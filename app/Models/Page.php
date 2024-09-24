@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\StatusEnum;
+
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
+
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Page extends Model implements TranslatableContract,HasMedia,Viewable
+{
+    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
+
+    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
+
+    protected $table = 'pages';
+    protected $guarded = [];
+
+    public function getCategory(){
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+    
+    public function faqs(){
+        return $this->morphMany(Faq::class, 'faqable');
+    }
+
+    public function registerMediaCollections(): void{
+
+        $this->addMediaCollection('page')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
+            $this->addMediaConversion('img')->width(1250)->nonOptimized();
+            $this->addMediaConversion('thumb')->width(500)->nonOptimized();
+            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
+            $this->addMediaConversion('icon')->width(100)->nonOptimized();
+        });
+
+        $this->addMediaCollection('gallery')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
+            $this->addMediaConversion('img')->width(1250)->nonOptimized();
+            $this->addMediaConversion('thumb')->width(500)->nonOptimized();
+            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
+            $this->addMediaConversion('icon')->width(100)->nonOptimized();
+        });
+
+        $this->addMediaCollection('cover')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
+            $this->addMediaConversion('img')->width(1250)->nonOptimized();
+            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
+        });
+    }
+
+    public function scopeActive($query){
+        return $query->where('status', 1);
+    }
+
+    public function scopeLang($query){
+        return $query->whereHas('translations', function ($query) {
+            $query->where('locale', app()->getLocale());
+        });
+    }
+
+    protected $casts = [
+        'status' => StatusEnum::class,
+    ];
+
+}
