@@ -77,7 +77,7 @@
 
     <div class="col-md-3 mb-3 p-1">
         
-        <x-dashboard.site.category parent="1"/>
+        <x-dashboard.site.category parent="2"/>
         
         <div class="card mt-2">
             <div class="card-status-top bg-blue"></div>
