@@ -2,10 +2,10 @@
     <div class="container py-16 xl:!py-20 lg:!py-20 md:!py-20">
         <div class="xl:flex lg:flex flex-row xl:!items-center lg:!items-center">
             <h3
-                class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-6 xl:!mb-0 lg:!mb-0 lg:pr-40 xl:pr-60 xxl:pr-[22.5rem] text-white">Join our community by using our services and grow your business.</h3>
-            <a href="#" class="btn btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] 
+                class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-6 xl:!mb-0 lg:!mb-0 lg:pr-40 xl:pr-60 xxl:pr-[22.5rem] text-white">Size özel çözümlerimiz ile işinizi bir adım öteye taşımak için teklif alın. </h3>
+            <a href="{{ route('contactus')}}" title="Teklif Al" class="btn btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] 
 			focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5]
-			 disabled:border-[#a07cc5]  !text-[.85rem] !rounded-[50rem]  !mb-0 whitespace-nowrap">Try It For Free</a>
+			 disabled:border-[#a07cc5]  !text-[.85rem] !rounded-[50rem]  !mb-0 whitespace-nowrap">Teklif Al</a>
         </div>
         <!--/div -->
         <hr
@@ -18,7 +18,7 @@
                             class="!mb-4"
                             src="/logof.png"
                             srcset="/logof.png"
-                            alt="image">
+                            alt="İzmir GO Dijital Ajans">
                             <p class="!mb-4">© 2024 İzmir GO Dijital Ajans.
                                 <br class="hidden xl:block lg:block text-[#cacaca]">Tüm Hakları Saklıdır.</p>
                                 <nav class="nav social social-white">
