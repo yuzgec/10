@@ -64,9 +64,7 @@
                                 <br>
                                 {{ config('settings.telefon1')}}
                                 </div>
-                                <!-- /.widget -->
                             </div>
-                            <!-- /column -->
                             <div
                                 class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
                                 <div class="widget text-[#cacaca]">
@@ -82,19 +80,17 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <!-- /.widget -->
                             </div>
-                            <!-- /column -->
                             <div
                                 class="md:w-full xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
                                 <div class="widget text-[#cacaca]">
-                                    <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Our Newsletter</h4>
-                                    <p class="!mb-5">Subscribe to our newsletter to get our news & deals delivered to you.</p>
+                                    <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Haber Bülteni</h4>
+                                    <p class="!mb-5">Mail bültemize katılarak en güncel teknoloji haberlerini alabilirsiniz.</p>
                                     <div class="newsletter-wrapper">
-                                        <!-- Begin Mailchimp Signup Form -->
-                                        <div id="mc_embed_signup2">
+
+                                    <div id="mc_embed_signup2">
                                             <form
-                                                action="https://elemisfreebies.us20.list-manage.com/subscribe/post?u=aa4947f70a475ce162057838d&amp;id=b49ef47a9a"
+                                                action="#"
                                                 method="post"
                                                 id="mc-embedded-subscribe-form2"
                                                 name="mc-embedded-subscribe-form"
@@ -109,14 +105,14 @@
                                                             value=""
                                                             name="EMAIL"
                                                             class="required email form-control block w-full text-[12px] font-medium leading-[1.7] appearance-none bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] px-4 py-[0.6rem] rounded-[0.4rem] motion-reduce:transition-none focus:text-[#60697b] focus:bg-[rgba(255,255,255,.03)] focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] disabled:bg-[#aab0bc] disabled:opacity-100 file:mt-[-0.6rem] file:mr-[-1rem] file:mb-[-0.6rem] file:ml-[-1rem] file:text-[#60697b] file:bg-[#fefefe] file:pointer-events-none file:transition-all file:duration-[0.2s] file:ease-in-out file:px-4 file:py-[0.6rem] file:rounded-none motion-reduce:file:transition-none placeholder:text-[#959ca9] placeholder:opacity-100 border border-solid !border-[rgba(255,255,255,0.1)] text-[#cacaca] focus:!border-[#a07cc5] bg-[rgba(255,255,255,.03)] focus-visible:!border-[#a07cc5] focus-visible:!outline-0"
-                                                            placeholder="Email Address"
+                                                            placeholder="Email Adresinizi Giriniz..."
                                                             id="mce-EMAIL2">
                                                             <label
                                                                 class="!ml-[0.05rem] text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none origin-[0_0] px-4 py-[0.6rem] left-0 top-0"
-                                                                for="mce-EMAIL2">Email Address</label>
+                                                                for="mce-EMAIL2">Email Adresiniz</label>
                                                             <input
                                                                 type="submit"
-                                                                value="Join"
+                                                                value="KATIL"
                                                                 name="subscribe"
                                                                 id="mc-embedded-subscribe2"
                                                                 class="btn btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !relative z-[2] focus:z-[5] hover:!transform-none border-0"></div>
@@ -124,8 +120,7 @@
                                                                 <div class="response" id="mce-error-response2" style="display:none"></div>
                                                                 <div class="response" id="mce-success-response2" style="display:none"></div>
                                                             </div>
-                                                            <!-- real people should not fill this in and expect good things - do not remove
-                                                            this or risk form bot signups-->
+                                                       
                                                             <div style="position: absolute; left: -5000px;" aria-hidden="true">
                                                                 <input
                                                                     type="text"
@@ -136,15 +131,9 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    <!--End mc_embed_signup-->
                                                 </div>
-                                                <!-- /.newsletter-wrapper -->
                                             </div>
-                                            <!-- /.widget -->
-                                        </div>
-                                        <!-- /column -->
-                                    </div>
-                                    <!--/.row -->
+                                                    </div>
+                                                </div>
                                 </div>
-                                <!-- /.container -->
                             </footer>

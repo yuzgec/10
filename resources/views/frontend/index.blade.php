@@ -60,6 +60,7 @@
     </section>
 
     <section class="wrapper !bg-[#ffffff]">
+
         <div class="container" style="margin-top:100px">
             <div class="flex flex-wrap mx-[-15px] !mb-8 !text-center mt-[-50px]">
                 <div class="lg:w-12/12 xl:w-12/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
@@ -115,6 +116,7 @@
         </div>
 
         <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] items-center">
+            
             <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] xl:!order-2 lg:!order-2 !relative">
                 <div class="shape !rounded-[50%] !bg-[#f6f3f9] rellax !w-[8rem] !h-[8rem] absolute" data-rellax-speed="1" style="bottom: -2.5rem; right: -1.5rem;"></div>
                 <figure class="!rounded-[.4rem] !mb-0">
@@ -123,61 +125,58 @@
             </div>
 
             <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
-            <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Kurumsal Kimlik</h3>
-            <p class="!mb-5">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-            <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
-                <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                    <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                        <li class="relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>Logo Tasarım</span>
-                        </li>
-                        <li class="mt-3 relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>Nullam quis risus eget urna mollis ornare aenean leo.</span>
-                        </li>
-                    </ul>
+                <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Kurumsal Kimlik</h3>
+                <p class="!mb-5">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+                
+                <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                    <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                            <li class="relative pl-6">
+                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                <span>Logo Tasarım</span>
+                            </li>
+                            <li class="mt-3 relative pl-6">
+                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                <span>Nullam quis risus eget urna mollis ornare aenean leo.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                            <li class="relative pl-6">
+                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                <span>Etiam porta euismod malesuada mollis nisl ornare sem.</span>
+                            </li>
+                            <li class="mt-3 relative pl-6">
+                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                <span>Vivamus sagittis lacus augue rutrum maecenas.</span>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
 
-                <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                    <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                        <li class="relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>Etiam porta euismod malesuada mollis nisl ornare sem.</span>
-                        </li>
-                        <li class="mt-3 relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>Vivamus sagittis lacus augue rutrum maecenas.</span>
-                        </li>
-                    </ul>
-                </div>
-
+                <a href="#" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">More Details</a>
+        
             </div>
 
-            <a href="#" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">More Details</a>
         </div>
-        <!--/column -->
-        </div>
-        <!--/.row -->
-    </div>
-    <!-- /.container -->
+
     </section>
-    <!-- /section -->
+
     <section class="wrapper image-wrapper bg-image bg-overlay !bg-fixed bg-no-repeat bg-[center_center] bg-cover relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.5)]" data-image-src="/frontend/img/photos/bg10.jpg">
-    <div class="container py-[8rem]">
-        <div class="flex flex-wrap mx-[-15px] !text-center">
-        <div class="lg:w-11/12 xl:w-10/12 xxl:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
-            <h2 class="text-[0.8rem] !leading-[1.35] uppercase text-white !mb-3">Join Our Community</h2>
-            <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-6 text-white lg:!px-5 xxl:!px-0">We are trusted by over 5000+ clients. Join them by using our services and grow your business.</h3>
-            <a href="#" class="btn btn-white !rounded-[50rem]  !mb-0 whitespace-nowrap">Join Us</a>
+        <div class="container py-[8rem]">
+            <div class="flex flex-wrap mx-[-15px] !text-center">
+                <div class="lg:w-11/12 xl:w-10/12 xxl:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+                    <h2 class="text-[0.8rem] !leading-[1.35] uppercase text-white !mb-3">Join Our Community</h2>
+                    <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-6 text-white lg:!px-5 xxl:!px-0">We are trusted by over 5000+ clients. Join them by using our services and grow your business.</h3>
+                    <a href="#" class="btn btn-white !rounded-[50rem]  !mb-0 whitespace-nowrap">Join Us</a>
+                </div>
+            </div>
         </div>
-        <!-- /column -->
-        </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container -->
     </section>
-    <!-- /section -->
+
     <section class="wrapper !bg-[#ffffff]">
     <div class="container py-[4.5rem] xl:!py-[7rem] lg:!py-[7rem] md:!py-[7rem]">
         <div class="flex flex-wrap mx-[-15px] !mb-8 !text-center">
@@ -185,9 +184,7 @@
             <h2 class="text-[0.8rem] uppercase text-[#a07cc5] !mb-3 !leading-[1.35] !tracking-[0.02rem]">Hizmetlerimiz</h2>
             <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold">İzmir Merkezli Ajansımız GO Dijital'in uzman ekibimizle tanışın </h3>
         </div>
-        <!-- /column -->
         </div>
-        <!-- /.row -->
         <div class="itemgrid grid-view projects-masonry">
             <div class="flex flex-wrap mx-[-15px] xl:mx-[-20px] lg:mx-[-20px] md:mx-[-20px] mt-[-50px] xl:mt-[-80px] lg:mt-[-80px] md:mt-[-80px] isotope">
                @foreach ($services as $item)
@@ -211,13 +208,9 @@
             </div>
             <!-- /.project -->
         </div>
-        <!-- /.row -->
         </div>
-        <!-- /.grid -->
     </div>
-    <!-- /.container -->
     </section>
-    <!-- /section -->
     <section class="wrapper !bg-[#f6f3f9]">
     <div class="container py-[4.5rem] xl:pt-28 lg:pt-28 md:pt-28 xl:pb-36 lg:pb-36 md:pb-36">
         <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] xl:mt-0 lg:mt-0 items-center">
@@ -225,34 +218,25 @@
             <h2 class="text-[0.8rem] uppercase text-[#a07cc5] !mb-3 !leading-[1.35] !tracking-[0.02rem]">Company Facts</h2>
             <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold mb-3 xxl:!pr-20">We are proud of our projects</h3>
         </div>
-        <!-- /column -->
         <div class="xl:w-8/12 lg:w-8/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full xl:!mt-2 lg:!mt-2">
             <div class="flex flex-wrap mx-[-15px] items-center counter-wrapper mt-[-30px] !text-center">
             <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
                 <h3 class="counter counter-lg xl:text-[2.2rem] text-[calc(1.345rem_+_1.14vw)] tracking-[normal] !leading-none mb-2">1000+</h3>
                 <p class="font-medium !mb-0">Completed Projects</p>
             </div>
-            <!--/column -->
-            <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
+                <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
                 <h3 class="counter counter-lg xl:text-[2.2rem] text-[calc(1.345rem_+_1.14vw)] tracking-[normal] !leading-none mb-2">500+</h3>
                 <p class="font-medium !mb-0">Happy Clients</p>
             </div>
-            <!--/column -->
-            <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
+                <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
                 <h3 class="counter counter-lg xl:text-[2.2rem] text-[calc(1.345rem_+_1.14vw)] tracking-[normal] !leading-none mb-2">150+</h3>
                 <p class="font-medium !mb-0">Awards Won</p>
             </div>
-            <!--/column -->
+                </div>
             </div>
-            <!--/.row -->
         </div>
-        <!-- /column -->
-        </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container -->
     </section>
-    <!-- /section -->
     <section class="wrapper !bg-[#ffffff]">
     <div class="container py-[6rem] xl:!py-[7rem] lg:!py-[7rem] md:!py-[7rem]">
         <div class="itemgrid !mb-[4.5rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem]">
@@ -271,12 +255,9 @@
                     </div>
                 </blockquote>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
             </div>
-            <!--/column -->
-            <div class="item md:w-6/12 lg:w-6/12 xl:w-3/12 flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
+                <div class="item md:w-6/12 lg:w-6/12 xl:w-3/12 flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
             <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
                 <div class="card-body flex-[1_1_auto] p-[40px]">
                 <span class="ratings  inline-block relative w-20 h-[0.8rem] text-[0.9rem] leading-none before:text-[rgba(38,43,50,0.1)] after:inline-block after:not-italic after:font-normal after:absolute after:text-[#fcc032] after:content-['\2605\2605\2605\2605\2605'] after:overflow-hidden after:left-0 after:top-0 before:inline-block before:not-italic before:font-normal before:absolute before:text-[#fcc032] before:content-['\2605\2605\2605\2605\2605'] before:overflow-hidden before:left-0 before:top-0 five !mb-3"></span>
@@ -290,12 +271,9 @@
                     </div>
                 </blockquote>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
             </div>
-            <!--/column -->
-            <div class="item md:w-6/12 lg:w-6/12 xl:w-3/12 flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
+                <div class="item md:w-6/12 lg:w-6/12 xl:w-3/12 flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
             <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
                 <div class="card-body flex-[1_1_auto] p-[40px]">
                 <span class="ratings  inline-block relative w-20 h-[0.8rem] text-[0.9rem] leading-none before:text-[rgba(38,43,50,0.1)] after:inline-block after:not-italic after:font-normal after:absolute after:text-[#fcc032] after:content-['\2605\2605\2605\2605\2605'] after:overflow-hidden after:left-0 after:top-0 before:inline-block before:not-italic before:font-normal before:absolute before:text-[#fcc032] before:content-['\2605\2605\2605\2605\2605'] before:overflow-hidden before:left-0 before:top-0 five !mb-3"></span>
@@ -309,12 +287,9 @@
                     </div>
                 </blockquote>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
             </div>
-            <!--/column -->
-            <div class="item md:w-6/12 lg:w-6/12 xl:w-3/12 flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
+                <div class="item md:w-6/12 lg:w-6/12 xl:w-3/12 flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
             <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
                 <div class="card-body flex-[1_1_auto] p-[40px]">
                 <span class="ratings  inline-block relative w-20 h-[0.8rem] text-[0.9rem] leading-none before:text-[rgba(38,43,50,0.1)] after:inline-block after:not-italic after:font-normal after:absolute after:text-[#fcc032] after:content-['\2605\2605\2605\2605\2605'] after:overflow-hidden after:left-0 after:top-0 before:inline-block before:not-italic before:font-normal before:absolute before:text-[#fcc032] before:content-['\2605\2605\2605\2605\2605'] before:overflow-hidden before:left-0 before:top-0 five !mb-3"></span>
@@ -328,13 +303,9 @@
                     </div>
                 </blockquote>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
             </div>
-            <!--/column -->
-        </div>
-        <!-- /.row -->
+            </div>
         </div>
         <!-- /.grid-view -->
         <div class="flex flex-wrap mx-[-15px] !mb-8 !text-center">
@@ -342,15 +313,12 @@
             <h2 class="text-[0.8rem] uppercase text-[#a07cc5] !mb-3 !leading-[1.35] !tracking-[0.02rem]">Company Strategy</h2>
             <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold">Just sit and relax while we take care of your business needs.</h3>
         </div>
-        <!-- /column -->
         </div>
-        <!-- /.row -->
         <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] !mb-[4.5rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem] items-center">
         <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full !relative">
             <div class="shape bg-dot leaf rellax !w-[7rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2rem; left: -0.7rem;"></div>
             <figure class="rounded-[0.4rem] relative z-[2]"><img class="rounded-[0.4rem]" src="/frontend/img/photos/about20.jpg" srcset="/frontend/img/photos/about20@2x.jpg 2x" alt="image"></figure>
         </div>
-        <!--/column -->
         <div class="xl:w-6/12 lg:w-6/12 xxl:w-5/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full">
             <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] !leading-[1.3] font-bold mb-7">Our Working Process</h3>
             <div class="flex flex-row mb-5">
@@ -381,15 +349,12 @@
             </div>
             </div>
         </div>
-        <!--/column -->
         </div>
-        <!--/.row -->
         <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] items-center">
         <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full xl:!order-2 lg:!order-2 !relative">
             <div class="shape !rounded-[50%] bg-line leaf rellax !w-[8rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2.5rem; right: -1.5rem;"></div>
             <figure class="rounded-[0.4rem] relative z-[2]"><img class="rounded-[0.4rem]" src="/frontend/img/photos/about19.jpg" srcset="/frontend/img/photos/about19@2x.jpg 2x" alt="image"></figure>
         </div>
-        <!--/column -->
         <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full">
             <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] !leading-[1.3] font-bold mb-4">Why Choose Us?</h3>
             <p class="!mb-5">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius.</p>
@@ -405,8 +370,7 @@
                     <span>Nullam quis risus eget urna mollis ornare aenean leo.</span></li>
                 </ul>
             </div>
-            <!--/column -->
-            <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                 <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
                 <li class="relative pl-6">
                     <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#a07cc5] !bg-[#eee7f5] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
@@ -417,16 +381,11 @@
                     <span>Vivamus sagittis lacus augue rutrum maecenas odio.</span></li>
                 </ul>
             </div>
-            <!--/column -->
-            </div>
-            <!--/.row -->
-            <a href="#" class="btn btn-soft-violet !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">More Details</a>
+                </div>
+                <a href="#" class="btn btn-soft-violet !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">More Details</a>
         </div>
-        <!--/column -->
         </div>
-        <!--/.row -->
     </div>
-    <!-- /.container -->
     </section>
 
 @endsection
