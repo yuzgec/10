@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Blog;
 use App\Models\Page;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Category;
 use App\Models\Language;
 use App\Enums\StatusEnum;
@@ -18,17 +19,21 @@ class ViewShareProvider extends ServiceProvider
     public function boot(): void
     {
      
+        config()->set('settings', Setting::pluck('value','item')->all());
 
         $status = Cache::remember('status',now()->addYear(5), function () {
             return collect(StatusEnum::cases());
         });
 
-
-        $categories = Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products'])->lang()->get()->toFlatTree();
-        $services = Service::with(['getCategory'])->active()->lang()->get();
-        $pages = Page::with(['getCategory'])->active()->lang()->get();
-        $blogs =Blog::with(['getCategory'])->active()->lang()->get();
+        $categories = Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media'])->lang()->get()->toFlatTree();
+        $services = Service::with(['getCategory','media'])->active()->lang()->get();
+        $pages = Page::with(['getCategory','media'])->active()->lang()->get();
+        $blogs =Blog::with(['getCategory','media'])->active()->lang()->get();
         $language = Language::active()->get();
+
+
+        //dd($language);
+
   
         View::share([
              'categories' => $categories,

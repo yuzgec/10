@@ -9,26 +9,25 @@ use Spatie\MediaLibrary\HasMedia;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
-
-
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
+
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class Product extends Model implements TranslatableContract,HasMedia,Viewable
 {
     use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
 
     protected $guarded = [];
-
-    
 
     public $translatedAttributes = 
     ['name',
@@ -51,9 +50,7 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
      'tab4_content',
      'tab5_name',
      'tab5_content',
-];
-
-
+    ];
 
     public function brand(){
         return $this->belongsTo(ProductBrand::class, 'brand_id');
@@ -105,5 +102,11 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
     protected $casts = [
         'status' => StatusEnum::class,
     ];
+
+
+    public function media(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'model');
+    }
 
 }

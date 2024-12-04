@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('faq_translations', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->longtext('desc')->nullable();
 
             $table->unsignedBigInteger('faq_id')->unsigned();

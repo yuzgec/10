@@ -1,115 +1,122 @@
 @extends('backend.layout.app')
-@section('content') 
-<div class="page-body"""> 
+
+@section('content')
+<div class="page-body">
     <div class="container-xl">
-    <div class="card">
         <div class="row g-0">
+            <!-- Sol Taraf: Tab Bar -->
             <div class="col-12 col-md-3 border-end">
                 <div class="card-body">
-                    <h4 class="subheader">Business settings</h4>
+                    <h4 class="subheader">Ayarlar</h4>
                     <div class="list-group list-group-transparent">
-                        <a
-                            href="./settings.html"
-                            class="list-group-item list-group-item-action d-flex align-items-center active">My Account</a>
-                        <a
-                            href="#"
-                            class="list-group-item list-group-item-action d-flex align-items-center">My Notifications</a>
-                        <a
-                            href="#"
-                            class="list-group-item list-group-item-action d-flex align-items-center">Connected Apps</a>
-                        <a
-                            href="./settings-plan.html"
-                            class="list-group-item list-group-item-action d-flex align-items-center">Plans</a>
-                        <a
-                            href="#"
-                            class="list-group-item list-group-item-action d-flex align-items-center">Billing &amp; Invoices</a>
-                    </div>
-                    <h4 class="subheader mt-4">Experience</h4>
-                    <div class="list-group list-group-transparent">
-                        <a href="#" class="list-group-item list-group-item-action">Give Feedback</a>
+                        @foreach($categories->where('id', 8) as $category)
+                        <a href="#category-{{ $category->id }}" class="list-group-item list-group-item-action d-flex align-items-center" data-bs-toggle="tab">
+                            {{ $category->name }}
+                        </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
+            
+            <!-- Sağ Taraf: Tab İçerikleri -->
             <div class="col-12 col-md-9 d-flex flex-column">
-                <div class="card-body">
-                    <h2 class="mb-4">My Account</h2>
-                    <h3 class="card-title">Profile Details</h3>
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <span
-                                class="avatar avatar-xl"
-                                style="background-image: url(./static/avatars/000m.jpg)"></span>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="btn">
-                                Change avatar
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="btn btn-ghost-danger">
-                                Delete avatar
-                            </a>
-                        </div>
-                    </div>
-                    <h3 class="card-title mt-4">Business Profile</h3>
-                    <div class="row g-3">
-                        <div class="col-md">
-                            <div class="form-label">Business Name</div>
-                            <input type="text" class="form-control" value="Tabler"></div>
-                            <div class="col-md">
-                                <div class="form-label">Business ID</div>
-                                <input type="text" class="form-control" value="560afc32"></div>
-                                <div class="col-md">
-                                    <div class="form-label">Location</div>
-                                    <input type="text" class="form-control" value="Peimei, China"></div>
-                                </div>
-                                <h3 class="card-title mt-4">Email</h3>
-                                <p class="card-subtitle">This contact will be shown to others publicly, so choose it carefully.</p>
-                                <div>
-                                    <div class="row g-2">
-                                        <div class="col-auto">
-                                            <input
-                                                type="text"
-                                                class="form-control w-auto"
-                                                value="paweluna@howstuffworks.com"></div>
-                                            <div class="col-auto">
-                                                <a href="#" class="btn">
-                                                    Change
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h3 class="card-title mt-4">Password</h3>
-                                    <p class="card-subtitle">You can set a permanent password if you don't want to use temporary login codes.</p>
-                                    <div>
-                                        <a href="#" class="btn">
-                                            Set new password
-                                        </a>
-                                    </div>
-                                    <h3 class="card-title mt-4">Public profile</h3>
-                                    <p class="card-subtitle">Making your profile public means that anyone on the
-                                        Dashkit network will be able to find you.</p>
-                                    <div>
-                                        <label class="form-check form-switch form-switch-lg">
-                                            <input class="form-check-input" type="checkbox">
-                                                <span class="form-check-label form-check-label-on">You're currently visible</span>
-                                                <span class="form-check-label form-check-label-off">You're currently invisible</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer bg-transparent mt-auto">
-                                        <div class="btn-list justify-content-end">
-                                            <a href="#" class="btn">
-                                                Cancel
-                                            </a>
-                                            <a href="#" class="btn btn-primary">
-                                                Submit
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="tab-content">
+                @foreach($categories->where('id', 8) as $category)
+                <div class="tab-pane fade" id="category-{{ $category->id }}">
+                        <div class="card-body">
+                            <h2 class="mb-4">{{ $category->name }}</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Value</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($settings->where('category_id', $category->id) as $setting)
+                                    <tr>
+                                        <td>{{ $setting->item }}</td>
+                                        <td>
+                                            @if($setting->isImage)
+                                            <img src="{{ asset('storage/' . $setting->value) }}" alt="{{ $setting->item }}" width="50">
+                                            @else
+                                            {{ $setting->value }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('settings.update', $setting->id) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                @if($setting->isType == \App\Enums\SettingsEnum::INPUT)
+                                                <input type="text" name="value" value="{{ $setting->value }}" class="form-control">
+                                                @elseif($setting->isType == \App\Enums\SettingsEnum::TEXTAREA)
+                                                <textarea name="value" class="form-control">{{ $setting->value }}</textarea>
+                                                @elseif($setting->isType == \App\Enums\SettingsEnum::CHECKBOX)
+                                                <input type="checkbox" name="value" value="1" {{ $setting->value ? 'checked' : '' }}>
+                                                @endif
+
+                                                @if($setting->isImage)
+                                                <input type="file" name="image" class="form-control mt-2">
+                                                @endif
+
+                                                <button type="submit" class="btn btn-primary mt-2">Update</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endsection
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="createSettingModal" tabindex="-1" aria-labelledby="createSettingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('settings.store') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createSettingModalLabel">Yeni Ayar Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-label">Item</div>
+                    <input type="text" name="item" class="form-control" required>
+                    
+                    <div class="form-label mt-3">Category</div>
+                    <select name="category_id" class="form-control" required>
+                        @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="form-label mt-3">Type</div>
+                    <select name="isType" class="form-control" required>
+                        <option value="{{ \App\Enums\SettingsEnum::INPUT }}">Input</option>
+                        <option value="{{ \App\Enums\SettingsEnum::TEXTAREA }}">Textarea</option>
+                        <option value="{{ \App\Enums\SettingsEnum::CHECKBOX }}">Checkbox</option>
+                    </select>
+
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" name="isImage" id="isImage">
+                        <label class="form-check-label" for="isImage">Is Image?</label>
+                    </div>
+
+                    <div class="form-label mt-3">Value</div>
+                    <input type="text" name="value" class="form-control">
+                    <input type="file" name="image" class="form-control mt-2">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

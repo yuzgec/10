@@ -131,10 +131,25 @@
                 <h4 class="card-title"><x-dashboard.icon.image/>Image <small style="color:gray">(İlk Fotoğraf)</small></h4>
             </div>
             <div class="card-body">
-                <input class="form-control mb-2" type="file" name="image">
-                <div class="text-center">
-                    <img src="{{ $edit->getFirstMediaUrl('page', 'thumb')}}" class="me-2 " style="width: 300px">
+                <div class="form-group">
+                    <input 
+                        type="file" 
+                        class="form-control image-preview-input mb-2" 
+                        name="image" 
+                        id="pageInput" 
+                        data-preview-target="pagePreview"
+                    >
+                    <div class="text-center">
+                        <img 
+                            src="{{ $edit->getFirstMediaUrl('page', 'thumb')}}" 
+                            style="width: 300px; cursor: pointer;" 
+                            id="pagePreview" 
+                            onclick="document.getElementById('pageInput').click()" 
+                            alt="Page Image"
+                        >
+                    </div>
                 </div>
+                
                 <label class="form-check form-switch mt-2">&nbsp; Kaldır
                     <input class="form-check-input switch" name="deleteImage" type="checkbox">
                 </label>
@@ -156,9 +171,27 @@
                 <h4 class="card-title"><x-dashboard.icon.image/>Cover <small style="color:gray">(Sayfa Üstüne Gelen Fotoğraf)</small></h4>
             </div>
             <div class="card-body">
-                <input class="form-control mb-2" type="file" name="cover">
-                <div class="text-center">
-                    <img src="{{ $edit->getFirstMediaUrl('cover', 'thumb')}}" class="me-2 " style="width: 300px">
+                <div class="form-group">
+                    <div class="form-group">
+                        <input 
+                            type="file" 
+                            class="form-control image-preview-input mb-2" 
+                            name="cover" 
+                            id="coverInput" 
+                            data-preview-target="coverPreview"
+                        >
+                        <div class="text-center">
+                            <img 
+                                src="{{ $edit->getFirstMediaUrl('cover', 'thumb')}}" 
+                                style="width: 300px; cursor: pointer;" 
+                                id="coverPreview" 
+                                onclick="document.getElementById('coverInput').click()" 
+                                alt="Cover Image"
+                            >
+                        </div>
+                    </div>
+                    
+                    
                 </div>
                 <label class="form-check form-switch mt-2">&nbsp; Kaldır
                     <input class="form-check-input switch" name="deleteCover" type="checkbox">
@@ -190,10 +223,10 @@
                                 <th>Sil</th>
                             </tr>
                             </thead>
-                            <tbody id="orders">
-                            <div class="divide-y">
-                            @foreach($edit->getMedia('gallery') as $item)
-                                <tr id="gallery_{{$item->id}}">
+                            <tbody id="sortable-gallery">
+                                <div class="divide-y">
+                                    @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
+                                    <tr data-id="{{ $item->id }}">
                                     <td>
                                         <img src="{{ $item->getUrl() }}" class="" width="75px"/>
                                     </td>
@@ -233,4 +266,59 @@
             });
         </script>
     @endforeach
+     {{--  Galeri Listeleme --}}
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gallery = document.getElementById('sortable-gallery');
+            new Sortable(gallery, {
+                animation: 150,
+                onEnd: function (evt) {
+                    const order = Array.from(gallery.children).map(row => row.dataset.id);
+
+                    fetch('{{ route('page.gallerysort') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ order })
+                    }).then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Gallery order updated successfully');
+                        } else {
+                            console.error('Error updating order');
+                        }
+                    }).catch(err => console.error(err));
+                }
+            });
+        });
+    </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.image-preview-input').forEach(input => {
+        input.addEventListener('change', function () {
+            previewImage(this);
+        });
+    });
+});
+
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const previewId = input.getAttribute('data-preview-target');
+
+        reader.onload = function (e) {
+            const previewElement = document.getElementById(previewId);
+            if (previewElement) {
+                previewElement.src = e.target.result;
+            }
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection

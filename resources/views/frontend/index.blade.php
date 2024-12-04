@@ -3,8 +3,66 @@
 @section('content')
     @include('frontend.layout.banner')
 
+    <section class="wrapper" style="margin-top:100px">
+        <div class="container pt-20 xl:pt-28 lg:pt-28 md:pt-28">
+          <div class="flex flex-wrap mx-[-15px] !text-center">
+            <div class="md:w-10/12 lg:w-7/12 xl:w-7/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !relative">
+              <img src="/frontend/img/svg/doodle5.svg" class="!w-[5rem] absolute hidden xl:block lg:block" data-delay="1800" style="bottom: -60%; right: 10%" alt="image">
+              <img src="/frontend/img/svg/doodle6.svg" class="!h-[5rem] !absolute hidden xl:block lg:block" data-delay="1800" style="top: -40%; left: -5%" alt="image">
+              <h3 class="text-[calc(1.325rem_+_0.9vw)] font-bold !leading-[1.2] xl:text-[2rem] !mb-8 xl:!px-6">GO Dijital İş Süreci: <span class="text-gradient gradient-7">Adım Adım Mükemmelliğe</span></h3>
+            </div>
+          </div>
+          <!-- /.row -->
+          <div class="flex flex-wrap mx-[-15px]">
+            <div class="xxl:w-11/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+              <div class="flex flex-wrap mx-[-15px] mt-[-50px] xl:mt-0 lg:mt-0 !text-center items-center">
+                <div class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto mb-[-2.5rem] lg:!mb-0 xl:!mb-0 mt-[50px] xl:mt-0 lg:mt-0">
+                  <figure class="mx-auto"><img src="/frontend/img/photos/devices4.png" srcset="/frontend/img/photos/devices4@2x.png 2x" alt="image"></figure>
+                </div>
+                <!-- /column -->
+                <div class="w-full xl:hidden lg:hidden px-[15px] mt-[50px] xl:mt-0 lg:mt-0"></div>
+                <div class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full lg:!-order-1 xl:!-order-1 mt-[50px] xl:mt-0 lg:mt-0">
+                  <div class="!mb-8">
+                    <span class="xl:text-[3rem] text-[calc(1.425rem_+_2.1vw)] !leading-none mb-3 font-medium text-gradient gradient-7">01</span>
+                    <h4 class="text-[1rem]">Sizi Dinliyoruz!</h4>
+                    <p class="mb-0 xl:!px-7">İhtiyaçlarınızı anlamak ve doğru çözümleri sunmak için sizi tanıyoruz.</p>
+                  </div>
+                  <!-- /div -->
+                  <div>
+                    <span class="xl:text-[3rem] text-[calc(1.425rem_+_2.1vw)] !leading-none mb-3 font-medium text-gradient gradient-7">02</span>
+                    <h4 class="text-[1rem]">Planlamayı Kusursuz Yapıyoruz!</h4>
+                    <p class="mb-0 xl:!px-7">Projeniz için stratejik bir yol haritası oluşturuyor ve ön hazırlıkları tamamlıyoruz.</p>
+                  </div>
+                  <!-- /div -->
+                </div>
+                <!-- /column -->
+                <div class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[50px] xl:mt-0 lg:mt-0">
+                  <div class="!mb-8">
+                    <span class="xl:text-[3rem] text-[calc(1.425rem_+_2.1vw)] !leading-none mb-3 font-medium text-gradient gradient-7">03</span>
+                    <h4 class="text-[1rem]">Hayalleri Gerçeğe Dönüştürüyoruz!</h4>
+                    <p class="mb-0 xl:!px-7">Tasarım ve geliştirme sürecini titizlikle yönetiyor, projeyi hayata geçiriyoruz.</p>
+                  </div>
+                  <!-- /div -->
+                  <div>
+                    <span class="xl:text-[3rem] text-[calc(1.425rem_+_2.1vw)] !leading-none mb-3 font-medium text-gradient gradient-7">04</span>
+                    <h4 class="text-[1rem]">Başarıya Birlikte Ulaşıyoruz!</h4>
+                    <p class="mb-0 xl:!px-7">Projeyi teslim ediyor, sürdürülebilir başarı için destek sunuyoruz.</p>
+                  </div>
+                  <!-- /div -->
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /column -->
+          </div>
+          <!-- /.row -->
+        </div>
+</section>
+<!-- /section -->
+
     <section class="wrapper !bg-[#ffffff]">
-    <div class="container pt-[17.5rem] xl:pt-[17.5rem] lg:pt-[17.5rem] md:pt-[17.5rem] pb-[4.5rem] xl:pb-[7rem] lg:pb-[7rem] md:pb-[7rem]">
+    <div class="container" style="margin-top:100px">
         <div class="flex flex-wrap mx-[-15px] !mb-8 !text-center mt-[-50px]">
         <div class="lg:w-12/12 xl:w-12/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
             <h2 class="text-[0.8rem] uppercase text-[#a07cc5] !mb-3 !leading-[1.35] !tracking-[0.02rem]">GO Dijital Neler Yapar?</h2>
@@ -40,7 +98,7 @@
                 <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
                 <li class="relative pl-6">
                     <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                    <span>Ürünlerinize Özel Web Sayfası</span>
+                    <span>Ürüne Özel Web Sayfası</span>
                 </li>
                 <li class="mt-3 relative pl-6">
                     <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
@@ -62,35 +120,37 @@
         </div>
         <!--/column -->
         <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
-            <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Corporate Design</h3>
+            <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Kurumsal Kimlik</h3>
             <p class="!mb-5">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
             <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
-            <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                <li class="relative pl-6">
-                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                    <span>Aenean quam ornare curabitur blandit consectetur.</span>
-                </li>
-                <li class="mt-3 relative pl-6">
-                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                    <span>Nullam quis risus eget urna mollis ornare aenean leo.</span></li>
-                </ul>
+                <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                    <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                        <li class="relative pl-6">
+                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                            <span>Logo Tasarım</span>
+                        </li>
+                        <li class="mt-3 relative pl-6">
+                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                            <span>Nullam quis risus eget urna mollis ornare aenean leo.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                    <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                        <li class="relative pl-6">
+                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                            <span>Etiam porta euismod malesuada mollis nisl ornare sem.</span>
+                        </li>
+                        <li class="mt-3 relative pl-6">
+                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                            <span>Vivamus sagittis lacus augue rutrum maecenas.</span>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-            <!--/column -->
-            <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                <li class="relative pl-6">
-                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                    <span>Etiam porta euismod malesuada mollis nisl ornare sem.</span>
-                </li>
-                <li class="mt-3 relative pl-6">
-                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                    <span>Vivamus sagittis lacus augue rutrum maecenas.</span></li>
-                </ul>
-            </div>
-            <!--/column -->
-            </div>
-            <!--/.row -->
+
             <a href="#" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">More Details</a>
         </div>
         <!--/column -->

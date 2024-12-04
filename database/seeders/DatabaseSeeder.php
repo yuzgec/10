@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(RolesAndPermissionsSeeder::class);
-        $this->call(LanguageSeeder::class);
 
         $arr = ['Web Sitesi', 'Sosyal Medya', 'Logo', 'Baskı', 'Google Maps', 'Google ADS', 'Meta ADS', 'Uzaktan Yardım', 'Satış', 'Kurumsal Mail'];
 
@@ -57,14 +56,18 @@ class DatabaseSeeder extends Seeder
         Category::create(['name' => 'Kurumsal', 'parent_id' =>1]);
         Category::create(['name' => 'Bilgi', 'parent_id' =>1]);
         Category::create(['name' => 'Belge', 'parent_id' =>1]);
-        Category::create(['name' => 'Hizmetler', 'parent_id' =>2]);
+        Category::create(['name' => 'Web Tasarım', 'parent_id' =>2]);
+        Category::create(['name' => 'Kurumsal Kimlik', 'parent_id' =>2]);
+        Category::create(['name' => 'Google SEO', 'parent_id' =>2]);
+        Category::create(['name' => 'Sosyal Medya', 'parent_id' =>2]);
+        Category::create(['name' => 'Dijital Reklam', 'parent_id' =>2]);
 
-        Page::create(['name:tr' => 'Kurumsal', 'name:en'=> 'About Us','category_id' => 9]);
+        Page::create(['name' => 'Kurumsal','category_id' => 9]);
 
 
-    /*     Service::create(['name' => 'Web Tasarım', 'category_id' => 12]);
+        Service::create(['name' => 'Web Tasarım', 'category_id' => 12]);
         Service::create(['name' => 'Sosyal Medya', 'category_id' => 12]);
-        Service::create(['name' => 'Google SEO', 'category_id' => 12]); */
+        Service::create(['name' => 'Google SEO', 'category_id' => 12]);
 
         ProductBrand::create(['name' => 'GO Dijital']);
 
@@ -81,268 +84,270 @@ class DatabaseSeeder extends Seeder
             [
                 'item' => 'siteName',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteDescription',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteSlogan',
                 'value' => 'Slogan',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'facebook',
                 'value' => 'facebook',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'instagram',
                 'value' => 'instagram',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'youtube',
                 'value' => 'youtube',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'linkedin',
                 'value' => 'linkedin',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'pinterest',
                 'value' => 'pinterest',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'twitter',
                 'value' => 'twitter',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'whatsapp',
                 'value' => 'whatsapp',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'discord',
                 'value' => 'discord',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'telefon1',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'telefon2',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'telefon3',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'email1',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'email2',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'email3',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'adres1',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'adres2',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'adres3',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'googleanaltycs',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'googleTagManager',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'facebookPixel',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'chat',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteTitle',
                 'value' => config('app.name'),
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteDescription',
                 'value' => config('app.name'),
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteKeywords',
                 'value' => config('app.name'),
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteAuthor',
                 'value' => config('app.name'),
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteAuthor',
                 'value' => config('app.name'),
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteLanguage',
                 'value' => 'Turkish',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'googleSiteVerification',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'yandexSiteVerification',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'facebookDomainVerification',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'googleRobots',
                 'value' => 'index,follow',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => false
 
             ],
             [
                 'item' => 'siteLogo',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => true
             ],
             [
                 'item' => 'siteMobilLogo',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => true
             ],
             [
                 'item' => 'siteFooterLogo',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => true
             ],
             [
                 'item' => 'siteFavIcon',
                 'value' => '',
-                'category_id' => 13,
+                'category_id' => 22,
                 'isImage' => true
             ]
         ];
     DB::table('settings')->insert($data);
-    Product::factory()->count(20)->create();
+    Product::factory()->count(2)->create();
+    
+    $this->call(LanguageSeeder::class);
 
 
     }

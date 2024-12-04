@@ -32,7 +32,7 @@
         <div class="card mb-3">
             <div class="card-body">
     
-                <x-dashboard.form.input label='Firma Adı' name='company_name'/>
+                <x-dashboard.form.input label='Firma Adı' name='company_name' placeholder="Firma Adı Giriniz"/>
 
                 <div class="form-group mb-3 row">
                     <label class="form-label col-3 col-form-label">Yetkili / Personel </label>

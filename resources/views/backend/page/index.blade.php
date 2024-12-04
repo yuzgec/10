@@ -8,7 +8,7 @@
             <div class="card-actions d-flex">
 
                 <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="sayfa Oluştur" class="btn btn-primary">
+                    <a href="{{ route('category.create')}}" title="Sayfa Oluştur" class="btn btn-primary">
                         <x-dashboard.icon.add/>
                        Kategori Ekle
                     </a>
@@ -91,7 +91,7 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-vcenter card-table table-striped table-hover">
+            <table class="table table-vcenter card-table table-striped table-hover" id="sortableTable">
                 <thead>
                     <tr>
                         <th>Img</th>
@@ -104,7 +104,7 @@
                 </thead>
                 <tbody>
                     @foreach ($all as $item)
-                    <tr>
+                    <tr data-id="{{ $item->id }}">
                         <td>
                             <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
                         </td>
@@ -174,5 +174,35 @@
   
 </div>
 
+
+@endsection
+
+@section('customJS')
+    {{--     Listelemele--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const table = document.getElementById('sortableTable');
+
+            new Sortable(table.querySelector('tbody'), {
+                handle: 'td', // Drag handle
+                animation: 150,
+                onEnd: function (evt) {
+                    const rows = table.querySelectorAll('tr');
+                    let order = Array.from(rows).map(row => row.dataset.id);
+
+                    fetch('{{ route('page.sort') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ order: order })
+                    }).then(response => response.json());
+                }
+            });
+        });
+    </script>
+
+  
 
 @endsection

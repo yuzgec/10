@@ -12,13 +12,15 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-class Category extends Model implements TranslatableContract,HasMedia
+class Category extends Model implements TranslatableContract,HasMedia,Viewable
 {
-    use HasFactory,SoftDeletes,NodeTrait,InteractsWithMedia,Translatable;
+    use HasFactory,SoftDeletes,NodeTrait,InteractsWithMedia,Translatable,InteractsWithViews;
 
 
     protected $table = 'categories';

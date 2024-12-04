@@ -22,8 +22,8 @@ class FaqRequest extends FormRequest
         'name:tr.required'             => 'Zorunlu Alan',
         'name:tr.max'                  => 'En fazla 255 karakterden oluşmalıdır.',
         'name:tr.min'                  => 'En az 6 karakterden oluşmalıdır.',
-        'category_id.required'        => 'Zorunlu Alan',
-        'category_id.exists'          => 'Geçersiz kategori',
+        'category_id.required'         => 'Zorunlu Alan',
+        'category_id.exists'           => 'Geçersiz kategori',
       ];
     }
 }

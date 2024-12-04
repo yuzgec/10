@@ -12,6 +12,7 @@ class PageObserver
      */
     public function created(Page $page): void
     {
+        //dd($page);
         Cache::forget('pages');
         Cache::forget('categories');
 

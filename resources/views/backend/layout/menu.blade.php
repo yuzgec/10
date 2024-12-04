@@ -52,8 +52,8 @@
                                             <x-dashboard.icon.date width="16"/> Randevu
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a href="./cards.html" class="dropdown-item">
-                                                Müşteri Listesi
+                                            <a href="{{ route('calendar')}}" class="dropdown-item">
+                                               Takvim
                                             </a>
                                         </div>
                                     </div>

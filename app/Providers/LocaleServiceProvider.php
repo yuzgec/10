@@ -8,16 +8,10 @@ use App\Models\Language;
 
 class LocaleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     */
     public function boot()
     {
 
-        $supportedLocales = ['tr','en'];
-
         $languages = Language::active()->get();
-
         foreach ($languages as $item) {
             $supportedLocales[$item->lang] = [
                 'name' => $item->name,
@@ -26,12 +20,8 @@ class LocaleServiceProvider extends ServiceProvider
                 'regional' => $item->regional,
             ];
         }
-
+        
         // Config içinde dinamik olarak `supportedLocales` değerini güncelle
         Config::set('laravellocalization.supportedLocales', $supportedLocales);
-
-        //dd($supportedLocales);
-
-        //dd(config('laravellocalization.supportedLocales'));
     }
 }

@@ -15,11 +15,21 @@
                     class="avatar avatar-xl mb-3 rounded"
                     style="background-image: url(./static/avatars/000m.jpg)">OY</span>
                 <h3 class="m-0 mb-1">
-                    <a href="#">{{ $item->name}}</a>
+                    <a href="{{ route('user.edit', $item->id)}}">{{ $item->name}}</a>
                 </h3>
                 <div class="text-secondary">{{ $item->email}}</div>
                 <div class="mt-3">
-                    <span class="badge bg-purple-lt">Web Master</span>
+                    @if($item->roles->isNotEmpty())
+                        <span class="badge bg-primary text-white">
+                            @foreach($item->roles as $role)
+                               {{ $role->name }}
+                            @endforeach
+                        </span>
+                    @else
+                    <span class="badge bg-red text-white">
+                        Rol Yok
+                    </span>
+                    @endif
                 </div>
             </div>
             <div class="d-flex">
@@ -35,9 +45,5 @@
 
     @endforeach
 </div>
-
-@endsection
-
-@section('customJS')
 
 @endsection

@@ -16,11 +16,11 @@
                     <div class="widget text-[#cacaca]">
                         <img
                             class="!mb-4"
-                            src="/frontend/img/logo-light.png"
-                            srcset="/frontend/img/logo-light@2x.png 2x"
+                            src="/logof.png"
+                            srcset="/logof.png"
                             alt="image">
-                            <p class="!mb-4">© 2024 Sandbox.
-                                <br class="hidden xl:block lg:block text-[#cacaca]">All rights reserved.</p>
+                            <p class="!mb-4">© 2024 İzmir GO Dijital Ajans.
+                                <br class="hidden xl:block lg:block text-[#cacaca]">Tüm Hakları Saklıdır.</p>
                                 <nav class="nav social social-white">
                                     <a
                                         class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
@@ -56,13 +56,13 @@
                         <div
                             class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
                             <div class="widget text-[#cacaca]">
-                                <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Get in Touch</h4>
-                                <address class="xl:pr-20 xxl:!pr-28 not-italic leading-[inherit] block mb-4">Moonshine St. 14/05 Light City, London, United Kingdom</address>
+                                <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">İletişim Bilgileri</h4>
+                                <address class="xl:pr-20 xxl:!pr-28 not-italic leading-[inherit] block mb-4">{{ config('settings.adres1')}}</address>
                                 <a
                                     class="text-[#cacaca] hover:text-[#a07cc5]"
-                                    href="mailto:first.last@email.com">info@email.com</a>
+                                    href="mailto:{{ config('settings.email1')}}">{{ config('settings.email1')}}</a>
                                 <br>
-                                    00 (123) 456 78 90
+                                {{ config('settings.telefon1')}}
                                 </div>
                                 <!-- /.widget -->
                             </div>
@@ -70,23 +70,16 @@
                             <div
                                 class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
                                 <div class="widget text-[#cacaca]">
-                                    <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Learn More</h4>
+                                    <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Hizmetlerimiz</h4>
                                     <ul class="pl-0 list-none   !mb-0">
+                                    @foreach ($categories->where('parent_id', 2) as $item )
+
                                         <li>
-                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="#">About Us</a>
+                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="{{ route('category.detail', $item->slug)}}" title="{{ $item->name}}">
+                                                {{ $item->name}}
+                                            </a>
                                         </li>
-                                        <li class="mt-[0.35rem]">
-                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="#">Our Story</a>
-                                        </li>
-                                        <li class="mt-[0.35rem]">
-                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="#">Projects</a>
-                                        </li>
-                                        <li class="mt-[0.35rem]">
-                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="#">Terms of Use</a>
-                                        </li>
-                                        <li class="mt-[0.35rem]">
-                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="#">Privacy Policy</a>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                                 <!-- /.widget -->

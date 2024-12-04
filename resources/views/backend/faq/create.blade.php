@@ -21,7 +21,6 @@
                         Kaydet
                     </a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -61,8 +60,6 @@
                                     <x-dashboard.form.text-area label='SSS Açıklama' name='desc:{{ $lang->lang }}' id='desc'/> 
                                 </div>
                             </div>
-
-
                         </div>       
                   </div>
                   @endforeach
@@ -72,26 +69,11 @@
     
     </div>
 
-
     <div class="col-md-3 mb-3 p-1">
         <x-dashboard.site.category parent="5"/>
     </div>
 
-
 </div>
 {{Form::close()}}
-
-@endsection
-
-@section('customJS')
-<script type="text/javascript">
-    CKEDITOR.replace( 'desc', {
-        filebrowserUploadUrl: "{{ route('page.index', ['_token' => csrf_token()]) }}",
-        filebrowserUploadMethod: 'form',
-        allowedContent: true,
-        height : 400
-    });
-</script>
-
 
 @endsection

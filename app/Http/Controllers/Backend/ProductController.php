@@ -10,7 +10,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $all = Product::with(['getCategory'])->where('name', 'like', '%'. request('q').'%')->paginate('20');
+
+        $all = Product::with(['getCategory'])->whereHas('translations', function ($query){
+            $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
+        })->paginate(10);
 
         return view('backend.product.index', compact('all'));
     }
@@ -41,7 +44,7 @@ class ProductController extends Controller
     }
 
     public function edit($id){
-        $edit = Product::find($id);
+        $edit = Product::withTrashed()->find($id);
         return view('backend.product.edit',compact('edit'));
     }
 }

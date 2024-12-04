@@ -30,7 +30,8 @@
                             type="button"
                             class="btn-close btn-close-white mr-[-0.75rem] m-0 p-0 leading-none text-[#343f52] transition-all duration-[0.2s] ease-in-out border-0 motion-reduce:transition-none before:text-[1.05rem] before:content-['\ed3b'] before:w-[1.8rem] before:h-[1.8rem] before:leading-[1.8rem] before:shadow-none before:transition-[background] before:duration-[0.2s] before:ease-in-out before:flex before:justify-center before:items-center before:m-0 before:p-0 before:rounded-[100%] hover:no-underline bg-inherit before:bg-[rgba(255,255,255,.08)] before:font-Unicons hover:before:bg-[rgba(0,0,0,.11)] focus:outline-0"
                             data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                            aria-label="Close">
+                        </button>
                     </div>
                     <div class="offcanvas-body xl:!ml-auto lg:!ml-auto flex  flex-col !h-full">
                         <ul class="navbar-nav">
@@ -39,7 +40,7 @@
                                     class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
                                     href="{{ route('home')}}"
                                     title="Anasayfa">
-                                    {{ __('site.anasayfa')}}
+                                    {{ __('site.anasayfa') }}
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
@@ -66,10 +67,10 @@
                                     Hizmetler
                                 </a>
                                 <ul class="dropdown-menu">
-                                    @foreach ($services as $item )
+                                    @foreach ($categories->where('parent_id', 2) as $item )
                                     <li class="dropdown ">
                                         <a class="dropdown-item hover:!text-[#a07cc5]"
-                                            href="{{ route('service.detail',$item->slug)}}">
+                                            href="{{ route('category.detail',$item->slug)}}">
                                             {{ $item->name }}
                                         </a>
                                     </li>
@@ -100,7 +101,7 @@
                                     İletişim
                                 </a>
                             </li>
-                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                           {{--  @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li class="nav-item">
 
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
@@ -110,12 +111,12 @@
                                         {{ $localeCode  }}
                                     </a>
                                 </li>
-                            @endforeach
+                            @endforeach --}}
                         </ul>
 
                         <div class="offcanvas-footer xl:hidden lg:hidden">
                             <div>
-                                <a href="mailto:bilgi@godijital.net" class="link-inverse">bilgi@godijital.net</a><br>0 232 473 73 37<br>
+                                <a href="mailto:{{ config('settings.email1')}}" class="link-inverse">{{ config('settings.email1')}}</a><br>{{ config('settings.telefon1')}}<br>
                                     <nav class="nav social social-white mt-4">
                                         <a
                                             class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
@@ -143,14 +144,10 @@
                                             <i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i>
                                         </a>
                                     </nav>
-                                    <!-- /.social -->
                                 </div>
                             </div>
-                            <!-- /.offcanvas-footer -->
                         </div>
-                        <!-- /.offcanvas-body -->
                     </div>
-                    <!-- /.navbar-collapse -->
                     <div class="navbar-other w-full !flex !ml-auto">
                         <ul class="navbar-nav !flex-row !items-center !ml-auto">
 
@@ -163,7 +160,6 @@
                                             class="uil uil-instagram before:content-['\eb9c'] text-[1rem] text-[#d53581]"></i>
                                     </a>
                                 </nav>
-                                <!-- /.social -->
                             </li>
                             <li class="nav-item hidden xl:block lg:block md:block">
                                 <a
@@ -177,13 +173,8 @@
                                     <span></span>
                                 </button>
                             </li>
-                        </ul>
-                        
-                        <!-- /.navbar-nav -->
+                        </ul>                        
                     </div>
-                    <!-- /.navbar-other -->
                 </div>
-                <!-- /.container -->
             </nav>
-            <!-- /.navbar -->
         </header>

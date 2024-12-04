@@ -10,15 +10,16 @@ use App\Models\PageTranslation;
 use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
 use Spatie\Activitylog\Models\Activity;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PageController extends Controller
 {   
 
     public function index()
     {
-        $all = Page::with(['getCategory'])->whereHas('translations', function ($query){
+        $all = Page::with(['getCategory','media'])->whereHas('translations', function ($query){
             $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
-        })->paginate(10);
+        })->orderBy('rank', 'asc')->paginate(20);
 
         return view('backend.page.index',compact('all'));
     }
@@ -60,11 +61,8 @@ class PageController extends Controller
     {
         $edit = Page::withTrashed()->find($id);
 
-        //dd(get_class($edit));
-
         $activities = Activity::where('subject_type', PageTranslation::class)->where('subject_id', $id)->orderBy('created_at', 'desc')->get();
 
-        //dd($activities);
         return view('backend.page.edit', compact('edit','activities'));
     }
 
@@ -130,4 +128,26 @@ class PageController extends Controller
         alert()->html('Başarıyla Geri Alındı','Sayfa başarıyla geri yüklendi.', 'success');
         return redirect()->route('page.index');
     }
+
+    public function sort(Request $request)
+{
+    $order = $request->input('order');
+
+    foreach ($order as $index => $id) {
+        Page::where('id', $id)->update(['rank' => $index + 1]);
+    }
+
+    return response()->json(['success' => true]);
+}
+
+public function gallerysort(Request $request)
+{
+    $order = $request->input('order'); // Array of media IDs in new order
+
+    foreach ($order as $index => $id) {
+        Media::where('id', $id)->update(['order_column' => $index + 1]);
+    }
+
+    return response()->json(['success' => true]);
+}
 }
