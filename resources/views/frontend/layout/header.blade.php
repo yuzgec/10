@@ -1,4 +1,4 @@
-<header class="relative wrapper !bg-[#f6f3f9]">
+<header class="relative wrapper">
     <div
         class="gradient-5 text-white font-bold !text-[.75rem] mb-2 !relative"
         style="z-index: 1;">
