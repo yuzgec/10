@@ -113,11 +113,13 @@
                  
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 12)->take(3) as $index => $item)
+                            @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
                                 @if($index % 2 == 0)
                                 <li class="mt-3 relative pl-6">
-                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                    <span>{{ $item->name}}</span>
+                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                        <span>{{ $item->name}}</span>
+                                    </a>
                                 </li>
                                 @endif
                             @endforeach
@@ -126,11 +128,13 @@
 
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 12)->take(3) as $index => $item)
-                            @if($index % 2 != 0) {{-- Alt blok için --}}
+                            @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
+                            @if($index % 2 != 0)
                                 <li class="mt-3 relative pl-6">
-                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                    <span>{{ $item->name}}</span>
+                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                        <span>{{ $item->name}}</span>
+                                    </a>
                                 </li>
                                 @endif
                             @endforeach
@@ -160,11 +164,13 @@
                  
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 13)->take(3) as $index => $item)
+                            @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
                                 @if($index % 2 == 0)
                                 <li class="mt-3 relative pl-6">
-                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                    <span>{{ $item->name}}</span>
+                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                        <span>{{ $item->name}}</span>
+                                    </a>
                                 </li>
                                 @endif
                             @endforeach
@@ -173,11 +179,13 @@
 
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 12)->take(3) as $index => $item)
-                            @if($index % 2 != 0) {{-- Alt blok için --}}
+                            @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
+                            @if($index % 2 != 0)
                                 <li class="mt-3 relative pl-6">
-                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                    <span>{{ $item->name}}</span>
+                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                        <span>{{ $item->name}}</span>
+                                    </a>
                                 </li>
                                 @endif
                             @endforeach
