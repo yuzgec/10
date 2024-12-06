@@ -3,7 +3,7 @@
         class="gradient-5 text-white font-bold !text-[.75rem] mb-2 !relative"
         style="z-index: 1;">
         <div class="container py-2 !text-center">
-            <p class="!mb-0">✨ Yazın Sıcağında, Web Sitenizi Yenileyin! %50 İndirimle
+            <p class="!mb-0">✨ Web Sitenizi Yenileyin! %50 İndirimle
                 Dijital Dünyada Parlayın!
                 <a href="#" class="!text-white hover inline-flex items-center">
                     Detaylı Bilgi İçin

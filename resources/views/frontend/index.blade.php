@@ -1,5 +1,29 @@
 @extends('frontend.layout.app')
+@section('customCSS')
+<style>
+        .image-container {
+            width: 373px; /* Görünen alanın genişliği */
+            height: 550px; /* Görünen alanın yüksekliği */
+            overflow: hidden; /* Alan dışındaki kısımları gizle */
+            position: relative;
+        }
 
+        .image-container img {
+            position: absolute;
+            width: auto; /* Genişliği otomatik ayarla */
+            height: auto; /* Yüksekliği otomatik ayarla */
+            transition: transform 0.3s ease; /* Smooth kaydırma */
+        }
+
+        .image-container:hover {
+            overflow: auto; /* Hover olduğunda kaydırma etkinleştir */
+        }
+
+        .image-container:hover img {
+            cursor: grab; /* Görselde gezinmek için grab işareti */
+        }
+    </style>
+@endsection
 @section('content')
     @include('frontend.layout.banner')
 
@@ -20,8 +44,9 @@
                 <div class="xxl:w-11/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
                     <div class="flex flex-wrap mx-[-15px] mt-[-50px] xl:mt-0 lg:mt-0 !text-center items-center">
                         <div class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto mb-[-2.5rem] lg:!mb-0 xl:!mb-0 mt-[50px] xl:mt-0 lg:mt-0">
-                            <figure class="mx-auto">
-                                <img src="/frontend/img/photos/devices4.png" srcset="/frontend/img/photos/devices4@2x.png 2x" alt="İzmir GO Dijital Ajans"></figure>
+                            <figure class="mx-auto image-container">
+                                <img  src="https://picsum.photos/373/1682?random=1" alt="İzmir GO Dijital Ajans">
+                            </figure>
                         </div>
 
                         <div class="w-full xl:hidden lg:hidden px-[15px] mt-[50px] xl:mt-0 lg:mt-0"></div>
@@ -85,29 +110,33 @@
                 </p>
 
                 <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                 
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                        <li class="relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>Kurumsal İnternet Sitesi</span>
-                        </li>
-                        <li class="mt-3 relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>E-Ticaret Sitesi</span></li>
+                            @foreach ($services->where('category_id', 12)->take(3) as $index => $item)
+                                @if($index % 2 == 0)
+                                <li class="mt-3 relative pl-6">
+                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                    <span>{{ $item->name}}</span>
+                                </li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
 
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                        <li class="relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>Ürüne Özel Web Sayfası</span>
-                        </li>
-                        <li class="mt-3 relative pl-6">
-                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                            <span>QR Menu / E-mail İmza</span></li>
+                            @foreach ($services->where('category_id', 12)->take(3) as $index => $item)
+                            @if($index % 2 != 0) {{-- Alt blok için --}}
+                                <li class="mt-3 relative pl-6">
+                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                    <span>{{ $item->name}}</span>
+                                </li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
+
                 </div>
 
                 <a href="{{ route('contactus')}}" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Detaylı Bilgi İçin</a>
@@ -126,38 +155,38 @@
 
             <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
                 <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Kurumsal Kimlik</h3>
-                <p class="!mb-5">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-                
+                <p class="!mb-5">Kurumsal kimlik ve baskı çözümleriyle markanızın profesyonel bir görünüme kavuşmasını sağlayan firmamız, tasarımdan üretime kadar tüm süreçlerde yanınızda.</p>
                 <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                 
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            <li class="relative pl-6">
-                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                <span>Logo Tasarım</span>
-                            </li>
-                            <li class="mt-3 relative pl-6">
-                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                <span>Nullam quis risus eget urna mollis ornare aenean leo.</span>
-                            </li>
+                            @foreach ($services->where('category_id', 13)->take(3) as $index => $item)
+                                @if($index % 2 == 0)
+                                <li class="mt-3 relative pl-6">
+                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                    <span>{{ $item->name}}</span>
+                                </li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
 
                     <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
                         <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            <li class="relative pl-6">
-                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                <span>Etiam porta euismod malesuada mollis nisl ornare sem.</span>
-                            </li>
-                            <li class="mt-3 relative pl-6">
-                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                <span>Vivamus sagittis lacus augue rutrum maecenas.</span>
-                            </li>
+                            @foreach ($services->where('category_id', 12)->take(3) as $index => $item)
+                            @if($index % 2 != 0) {{-- Alt blok için --}}
+                                <li class="mt-3 relative pl-6">
+                                    <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                    <span>{{ $item->name}}</span>
+                                </li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
 
                 </div>
 
-                <a href="#" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">More Details</a>
+                <a href="#" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">Hepsini Görüntüle</a>
         
             </div>
 
@@ -165,13 +194,37 @@
 
     </section>
 
-    <section class="wrapper image-wrapper bg-image bg-overlay !bg-fixed bg-no-repeat bg-[center_center] bg-cover relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.5)]" data-image-src="/frontend/img/photos/bg10.jpg">
-        <div class="container py-[8rem]">
-            <div class="flex flex-wrap mx-[-15px] !text-center">
-                <div class="lg:w-11/12 xl:w-10/12 xxl:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
-                    <h2 class="text-[0.8rem] !leading-[1.35] uppercase text-white !mb-3">Join Our Community</h2>
-                    <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-6 text-white lg:!px-5 xxl:!px-0">We are trusted by over 5000+ clients. Join them by using our services and grow your business.</h3>
-                    <a href="#" class="btn btn-white !rounded-[50rem]  !mb-0 whitespace-nowrap">Join Us</a>
+    <section class="wrapper !bg-[#edf2fc]">
+
+        <div class="container py-[4.5rem] xl:!py-24 lg:!py-24 md:!py-24">
+            <div class="flex flex-wrap mx-[-15px] !mb-8">
+                <div class="xl:w-8/12 lg:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !text-center">
+                    <h2 class="text-[0.8rem] uppercase text-[#3f78e0] !mb-3 !leading-[1.35]">
+                        İnternet Sitesi Analizi
+                    </h2>
+                    <h3 class="text-[calc(1.305rem_+_0.66vw)] font-bold xl:text-[1.8rem] leading-[1.3]  !mb-0">
+                        İnternet sitenizin linkini girerek detaylı site incelemesi talep edebilirsiniz.
+                    </h3>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap mx-[-15px]">
+                <div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+                    <form action="#">
+                        <div class="form-floating input-group relative">
+                            <input
+                            type="url"
+                            class="form-control border-0 relative block w-full text-[.75rem] font-medium text-[#60697b] bg-[#fefefe] bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] duration-[0.15s] ease-in-out focus:text-[#60697b] focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] focus:!border-[rgba(63,120,224,0.5)] focus-visible:!outline-0 placeholder:text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] leading-[1.25]"
+                            placeholder="Site Linkinizi Giriniz"
+                            id="analyze">
+                            <label class="inline-block text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none border origin-[0_0] px-4 py-[0.6rem] border-solid border-transparent left-0 top-0 font-Manrope" for="analyze">
+                                Site Linki Giriniz...
+                            </label>
+                            <button class="btn btn-primary text-white !bg-[#3f78e0] border-[#3f78e0] hover:text-white hover:bg-[#3f78e0] hover:border-[#3f78e0] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#3f78e0] active:border-[#3f78e0] disabled:text-white disabled:bg-[#3f78e0] disabled:border-[#3f78e0] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]" type="button">
+                                Analiz Et
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -388,4 +441,32 @@
     </div>
     </section>
 
+@endsection
+
+@section('customJS')
+
+<script>
+
+    const container = document.querySelector('.image-container');
+
+        container.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            let startX = e.pageX - container.offsetLeft;
+            let scrollLeft = container.scrollLeft;
+
+        const onMouseMove = (e) => {
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 2; // Sürükleme hızı
+                container.scrollLeft = scrollLeft - walk;
+            };
+
+        const onMouseUp = () => {
+                container.removeEventListener('mousemove', onMouseMove);
+                container.removeEventListener('mouseup', onMouseUp);
+        };
+
+        container.addEventListener('mousemove', onMouseMove);
+        container.addEventListener('mouseup', onMouseUp);
+    });
+</script>
 @endsection

@@ -4,10 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>İzmir Web Tasarım Ajansı | Foça GO Dijital</title>
-  <meta name="description" content="An impressive and flawless site template that includes various UI elements and countless features, attractive ready-made blocks and rich pages, basically everything you need to create a unique and professional website.">
+  <title>İzmir Web Tasarım ve Google SEO Ajansı | Foça GO Dijital</title>
+  <meta name="description" content="GO Dijital İzmir Foça'da 360° hizmet veren genç ve dinamik bir web tasarım, reklam ve google seo ajansıdır. ">
   <meta name="author" content="GO Dijital">
   @include('frontend.layout.css')
+  @yield('customCSS')
 
 </head>
 
@@ -20,6 +21,8 @@
 	@include('frontend.layout.footer')
 
   	@include('frontend.layout.js')
+    @yield('customJS')
+
 </body>
 
 </html>

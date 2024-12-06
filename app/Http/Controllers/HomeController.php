@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Browsershot\Browsershot;
 use Spatie\TranslationLoader\LanguageLine;
 use CyrildeWit\EloquentViewable\Support\Period;
 use CyrildeWit\EloquentViewable\Contracts\Views;
@@ -16,6 +17,15 @@ use CyrildeWit\EloquentViewable\Contracts\Views;
 class HomeController extends Controller
 {
     public function index(){
+
+/*         Browsershot::url('https://www.godijital.net')
+        ->windowSize(1920, 1080)
+        ->save(public_path('/storage/desktop.jpg'));
+
+        Browsershot::url('https://www.godijital.net')
+        ->device('iPhone X')
+        ->save(public_path('/storage/mobile.jpg')); */
+
         return view('frontend.index');
     }
 
