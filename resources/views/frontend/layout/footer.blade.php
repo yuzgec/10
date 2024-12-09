@@ -1,6 +1,6 @@
 <footer class="bg-[rgba(52,63,82)] opacity-100 text-[#cacaca]">
     
-    <div class="container py-16 xl:!py-20 lg:!py-20 md:!py-20">
+    <div class="container py-10">
         <div class="xl:flex lg:flex flex-row xl:!items-center lg:!items-center">
             <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-6 xl:!mb-0 lg:!mb-0 lg:pr-40 xl:pr-60 xxl:pr-[22.5rem] text-white">Size özel çözümlerimiz ile işinizi bir adım öteye taşımak için teklif alın. </h3>
             <a href="{{ route('contactus')}}" title="Teklif Al" class="btn btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] 

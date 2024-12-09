@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg center-nav transparent navbar-light">
         <div class="container xl:flex-row lg:flex-row !flex-nowrap items-center">
             <div class="navbar-brand w-full">
-                <a href="{{ route('home')}}" title="Anasayfa">
+                <a href="{{ route('home')}}" title="Go Dijital Anasayfa">
                     <img
                         src="/frontend/img/godijital.png"
                         srcset="/frontend/img/godijital.png"
@@ -40,7 +40,7 @@
                                     class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
                                     href="{{ route('home')}}"
                                     title="Anasayfa">
-                                    {{ __('site.anasayfa') }}
+                                    Anasayfa
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
@@ -118,29 +118,21 @@
                             <div>
                                 <a href="mailto:{{ config('settings.email1')}}" class="link-inverse">{{ config('settings.email1')}}</a><br>{{ config('settings.telefon1')}}<br>
                                     <nav class="nav social social-white mt-4">
+                                        
                                         <a
                                             class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                            href="#">
-                                            <i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i>
-                                        </a>
-                                        <a
-                                            class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                            href="#">
+                                            href="https://www.facebook.com{{ config('settings.facebook')}}">
                                             <i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i>
                                         </a>
+                                       
                                         <a
                                             class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                            href="#">
-                                            <i class="uil uil-dribbble before:content-['\eaa2'] !text-white text-[1rem]"></i>
-                                        </a>
-                                        <a
-                                            class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                            href="#">
+                                            href="https://www.instagram.com/{{ config('settings.instagram')}}">
                                             <i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i>
                                         </a>
                                         <a
                                             class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                            href="#">
+                                            href="https://www.youtube.com/{{ config('settings.youtube')}}">
                                             <i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i>
                                         </a>
                                     </nav>
@@ -153,11 +145,8 @@
 
                             <li class="nav-item">
                                 <nav class="nav social social-muted justify-end text-right">
-                                    <a
-                                        class="m-[0_0_0_.7rem] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]"
-                                        href="#">
-                                        <i
-                                            class="uil uil-instagram before:content-['\eb9c'] text-[1rem] text-[#d53581]"></i>
+                                    <a class="m-[0_0_0_.7rem] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]" href="https://www.instagram.com/{{ config('settings.instagram')}}">
+                                        <i class="uil uil-instagram before:content-['\eb9c'] text-[1rem] text-[#d53581]"></i>
                                     </a>
                                 </nav>
                             </li>
