@@ -13,7 +13,10 @@
 </head>
 
 <body class=" text-[0.85rem]">
+  <div class="page-loader"></div>
+
 	<div class="grow shrink-0">
+
 		@include('frontend.layout.header')
 		@yield('content')
 	</div>

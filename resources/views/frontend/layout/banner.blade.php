@@ -4,7 +4,7 @@
             <div class="xl:w-7/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[35px] md:px-[20px] mt-[15px] xl:mt-0 lg:mt-0 max-w-full">
                 <h1 class="xl:text-[3.3rem] text-[calc(1.455rem_+_2.46vw)] !leading-[1.05] font-bold !mb-0">
                     <span class=" !relative z-[1] after:content-[''] after:absolute after:z-[-1] after:block after:[background-size:100%_100%] after:bg-no-repeat after:bg-bottom after:bottom-[-0.1em] after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-1 yellow">GO Dijital</span>
-                    yanınızda! Geleceğin dünyasında kaybolmayın,
+                    yanınızda! Modern dünyada kaybolmayın.
                 </h1>
             </div>
             <div
@@ -12,7 +12,7 @@
                 <p class="lead !text-[1.25rem] !leading-[1.6] font-medium my-3">Web tasarım ve
                     sosyal medya yönetiminde uzman ekibimizle markanızı dijital dünyada zirveye
                     taşıyoruz.</p>
-                <a href="#" class="more hover !text-[#a07cc5]">İletişime Geç</a>
+                <a href="{{ route('contactus')}}" class="more hover !text-[#a07cc5]" title="İletişime Geç">İletişime Geç</a>
             </div>
         </div>
     </div> 
