@@ -1,29 +1,5 @@
 @extends('frontend.layout.app')
-@section('customCSS')
-<style>
-        .image-container {
-            width: 373px; /* Görünen alanın genişliği */
-            height: 550px; /* Görünen alanın yüksekliği */
-            overflow: hidden; /* Alan dışındaki kısımları gizle */
-            position: relative;
-        }
 
-        .image-container img {
-            position: absolute;
-            width: auto; /* Genişliği otomatik ayarla */
-            height: auto; /* Yüksekliği otomatik ayarla */
-            transition: transform 0.3s ease; /* Smooth kaydırma */
-        }
-
-        .image-container:hover {
-            overflow: auto; /* Hover olduğunda kaydırma etkinleştir */
-        }
-
-        .image-container:hover img {
-            cursor: grab; /* Görselde gezinmek için grab işareti */
-        }
-    </style>
-@endsection
 @section('content')
     @include('frontend.layout.banner')
 
@@ -45,7 +21,7 @@
                     <div class="flex flex-wrap mx-[-15px] mt-[-50px] xl:mt-0 lg:mt-0 !text-center items-center">
                         <div class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto mb-[-2.5rem] lg:!mb-0 xl:!mb-0 mt-[50px] xl:mt-0 lg:mt-0">
                             <figure class="mx-auto image-container">
-                                <img  src="https://picsum.photos/373/1682?random=1" alt="İzmir GO Dijital Ajans">
+                                <img  src="/godijital-calisma-asamalari.jpg" alt="İzmir GO Dijital Ajans">
                             </figure>
                         </div>
 
@@ -268,30 +244,3 @@
 
 @endsection
 
-@section('customJS')
-
-<script>
-
-    const container = document.querySelector('.image-container');
-
-        container.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            let startX = e.pageX - container.offsetLeft;
-            let scrollLeft = container.scrollLeft;
-
-        const onMouseMove = (e) => {
-                const x = e.pageX - container.offsetLeft;
-                const walk = (x - startX) * 2; // Sürükleme hızı
-                container.scrollLeft = scrollLeft - walk;
-            };
-
-        const onMouseUp = () => {
-                container.removeEventListener('mousemove', onMouseMove);
-                container.removeEventListener('mouseup', onMouseUp);
-        };
-
-        container.addEventListener('mousemove', onMouseMove);
-        container.addEventListener('mouseup', onMouseUp);
-    });
-</script>
-@endsection
