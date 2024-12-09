@@ -17,8 +17,9 @@
         </div>
     </div> 
 </section>
+<section class="wrapper overflow-hidden">
 
-<div class="swiper-container swiper-auto swiper-auto-xs !mb-8 relative !z-10" data-margin="40" data-nav="false"
+    <div class="swiper-container swiper-auto swiper-auto-xs !mb-8 relative !z-10" data-margin="40" data-nav="false"
         data-dots="false" data-centered="true" data-loop="true" data-items-auto="true" data-autoplay="true"
         data-autoplaytime="1" data-drag="false" data-resizeupdate="false" data-speed="7000">
         <div class="swiper overflow-visible pointer-events-none">
@@ -96,3 +97,4 @@
             
         </div>
       </div>
+</section>
