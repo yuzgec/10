@@ -27,9 +27,9 @@
 @section('content')
     @include('frontend.layout.banner')
 
-    <section class="wrapper" style="margin-top:100px">
-        <div class="container pt-20 xl:pt-28 lg:pt-28 md:pt-28">
-
+    <section class="wrapper mt-10">
+        <div class="container">
+ 
             <div class="flex flex-wrap mx-[-15px] !text-center">
                 <div class="md:w-10/12 lg:w-7/12 xl:w-7/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !relative">
                     <img src="/frontend/img/svg/doodle5.svg" class="!w-[5rem] absolute hidden xl:block lg:block" data-delay="1800" style="bottom: -60%; right: 10%" alt="image">
