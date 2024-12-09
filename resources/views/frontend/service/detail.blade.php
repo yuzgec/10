@@ -26,8 +26,16 @@
 
 <section class="wrapper !bg-[#ffffff]  angled upper-end relative border-0 before:top-[-4rem] before:border-l-transparent before:border-r-[100vw] before:border-t-[4rem] before:border-[#fefefe] before:content-[''] before:block before:absolute before:z-0 before:border-y-transparent before:border-0 before:border-solid before:right-0 after:content-[''] after:block after:absolute after:z-0 after:border-y-transparent after:border-[#fefefe] after:border-0 after:border-solid after:right-0">
     <div class="container">
-        <div class="row">
-            {!! $detail->desc !!}
+        <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                 
+            <div class="xl:w-9/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                    {!! $detail->desc !!}
+            </div>
+
+            <div class="xl:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                    GO Dijital
+            </div>
+
         </div>
     </div>
 </section>
