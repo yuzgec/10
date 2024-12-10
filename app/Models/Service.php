@@ -24,9 +24,9 @@ use CyrildeWit\EloquentViewable\InteractsWithViews;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Service extends Model implements TranslatableContract,HasMedia
+class Service extends Model implements TranslatableContract,HasMedia,Viewable
 {
-    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable;
+    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
 
     protected $table = 'services';
     protected $guarded = [];
