@@ -215,7 +215,7 @@
 
 
     <section class="wrapper !bg-[#ffffff] ">
-        <div  class="container pt-20 xl:pt-28 lg:pt-28 md:pt-28 pb-16 xl:pb-20 lg:pb-20 md:pb-20">
+        <div  class="container pt-10">
 
             <div class="flex flex-wrap mx-[-15px]">
                 <div class="lg:w-9/12 xl:w-8/12 xxl:w-7/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">

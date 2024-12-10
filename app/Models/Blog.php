@@ -68,6 +68,10 @@ class Blog extends Model implements TranslatableContract,HasMedia,Viewable
         return $query->where('status', 1);
     }
 
+    public function scopeRank($query){
+        return $query->orderBy('rank','asc');
+    }
+
     public function scopeLang($query){
         return $query->whereHas('translations', function ($query) {
             $query->where('locale', app()->getLocale());

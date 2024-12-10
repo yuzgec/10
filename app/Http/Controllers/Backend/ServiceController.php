@@ -19,7 +19,7 @@ class ServiceController extends Controller
     {
         $all = Service::with(['getCategory'])->whereHas('translations', function ($query){
             $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
-        })->paginate(20);
+        })->rank()->paginate(20);
         return view('backend.service.index',compact('all'));
     }
 
@@ -139,5 +139,27 @@ class ServiceController extends Controller
 
         alert()->html('Başarıyla Geri Alındı','Hizmet başarıyla geri yüklendi.', 'success');
         return redirect()->route('service.index');
+    }
+
+    public function sort(Request $request)
+    {
+        $order = $request->input('order');
+
+        foreach ($order as $index => $id) {
+            Service::where('id', $id)->update(['rank' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function gallerysort(Request $request)
+    {
+        $order = $request->input('order'); // Array of media IDs in new order
+
+        foreach ($order as $index => $id) {
+            Media::where('id', $id)->update(['order_column' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

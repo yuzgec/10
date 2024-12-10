@@ -178,7 +178,6 @@
 @endsection
 
 @section('customJS')
-    {{--     Listelemele--}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const table = document.getElementById('sortableTable');
@@ -202,7 +201,4 @@
             });
         });
     </script>
-
-  
-
 @endsection

@@ -39,7 +39,7 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web']],function() {
     Route::auto('/page',PageController::class);
     Route::get('/page-trash',[PageController::class,'trash'])->name('page.trash');
     Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
-    Route::resource('/service',ServiceController::class);
+    Route::auto('/service',ServiceController::class);
     Route::get('/service-trash',[ServiceController::class,'trash'])->name('service.trash');
     Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
     

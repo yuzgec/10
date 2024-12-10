@@ -26,9 +26,9 @@ class ViewShareProvider extends ServiceProvider
         });
 
         $categories = Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media'])->lang()->get()->toFlatTree();
-        $services = Service::with(['getCategory','media'])->active()->lang()->get();
+        $services = Service::with(['getCategory','media'])->active()->lang()->rank()->get();
         $pages = Page::with(['getCategory','media'])->active()->lang()->get();
-        $blog =Blog::with(['getCategory','media'])->active()->lang()->get();
+        $blog =Blog::with(['getCategory','media'])->active()->lang()->rank()->get();
 
         $language = Cache::remember('language',now()->addYear(5), function () {
             return Language::active()->get();
