@@ -93,6 +93,20 @@ class HomeController extends Controller
         return view('frontend.blog.detail',compact('detail'));
     }
 
+    public function blogCategory($slug){
+
+        $category = Category::whereHas('translations', function ($query) use ($slug){
+            $query->where('slug', $slug);
+        })->first();
+
+        $all = Blog::with(['getCategory'])->whereHas('translations', function ($query) use ($category){
+            $query->where('category_id', $category->id);
+        })->get();
+
+        return view('frontend.blog.blog-category',compact('all', 'category'));
+
+    }
+
 
     public function analysis(Request $request){
 

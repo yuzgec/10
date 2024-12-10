@@ -251,7 +251,7 @@
                                                 <div class="card-body flex-[1_1_auto] p-[40px] xl:p-[1.75rem_1.75rem_1rem_1.75rem] lg:p-[1.75rem_1.75rem_1rem_1.75rem] md:p-[1.75rem_1.75rem_1rem_1.75rem] sm:pb-4 xsm:pb-4  ">
                                                     <div class="post-header">
                                                         <div class="inline-flex mb-[.4rem] uppercase tracking-[0.02rem] text-[0.7rem] font-bold text-[#aab0bc] relative align-top pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
-                                                            <a href="#" class="hover" rel="category">{{ $item->getCategory->name}}</a>
+                                                            <a href="{{ route('blog.category', $item->getCategory->slug) }}" class="hover" rel="category">{{ $item->getCategory->name}}</a>
                                                         </div>
                                                         <h2 class="post-title h3 !mt-1 !mb-3">
                                                             <a class="text-[#343f52] hover:text-[#3f78e0]"  href="{{ route('blog.detail', $item->slug) }}" title="{{ $item->name}}">{{ $item->name}}</a>

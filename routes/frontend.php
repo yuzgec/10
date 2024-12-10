@@ -17,6 +17,7 @@ Route::get('/hizmetler', [HomeController::class, 'services'])->name('services');
 Route::get('/hizmet/{url}', [HomeController::class, 'service'])->name('service.detail');
 
 Route::get('/blog', [HomeController::class, 'blogs'])->name('blogs');
+Route::get('/blog-kategori/{url}', [HomeController::class, 'blogCategory'])->name('blog.category');
 Route::get('/blog/{url}', [HomeController::class, 'blog'])->name('blog.detail');
 
 Route::post('/analysis', [HomeController::class, 'analysis'])->name('analysis');
