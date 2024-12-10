@@ -23,9 +23,6 @@ class Cors
         $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // İzin verilen HTTP metodları
         $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With'); // İzin verilen başlıklar
 
-        $response->headers->set('X-XSS-Protection', '1; mode=block');
-        $response->headers->set('Content-Security-Policy', "script-src 'self';");
-        $response->headers->set('X-Content-Type-Options', 'nosniff');
 
         // Eğer OPTIONS metodu kullanılıyorsa (preflight request), sadece başlıkları döndür
         if ($request->getMethod() === "OPTIONS") {
