@@ -29,7 +29,8 @@
         "spatie/laravel-permission": "^6.7",
         "spatie/laravel-sluggable": "^3.6",
         "spatie/laravel-tags": "^4.6",
-        "spatie/laravel-translation-loader": "^2.8"
+        "spatie/laravel-translation-loader": "^2.8",
+        "unisharp/laravel-filemanager": "^2.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

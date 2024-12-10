@@ -14,10 +14,15 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\LanguageController;
 use App\Http\Controllers\Backend\WorkFlowController;
 use App\Http\Controllers\Backend\DashboardController;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Controllers\Backend\TranslationController;
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
 
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
 //Backend
 Route::get('/go',[DashboardController::class, 'index'])->name('go');

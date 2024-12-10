@@ -194,53 +194,27 @@
 
             <div class="flex flex-wrap mx-[-15px]">
                 <div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
-                    <form action="#">
                         <div class="form-floating input-group relative">
                             <input
-                            type="url"
+                            type="text"
                             class="form-control border-0 relative block w-full text-[.75rem] font-medium text-[#60697b] bg-[#fefefe] bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] duration-[0.15s] ease-in-out focus:text-[#60697b] focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] focus:!border-[rgba(63,120,224,0.5)] focus-visible:!outline-0 placeholder:text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] leading-[1.25]"
                             placeholder="Site Linkinizi Giriniz"
-                            id="analyze">
+                            id="analyze"
+                            name="name">
                             <label class="inline-block text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none border origin-[0_0] px-4 py-[0.6rem] border-solid border-transparent left-0 top-0 font-Manrope" for="analyze">
                                 Site Linki Giriniz...
                             </label>
-                            <button class="btn btn-primary text-white !bg-[#3f78e0] border-[#3f78e0] hover:text-white hover:bg-[#3f78e0] hover:border-[#3f78e0] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#3f78e0] active:border-[#3f78e0] disabled:text-white disabled:bg-[#3f78e0] disabled:border-[#3f78e0] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]" type="button">
+                            <button class="btn btn-primary text-white !bg-[#3f78e0] border-[#3f78e0] hover:text-white hover:bg-[#3f78e0] hover:border-[#3f78e0] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#3f78e0] active:border-[#3f78e0] disabled:text-white disabled:bg-[#3f78e0] disabled:border-[#3f78e0] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]" type="submit">
                                 Analiz Et
                             </button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </section>
 
  
-    <section class="wrapper !bg-[#f6f3f9]">
-    <div class="container py-[4.5rem] xl:pt-28 lg:pt-28 md:pt-28 xl:pb-36 lg:pb-36 md:pb-36">
-        <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] xl:mt-0 lg:mt-0 items-center">
-        <div class="xl:w-4/12 lg:w-4/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full text-center lg:text-left xl:text-left xl:!mt-0 lg:!mt-0">
-            <h2 class="text-[0.8rem] uppercase text-[#a07cc5] !mb-3 !leading-[1.35] !tracking-[0.02rem]">Company Facts</h2>
-            <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold mb-3 xxl:!pr-20">We are proud of our projects</h3>
-        </div>
-        <div class="xl:w-8/12 lg:w-8/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] max-w-full xl:!mt-2 lg:!mt-2">
-            <div class="flex flex-wrap mx-[-15px] items-center counter-wrapper mt-[-30px] !text-center">
-            <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
-                <h3 class="counter counter-lg xl:text-[2.2rem] text-[calc(1.345rem_+_1.14vw)] tracking-[normal] !leading-none mb-2">1000+</h3>
-                <p class="font-medium !mb-0">Completed Projects</p>
-            </div>
-                <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
-                <h3 class="counter counter-lg xl:text-[2.2rem] text-[calc(1.345rem_+_1.14vw)] tracking-[normal] !leading-none mb-2">500+</h3>
-                <p class="font-medium !mb-0">Happy Clients</p>
-            </div>
-                <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] px-[15px] mt-[30px] max-w-full">
-                <h3 class="counter counter-lg xl:text-[2.2rem] text-[calc(1.345rem_+_1.14vw)] tracking-[normal] !leading-none mb-2">150+</h3>
-                <p class="font-medium !mb-0">Awards Won</p>
-            </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </section>
+   
 
 @endsection
 

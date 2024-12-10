@@ -116,9 +116,13 @@
             <h4>Home tab</h4>
             <div class="card">
               <div class="card-body text-center">
+
                   <i class="fa fa-globe text-primary fa-3x text-primary-shadow"></i>
                   <h6 class="mt-4 mb-2">Total Visit</h6>
-                  <h2 class="mb-2 number-font">834</h2>
+                  @foreach ($analysis as $item )
+                  <h2 class="mb-2 number-font">{{ $item->name}}</h2>
+
+                  @endforeach
                   <p class="text-muted">Sed ut perspiciatis unde omnis accusantium doloremque</p>
               </div>
           </div>          

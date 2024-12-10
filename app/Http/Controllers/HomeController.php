@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Analysis;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Browsershot\Browsershot;
+use App\Http\Requests\AnalysisRequest;
 use Spatie\TranslationLoader\LanguageLine;
 use CyrildeWit\EloquentViewable\Support\Period;
 use CyrildeWit\EloquentViewable\Contracts\Views;
@@ -17,15 +19,6 @@ use CyrildeWit\EloquentViewable\Contracts\Views;
 class HomeController extends Controller
 {
     public function index(){
-
-/*         Browsershot::url('https://www.godijital.net')
-        ->windowSize(1920, 1080)
-        ->save(public_path('/storage/desktop.jpg'));
-
-        Browsershot::url('https://www.godijital.net')
-        ->device('iPhone X')
-        ->save(public_path('/storage/mobile.jpg')); */
-
         return view('frontend.index');
     }
 
@@ -87,10 +80,31 @@ class HomeController extends Controller
     }
 
 
-    public function phone(){
-        return view('phone');
-    } 
+    public function analysis(Request $request){
 
+
+        // Regex deseni
+        //$pattern = '/^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+)(?:\.[a-zA-Z]{2,})$/';
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $create = Analysis::create([
+            'name' => strip_tags($request->input('name')),
+        ]);
+        /* 
+
+        $desktop = Browsershot::url($request->name)->windowSize(1920, 1080)->save(public_path('/storage/analysis/desktop.jpg'));
+        $mobile = Browsershot::url($request->name)->device('iPhone X')->save(public_path('/storage/mobile.jpg'));
+ */
+        //dd($matches, $desktop, $mobile);
+        //return view('frontend.page.analysis',compact('desktop','mobile'));
+
+        return redirect()->route('home');
+
+
+    }
     
 
 }

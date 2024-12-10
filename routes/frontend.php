@@ -16,3 +16,6 @@ Route::get('/izmir-ajans/{url}', [HomeController::class, 'category'])->name('cat
 Route::get('/hizmetler', [HomeController::class, 'services'])->name('services');
 Route::get('/blog', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/blog/{url}', [HomeController::class, 'blog'])->name('blog');
+
+Route::post('/analysis', [HomeController::class, 'analysis'])->name('analysis');
+Route::get('/site-analiz-sonuc', [HomeController::class, 'analysis.result']);
