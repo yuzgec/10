@@ -103,6 +103,8 @@ class HomeController extends Controller
             $query->where('category_id', $category->id);
         })->get();
 
+        //dd($all);
+
         return view('frontend.blog.blog-category',compact('all', 'category'));
 
     }
