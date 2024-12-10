@@ -195,6 +195,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'SEOMeta'=> Artesaos\SEOTools\Facades\SEOMeta::class,
+        'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+
     ])->toArray(),
 
 ];
