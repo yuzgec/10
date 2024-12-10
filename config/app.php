@@ -176,6 +176,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         CyrildeWit\EloquentViewable\EloquentViewableServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
 
 
     ])->toArray(),

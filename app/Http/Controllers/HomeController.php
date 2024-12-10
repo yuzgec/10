@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Browsershot\Browsershot;
 use App\Http\Requests\AnalysisRequest;
+use Artesaos\SEOTools\Facades\SEOMeta;
 use Spatie\TranslationLoader\LanguageLine;
 use CyrildeWit\EloquentViewable\Support\Period;
 use CyrildeWit\EloquentViewable\Contracts\Views;
@@ -20,10 +21,22 @@ use CyrildeWit\EloquentViewable\Contracts\Views;
 class HomeController extends Controller
 {
     public function index(){
+
+
+        SEOMeta::setTitle('İzmir Foça Web Tasarım Ajansı | Google SEO ve Reklamları ');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
+
         return view('frontend.index');
     }
 
     public function contactus(){
+
+
+        SEOMeta::setTitle('İzmir GO Dijital İletişim | Web tasarım, Google SEO ve Reklamları | Sosyal Medya');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
+
         return view('frontend.page.contactus');
     }
 
@@ -46,12 +59,17 @@ class HomeController extends Controller
 
     public function service($slug){
 
+   
+
         $detail = Service::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
+        SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name.' | GO Dijital');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
 
         return view('frontend.service.detail',compact('detail'));
     }
@@ -63,6 +81,11 @@ class HomeController extends Controller
         })->first();
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
+
+
+        SEOMeta::setTitle('İzmir '.$detail->name.' | Foça GO Dijital');
+        SEOMeta::setDescription('GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir dijital ajanstır');
+        SEOMeta::setCanonical(url()->full());
 
         return view('frontend.category.detail',compact('detail'));
        
@@ -76,6 +99,9 @@ class HomeController extends Controller
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
+        SEOMeta::setTitle('İzmir '.$detail->name.' | Foça GO Dijital');
+        SEOMeta::setDescription('GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir dijital ajanstır');
+        SEOMeta::setCanonical(url()->full());
 
         return view('frontend.page.detail',compact('detail'));
     }
@@ -90,6 +116,10 @@ class HomeController extends Controller
 
         $count = views($detail)->unique()->count();
 
+        SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name.' | GO Dijital');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
+
         return view('frontend.blog.detail',compact('detail'));
     }
 
@@ -102,6 +132,10 @@ class HomeController extends Controller
         $all = Blog::with(['getCategory'])->whereHas('translations', function ($query) use ($category){
             $query->where('category_id', $category->id);
         })->get();
+
+        SEOMeta::setTitle('İzmir '.$category->name.' | İzmir Foça GO Dijital');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
 
         //dd($all);
 
