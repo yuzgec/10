@@ -25,34 +25,35 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 //Backend
-Route::get('/go',[DashboardController::class, 'index'])->name('go');
-Route::auto('/user',UserController::class);
-Route::get('/go/activity', [UserController::class,'activity'])->name('activity');
-Route::resource('/go/role',RoleController::class);
-
-Route::resource('/go/customer',CustomerController::class);
-Route::resource('/go/offer',CustomerOfferController::class);
-Route::resource('/go/works',CustomerWorkController::class);
-
-
-Route::auto('/page',PageController::class);
-Route::get('/go/page-trash',[PageController::class,'trash'])->name('page.trash');
-Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
-Route::resource('/go/service',ServiceController::class);
-Route::get('/go/service-trash',[ServiceController::class,'trash'])->name('service.trash');
-Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
-
-Route::resource('/go/category',CategoryController::class);
-Route::resource('/go/blog',BlogController::class);
-Route::resource('/go/faq',FaqController::class);
-Route::resource('/go/product',ProductController::class);
-Route::resource('/go/language',LanguageController::class);
-Route::resource('/go/settings',SettingController::class);
-
-Route::get('/customer/export', [CustomerController::class, 'export'])->name('customer.export');
-
-
-Route::resource('/go/workflow', WorkFlowController::class);
-Route::resource('/go/translation', TranslationController::class);
-
+Route::group(["prefix"=>"go", 'middleware' => ['auth','web']],function() {
+    Route::get('/',[DashboardController::class, 'index'])->name('go');
+    Route::auto('/user',UserController::class);
+    Route::get('/activity', [UserController::class,'activity'])->name('activity');
+    Route::resource('/role',RoleController::class);
+    
+    Route::resource('/customer',CustomerController::class);
+    Route::resource('/offer',CustomerOfferController::class);
+    Route::resource('/works',CustomerWorkController::class);
+    
+    
+    Route::auto('/page',PageController::class);
+    Route::get('/page-trash',[PageController::class,'trash'])->name('page.trash');
+    Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
+    Route::resource('/service',ServiceController::class);
+    Route::get('/service-trash',[ServiceController::class,'trash'])->name('service.trash');
+    Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
+    
+    Route::auto('/category',CategoryController::class);
+    Route::auto('/blog',BlogController::class);
+    Route::auto('/faq',FaqController::class);
+    Route::auto('/product',ProductController::class);
+    Route::auto('/language',LanguageController::class);
+    Route::auto('/settings',SettingController::class);
+    
+    Route::get('/customer/export', [CustomerController::class, 'export'])->name('customer.export');
+    
+    
+    Route::auto('/workflow', WorkFlowController::class);
+    Route::auto('/translation', TranslationController::class);
+});
 
