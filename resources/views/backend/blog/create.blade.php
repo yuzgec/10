@@ -177,27 +177,20 @@
 @endsection
 
 @section('customJS')
-<script type="text/javascript">
-    CKEDITOR.replace( 'desc', {
-        filebrowserUploadUrl: "{{ route('blog.index', ['_token' => csrf_token()]) }}",
-        filebrowserUploadMethod: 'form',
-        allowedContent: true,
-        height : 400,
-        toolbar: [
-            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold']},
-            { name: 'paragraph',items: [ 'BulletedList', 'Align']},
-            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-            { name: 'styles', items: [ 'Format', 'FontSize']},
-            { name: 'links', items : [ 'Link', 'Unlink'] },
-            { name: 'insert', items : [ 'Image', 'Table', 'TableTools', 'Youtube']},
-            { name: 'document', items : [ 'Source','Maximize' ]},
-            { name: 'clipboard', items : [ 'PasteText', 'PasteFromWord' ]},
-            { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-        ],
-    });
-
-    
-</script>
 
 
+@foreach($language as $lang)
+    <script type="text/javascript">
+        CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
+
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
+            filebrowserUploadMethod: 'form',
+            allowedContent: true,
+            height : 400,
+        });
+    </script>
+@endforeach
 @endsection

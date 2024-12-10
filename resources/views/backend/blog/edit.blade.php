@@ -217,22 +217,18 @@
 @endsection
 
 @section('customJS')
+@foreach($language as $lang)
     <script type="text/javascript">
-        CKEDITOR.replace( 'desc', {
-            filebrowserUploadUrl: "{{ route('blog.index', ['_token' => csrf_token()]) }}",
+        CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
+
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
             filebrowserUploadMethod: 'form',
             allowedContent: true,
             height : 400,
-            toolbar: [
-                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold']},
-                { name: 'paragraph',items: [ 'BulletedList']},
-                { name: 'colors', items: [ 'TextColor','youtube' ]},
-                { name: 'styles', items: [ 'Format', 'FontSize']},
-                { name: 'links', items : [ 'Link', 'Unlink'] },
-                { name: 'insert', items : [ 'Image', 'Table']},
-                { name: 'document', items : [ 'Source','Maximize' ]},
-                { name: 'clipboard', items : [ 'PasteText', 'PasteFromWord' ]},
-            ],
         });
     </script>
+@endforeach
 @endsection
