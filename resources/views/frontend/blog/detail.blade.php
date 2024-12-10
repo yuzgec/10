@@ -19,7 +19,7 @@
 <!--                 <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0_.4rem] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]"><a class="text-[0.8rem] text-[#aab0bc] hover:text-[#3f78e0] hover:border-[#3f78e0]" href="#"><i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>3<span> Comments</span></a></li>
  -->                <li class="post-likes inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0_.4rem] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
                         <i class="uil uil-eye pr-[0.2rem] align-[-.05rem]"></i>
-                        3<span> Görüntülenme</span>
+                        {{ views($detail)->unique()->count()}} <span> Görüntülenme</span>
                     </li>
               </ul>
             </div>

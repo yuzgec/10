@@ -145,10 +145,6 @@ class HomeController extends Controller
 
     public function analysis(Request $request){
 
-
-        // Regex deseni
-        //$pattern = '/^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+)(?:\.[a-zA-Z]{2,})$/';
-        
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -160,14 +156,10 @@ class HomeController extends Controller
 
         $desktop = Browsershot::url($request->name)->windowSize(1920, 1080)->save(public_path('/storage/analysis/desktop.jpg'));
         $mobile = Browsershot::url($request->name)->device('iPhone X')->save(public_path('/storage/mobile.jpg'));
- */
-        //dd($matches, $desktop, $mobile);
+        */
         //return view('frontend.page.analysis',compact('desktop','mobile'));
 
         return redirect()->route('home');
-
-
     }
-    
 
 }

@@ -54,7 +54,8 @@
                                     @foreach ($pages as $item )
                                     <li class="dropdown ">
                                         <a class="dropdown-item hover:!text-[#a07cc5]"
-                                            href="{{ route('page.detail', $item->slug )}}">
+                                            href="{{ route('page.detail', $item->slug )}}"
+                                            title="{{ $item->name }}">
                                             {{ $item->name }}
                                         </a>
                                     </li>
@@ -64,14 +65,16 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
                                     href="#"
-                                    data-bs-toggle="dropdown">
+                                    data-bs-toggle="dropdown"
+                                    title="Hizmetlerimiz">
                                     Hizmetler
                                 </a>
                                 <ul class="dropdown-menu">
                                     @foreach ($categories->where('parent_id', 2) as $item )
                                     <li class="dropdown ">
                                         <a class="dropdown-item hover:!text-[#a07cc5]"
-                                            href="{{ route('category.detail',$item->slug)}}">
+                                            href="{{ route('category.detail',$item->slug)}}"
+                                            title=" {{ $item->name }}">
                                             {{ $item->name }}
                                         </a>
                                     </li>
@@ -80,25 +83,29 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
-                                    href="{{ route('projects')}}">
+                                    href="{{ route('projects')}}"
+                                    title="Çalışmalar">
                                     Çalışmalar
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
-                                    href="{{ route('brands')}}">
+                                    href="{{ route('brands')}}"
+                                    title="Markalar">
                                     Markalar
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
-                                    href="{{ route('blogs')}}">
+                                    href="{{ route('blogs')}}"
+                                    title="Blog">
                                     Blog
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
-                                    href="{{ route('contactus')}}">
+                                    href="{{ route('contactus')}}"
+                                    title="İletişim">
                                     İletişim
                                 </a>
                             </li>
@@ -154,7 +161,8 @@
                             <li class="nav-item hidden xl:block lg:block md:block">
                                 <a
                                     href="{{ route('offer')}}"
-                                    class="btn btn-sm btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !text-[.85rem] !rounded-[50rem] hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
+                                    class="btn btn-sm btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !text-[.85rem] !rounded-[50rem] hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]"
+                                    title="Teklif Al">
                                     Teklif Al
                                 </a>
                             </li>

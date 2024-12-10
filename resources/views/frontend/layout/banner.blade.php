@@ -12,7 +12,7 @@
                 <p class="lead !text-[1.25rem] !leading-[1.6] font-medium my-3">Web tasarım ve
                     sosyal medya yönetiminde uzman ekibimizle markanızı dijital dünyada zirveye
                     taşıyoruz.</p>
-                <a href="{{ route('contactus')}}" class="more hover !text-[#a07cc5]" title="İletişime Geç">İletişime Geç</a>
+                <a href="{{ route('contactus')}}" class="more hover !text-[#3f78e0]" title="İletişime Geç">İletişime Geç</a>
             </div>
         </div>
     </div> 

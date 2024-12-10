@@ -65,7 +65,7 @@
         <div class="container" style="margin-top:100px">
             <div class="flex flex-wrap mx-[-15px] !mb-8 !text-center mt-[-50px]">
                 <div class="lg:w-12/12 xl:w-12/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
-                    <h2 class="text-[0.8rem] uppercase text-[#a07cc5] !mb-3 !leading-[1.35] !tracking-[0.02rem]">GO Dijital Neler Yapar?</h2>
+                    <h2 class="text-[0.8rem] uppercase text-[#3f78e0] !mb-3 !leading-[1.35] !tracking-[0.02rem]">GO Dijital Neler Yapar?</h2>
                     <h3 class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold">
                     Firmanızın tüm dijital işlerini, sosyal medya reklamlarını ve görsel, tasarımsal bütün işlerinizi yapıyoruz.</h3>
                 </div>
@@ -119,7 +119,7 @@
 
                 </div>
 
-                <a href="{{ route('contactus')}}" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Detaylı Bilgi İçin</a>
+                <a href="{{ route('contactus')}}" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Detaylı Bilgi İçin</a>
             
             </div>
         </div>
@@ -170,7 +170,7 @@
 
                 </div>
 
-                <a href="#" class="btn btn-soft-leaf !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">Hepsini Görüntüle</a>
+                <a href="#" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">Hepsini Görüntüle</a>
         
             </div>
 
@@ -234,7 +234,7 @@
                         data-items-xs="1">
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                            @foreach ($blog as $item )
+                            @foreach ($blog->take(3) as $item )
                                 <div class="swiper-slide">
                                     <div class="item-inner">
                                         <article>
