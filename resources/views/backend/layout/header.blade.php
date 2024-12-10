@@ -84,7 +84,10 @@
             <div class="dropdown-divider"></div>
             <a href="{{ route('language.index')}}" class="dropdown-item">Diller</a>
             <a href="{{ route('settings.index')}}" class="dropdown-item">Ayarlar</a>
-            <a href="./sign-in.html" class="dropdown-item">Çıkış Yap</a>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="dropdown-item">Çıkış Yap</button>
+          </form>
           </div>
         </div>
       </div>
