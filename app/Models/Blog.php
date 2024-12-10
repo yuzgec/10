@@ -2,32 +2,33 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 use App\Enums\StatusEnum;
 
 use Spatie\Sluggable\HasSlug;
-
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
-
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Activitylog\LogOptions;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
+
+use Astrotomic\Translatable\Translatable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Blog extends Model implements TranslatableContract,HasMedia
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+
+class Blog extends Model implements TranslatableContract,HasMedia,Viewable
 {
-    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable;
+    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
 
     protected $table = 'blogs';
     protected $guarded = [];
@@ -71,6 +72,11 @@ class Blog extends Model implements TranslatableContract,HasMedia
         return $query->whereHas('translations', function ($query) {
             $query->where('locale', app()->getLocale());
         });
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d'); // Sadece tarih formatı
     }
 
     protected $casts = [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Page;
 use App\Models\User;
 use App\Models\Service;
@@ -53,7 +54,6 @@ class HomeController extends Controller
 
 
         return view('frontend.service.detail',compact('detail'));
-        //$Count = views($detail)->unique()->period(Period::create(Carbon::today()))->count();
     }
 
     public function category($slug){
@@ -73,13 +73,24 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
-        //dd($detail);
-
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
 
         return view('frontend.page.detail',compact('detail'));
+    }
+
+    public function blog($slug){
+        $detail = Blog::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
+            $query->where('slug', $slug);
+        })->first();
+
+
+        views($detail)->cooldown(60)->collection(config('app.locale'))->record();
+
+        $count = views($detail)->unique()->count();
+
+        return view('frontend.blog.detail',compact('detail'));
     }
 
 

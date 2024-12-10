@@ -28,19 +28,25 @@ class ViewShareProvider extends ServiceProvider
         $categories = Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media'])->lang()->get()->toFlatTree();
         $services = Service::with(['getCategory','media'])->active()->lang()->get();
         $pages = Page::with(['getCategory','media'])->active()->lang()->get();
-        $blogs =Blog::with(['getCategory','media'])->active()->lang()->get();
-        $language = Language::active()->get();
+        $blog =Blog::with(['getCategory','media'])->active()->lang()->get();
+
+        $language = Cache::remember('language',now()->addYear(5), function () {
+            return Language::active()->get();
+        });
+
+
+        //dd($blogs);
 
 
         //dd($language);
 
   
         View::share([
-             'categories' => $categories,
+            'blog'=> $blog,
+            'categories' => $categories,
             'status' => $status,
             'services' => $services,
             'pages' => $pages,
-            'blogs', $blogs,
             'language' => $language,
         ]);
     }

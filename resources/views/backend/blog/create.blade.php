@@ -58,7 +58,7 @@
                             <div class="card">
                                 <div class="card-status-top bg-blue"></div>
                                 <div class="card-body">
-                                    <x-dashboard.form.input label='Blog Adı' name='name:{{ $lang->lang }}' placeholder="Blog Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                    <x-dashboard.form.input label='Blog Adı' name='name:{{ $lang->lang }}' placeholder="Blog Adı Giriniz ({{ $lang->native }})" maxlength="100"/>
                                     <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
                                     <x-dashboard.form.text-area label='İçerik' name='desc:{{ $lang->lang }}' id='desc'/>
                                 </div>
