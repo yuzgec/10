@@ -46,7 +46,8 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
                                     href="#"
-                                    data-bs-toggle="dropdown">
+                                    data-bs-toggle="dropdown"
+                                    title="Kurumsal">
                                     Kurumsal
                                 </a>
                                 <ul class="dropdown-menu">

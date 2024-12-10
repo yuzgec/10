@@ -49,6 +49,9 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
+        views($detail)->cooldown(60)->collection(config('app.locale'))->record();
+
+
         return view('frontend.service.detail',compact('detail'));
         //$Count = views($detail)->unique()->period(Period::create(Carbon::today()))->count();
     }
@@ -59,7 +62,7 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
-        views($detail)->cooldown(60)->record();
+        views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
         return view('frontend.category.detail',compact('detail'));
        
