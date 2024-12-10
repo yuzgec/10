@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('blog', $edit->slug) }}" target="_blank" class="btn btn-outline-dark" title="{{$edit->name}} - Sayfasını Önizle">
+                    <a href="{{ route('blog.detail', $edit->slug) }}" target="_blank" class="btn btn-outline-dark" title="{{$edit->name}} - Sayfasını Önizle">
                         <x-dashboard.icon.preview/>
                         Sayfa Önizle
                     </a>
