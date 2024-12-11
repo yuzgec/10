@@ -25,22 +25,35 @@
         </div>
     </div>
 </section>
-
 @if(!$detail->deleteContent)
-    <section class="wrapper !bg-[#ffffff]  angled upper-end relative border-0 before:top-[-4rem] before:border-l-transparent before:border-r-[100vw] before:border-t-[4rem] before:border-[#fefefe] before:content-[''] before:block before:absolute before:z-0 before:border-y-transparent before:border-0 before:border-solid before:right-0 after:content-[''] after:block after:absolute after:z-0 after:border-y-transparent after:border-[#fefefe] after:border-0 after:border-solid after:right-0">
-        <div class="container">
-            <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
-                    
-                <div class="xl:w-9/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                        {!! $detail->desc !!}
-                </div>
 
-                <div class="xl:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                        GO Dijital
+  <section class="wrapper bg-white" style="margin-top:80px;margin-bottom:50px">
+    <div class="container">
+        <div class="flex flex-wrap mx-[-15px]">
+            <div class="xl:w-10/12 lg:w-10/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+                <div class="blog single !mt-[-7rem]">
+                    <div class="card">
+                        <figure class="flex flex-wrap mx-auto " style="margin-top:50px">
+                            <img src="/frontend/img/godijital.png" alt="İzmir GO Dijital Web Tasarım ve Reklam Ajansı" style="width:400px">
+                        </figure>
+                        <div class="card-body flex-[1_1_auto] p-[40px] xl:p-[2.8rem_3rem_2.8rem] lg:p-[2.8rem_3rem_2.8rem] md:p-[2.8rem_3rem_2.8rem]">
+                            <div class="classic-view">
+                                <article class="post mb-8">
+                                    <div class="relative mb-5">
+                                        <h2 class="h1 !mb-4 !leading-[1.3]">İzmir GO Dijital Web Tasarım ve Reklam Ajansı</h2>
+                                        {!! $detail->desc !!}
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-
             </div>
         </div>
     </section>
-@endif
+    @endif
+
+  
+
 @endsection
