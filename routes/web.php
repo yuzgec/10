@@ -7,7 +7,7 @@ use App\Http\Controllers\Backend\CalendarController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
-
+Route::redirect('/hakkimizda', '/kurumsal/hakkimizda', 301);
 
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 Route::get('/calendar/create', [CalendarController::class, 'create'])->name('calendar.create');
