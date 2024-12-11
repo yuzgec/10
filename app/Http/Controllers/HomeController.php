@@ -58,8 +58,6 @@ class HomeController extends Controller
 
     public function service($slug){
 
-   
-
         $detail = Service::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
@@ -113,13 +111,14 @@ class HomeController extends Controller
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
-        $count = views($detail)->unique()->count();
+        $t = str_replace(',', "\n", $detail->name);
+        $title = nl2br($t); 
 
         SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name);
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
-        return view('frontend.blog.detail',compact('detail'));
+        return view('frontend.blog.detail',compact('detail','title'));
     }
 
     public function blogCategory($slug){

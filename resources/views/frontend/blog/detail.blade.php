@@ -13,8 +13,7 @@
                         <a href="{{ route('blog.category', $detail->getCategory->slug) }}" class="hover" rel="category">{{ $detail->getCategory->name}}</a>
                     </div>
                     <h1 class="text-[calc(1.365rem_+_1.38vw)] font-bold leading-[1.2] xl:text-[2.4rem] mb-4">
-                        @php $formattedText = str_replace(',', "\n", $detail->name); echo
-                        nl2br($formattedText) @endphp
+                        {!! $title!!}
                     </h1>
                     <ul class="text-[0.8rem] text-[#aab0bc] m-0 p-0 list-none !mb-5">
                         <li class="post-date inline-block">
