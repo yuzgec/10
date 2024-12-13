@@ -66,9 +66,9 @@ class PageController extends Controller
         return view('backend.page.edit', compact('edit','activities'));
     }
 
-    public function update(PageRequest $request, string $id)
+    public function update(PageRequest $request, Page $update)
     {
-        $update = Page::find($id);
+        //$update = Page::find($id);
 
         tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
 
@@ -97,7 +97,7 @@ class PageController extends Controller
         }
 
         alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli sayfa başarıyla güncellendi.', 'success');
-        return redirect()->route('page.index');
+        return redirect()->route('page.edit', $update->id);
 
     }
 
@@ -137,7 +137,7 @@ class PageController extends Controller
             Page::where('id', $id)->update(['rank' => $index + 1]);
         }
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'message' => 'selam']);
     }
 
     public function gallerysort(Request $request)

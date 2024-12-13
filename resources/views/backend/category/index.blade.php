@@ -50,7 +50,7 @@
                     </td>
 
                     <td>
-                        <a href="#">Düzenle</a>
+                        <a href="{{ route('category.edit', $item->id)}}">Düzenle</a>
                     </td>
                 </tr>
                 @endforeach

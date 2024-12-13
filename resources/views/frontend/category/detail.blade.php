@@ -48,5 +48,30 @@
             </div>
             
         </div>
+
+
     </section>
+
+
+    <div class="container mt-10 mb-10">
+        <div class="flex flex-wrap mx-[-15px]">
+            <div class="xl:w-12/12 lg:w-10/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+                <div class="blog single ">
+                    <div class="card">
+                      
+                        <div class="card-body flex-[1_1_auto] p-[40px] xl:p-[2.8rem_3rem_2.8rem] lg:p-[2.8rem_3rem_2.8rem] md:p-[2.8rem_3rem_2.8rem]">
+                            <div class="classic-view">
+                                <article class="post mb-8">
+                                    <div class="relative mb-5">
+                                        <h2 class="h1 !mb-4 !leading-[1.3]">İzmir Foça GO Dijital Ajans - {{ $detail->name}}</h2>
+                                        {!! $detail->desc !!}
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection

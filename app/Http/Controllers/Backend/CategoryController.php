@@ -66,15 +66,54 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edit = Category::find($id);
+
+        $parent = Category::ancestorsOf($id);
+
+        //dd($edit->parent_id,$parent);
+
+        return view('backend.category.edit',compact('edit','parent'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $update)
     {
-        //
+
+        tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
+
+
+        if($request->deleteImage == "1"){
+            $update->media()->where('collection_name', 'page')->delete();
+        }
+
+        if($request->hasfile('image')){
+            $update->media()->where('collection_name', 'page')->delete();
+            $update->addMedia($request->image)->toMediaCollection('page');
+        }
+
+        if($request->hasfile('cover')){
+            $update->addMedia($request->cover)->toMediaCollection('cover');
+        }
+
+        if($request->deleteCover == "1"){
+            $update->media()->where('collection_name', 'cover')->delete();
+        }
+
+        if($request->hasfile('gallery')) {
+            foreach ($request->gallery as $item){
+                $update->addMedia($item)->toMediaCollection('gallery');
+            }
+        }
+
+        if ($request->parent_id){
+            $node = Category::find($request->parent_id);
+            $node->appendNode($update);
+        }
+
+        alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli sayfa başarıyla güncellendi.', 'success');
+        return redirect()->route('category.edit', $update->id);
     }
 
     /**

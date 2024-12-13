@@ -25,10 +25,21 @@ class ViewShareProvider extends ServiceProvider
             return collect(StatusEnum::cases());
         });
 
-        $categories = Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media'])->lang()->get()->toFlatTree();
-        $services = Service::with(['getCategory','media'])->active()->lang()->rank()->get();
-        $pages = Page::with(['getCategory','media'])->active()->lang()->get();
-        $blog =Blog::with(['getCategory','media'])->active()->lang()->rank()->get();
+        $categories = Cache::remember('categories',now()->addYear(5), function () {
+            return Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media'])->lang()->get()->toFlatTree();
+        });
+
+        $services = Cache::remember('services',now()->addYear(5), function () {
+            return Service::with(['getCategory','media'])->active()->lang()->rank()->get();
+        });
+
+        $pages = Cache::remember('pages',now()->addYear(5), function () {
+            return Page::with(['getCategory','media'])->active()->lang()->get();
+        });
+
+        $blog = Cache::remember('blog',now()->addYear(5), function () {
+            return Blog::with(['getCategory','media'])->active()->lang()->rank()->get();
+        });
 
         $language = Cache::remember('language',now()->addYear(5), function () {
             return Language::active()->get();

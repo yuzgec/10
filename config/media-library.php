@@ -259,7 +259,7 @@ return [
      *
      * More info: https://css-tricks.com/native-lazy-loading/
      */
-    'default_loading_attribute_value' => null,
+    'default_loading_attribute_value' => 'eager',
 
     /*
      * You can specify a prefix for that is used for storing all media.
