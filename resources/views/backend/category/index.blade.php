@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="sayfa Oluştur" class="btn btn-primary">
+                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
                         <x-dashboard.icon.add/>
                         Ekle
                     </a>

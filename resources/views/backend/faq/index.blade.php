@@ -8,7 +8,7 @@
             <div class="card-actions d-flex">
 
                 <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="sayfa Oluştur" class="btn btn-primary">
+                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
                         <x-dashboard.icon.add/>
                        Kategori Ekle
                     </a>
@@ -81,7 +81,7 @@
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('faq.create')}}" title="sayfa Oluştur" class="btn btn-primary">
+                    <a href="{{ route('faq.create')}}" title="S.S.S. Oluştur" class="btn btn-primary">
                         <x-dashboard.icon.add/>
                         Ekle
                     </a>
