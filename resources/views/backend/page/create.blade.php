@@ -77,7 +77,7 @@
                         </div>       
                    </div>
                    @endforeach
-                   <div class="tab-content">
+                    <div class="tab-content">
                         <div class="tab-pane" id="image" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-6 mb-3">

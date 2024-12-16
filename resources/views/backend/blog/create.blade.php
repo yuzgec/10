@@ -43,36 +43,97 @@
 
                 <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
                     @foreach($language as $properties)
-                        <li class="nav-item" role="presentation">
-                            <a href="#{{ $properties->lang }}" class="nav-link @if ($loop->first) active @endif" data-bs-toggle="tab">
-                                <img src="/flags/{{ $properties->lang }}.svg" width="20px"><span  style="margin-left:10px">{{ $properties->native }}</span>
-                            </a>
-                        </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#{{ $properties->lang }}" class="nav-link @if ($loop->first) active @endif" data-bs-toggle="tab">
+                            <img src="/flags/{{ $properties->lang }}.svg" width="20px"><span  style="margin-left:10px">{{ $properties->native }}</span>
+                        </a>
+                    </li>
                     @endforeach
+                    <li class="nav-item" role="presentation">
+                        <a href="#image" class="nav-link" data-bs-toggle="tab">
+                            <span  style="margin-left:10px"><x-dashboard.icon.image/> Medya</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             
             <div class="card-body">
 
-                  @foreach($language as $lang)
-                  <div class="tab-content">
-                        <div class="tab-pane @if ($loop->first) active show @endif" id="{{$lang->lang}}" role="tabpanel">
+                @foreach($language as $lang)
+                <div class="tab-content">
+                    <div class="tab-pane @if ($loop->first) active show @endif" id="{{$lang->lang}}" role="tabpanel">
 
-                            <div class="card">
-                                <div class="card-status-top bg-blue"></div>
-                                <div class="card-body">
-                                    <x-dashboard.form.input label='Blog Adı' name='name:{{ $lang->lang }}' placeholder="Blog Adı Giriniz ({{ $lang->native }})" maxlength="100"/>
-                                    <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
-                                    <x-dashboard.form.text-area label='İçerik' name='desc:{{ $lang->lang }}' id='desc'/>
+                        <div class="card">
+                            <div class="card-status-top bg-blue"></div>
+                            <div class="card-body">
+                                <x-dashboard.form.input label='Blog Adı' name='name:{{ $lang->lang }}' placeholder="Blog Adı Giriniz ({{ $lang->native }})" maxlength="100"/>
+                                <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
+                                <x-dashboard.form.text-area label='İçerik' name='desc:{{ $lang->lang }}' id='desc'/>
+                            </div>
+                        </div>
+
+                        <x-dashboard.site.seo :lang="$lang" />
+
+                    </div>       
+                </div>
+                @endforeach
+                   
+                <div class="tab-content">
+                    <div class="tab-pane" id="image" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-stamp">
+                                        <div class="card-stamp-icon bg-blue">
+                                            <x-dashboard.icon.image/>
+                                        </div>
+                                    </div>
+                                    <div class="card-status-top bg-blue"></div>
+                                    <div class="card-header">
+                                        <h4 class="card-title"><x-dashboard.icon.image/>Image</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <input class="form-control" type="file" name="image">
+                                    </div>
                                 </div>
                             </div>
 
-                            <x-dashboard.site.seo :lang="$lang" />
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-stamp">
+                                        <div class="card-stamp-icon bg-green">
+                                            <x-dashboard.icon.image/>
+                                        </div>
+                                    </div>
+                                    <div class="card-status-top bg-blue"></div>
+                                    <div class="card-header">
+                                        <h4 class="card-title"><x-dashboard.icon.image/>Cover</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <input class="form-control" type="file" name="cover">
+                                    </div>
+                                </div>
+                            </div>
 
-                        </div>       
-                  </div>
-                  @endforeach
-            
+                            <div class="col-md-12 mb-3">
+                                <div class="card">
+                                    <div class="card-status-top bg-blue"></div>
+                                    <div class="card-stamp">
+                                        <div class="card-stamp-icon bg-purple">
+                                            <x-dashboard.icon.image/>
+                                        </div>
+                                    </div>
+                                    <div class="card-header">
+                                        <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <input class="form-control" type="file" name="gallery[]" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     
@@ -121,60 +182,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-blue">
-                    <x-dashboard.icon.image/>
-                </div>
-            </div>
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Image</h4>
-            </div>
-            <div class="card-body">
-                <input class="form-control" type="file" name="image">
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-green">
-                    <x-dashboard.icon.image/>
-                </div>
-            </div>
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Cover</h4>
-            </div>
-            <div class="card-body">
-                <input class="form-control" type="file" name="cover">
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-purple">
-                    <x-dashboard.icon.image/>
-                </div>
-            </div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri</h4>
-            </div>
-            <div class="card-body">
-                <input class="form-control" type="file" name="gallery[]" multiple>
-            </div>
-        </div>
-    </div>
-
-
-
-</div>
+ </div>
 {!! html()->form()->close() !!}
 
 @endsection

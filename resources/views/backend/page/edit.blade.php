@@ -80,9 +80,9 @@
                             <x-dashboard.site.seo :lang="$lang" />
 
                         </div>       
-                   </div>
-                   @endforeach
-                   <div class="tab-content">
+                    </div>
+                    @endforeach
+                    <div class="tab-content">
                         <div class="tab-pane" id="image" role="tabpanel">
                             <div class="row">
 
@@ -156,9 +156,7 @@
                                                             alt="Cover Image"
                                                         >
                                                     </div>
-                                                </div>
-                                                
-                                                
+                                                </div>                                              
                                             </div>
                                             <label class="form-check form-switch mt-2">&nbsp; Kaldır
                                                 <input class="form-check-input switch" name="deleteCover" type="checkbox">
@@ -182,39 +180,39 @@
                                         </div>
                                         <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                                             <input class="form-control mb-2" type="file" name="gallery[]" multiple>
-                                                <div class="table-responsive ">
-                                                    <table class="table table-hover table-bordered table-center">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Resim</th>
-                                                            <th>Sil</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody id="sortable-gallery">
-                                                            <div class="divide-y">
-                                                                @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
-                                                                <tr data-id="{{ $item->id }}">
-                                                                    <td>{{ $item->order_column}}</td>
+                                            <div class="table-responsive ">
+                                                <table class="table table-hover table-bordered table-center">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Resim</th>
+                                                        <th>Sil</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="sortable-gallery">
+                                                        <div class="divide-y">
+                                                            @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
+                                                            <tr data-id="{{ $item->id }}">
+                                                                <td>{{ $item->order_column}}</td>
 
-                                                                    <td>
-                                                                        <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
-                                                                    </td>
-                                                                    <td style="background-color:{{ $item->size >= 819200 ? 'red' : 'green'}};color:white">
-                                                                        {{ intval($item->size / 1024)}} kb
-                                                                    </td>
-                                                                    <td>{{ $item->file_name}}
-                                                                    </td>
-                                                                    <td>
-                                                                        <button class="btn btn-danger btn-sm" title="Resim Sil">
-                                                                            <x-dashboard.icon.delete/> 
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                                @endforeach
-                                                            </div>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                                <td>
+                                                                    <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
+                                                                </td>
+                                                                <td style="background-color:{{ $item->size >= 819200 ? 'red' : 'green'}};color:white">
+                                                                    {{ intval($item->size / 1024)}} kb
+                                                                </td>
+                                                                <td>{{ $item->file_name}}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-danger btn-sm" title="Resim Sil">
+                                                                        <x-dashboard.icon.delete/> 
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -307,36 +305,36 @@
                         body: JSON.stringify({ order })
                     }).then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: 'Sıralama Başarıyla Yapıldı',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        } else {
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'error',
-                title: 'Bir hata oluştu!',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        }
-                    }).catch(error => {
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: 'İstek başarısız oldu!',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        console.error('Error:', error);
-    });
+                    if (data.success) {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Sıralama Başarıyla Yapıldı',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        } else {
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Bir hata oluştu!',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        }
+                            }).catch(error => {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'İstek başarısız oldu!',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        console.error('Error:', error);
+                    });
                 }
             });
         });
