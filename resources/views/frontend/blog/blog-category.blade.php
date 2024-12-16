@@ -10,6 +10,9 @@
                         <li class="breadcrumb-item flex text-[#60697b]">
                             <a class="text-[#60697b] hover:text-[#3f78e0]" href="{{ route('home')}}">Anasayfa</a>
                         </li>
+                        <li class="breadcrumb-item flex text-[#60697b] pl-2 before:font-normal before:flex before:items-center before:text-[rgba(96,105,123,.35)] before:content-['\e931'] before:text-[0.9rem] before:-mt-px before:pr-2 before:font-Unicons" aria-current="page">
+                            <a class="text-[#60697b] hover:text-[#3f78e0]" href="{{ route('blogs')}}">Blog</a>
+                        </li>
                         <li class="breadcrumb-item flex text-[#60697b] pl-2 before:font-normal before:flex before:items-center before:text-[rgba(96,105,123,.35)] before:content-['\e931'] before:text-[0.9rem] before:-mt-px before:pr-2 before:font-Unicons active"
                             aria-current="page">{{ $category->name}}
                         </li>

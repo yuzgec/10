@@ -11,10 +11,11 @@ use App\Models\Language;
 use App\Observers\BlogObserver;
 use App\Observers\PageObserver;
 use App\Observers\ServiceObserver;
+use App\Observers\CategoryObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Schema;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Page::observe(PageObserver::class);
         Service::observe(ServiceObserver::class);
         Blog::observe(BlogObserver::class);
+        Category::observe(CategoryObserver::class);
         
 
         

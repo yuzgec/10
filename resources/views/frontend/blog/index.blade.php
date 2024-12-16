@@ -7,7 +7,7 @@
         <div class="!relative">
             <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] items-center">
                 @foreach ($blog as $item )
-                <div class="xl:w-4/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] xl:!order-2 lg:!order-2 !relative">
+                <div class="xl:w-4/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[15px] lg:px-[20px] px-[15px] max-w-full mt-[50px] xl:!order-2 lg:!order-2 !relative">
                     <article>
                         <div class="card">
                     

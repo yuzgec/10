@@ -47,10 +47,19 @@ class HomeController extends Controller
     }
 
     public function blogs(){
+
+        SEOMeta::setTitle('Blog | GO Dijital Ajans | Google SEO Uzmanı');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
+
         return view('frontend.blog.index');
     }
 
     public function projects(){
+
+        SEOMeta::setTitle('Çalışmalarımız | GO Dijital Ajans | Google SEO Uzmanı');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
 
         return view('frontend.project.index');
     }
