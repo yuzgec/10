@@ -1,7 +1,12 @@
 @extends('backend.layout.app')
 @section('content')
-{{Form::model($edit, ["route" => ["service.update", $edit->id],'enctype' => 'multipart/form-data'])}}
-@method('PUT')
+
+
+{!! html()->model($edit)->form('PUT', route('service.update', $edit->id))
+    ->attribute('enctype', 'multipart/form-data')
+    ->open() 
+!!}
+
 
 <div class="col-12 mb-3">
     <div class="card">
@@ -216,7 +221,7 @@
 
 </div>
 
-{{Form::close()}}
+{!! html()->form()->close() !!}
 
 <x-dashboard.site.activities :activities="$activities" />
 

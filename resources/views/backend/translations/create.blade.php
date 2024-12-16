@@ -1,7 +1,10 @@
 @extends('backend.layout.app')
 
 @section('content')
-    {{Form::open(['route' => 'translation.store', 'enctype' => 'multipart/form-data'])}}
+{!! html()->form()
+    ->method('POST')
+    ->action(route('translation.store'))
+    ->open() !!}
 
     <div class="col-md-12">
         <div class="card">
@@ -43,6 +46,7 @@
             </div>
         </div>
     </div>
-{{Form::close()}}
+    
+    {!! html()->form()->close() !!}
 
 @endsection

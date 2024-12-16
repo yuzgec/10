@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
         Livewire\LivewireServiceProvider::class,
+        Spatie\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -197,6 +198,8 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'SEOMeta'=> Artesaos\SEOTools\Facades\SEOMeta::class,
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+        'Html' => Spatie\Html\Facades\Html::class,
+
 
     ])->toArray(),
 

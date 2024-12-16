@@ -1,8 +1,11 @@
 @extends('backend.layout.app')
 
 @section('content')
-{{Form::open(['route' => 'blog.store', 'enctype' => 'multipart/form-data'])}}
-
+{!! html()->form()
+    ->method('POST')
+    ->action(route('blog.store'))
+    ->attribute('enctype', 'multipart/form-data')
+    ->open() !!}
 <div class="col-12 mb-3">
     <div class="card">
         <div class="card-status-top bg-blue"></div>
@@ -172,7 +175,7 @@
 
 
 </div>
-{{Form::close()}}
+{!! html()->form()->close() !!}
 
 @endsection
 

@@ -1,7 +1,13 @@
 @extends('backend.layout.app')
 
 @section('content')
-{{Form::open(['route' => 'page.store', 'enctype' => 'multipart/form-data'])}}
+
+
+{!! html()->form()
+    ->method('POST')
+    ->action(route('product.store'))
+    ->attribute('enctype', 'multipart/form-data')
+    ->open() !!}
 
 <div class="col-12 mb-3">
     <div class="card">
@@ -135,7 +141,8 @@
     <x-dashboard.site.seo/>
 
 </div>
-{{Form::close()}}
+
+{!! html()->form()->close() !!}
 
 @endsection
 

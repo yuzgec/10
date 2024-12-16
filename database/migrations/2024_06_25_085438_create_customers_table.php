@@ -40,7 +40,6 @@ return new class extends Migration
             $table->string('status')->default(CustomerEnum::NEW->value);
             $table->string('medium')->default(MediumEnum::UNKNOWN->value);
             $table->date('firstdate_at')->default(now());
-        
             $table->timestamps();
         });
     }

@@ -1,6 +1,11 @@
 @extends('backend.layout.app')
 @section('content')
-{{Form::open(['route' => 'customer.store', 'enctype' => 'multipart/form-data'])}}
+
+{!! Html::form()
+    ->method('POST')
+    ->action(route('customer.store'))
+    ->attribute('enctype', 'multipart/form-data')
+    ->open() !!}
 
 <div class="col-12 mb-3">
     <div class="card">
@@ -27,130 +32,92 @@
     </div>
 </div>
 
-<div class="d-flex">
-    <div class="col-md-9 mb-3 p-1">
+<div class="row">
+    <div class="col-md-9 mb-3">
         <div class="card mb-3">
-            <div class="card-body">
-    
-                <x-dashboard.form.input label='Firma Adı' name='company_name' placeholder="Firma Adı Giriniz"/>
 
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Yetkili / Personel </label>
-                    <div class="col-5">
-                        <x-dashboard.form.only-input label='Yetkili Adı' name='authorized_person' placeholder="Yetkili Kişi Adı"/>
-                    </div>
-                    <div class="col-4">
-                        <x-dashboard.form.only-input label='Personel Adı' name='staff_name' placeholder="Personel Adı"/>
+
+        <div class="card-body">
+
+            <x-dashboard.form.input label='Firma Adı' name='company_name' placeholder="Firma Adı Giriniz"/>
+
+            <div class="form-group mb-3 row">
+                <label class="form-label col-3 col-form-label">Yetkili / Personel </label>
+                <div class="col-5">
+                    <x-dashboard.form.only-input label='Yetkili Adı' name='authorized_person' placeholder="Yetkili Kişi Adı"/>
+                </div>
+                <div class="col-4">
+                    <x-dashboard.form.only-input label='Personel Adı' name='staff_name' placeholder="Personel Adı"/>
+                </div>
+            </div>
+            
+
+            <div class="form-group mb-3 row">
+                <label class="form-label col-3 col-form-label">Vergi D. / Vergi No </label>
+                
+                <div class="col-5">
+                    <div class="input-group mb-2">
+                        <x-dashboard.form.only-input name='tax_place' placeholder="Vergi Dairesi"/>
                     </div>
                 </div>
-
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Vergi D. / Vergi No </label>
-                   
-                    <div class="col-5">
-                        <div class="input-group mb-2">
-                            <x-dashboard.form.only-input name='tax_place' placeholder="Vergi Dairesi"/>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2">
-                            <x-dashboard.form.only-input name='tax_number' placeholder="Vergi No"/>
-                        </div>
+                <div class="col-4">
+                    <div class="input-group mb-2">
+                        <x-dashboard.form.only-input name='tax_number' placeholder="Vergi No"/>
                     </div>
                 </div>
-    
-                <x-dashboard.form.input label='Yetkili Adı' name='authorized_person'/>
+            </div>
 
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Seçenek </label>
-                    <div class="col-6 col-md-3">
-                        <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek1
-                            <input class="form-check-input switch" name="option1" type="checkbox" value="0">
-                        </label>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek2
-                            <input class="form-check-input switch" name="option2" type="checkbox" value="0">
-                        </label>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek3
-                            <input class="form-check-input switch" name="option3" type="checkbox" value="0">
-                        </label>
-                    </div>
-                   
+            <x-dashboard.form.input label='Yetkili Adı' name='authorized_person'/>
+
+            <div class="form-group mb-3 row">
+                <label class="form-label col-3 col-form-label">Seçenek </label>
+                <div class="col-6 col-md-3">
+                    <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek1
+                        <input class="form-check-input switch" name="option1" type="checkbox" value="0">
+                    </label>
                 </div>
+                <div class="col-6 col-md-3">
+                    <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek2
+                        <input class="form-check-input switch" name="option2" type="checkbox" value="0">
+                    </label>
+                </div>
+                <div class="col-6 col-md-3">
+                    <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek3
+                        <input class="form-check-input switch" name="option3" type="checkbox" value="0">
+                    </label>
+                </div>
+                
+            </div>
 
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Web Site </label>
-                   
-                    <div class="col-5">
-                        <div class="input-group mb-2">
-                            <span class="input-group-text"><x-dashboard.icon.connect/></span>
-                            <input type="text" class="form-control" name="website1" placeholder="Web Site Adı" value="{{ old('website1') }}">
-                        </div>
+            <div class="form-group mb-3 row">
+                <label class="form-label col-3 col-form-label">Web Site </label>
+                
+                <div class="col-5">
+                    <div class="input-group mb-2">
+                        <span class="input-group-text"><x-dashboard.icon.connect/></span>
+                        <input type="text" class="form-control" name="website1" placeholder="Web Site Adı" value="{{ old('website1') }}">
                     </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2">
-                            <span class="input-group-text"><x-dashboard.icon.connect/></span>
-                            <input type="text" class="form-control" name="website2" placeholder="Web Site Adı" value="{{ old('website2') }}">
-                        </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group mb-2">
+                        <span class="input-group-text"><x-dashboard.icon.connect/></span>
+                        <input type="text" class="form-control" name="website2" placeholder="Web Site Adı" value="{{ old('website2') }}">
                     </div>
                 </div>
             </div>
         </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title"><x-dashboard.icon.add/>İş Oluştur</h3>
+
+            
+        </div>
+        <div class="card  mt-3">
+            <div class="card-body">asd</div>
+        </div>
 
 
-                </div>
-        
-                <div class="card-body">
-                    <x-dashboard.form.input label='İş Adı' name='work_name' placeholder="İş Adı Giriniz"/>
-                    <x-dashboard.form.input label='Web Site' name='work_website' placeholder="Web Site Adı Giriniz"/>
-
-                    <div class="form-group mb-3 row">
-                        <label class="form-label col-3 col-form-label">İş Türü </label>
-                        <div class="col">
-                            <select name="work_category" class="form-control">
-                                @foreach ($type as $item)
-                                <option value="{{$item->id}}">{{ $item->name}}</option>
-                                @endforeach
-                            </select>
-                                
-                        </div>
-                    </div>
-        
-                    <div class="form-group mb-3 row">
-                        <label class="form-label col-3 col-form-label">Fiyat </label>
-                       
-                        <div class="col-5">
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><x-dashboard.icon.lira/></span>
-
-                                <input type="text" class="form-control" name="work_offer" placeholder="Teklif Fiyatı" autocomplete="off" value="{{ old('offer') }}">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><x-dashboard.icon.lira/></span>
-                                <input type="text" class="form-control" name="work_price" placeholder="son Fiyat" autocomplete="off" value="{{ old('price') }}">
-                            </div>
-                        </div>
-                    </div>
-        
-                    <x-dashboard.form.textarea label='Açıklama ' name='work_desc'/>
-        
-        
-        
-        
-                </div>
-            </div>
     </div>
     
-    <div class="col-md-3 mb-3 p-1">
+    <div class="col-md-3 mb-3">
         <div class="card">
          
             <div class="card-body">
@@ -192,8 +159,7 @@
 </div>
 
 
-
-
+{!! Html::form()->close() !!}
 @endsection
 
 @section('customJS')

@@ -1,7 +1,9 @@
 @extends('backend.layout.app')
 @section('content')
-{{Form::model($edit, ["route" => ["faq.update", $edit->id]])}}
-@method('PUT')
+
+
+{!! html()->model($edit)->form('PUT', route('faq.update', $edit->id))->open() !!}
+
 
 <div class="col-12 mb-3">
     <div class="card">
@@ -81,7 +83,7 @@
        
     </div>
 </div>
-{{Form::close()}}
+{!! html()->form()->close() !!}
 @endsection
 
 @section('customJS')

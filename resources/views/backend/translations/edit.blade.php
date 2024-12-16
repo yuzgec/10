@@ -1,8 +1,9 @@
 @extends('backend.layout.app')
 
 @section('content')
-    {{Form::model($edit, ["route" => ["translation.update", $edit->id],'enctype' => 'multipart/form-data'])}}  
-    @method('PUT')
+
+{!! html()->model($edit)->form('PUT', route('translation.update', $edit->id))->open() !!}
+
     <div class="col-md-12">
         <div class="card">
             <div class="card-status-top bg-blue"></div>
@@ -43,6 +44,8 @@
             </div>
         </div>
     </div>
-{{Form::close()}}
+    
+{!! html()->form()->close() !!}
+
 
 @endsection

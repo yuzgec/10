@@ -6,8 +6,7 @@
         <x-dashboard.site.preview/>
     </div>
 </div>
-{{Form::model($edit, ["route" => ["user.update", $edit->id],'enctype' => 'multipart/form-data'])}}
-@method('PUT')
+{!! html()->model($edit)->form('PUT', route('user.update', $edit->id))->open() !!}
 
 <div class="row">
     <div class="col-md-6 col-12 mb-3">
@@ -54,6 +53,5 @@
             </div>
         </div>
     </div>
-    {{Form::close()}}
-
+    {!! html()->form()->close() !!}
 @endsection
