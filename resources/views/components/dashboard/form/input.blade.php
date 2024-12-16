@@ -3,7 +3,7 @@
     <div class="col">
 
         {!! Html::text($name)
-            ->class($class . ($errors->has($name) ? ' is-invalid' : null))
+            ->class($class . ($errors->has($name) ? ' is-invalid' : ''))
             ->placeholder($placeholder)
             ->attribute('maxlength', $maxlength ?? null) // Dinamik maxlength
             ->id($id) !!}
