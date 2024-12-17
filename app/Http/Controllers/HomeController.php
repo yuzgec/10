@@ -101,10 +101,10 @@ class HomeController extends Controller
     }
 
     public function page($slug){
+
         $detail = Page::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
-
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
@@ -120,13 +120,10 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
-
-
-
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
-        $t = str_replace([',', '?', ':'], "\n", $detail->name);
-        $title = nl2br($t); 
+        $t = preg_replace('/([,\?:])/', "$1\n", $detail->name); // İşaretlerden sonra \n ekle
+        $title = nl2br($t);
 
         SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name);
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
