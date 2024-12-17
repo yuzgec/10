@@ -290,7 +290,7 @@
                         data-items-xs="1">
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                            @foreach ($blog->take(3) as $item )
+                            @foreach ($blog->take(5) as $item )
                                 <div class="swiper-slide">
                                     <div class="item-inner">
                                         <article>

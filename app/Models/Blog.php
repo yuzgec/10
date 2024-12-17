@@ -69,7 +69,7 @@ class Blog extends Model implements TranslatableContract,HasMedia,Viewable
     }
 
     public function scopeRank($query){
-        return $query->orderBy('rank','asc');
+        return $query->orderBy('rank','desc');
     }
 
     public function scopeLang($query){

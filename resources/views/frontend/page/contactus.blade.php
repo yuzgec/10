@@ -29,13 +29,13 @@
           <div class="shape bg-dot primary rellax !w-[8rem] !h-[8rem] absolute opacity-50  bg-[radial-gradient(#3f78e0_2px,transparent_2.5px)]" data-rellax-speed="1" style="top: 0; left: -1.4rem; z-index: 0;"></div>
           <div class="flex flex-wrap mx-[-15px] xl:mx-[-12.5px] lg:mx-[-12.5px] md:mx-[-12.5px] mt-[-25px]">
             <div class="xl:w-6/12 lg:w-6/12 md:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[12.5px] lg:px-[12.5px] md:px-[12.5px] mt-[25px] max-w-full">
-              <figure class="rounded-[0.4rem] xl:!mt-10 lg:!mt-10 md:!mt-10 !relative"><img class="!rounded-[0.4rem]" src="./assets/img/photos/g5.jpg" srcset="./assets/img/photos/g5@2x.jpg 2x" alt="image"></figure>
+              <figure class="rounded-[0.4rem] xl:!mt-10 lg:!mt-10 md:!mt-10 !relative"><img class="!rounded-[0.4rem]" src="/frontend/img/iletisim-2.jpg" alt="İzmir Web Tasarım Ajansı"></figure>
             </div>
             <!--/column -->
             <div class="xl:w-6/12 lg:w-6/12 md:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[12.5px] lg:px-[12.5px] md:px-[12.5px] mt-[25px] max-w-full">
               <div class="flex flex-wrap mx-[-15px] xl:mx-[-12.5px] lg:mx-[-12.5px] md:mx-[-12.5px] mt-[-25px]">
                 <div class="w-full flex-[0_0_auto] px-[12.5px] mt-[25px] max-w-full xl:!order-2 lg:!order-2 md:!order-2">
-                  <figure class="rounded-[0.4rem]"><img class="!rounded-[0.4rem]" src="./assets/img/photos/g6.jpg" srcset="./assets/img/photos/g6@2x.jpg 2x" alt="image"></figure>
+                  <figure class="rounded-[0.4rem]"><img class="!rounded-[0.4rem]" src="/frontend/img/iletisim-1.jpg" alt="İzmir Web Tasarım Ajansı"></figure>
                 </div>
                 <!--/column -->
                 <div class="xl:w-10/12 lg:w-10/12 md:w-10/12 w-full flex-[0_0_auto] px-[12.5px] mt-[25px] max-w-full">
