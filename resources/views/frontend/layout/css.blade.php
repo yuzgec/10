@@ -4,7 +4,7 @@
 <link rel="shortcut icon" href="/frontend/img/fav.jpg">
   <link rel="stylesheet" type="text/css" href="/frontend/fonts/unicons/unicons.css">
 <link rel="stylesheet" href="/frontend/css/plugins.css">
-<link rel="stylesheet" href="/frontend/style.css?ver=4">
+<link rel="stylesheet" href="/frontend/style.css?ver=5">
 <link rel="stylesheet" href="/frontend/css/colors/blue.css?ver=3">
 <link rel="preload" href="/frontend/css/fonts/thicccboi.css" as="style" onload="this.rel='stylesheet'">
 <style>
