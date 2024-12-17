@@ -26,39 +26,36 @@
           <div class="swiper-wrapper ticker">
             <div class="swiper-slide">
               <figure class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/polipa.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/polipa.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/ondance.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/ondance.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/miknatis.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/miknatis.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/koltukyikama.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/koltukyikama.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
          
           </div>
-          <!--/.swiper-wrapper -->
         </div>
-        <!-- /.swiper -->
       </div>
-      <!-- /.swiper-container -->
       <div class="swiper-container swiper-auto swiper-auto-xs mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14 relative !z-10"
         data-margin="40" data-nav="false" data-dots="false" data-centered="true" data-loop="true" data-items-auto="true"
         data-autoplay="true" data-autoplaytime="1" data-drag="false" data-resizeupdate="false" data-speed="7000">
@@ -67,31 +64,31 @@
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/sms.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/sms.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/psikolog.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/psikolog.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/ayazmetal.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/ayazmetal.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/tunatech.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/tunatech.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="" />
+                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="İzmir Foça GO Dijital Ajans" />
               </figure>
             </div>
             

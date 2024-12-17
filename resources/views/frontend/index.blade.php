@@ -72,110 +72,166 @@
             </div>
 
             <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] !mb-[4.5rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem] items-center">
-            <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] !relative">
-                <div class="shape bg-dot violet rellax !w-[7rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2rem; left: -0.7rem;"></div>
-                <figure class="!rounded-[.4rem] !mb-0">
-                    <img class="!rounded-[.4rem]" src="/web-tasarim-ajansi-izmir.jpg" srcset="/web-tasarim-ajansi-izmir.jpg" alt="İzmir GO Dijital Ajans">
-                </figure>
-            </div>
-
-            <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
-                <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">İnternet Sitesi Yapımı</h3>
-                <p class="!mb-5">
-                    Dijital dünyada fark yaratmanızı sağlayacak kapsamlı web ve yazılım çözümlerimizle yanınızdayız. Modern tasarımlar ve yenilikçi teknolojilerle işletmenizi dijitalde güçlendirin:
-                </p>
-
-                <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
-                 
-                    <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
-                                @if($index % 2 == 0)
-                                <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
-                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                        <span>{{ $item->name}}</span>
-                                    </a>
-                                </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
-
-                    <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
-                            @if($index % 2 != 0)
-                                <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
-                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                        <span>{{ $item->name}}</span>
-                                    </a>
-                                </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
-
+                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] !relative">
+                    <div class="shape bg-dot violet rellax !w-[7rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2rem; left: -0.7rem;"></div>
+                    <figure class="!rounded-[.4rem] !mb-0">
+                        <img class="!rounded-[.4rem]" src="/web.jpg" alt="İzmir GO Dijital Ajans - Web Tasarım">
+                    </figure>
                 </div>
 
-                <a href="{{ route('contactus')}}" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Detaylı Bilgi İçin</a>
-            
+                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
+                    <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">İnternet Sitesi Yapımı</h3>
+                    <p class="!mb-5">
+                        Dijital dünyada fark yaratmanızı sağlayacak kapsamlı web ve yazılım çözümlerimizle yanınızdayız. Modern tasarımlar ve yenilikçi teknolojilerle işletmenizi dijitalde güçlendirin:
+                    </p>
+
+                    <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                    
+                        <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                            <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                                @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
+                                    @if($index % 2 == 0)
+                                    <li class="mt-3 relative pl-6">
+                                        <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
+                                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                            <span>{{ $item->name}}</span>
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                            <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                                @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
+                                @if($index % 2 != 0)
+                                    <li class="mt-3 relative pl-6">
+                                        <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
+                                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                            <span>{{ $item->name}}</span>
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <a href="/izmir-ajans/web-tasarim" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Hepsini Görüntüle</a>
+                
+                </div>
             </div>
+
+            <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] items-center">
+                
+                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] xl:!order-2 lg:!order-2 !relative">
+                    <div class="shape !rounded-[50%] !bg-[#f6f3f9] rellax !w-[8rem] !h-[8rem] absolute" data-rellax-speed="1" style="bottom: -2.5rem; right: -1.5rem;"></div>
+                    <figure class="!rounded-[.4rem] !mb-0">
+                        <img class="!rounded-[.4rem] mb-10" src="/kurumsal-kimlik.jpg" alt="İzmir GO Dijital Ajans - Kurumsal Kimlik">
+                    </figure>
+                </div>
+
+                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
+                    <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Kurumsal Kimlik</h3>
+                    <p class="!mb-5">Kurumsal kimlik ve baskı çözümleriyle markanızın profesyonel bir görünüme kavuşmasını sağlayan firmamız, tasarımdan üretime kadar tüm süreçlerde yanınızda.</p>
+                    <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                    
+                        <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                            <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                                @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
+                                    @if($index % 2 == 0)
+                                    <li class="mt-3 relative pl-6">
+                                        <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
+                                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                            <span>{{ $item->name}}</span>
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                            <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                                @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
+                                @if($index % 2 != 0)
+                                    <li class="mt-3 relative pl-6">
+                                        <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
+                                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                            <span>{{ $item->name}}</span>
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <a href="/izmir-ajans/kurumsal-kimlik" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">Hepsini Görüntüle</a>
+            
+                </div>
+
+            </div>
+
+            <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-100px] !mb-[4.5rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem] items-center">
+                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] !relative">
+                    <div class="shape bg-dot violet rellax !w-[7rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2rem; left: -0.7rem;"></div>
+                    <figure class="!rounded-[.4rem] !mb-0">
+                        <img class="!rounded-[.4rem]" src="/seo.jpg" alt="İzmir GO Dijital Ajans">
+                    </figure>
+                </div>
+
+                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
+                    <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Google SEO Optimizasyonu</h3>
+                    <p class="!mb-5">
+                        Google SEO (Search Engine Optimization), web sitenizin arama motorlarında üst sıralarda yer almasını sağlamak için yapılan stratejik çalışmalardır.
+                    </p>
+
+                    <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
+                    
+                        <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                            <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                                @foreach ($services->where('category_id', 14)->take(6) as $index => $item)
+                                    @if($index % 2 == 0)
+                                    <li class="mt-3 relative pl-6">
+                                        <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
+                                            <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                            <span>{{ $item->name}}</span>
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
+                            <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
+                                @foreach ($services->where('category_id', 14)->take(6) as $index => $item)
+                                    @if($index % 2 != 0)
+                                        <li class="mt-3 relative pl-6">
+                                            <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
+                                                <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
+                                                <span>{{ $item->name}}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <a href="/izmir-ajans/google-seo" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Hepsini Görüntüle</a>
+                
+                </div>
+            </div>
+
         </div>
 
-        <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] items-center">
-            
-            <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] xl:!order-2 lg:!order-2 !relative">
-                <div class="shape !rounded-[50%] !bg-[#f6f3f9] rellax !w-[8rem] !h-[8rem] absolute" data-rellax-speed="1" style="bottom: -2.5rem; right: -1.5rem;"></div>
-                <figure class="!rounded-[.4rem] !mb-0">
-                    <img class="!rounded-[.4rem] mb-10" src="/kurumsal-kimlik.jpg" alt="İzmir GO Dijital Ajans">
-                </figure>
-            </div>
-
-            <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px]">
-                <h3 class="xl:text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] font-bold !leading-[1.3] mb-4">Kurumsal Kimlik</h3>
-                <p class="!mb-5">Kurumsal kimlik ve baskı çözümleriyle markanızın profesyonel bir görünüme kavuşmasını sağlayan firmamız, tasarımdan üretime kadar tüm süreçlerde yanınızda.</p>
-                <div class="flex flex-wrap mx-[-15px] mt-[-15px]">
-                 
-                    <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
-                                @if($index % 2 == 0)
-                                <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
-                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                        <span>{{ $item->name}}</span>
-                                    </a>
-                                </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
-
-                    <div class="xl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[15px]">
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-leaf !mb-0">
-                            @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
-                            @if($index % 2 != 0)
-                                <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
-                                        <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
-                                        <span>{{ $item->name}}</span>
-                                    </a>
-                                </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
-
-                </div>
-
-                <a href="#" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">Hepsini Görüntüle</a>
         
-            </div>
-
-        </div>
-
     </section>
 
     <section class="wrapper !bg-[#edf2fc]">
