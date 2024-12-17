@@ -22,7 +22,7 @@ class CategoryTranslation extends Model implements Viewable
 
     public function getSlugOptions() : SlugOptions
     {
-        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug')->allowDuplicateSlugs();
+        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug')->saveSlugsTo();
     }
 
 }

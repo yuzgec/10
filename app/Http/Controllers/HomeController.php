@@ -66,13 +66,13 @@ class HomeController extends Controller
 
     public function service($category, $slug){
         
-        //dd($slug);
-
         $detail = Service::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
 
-        //dd($detail);
+        dd($category,$slug,$detail);
+
+        //dd();
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
