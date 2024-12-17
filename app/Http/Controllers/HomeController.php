@@ -70,7 +70,7 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
-        dd($category,$slug,$detail);
+        //dd($category,$slug,$detail);
 
         //dd();
 

@@ -4,25 +4,24 @@ namespace App\Models;
 
 use App\Enums\StatusEnum;
 
-
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
-
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Activitylog\LogOptions;
 
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
+
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
 
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class Service extends Model implements TranslatableContract,HasMedia,Viewable
 {
@@ -45,6 +44,7 @@ class Service extends Model implements TranslatableContract,HasMedia,Viewable
 
     public function registerMediaCollections(): void
     {
+      
 
         $this->addMediaCollection('page')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
             $this->addMediaConversion('img')->width(1250)->nonOptimized();
