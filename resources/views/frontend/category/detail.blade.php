@@ -33,7 +33,7 @@
                 @foreach ($services->where('category_id', $detail->id) as $item)
 
                     <div class="xl:w-4/12 group cursor-dark rounded lg:w-4/12 md:w-4/12 w-6/12 flex-[0_0_auto] px-[15px] max-w-full mt-[30px]">
-                    <a href="{{ route('service.detail', $item->slug) }}" title="{{ $item->name }}">
+                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug]) }}" title="{{ $item->name }}">
                     <div class="card lift !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] !h-full items-center">
                         <div class="card-body items-center flex !px-3 py-6 xl:!p-8 lg:!p-8 md:!p-8">
                             <figure class=" md:!px-3 xl:!px-0 xxl:!px-3 !mb-0">

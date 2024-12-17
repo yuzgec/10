@@ -64,11 +64,15 @@ class HomeController extends Controller
         return view('frontend.project.index');
     }
 
-    public function service($slug){
+    public function service($category, $slug){
+        
+        //dd($slug);
 
         $detail = Service::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
+
+        //dd($detail);
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
@@ -117,9 +121,11 @@ class HomeController extends Controller
         })->first();
 
 
+
+
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
-        $t = str_replace(',', "\n", $detail->name);
+        $t = str_replace([',', '?', ':'], "\n", $detail->name);
         $title = nl2br($t); 
 
         SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name);

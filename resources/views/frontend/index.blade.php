@@ -92,7 +92,7 @@
                             @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
                                 @if($index % 2 == 0)
                                 <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
                                         <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
                                         <span>{{ $item->name}}</span>
                                     </a>
@@ -107,7 +107,7 @@
                             @foreach ($services->where('category_id', 12)->take(6) as $index => $item)
                             @if($index % 2 != 0)
                                 <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
                                         <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
                                         <span>{{ $item->name}}</span>
                                     </a>
@@ -143,7 +143,7 @@
                             @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
                                 @if($index % 2 == 0)
                                 <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
                                         <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
                                         <span>{{ $item->name}}</span>
                                     </a>
@@ -158,7 +158,7 @@
                             @foreach ($services->where('category_id', 13)->take(6) as $index => $item)
                             @if($index % 2 != 0)
                                 <li class="mt-3 relative pl-6">
-                                    <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name}}">
+                                    <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name}}">
                                         <span><i class="uil uil-check !w-4 !h-4 text-[0.8rem] leading-none tracking-[normal] text-center table !text-[#7cb798] !bg-[#e7f2ec] absolute rounded-[100%] left-0 top-[0.2rem] before:align-middle before:table-cell before:content-['\e9dd']"></i></span>
                                         <span>{{ $item->name}}</span>
                                     </a>

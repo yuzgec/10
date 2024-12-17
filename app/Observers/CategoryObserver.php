@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Observers;
+
 use App\Models\Category;
 use Illuminate\Support\Facades\Cache;
 

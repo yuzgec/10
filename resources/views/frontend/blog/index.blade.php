@@ -39,12 +39,6 @@
                                         <i class="uil uil-calendar-alt pr-[0.2rem] align-[-.05rem] before:content-['\e9ba']"></i>
                                         <span>{{ $item->created_at}}</span>
                                     </li>
-                                    <!--  <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                                        <a class="text-[#aab0bc] hover:text-[#3f78e0] hover:border-[#3f78e0]" href="#">
-                                            <i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>
-                                            4
-                                        </a>
-                                    </li> -->
                                     <li class="post-likes !ml-auto inline-block">
                                         <i class="uil uil-eye pr-[0.2rem] align-[-.05rem]"></i>
                                         {{ views($item)->unique()->count()}} Görüntülenme

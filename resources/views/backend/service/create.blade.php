@@ -33,7 +33,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-9 mb-3 p-1">
+    <div class="col-md-9 mb-3">
         <div class="card">
             <div class="card-stamp">
                 <div class="card-stamp-icon bg-yellow">
@@ -143,7 +143,7 @@
     
     </div>
 
-    <div class="col-md-3 mb-3 p-1">
+    <div class="col-md-3 mb-3">
         
         <x-dashboard.site.category parent="2"/>
         

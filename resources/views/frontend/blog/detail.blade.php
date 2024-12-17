@@ -52,7 +52,7 @@
                 <div class="widget">
               <h4 class="widget-title !mb-3">Son Blog Yazıları</h4>
               <ul class="m-0 p-0 after:content-[''] after:block after:h-0 after:clear-both after:invisible">
-              @foreach ($blog->whereNotIn('id',[$detail->id])->take(3) as $item )
+              @foreach ($blog->whereNotIn('id',[$detail->id])->take(5) as $item )
 
                 <li class=" clear-both block overflow-hidden">
                   <figure class="!rounded-[.4rem] float-left w-14 !h-[4.5rem]">
@@ -72,12 +72,10 @@
                         <i class="uil uil-eye pr-[0.2rem] align-[-.05rem]"></i>{{ views($item)->unique()->count()}}</a>
                     </li>
                     </ul>
-                    <!-- /.post-meta -->
                   </div>
                 </li>
           @endforeach
               </ul>
-              <!-- /.image-list -->
             </div>
                     <div class="job-list mt-10" >
                         <h3 class="!mb-4">Hizmet Kategorileri</h3>
@@ -87,8 +85,7 @@
                         <a href="{{ route('category.detail', $item->slug)}}" title="{{ $item->name }}" class="card mb-4 lift">
                             <div class="card-body p-2">
                                 <span class="flex flex-wrap mx-[-10px] justify-between items-center">
-                                    <span class="w-12/12 md:w-12/12 lg:w-12/12 xl:w-12/12 flex-[0_0_auto] px-[15px] max-w-full text-[#60697b] flex items-center" 
-                                    ">
+                                    <span class="w-12/12 md:w-12/12 lg:w-12/12 xl:w-12/12 flex-[0_0_auto] px-[15px] max-w-full text-[#60697b] flex items-center">
                                         {{ $item->name}}
                                     </span>
                                     <span class="hidden xl:block lg:block w-1/12 flex-[0_0_auto] px-[15px] max-w-full !text-center text-[#60697b]">

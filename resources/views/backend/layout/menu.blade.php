@@ -62,9 +62,9 @@
                                             <x-dashboard.icon.lira width="16"/> Ödeme
                                         </a>
                                         <div class="dropdown-menu">
-                                          <a href="./cards.html" class="dropdown-item">
-                                            Müşteri Listesi
-                                          </a>
+                                            <a href="./cards.html" class="dropdown-item">
+                                                Müşteri Listesi
+                                            </a>
                                         </div>
                                     </div>
 

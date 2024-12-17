@@ -71,7 +71,7 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        $edit = Service::withTrashed()->find($id);
+        $edit = Service::with('getCategory')->withTrashed()->find($id);
         $activities = Activity::where('subject_type', ServiceTranslation::class)->where('subject_id', $id)->orderBy('created_at', 'desc')->get();
         return view('backend.service.edit', compact('edit', 'activities'));
     }

@@ -44,11 +44,10 @@
                         @foreach ($services->where('category_id', $detail->getCategory->id) as $item)
                             
                         
-                        <a href="{{ route('service.detail', $item->slug)}}" title="{{ $item->name }}" class="card mb-4 lift" style="background-color:{{($detail->id == $item->id ) ? '#e2e2e2' : null}}">
+                        <a href="{{ route('service.detail', [$item->getCategory->slug, $item->slug])}}" title="{{ $item->name }}" class="card mb-4 lift" style="background-color:{{($detail->id == $item->id ) ? '#e2e2e2' : null}}">
                             <div class="card-body p-2">
                                 <span class="flex flex-wrap mx-[-10px] justify-between items-center">
-                                    <span class="w-12/12 md:w-12/12 lg:w-12/12 xl:w-12/12 flex-[0_0_auto] px-[15px] max-w-full text-[#60697b] flex items-center" 
-                                    ">
+                                    <span class="w-12/12 md:w-12/12 lg:w-12/12 xl:w-12/12 flex-[0_0_auto] px-[15px] max-w-full text-[#60697b] flex items-center">
                                         {{ $item->name}}
                                     </span>
                                     <span class="hidden xl:block lg:block w-1/12 flex-[0_0_auto] px-[15px] max-w-full !text-center text-[#60697b]">
