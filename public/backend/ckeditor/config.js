@@ -4,8 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-
-	config.extraPlugins = 'youtube,justify,colorbutton';
+	config.extraPlugins = 'youtube,justify,colorbutton,tabletools,tableresize';
 
 	// Define changes to default configuration here.
 	// For complete reference see:
