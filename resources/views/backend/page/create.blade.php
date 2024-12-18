@@ -198,6 +198,8 @@
                 filebrowserUploadMethod: 'form',
                 allowedContent: true,
                 height : 400,
+                
+
             });
         </script>
     @endforeach

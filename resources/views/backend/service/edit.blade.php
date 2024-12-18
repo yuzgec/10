@@ -290,6 +290,8 @@
             filebrowserUploadMethod: 'form',
             allowedContent: true,
             height : 400,
+            extraAllowedContent: 'img[class]', // Resimlere class eklemeyi etkinleştirir
+
         });
     </script>
 @endforeach
