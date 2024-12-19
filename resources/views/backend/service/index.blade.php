@@ -9,8 +9,8 @@
 
                 <div class="p-1">
                     <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
-                        <x-dashboard.icon.add/>
-                       Kategori Ekle
+                        <x-dashboard.icon.add width="16" height="16"/>
+                        Ekle
                     </a>
                 </div>
 
@@ -57,9 +57,9 @@
         @if($all->total() != 0)
 
         <div class="card-header">
-            <h3 class="card-title">Hizmet Listesi [{{ $all->total()}}]</h3>
+            <h3 class="card-title">Hizmetler [{{ $all->total()}}]</h3>
             <div class="card-actions d-flex">
-                <div class="d-none d-sm-inline-block  p-1">
+                <div class="d-none d-sm-inline-block p-1">
                     <form>
                         <div class="input-icon mb-3">
                             <input type="text" class="form-control" name="q" placeholder="Arama" value="{{ request('q')}}">
@@ -67,6 +67,16 @@
                                 <x-dashboard.icon.search/>
                              </span>
                         </div>
+                    </form>
+                </div>
+                <div class="d-none d-sm-inline-block p-1">
+                    <form>
+                        <select class="form-select" name="category_id" onchange="location = this.value;">
+                            <option value="?category_id=0" {{ request('category_id') == 0 ? 'selected' :  null}}>Hepsi</option>
+                            @foreach ($categories->where('parent_id',2) as $item)
+                                <option value="?category_id={{ $item->id}}" {{ request('category_id') == $item->id ? 'selected' :  null}}>{{ $item->name}}</option>
+                            @endforeach
+                        </select>
                     </form>
                 </div>
                 @if(request('q'))
@@ -77,15 +87,13 @@
                 </div>
                 @endif
                 <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-dark">
+                    <a href="{{ url()->previous() }}" class="btn btn-icon">
                         <x-dashboard.icon.back/>
-                        Geri
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('service.create')}}" title="sayfa Oluştur" class="btn btn-primary">
+                    <a href="{{ route('service.create')}}" title="Hizmet Oluştur" class="btn btn-icon" >
                         <x-dashboard.icon.add/>
-                        Ekle
                     </a>
                 </div>
 
@@ -97,7 +105,7 @@
             <thead>
                     <tr>
                         <th>Img</th>
-                        <th>AD</th>
+                        <th>Ad</th>
                         <th>Kategori</th>
                         <th>Durum</th>
                         <th class="w-1"></th>
@@ -111,13 +119,15 @@
                             <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
                         </td>
                         <td>
-                            <a href="{{ route('service.edit',$item->id)}}" title="Düzenle">
+                            <a href="{{ route('service.edit',$item->id)}}" title=" {{$item->name}} - Düzenle">
                                 {{$item->name}}
                             </a>
                         </td>
 
                         <td class="text-secondary">
+                            <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
                             {{ $item->getCategory->name }}
+                            </a>
                         </td>
                         <td class="text-secondary">
                             <div class="d-flex align-items-center">
@@ -162,8 +172,14 @@
                         </div>
                     </div>
                     @endforeach
+
                 </tbody>
             </table>
+            
+            <div class="d-flex align-items-center justify-content-center mt-2">
+                {{ $all->appends(['siralama' => 'service', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
+            </div>
+
           
         </div>
         
@@ -209,7 +225,6 @@
 
         // Laravel'den gelen verileri kullan
         const chartData = @json($chartData);
-
         new Chart(ctx, {
             type: 'bar', // Çubuk grafik
             data: {
@@ -234,27 +249,26 @@
     });
 </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const table = document.getElementById('sortableTable');
-
-            new Sortable(table.querySelector('tbody'), {
-                handle: 'td', // Drag handle
-                animation: 150,
-                onEnd: function (evt) {
-                    const rows = table.querySelectorAll('tr');
-                    let order = Array.from(rows).map(row => row.dataset.id);
-
-                    fetch('{{ route('service.sort') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ order: order })
-                    }).then(response => response.json());
-                }
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('sortableTable');
+        new Sortable(table.querySelector('tbody'), {
+            handle: 'td', // Drag handle
+            animation: 150,
+            onEnd: function (evt) {
+                const rows = table.querySelectorAll('tr');
+                let order = Array.from(rows).map(row => row.dataset.id);
+                fetch('{{ route('service.sort') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ order: order })
+                }).then(response => response.json());
+            }
         });
-    </script>
+    });
+</script>
+
 @endsection

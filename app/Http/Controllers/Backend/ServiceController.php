@@ -18,9 +18,17 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
-        $all = Service::with(['getCategory'])->whereHas('translations', function ($query){
-            $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
-        })->rank()->paginate(30);
+        $all = Service::with(['getCategory', 'media'])
+        ->lang()
+        ->when(request('q'), function ($query, $q) {
+            $query->whereTranslationLike('name', "%{$q}%")
+                  ->orWhereTranslationLike('slug', "%{$q}%");
+        })
+        ->when(request('category_id'), function($query){
+            $query->where('category_id', request('category_id'));
+        })
+        ->rank()
+        ->paginate(20);
 
 
           // Kullanıcıdan tarih aralığını alın
@@ -33,7 +41,9 @@ class ServiceController extends Controller
             $endDate ? now()->parse($endDate) : null
         );
 
-        $topPages = Service::orderByViews('desc', $period)->get();
+        $topPages = Service::orderByViews('desc', $period)->take(10)->when(request('category_id'), function($query){
+            $query->where('category_id', request('category_id'));
+        })->get();
 
         $chartData = [
             'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al

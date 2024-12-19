@@ -68,6 +68,10 @@ class Page extends Model implements TranslatableContract,HasMedia,Viewable
         });
     }
 
+    public function scopeRank($query){
+        return $query->orderBy('rank','asc');
+    }
+
     protected $casts = [
         'status' => StatusEnum::class,
     ];

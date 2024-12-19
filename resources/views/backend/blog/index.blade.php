@@ -57,17 +57,28 @@
         <div class="card-status-top bg-blue"></div>
         @if($all->total() != 0)
 
+     
         <div class="card-header">
-            <h3 class="card-title">Sayfa Listesi [{{ $all->total()}}]</h3>
+            <h3 class="card-title">Bloglar [{{ $all->total()}}]</h3>
             <div class="card-actions d-flex">
-                <div class="d-none d-sm-inline-block  p-1">
+                <div class="d-none d-sm-inline-block p-1">
                     <form>
                         <div class="input-icon mb-3">
                             <input type="text" class="form-control" name="q" placeholder="Arama" value="{{ request('q')}}">
                             <span class="input-icon-addon">
                                 <x-dashboard.icon.search/>
-                             </span>
+                            </span>
                         </div>
+                    </form>
+                </div>
+                <div class="d-none d-sm-inline-block p-1">
+                    <form>
+                        <select class="form-select" name="category_id" onchange="location = this.value;">
+                            <option value="?category_id=0" {{ request('category_id') == 0 ? 'selected' :  null}}>Hepsi</option>
+                            @foreach ($categories->where('parent_id',1) as $item)
+                                <option value="?category_id={{ $item->id}}" {{ request('category_id') == $item->id ? 'selected' :  null}}>{{ $item->name}}</option>
+                            @endforeach
+                        </select>
                     </form>
                 </div>
                 @if(request('q'))
@@ -78,15 +89,13 @@
                 </div>
                 @endif
                 <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-dark">
+                    <a href="{{ url()->previous() }}" class="btn btn-icon">
                         <x-dashboard.icon.back/>
-                        Geri
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('blog.create')}}" title="Blog Oluştur" class="btn btn-primary">
+                    <a href="{{ route('blog.create')}}" title="Blog Oluştur" class="btn btn-icon" >
                         <x-dashboard.icon.add/>
-                        Ekle
                     </a>
                 </div>
 

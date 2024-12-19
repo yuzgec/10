@@ -81,6 +81,7 @@ class Service extends Model implements TranslatableContract,HasMedia,Viewable
         });
     }
 
+
     protected $casts = [
         'status' => StatusEnum::class,
     ];

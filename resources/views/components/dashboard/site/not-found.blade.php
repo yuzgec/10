@@ -5,9 +5,11 @@
       Henüz birşey eklenmemiş.
     </p>
     <div class="empty-action">
-        <a href="{{ route($route.'.create')}}" class="btn btn-primary">
+        <a href="{{ route($route.'.index')}}" class="btn btn-icon">
+            <x-dashboard.icon.back/>
+        </a>
+        <a href="{{ route($route.'.create')}}" class="btn btn-icon">
             <x-dashboard.icon.add/>
-            Hemen Ekle
         </a>
     </div>
 </div>

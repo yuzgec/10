@@ -17,11 +17,19 @@ class PageController extends Controller
 
     public function index()
     {
-        $all = Page::with(['getCategory','media'])->whereHas('translations', function ($query){
-            $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
-        })->orderBy('rank', 'asc')->paginate(20);
+        $all = Page::with(['getCategory', 'media'])
+        ->lang()
+        ->when(request('q'), function ($query, $q) {
+            $query->whereTranslationLike('name', "%{$q}%")
+                  ->orWhereTranslationLike('slug', "%{$q}%");
+        })
+        ->when(request('category_id'), function($query){
+            $query->where('category_id', request('category_id'));
+        })
+        ->rank()
+        ->paginate(20);
 
-        $topPages = Page::orderByViews()->get();
+        $topPages = Page::orderByViews()->take(10)->get();
 
         $chartData = [
             'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
