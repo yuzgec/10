@@ -28,7 +28,7 @@ class ServiceController extends Controller
             $query->where('category_id', request('category_id'));
         })
         ->rank()
-        ->paginate(20);
+        ->paginate(30);
 
 
           // Kullanıcıdan tarih aralığını alın

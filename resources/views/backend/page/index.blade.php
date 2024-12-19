@@ -176,6 +176,12 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                    
+                <div class="d-flex align-items-center justify-content-center mt-2">
+                    {{ $all->appends(['siralama' => 'page', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
+                </div>
+
             
             </div>
             

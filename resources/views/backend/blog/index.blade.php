@@ -1,20 +1,17 @@
 @extends('backend.layout.app')
 @section('content')
-
 <div class="col-12 col-md-3">
     <div class="card">
         <div class="card-status-top bg-blue"></div>
         <div class="card-header">
             <h3 class="card-title">Kategoriler</h3>
             <div class="card-actions d-flex">
-
                 <div class="p-1">
                     <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
                         <x-dashboard.icon.add/>
                        Kategori Ekle
                     </a>
                 </div>
-
             </div>
         </div>
         
@@ -46,6 +43,13 @@
 
                 </tbody>
             </table>
+
+               
+            <div class="d-flex align-items-center justify-content-center mt-2">
+                {{ $all->appends(['siralama' => 'blog', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
+            </div>
+
+
         </div>
 
     </div>
@@ -125,10 +129,9 @@
                                 {{$item->name}}
                             </a>
                         </td>
-
                         <td class="text-secondary">
-                            {{ $item->getCategory->name }}
-                        </td>
+                            <a href="{{ route('category.edit', $item->getCategory->slug)}}" title="{{ $item->getCategory->name }} - Düzenle">{{ $item->getCategory->name }}
+                        </td> 
                         <td class="text-secondary">
                             <div class="d-flex align-items-center">
                             <x-dashboard.icon.status  status='{{$item->status->color() }}'/>
@@ -192,11 +195,53 @@
 
 
     </div>
+    
+    <div class="card mt-3">
+        <div class="card-status-top bg-blue"></div>
+        <div class="card-header">
+            <h3 class="card-title">En Çok Bakılan Sayfalar</h3>
+        
+        </div>
+        <div class="card-body">
+            <canvas id="topPagesChart" width="400" height="200"></canvas>
+        </div>
+    </div>
   
 </div>
 @endsection
 
 @section('customJS')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('topPagesChart').getContext('2d');
+
+        // Laravel'den gelen verileri kullan
+        const chartData = @json($chartData);
+
+        new Chart(ctx, {
+            type: 'bar', // Çubuk grafik
+            data: {
+                labels: chartData.labels, // Sayfa başlıkları
+                datasets: [{
+                    label: 'Görüntülenme Sayısı',
+                    data: chartData.views, // Görüntülenme sayıları
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Grafik rengi
+                    borderColor: 'rgba(75, 192, 192, 1)', // Çizgi rengi
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true // Y eksenini sıfırdan başlat
+                    }
+                }
+            }
+        });
+    });
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const table = document.getElementById('sortableTable');

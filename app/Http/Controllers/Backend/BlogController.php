@@ -16,11 +16,28 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $all = Blog::with(['getCategory'])->whereHas('translations', function ($query){
-            $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
-        })->rank()->paginate(20);
+        $all = Blog::with(['getCategory', 'media'])
+        ->lang()
+        ->when(request('q'), function ($query, $q) {
+            $query->whereTranslationLike('name', "%{$q}%")
+                  ->orWhereTranslationLike('slug', "%{$q}%");
+        })
+        ->when(request('category_id'), function($query){
+            $query->where('category_id', request('category_id'));
+        })
+        ->rank()
+        ->paginate(30);
+
         
-        return view('backend.blog.index',compact('all'));
+        $topPages = Blog::orderByViews()->take(10)->get();
+
+        $chartData = [
+            'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
+            'views' => $topPages->pluck('views_count'), // Görüntülenme sayılarını al
+        ];
+
+        
+        return view('backend.blog.index',compact('all','chartData'));
     }
 
     /**
