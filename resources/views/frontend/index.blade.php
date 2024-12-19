@@ -75,7 +75,7 @@
                 <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] !relative">
                     <div class="shape bg-dot violet rellax !w-[7rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2rem; left: -0.7rem;"></div>
                     <figure class="!rounded-[.4rem] !mb-0">
-                        <img class="!rounded-[.4rem]" src="/web.jpg" alt="İzmir GO Dijital Ajans - Web Tasarım">
+                        <img class="!rounded-[.4rem]" src="/frontend/img/web.jpg" alt="İzmir GO Dijital Ajans - Web Tasarım">
                     </figure>
                 </div>
 
@@ -129,7 +129,7 @@
                 <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] xl:!order-2 lg:!order-2 !relative">
                     <div class="shape !rounded-[50%] !bg-[#f6f3f9] rellax !w-[8rem] !h-[8rem] absolute" data-rellax-speed="1" style="bottom: -2.5rem; right: -1.5rem;"></div>
                     <figure class="!rounded-[.4rem] !mb-0">
-                        <img class="!rounded-[.4rem] mb-10" src="/kurumsal-kimlik.jpg" alt="İzmir GO Dijital Ajans - Kurumsal Kimlik">
+                        <img class="!rounded-[.4rem] mb-10" src="/frontend/img/kurumsal-kimlik.jpg" alt="İzmir GO Dijital Ajans - Kurumsal Kimlik">
                     </figure>
                 </div>
 
@@ -180,7 +180,7 @@
                 <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] max-w-full mt-[50px] !relative">
                     <div class="shape bg-dot violet rellax !w-[7rem] !h-[8rem] !absolute z-[1] opacity-50" data-rellax-speed="1" style="bottom: -2rem; left: -0.7rem;"></div>
                     <figure class="!rounded-[.4rem] !mb-0">
-                        <img class="!rounded-[.4rem]" src="/seo.jpg" alt="İzmir GO Dijital Ajans">
+                        <img class="!rounded-[.4rem]" src="/frontend/img/seo.jpg" alt="İzmir GO Dijital - Google SEO Optimizasyonu">
                     </figure>
                 </div>
 

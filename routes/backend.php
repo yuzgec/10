@@ -25,7 +25,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 //Backend
-Route::group(["prefix"=>"go", 'middleware' => ['auth','web']],function() {
+Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],function() {
     Route::get('/',[DashboardController::class, 'index'])->name('go');
     Route::auto('/user',UserController::class);
     Route::get('/activity', [UserController::class,'activity'])->name('activity');

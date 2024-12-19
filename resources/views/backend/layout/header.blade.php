@@ -12,7 +12,7 @@
         <div class="nav-item d-none d-md-flex me-3">
           <div class="btn-list">
             <span class="d-none d-sm-inline">
-                <a href="{{ route('home')}}" class="btn" target="_blank">
+                <a href="{{ route('home')}}" title="Site Önizle" class="btn" target="_blank">
                     <x-dashboard.icon.preview/>
                     Site Önizle
                 </a>
@@ -22,7 +22,7 @@
                 class="btn btn-primary d-none d-sm-inline-block"
                 data-bs-toggle="modal"
                 data-bs-target="#modal-report">
-                     Destek Talebi
+                Destek Talebi
             </a>
           </div>
         </div>

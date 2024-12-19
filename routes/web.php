@@ -14,10 +14,6 @@ Route::redirect('/makale/izmir-karsiyaka-da-seo-yapan-firmalar/46', '/blog/izmir
 
 
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
-Route::get('/calendar/create', [CalendarController::class, 'create'])->name('calendar.create');
-Route::post('/calendar', [CalendarController::class, 'store'])->name('calendar.store');
-Route::delete('/calendar/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
-Route::get('/calendar/events', [CalendarController::class, 'fetchEvents'])->name('calendar.events');
 
 $selectLang = Language::active()->get()->count();
 

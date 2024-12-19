@@ -199,8 +199,6 @@ return [
         'SEOMeta'=> Artesaos\SEOTools\Facades\SEOMeta::class,
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
         'Html' => Spatie\Html\Facades\Html::class,
-
-
     ])->toArray(),
 
 ];

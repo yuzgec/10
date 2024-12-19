@@ -21,7 +21,14 @@ class PageController extends Controller
             $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
         })->orderBy('rank', 'asc')->paginate(20);
 
-        return view('backend.page.index',compact('all'));
+        $topPages = Page::orderByViews()->get();
+
+        $chartData = [
+            'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
+            'views' => $topPages->pluck('views_count'), // Görüntülenme sayılarını al
+        ];
+
+        return view('backend.page.index',compact('all','chartData'));
     }
 
     public function create()

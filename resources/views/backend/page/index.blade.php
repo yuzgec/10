@@ -48,6 +48,20 @@
         </div>
 
     </div>
+
+    <div class="card mt-3">
+        <div class="card-status-top bg-blue"></div>
+        <div class="card-header">
+            <h3 class="card-title">Kategoriler</h3>
+           
+        </div>
+        <div class="card-body">
+            <canvas id="topPagesChart" width="400" height="200"></canvas>
+           
+
+        </div>
+        
+    </div>
 </div>
 <div class="col-12 col-md-9">
     <div class="card">
@@ -106,7 +120,9 @@
                     @foreach ($all as $item)
                     <tr data-id="{{ $item->id }}">
                         <td>
-                            <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
+                            <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'thumb')}}">
+                                <img src="{{ $item->getFirstMediaUrl('page', 'icon')}}" class="avatar me-2">
+                            </a>
                         </td>
                         <td>
                             <a href="{{ route('page.edit',$item->id)}}" title="Düzenle">
@@ -178,6 +194,38 @@
 @endsection
 
 @section('customJS')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('topPagesChart').getContext('2d');
+
+        // Laravel'den gelen verileri kullan
+        const chartData = @json($chartData);
+
+        new Chart(ctx, {
+            type: 'bar', // Çubuk grafik
+            data: {
+                labels: chartData.labels, // Sayfa başlıkları
+                datasets: [{
+                    label: 'Görüntülenme Sayısı',
+                    data: chartData.views, // Görüntülenme sayıları
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Grafik rengi
+                    borderColor: 'rgba(75, 192, 192, 1)', // Çizgi rengi
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true // Y eksenini sıfırdan başlat
+                    }
+                }
+            }
+        });
+    });
+</script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const table = document.getElementById('sortableTable');

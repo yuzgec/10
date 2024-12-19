@@ -84,6 +84,7 @@
                     @endforeach
                     <div class="tab-content">
                         <div class="tab-pane" id="image" role="tabpanel">
+                            
                             <div class="row">
 
                                 <div class="col-md-6 col-12 mb-3">
@@ -184,7 +185,10 @@
                                                 <table class="table table-hover table-bordered table-center">
                                                     <thead>
                                                     <tr>
+                                                        <th>Sıra</th>
                                                         <th>Resim</th>
+                                                        <th>Boyut</th>
+                                                        <th>Ad</th>
                                                         <th>Sil</th>
                                                     </tr>
                                                     </thead>
@@ -195,7 +199,10 @@
                                                                 <td>{{ $item->order_column}}</td>
 
                                                                 <td>
-                                                                    <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
+                                                                    <a data-fslightbox="gallery" href="{{ $item->getUrl() }}">
+                                                                        <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
+
+                                                                      </a>
                                                                 </td>
                                                                 <td style="background-color:{{ $item->size >= 819200 ? 'red' : 'green'}};color:white">
                                                                     {{ intval($item->size / 1024)}} kb

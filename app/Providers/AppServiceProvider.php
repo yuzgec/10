@@ -34,10 +34,7 @@ class AppServiceProvider extends ServiceProvider
         Service::observe(ServiceObserver::class);
         Blog::observe(BlogObserver::class);
         Category::observe(CategoryObserver::class);
-        
 
-        
-        
         //$lang = $languages->pluck('lang')->toArray(); // Sadece `lang` değerleri bir array olarak
         //dd($lang);
 

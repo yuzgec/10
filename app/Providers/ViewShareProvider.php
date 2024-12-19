@@ -45,12 +45,7 @@ class ViewShareProvider extends ServiceProvider
             return Language::active()->get();
         });
 
-
-        //dd($blogs);
-
-
-        //dd($language);
-
+        
   
         View::share([
             'blog'=> $blog,

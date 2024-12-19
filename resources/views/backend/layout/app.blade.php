@@ -24,7 +24,7 @@
 
 
     </head>
-    <body class="">
+    <body class="" data-bs-theme="light">
         <div class="page">
             @include('backend.layout.header')
             @include('backend.layout.menu')

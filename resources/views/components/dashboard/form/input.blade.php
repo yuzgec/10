@@ -15,7 +15,7 @@
         @endif
         
         @if($maxlength > 0)
-            <small class="charCount character-count"></small>
+            <small class="charCount character-count" style="float: right"></small>
         @endif
     </div>
 </div>

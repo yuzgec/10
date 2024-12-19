@@ -6,7 +6,7 @@
                     <div class="col">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ route('home')}}">
+                                <a class="nav-link" href="{{ route('go')}}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <x-dashboard.icon.home width="20"/>
                                     </span>

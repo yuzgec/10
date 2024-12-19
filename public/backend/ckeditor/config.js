@@ -4,13 +4,17 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	config.extraPlugins = 'youtube,justify,colorbutton,tabletools,tableresize';
+	config.extraPlugins = 'youtube,justify,colorbutton,tabletools,tableresize,scayt,menubutton,wordcount';
+	config.scayt_autoStartup = false;
+	config.removePlugins = 'stylescombo'; // Styles menüsünü tamamen kaldırır
+	config.wordcount = {
+		showWordCount: true,
+		showCharCount: false,
+		maxWordCount: -1,
+		maxCharCount: -1,
+		maxParagraphs: -1,
+	};
 
-	// Define changes to default configuration here.
-	// For complete reference see:
-	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
-
-	// The toolbar groups arrangement, optimized for two toolbar rows.
 	config.toolbarGroups = [
 		{ name: 'insert' },
 		{ name: 'links' },
@@ -22,12 +26,9 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'alignment' } // Hizalama seçenekleri doğrudan araç çubuğunda
 	];
 
-	// Remove some buttons provided by the standard plugins, which are
-	// not needed in the Standard(s) toolbar.
 	//config.removeButtons = 'Underline,Subscript,Superscript';
 
-	// Set the most common block elements.
-	config.format_tags = 'p;h2;h3;h4;h5;h6';
+	config.format_tags = 'p;h2;h3;h4';
 	// Simplify the dialog windows.
 
 };
