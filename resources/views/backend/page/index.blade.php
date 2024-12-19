@@ -49,19 +49,7 @@
 
     </div>
 
-    <div class="card mt-3">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">Kategoriler</h3>
-           
-        </div>
-        <div class="card-body">
-            <canvas id="topPagesChart" width="400" height="200"></canvas>
-           
-
-        </div>
-        
-    </div>
+    
 </div>
 <div class="col-12 col-md-9">
     <div class="card">
@@ -187,7 +175,16 @@
 
 
     </div>
-  
+    <div class="card mt-3">
+        <div class="card-status-top bg-blue"></div>
+        <div class="card-header">
+            <h3 class="card-title">En Çok Bakılan Sayfalar</h3>
+           
+        </div>
+        <div class="card-body">
+            <canvas id="topPagesChart" width="400" height="200"></canvas>
+        </div>
+    </div>
 </div>
 
 

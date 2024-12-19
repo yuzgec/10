@@ -9,18 +9,38 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
 use Spatie\Activitylog\Models\Activity;
+use CyrildeWit\EloquentViewable\Support\Period;
 
 class ServiceController extends Controller
 {   
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $all = Service::with(['getCategory'])->whereHas('translations', function ($query){
             $query->where('name', 'like', '%'.request('q').'%')->orWhere('slug', 'like', '%'.request('q').'%');
-        })->rank()->paginate(20);
-        return view('backend.service.index',compact('all'));
+        })->rank()->paginate(30);
+
+
+          // Kullanıcıdan tarih aralığını alın
+        $startDate = $request->input('start_date'); // Örn: 2023-01-01
+        $endDate = $request->input('end_date'); // Örn: 2023-12-31
+
+        // Tarih aralığını belirleyin
+        $period = Period::create(
+            $startDate ? now()->parse($startDate) : null,
+            $endDate ? now()->parse($endDate) : null
+        );
+
+        $topPages = Service::orderByViews('desc', $period)->get();
+
+        $chartData = [
+            'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
+            'views' => $topPages->pluck('views_count'), // Görüntülenme sayılarını al
+        ];
+
+        return view('backend.service.index',compact('all','chartData'));
     }
 
     /**
