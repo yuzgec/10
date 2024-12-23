@@ -14,6 +14,8 @@ class BlogObserver
     {
         Cache::forget('blogs');
         Cache::forget('categories');
+        Cache::forget('counts');
+        
     }
 
     /**
@@ -31,6 +33,7 @@ class BlogObserver
     {
         Cache::forget('blogs');
         Cache::forget('categories');
+        Cache::forget('counts');
 
     }
 
@@ -40,6 +43,8 @@ class BlogObserver
     public function restored(Blog $blog): void
     {
         Cache::forget('blogs');
+        Cache::forget('counts');
+
     }
 
     /**
@@ -48,5 +53,7 @@ class BlogObserver
     public function forceDeleted(Blog $blog): void
     {
         Cache::forget('blogs');
+        Cache::forget('counts');
+
     }
 }

@@ -37,7 +37,7 @@ class ViewShareProvider extends ServiceProvider
             return Page::with(['getCategory','media'])->active()->lang()->get();
         });
 
-        $blog = Cache::remember('blog',now()->addYear(5), function () {
+        $blog = Cache::remember('blogs',now()->addYear(5), function () {
             return Blog::with(['getCategory','media'])->active()->lang()->rank()->get();
         });
 
@@ -45,7 +45,8 @@ class ViewShareProvider extends ServiceProvider
             return Language::active()->get();
         });
 
-        
+        //dd($language);
+
   
         View::share([
             'blog'=> $blog,

@@ -179,6 +179,9 @@ class ServiceController extends Controller
             Service::where('id', $id)->update(['rank' => $index + 1]);
         }
 
+        Cache::forget('services');
+
+
         return response()->json(['success' => true]);
     }
 

@@ -16,6 +16,8 @@ class CategoryController extends Controller
         $all = Category::when(request('q'), function ($query) {
             return $query->where('parent_id', request('q'));
         })->get()->toFlatTree();
+
+        //dd($all);
         return view('backend.category.index',compact('all'));
     }
 

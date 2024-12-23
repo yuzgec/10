@@ -13,6 +13,8 @@ class CategoryObserver
     public function created(Category $category): void
     {
         Cache::forget('categories');
+        Cache::forget('counts');
+
     }
 
     /**
@@ -29,6 +31,8 @@ class CategoryObserver
     public function deleted(Category $category): void
     {
         Cache::forget('categories');
+        Cache::forget('counts');
+
 
     }
 
@@ -38,6 +42,8 @@ class CategoryObserver
     public function restored(Category $category): void
     {
         Cache::forget('categories');
+        Cache::forget('counts');
+
     }
 
     /**
@@ -46,5 +52,7 @@ class CategoryObserver
     public function forceDeleted(Category $category): void
     {
         Cache::forget('categories');
+        Cache::forget('counts');
+
     }
 }

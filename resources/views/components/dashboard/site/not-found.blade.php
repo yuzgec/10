@@ -8,7 +8,7 @@
         <a href="{{ route($route.'.index')}}" class="btn btn-icon">
             <x-dashboard.icon.back/>
         </a>
-        <a href="{{ route($route.'.create')}}" class="btn btn-icon">
+        <a href="{{ route($route.'.create')}}" class="btn btn-icon btn-primary">
             <x-dashboard.icon.add/>
         </a>
     </div>

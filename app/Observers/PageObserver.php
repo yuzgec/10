@@ -15,6 +15,7 @@ class PageObserver
         //dd($page);
         Cache::forget('pages');
         Cache::forget('categories');
+        Cache::forget('counts');
 
     }
 
@@ -34,6 +35,7 @@ class PageObserver
     {
         Cache::forget('pages');
         Cache::forget('categories');
+        Cache::forget('counts');
 
     }
 
@@ -43,6 +45,8 @@ class PageObserver
     public function restored(Page $page): void
     {
         Cache::forget('pages');
+        Cache::forget('counts');
+
     }
 
     /**
@@ -51,5 +55,7 @@ class PageObserver
     public function forceDeleted(Page $page): void
     {
         Cache::forget('pages');
+        Cache::forget('counts');
+
     }
 }

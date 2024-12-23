@@ -1,6 +1,6 @@
 @extends('backend.layout.app') @section('content')
 
-<div class="col-12 col-md-3">
+<div class="col-12 col-md-3 d-none d-sm-inline-block ">
     <div class="card">
         <div class="card-status-top bg-blue"></div>
         <div class="card-header">

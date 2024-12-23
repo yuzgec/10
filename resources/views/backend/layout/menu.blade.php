@@ -112,7 +112,7 @@
                                 <div class="dropdown-menu">
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            <x-dashboard.icon.add/> Personel
+                                            <x-dashboard.icon.add width="16" height="16"/> Personel
                                         </a>
                                         <div class="dropdown-menu">
                                           <a href="{{ route('customer.index')}}" class="dropdown-item">
@@ -125,7 +125,7 @@
                                     </div>
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            <x-dashboard.icon.add/> İzin
+                                            <x-dashboard.icon.add width="16" height="16"/> İzin
                                         </a>
                                         <div class="dropdown-menu">
                                             <a href="{{ route('customer.index')}}" class="dropdown-item">
@@ -195,7 +195,7 @@
                                 <div class="dropdown-menu">
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            Sayfa
+                                        <x-dashboard.icon.edit width="16" height="16"/> Sayfa
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
@@ -220,7 +220,7 @@
                                     </div>
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            Hizmet
+                                        <x-dashboard.icon.heart width="16" height="16"/> Hizmet
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            Blog
+                                            <x-dashboard.icon.blog width="16" height="16"/> Blog
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
@@ -273,7 +273,7 @@
                                     </div>
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            S.S.S.
+                                        <x-dashboard.icon.question-mark width="16" height="16"/> S.S.S.
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
@@ -299,53 +299,129 @@
                                             </a>
                                         </div>
                                     </div>
+                                    
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            Galeri
+                                        <x-dashboard.icon.image width="16" height="16"/> Resim Galeri
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a
-                                                class="dropdown-item"
-                                                href="{{ route('page.index')}}"
+                                            <a class="dropdown-item"
+                                                href="{{ route('faq.index')}}"
                                                 title="Sayfa Listesi">
-                                                Sayfa Yönetimi
+                                                <x-dashboard.icon.menu-list width="16"/> S.S.S Listesi
                                             </a>
                                             <a
                                                 class="dropdown-item"
-                                                href="{{ route('page.create')}}"
+                                                href="{{ route('faq.create')}}"
                                                 title="Sayfa Oluştur">
-                                                Sayfa Oluştur
+                                                <x-dashboard.icon.add width="16"/> S.S.S Oluştur
+                                            </a>
+
+                                            <a class="dropdown-item"
+                                                href="{{ route('category.index', ['q' => 5,'name' => 'SSS'])}}"
+                                                title="Kategori Listesi">
+                                                <x-dashboard.icon.category width="16"/> Kategori Yönetimi
                                             </a>
                                             
                                             <a class="dropdown-item" href="{{route('activity')}}" title="Etkinlikler">
-                                                Silinmiş Sayfalar
+                                                <x-dashboard.icon.delete width="16"/> Silinmiş Sayfalar
                                             </a>
                                         </div>
                                     </div>
+
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            Slider
+                                        <x-dashboard.icon.video width="16" height="16"/> Video Galeri
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a
-                                                class="dropdown-item"
-                                                href="{{ route('page.index')}}"
+                                            <a class="dropdown-item"
+                                                href="{{ route('faq.index')}}"
                                                 title="Sayfa Listesi">
-                                                Slider Listele
+                                                <x-dashboard.icon.menu-list width="16"/> S.S.S Listesi
                                             </a>
                                             <a
                                                 class="dropdown-item"
-                                                href="{{ route('page.create')}}"
+                                                href="{{ route('faq.create')}}"
                                                 title="Sayfa Oluştur">
-                                                Slider Ekle
+                                                <x-dashboard.icon.add width="16"/> S.S.S Oluştur
+                                            </a>
+
+                                            <a class="dropdown-item"
+                                                href="{{ route('category.index', ['q' => 5,'name' => 'SSS'])}}"
+                                                title="Kategori Listesi">
+                                                <x-dashboard.icon.category width="16"/> Kategori Yönetimi
                                             </a>
                                             
-                                           
+                                            <a class="dropdown-item" href="{{route('activity')}}" title="Etkinlikler">
+                                                <x-dashboard.icon.delete width="16"/> Silinmiş Sayfalar
+                                            </a>
                                         </div>
                                     </div>
+
+
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                            Kategori
+                                        <x-dashboard.icon.user width="16" height="16"/> Ekip Yönetimi
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ route('faq.index')}}"
+                                                title="Sayfa Listesi">
+                                                <x-dashboard.icon.menu-list width="16"/> S.S.S Listesi
+                                            </a>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('faq.create')}}"
+                                                title="Sayfa Oluştur">
+                                                <x-dashboard.icon.add width="16"/> S.S.S Oluştur
+                                            </a>
+
+                                            <a class="dropdown-item"
+                                                href="{{ route('category.index', ['q' => 5,'name' => 'SSS'])}}"
+                                                title="Kategori Listesi">
+                                                <x-dashboard.icon.category width="16"/> Kategori Yönetimi
+                                            </a>
+                                            
+                                            <a class="dropdown-item" href="{{route('activity')}}" title="Etkinlikler">
+                                                <x-dashboard.icon.delete width="16"/> Silinmiş Sayfalar
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                        <x-dashboard.icon.slider width="16" height="16"/> Slider Yönetimi
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ route('faq.index')}}"
+                                                title="Sayfa Listesi">
+                                                <x-dashboard.icon.menu-list width="16"/> S.S.S Listesi
+                                            </a>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('faq.create')}}"
+                                                title="Sayfa Oluştur">
+                                                <x-dashboard.icon.add width="16"/> S.S.S Oluştur
+                                            </a>
+
+                                            <a class="dropdown-item"
+                                                href="{{ route('category.index', ['q' => 5,'name' => 'SSS'])}}"
+                                                title="Kategori Listesi">
+                                                <x-dashboard.icon.category width="16"/> Kategori Yönetimi
+                                            </a>
+                                            
+                                            <a class="dropdown-item" href="{{route('activity')}}" title="Etkinlikler">
+                                                <x-dashboard.icon.delete width="16"/> Silinmiş Sayfalar
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                        <x-dashboard.icon.menu-list width="16"/> Kategori
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"

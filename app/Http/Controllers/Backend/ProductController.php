@@ -47,4 +47,8 @@ class ProductController extends Controller
         $edit = Product::withTrashed()->find($id);
         return view('backend.product.edit',compact('edit'));
     }
+
+    public function update(Request $request, $id){
+
+    }
 }

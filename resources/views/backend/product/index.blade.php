@@ -108,7 +108,7 @@
                             <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
                         </td>
                         <td>
-                            <a href="{{ route('page.edit',$item->id)}}" title="Düzenle">
+                            <a href="{{ route('product.edit',$item->id)}}" title="Düzenle">
                                 {{$item->name}}
                             </a>
                         </td>

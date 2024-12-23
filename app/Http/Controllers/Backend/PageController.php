@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\PageTranslation;
 use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -17,6 +18,9 @@ class PageController extends Controller
 
     public function index()
     {
+
+        //dd($pages);
+
         $all = Page::with(['getCategory', 'media'])
         ->lang()
         ->when(request('q'), function ($query, $q) {
@@ -151,6 +155,8 @@ class PageController extends Controller
         foreach ($order as $index => $id) {
             Page::where('id', $id)->update(['rank' => $index + 1]);
         }
+
+        Cache::forget('pages');
 
         return response()->json(['success' => true, 'message' => 'selam']);
     }

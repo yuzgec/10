@@ -32,6 +32,7 @@
         <table class="table table-vcenter card-table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Kategori Adı</th>
                     <th>Kategori Türü</th>
                     <th class="w-1"></th>
@@ -40,13 +41,26 @@
             <tbody>
                 @foreach ($all as $item)
                 <tr>
+
+                    <td>
+                        @if($item->parent_id == null)
+                        <span class="badge bg-blue text-blue-fg">{{ $item->id}}</b>
+                        @else
+                        {{ $item->id}}
+                        @endif
+                    </td>
+                
                     <td class="text-secondary text-capitalize">
                         <span class="">
                             {{ $item->parent_id == null ? '' : '--'}} {{ $item->name}}
                         </span>
                     </td>
-                    <td class="text-secondary text-capitalize">
-                        {{ $item->parent_id == null ? 'Ana Menu' : 'Alt Menu'}}
+                    <td class="text-secondary">
+                        @if($item->parent_id == null)
+                        <span class="badge bg-blue text-blue-fg">Ana Menu</b>
+                        @else
+                        <span class="badge badge-outline text-blue">Alt Menu</b>
+                        @endif
                     </td>
 
                     <td>

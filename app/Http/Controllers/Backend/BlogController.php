@@ -7,6 +7,7 @@ use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Activity;
 
 class BlogController extends Controller
@@ -16,6 +17,7 @@ class BlogController extends Controller
      */
     public function index()
     {
+
         $all = Blog::with(['getCategory', 'media'])
         ->lang()
         ->when(request('q'), function ($query, $q) {
@@ -167,6 +169,8 @@ class BlogController extends Controller
         foreach ($order as $index => $id) {
             Blog::where('id', $id)->update(['rank' => $index + 1]);
         }
+
+        Cache::forget('blogs');
 
         return response()->json(['success' => true]);
     }

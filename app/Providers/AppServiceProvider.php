@@ -13,8 +13,11 @@ use App\Observers\PageObserver;
 use App\Observers\ServiceObserver;
 use App\Observers\CategoryObserver;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cache;
 
+
+
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,8 +31,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
+
+        
         Paginator::useBootstrap();
         Carbon::setLocale(config('app.locale'));
+
         Page::observe(PageObserver::class);
         Service::observe(ServiceObserver::class);
         Blog::observe(BlogObserver::class);
@@ -40,6 +46,7 @@ class AppServiceProvider extends ServiceProvider
 
         //Config::set('translatable.locales', $lang);        
         //Config::set('laravellocalization.supportedLocales', $supportedLocales);
+
 
 
     }

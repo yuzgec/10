@@ -1,8 +1,8 @@
 @extends('backend.layout.app') 
 @section('content')
 
-    <div class="col-12 col-md-3">
-        <div class="card">
+    <div class="col-12 col-md-3 d-none d-sm-inline-block ">
+        <div class="card mb-3">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
                 <h3 class="card-title">Kategoriler</h3>
@@ -109,9 +109,9 @@
                             <th>Img</th>
                             <th>AD</th>
                             <th>Kategori</th>
-                            <th>Durum</th>
+                            <th class="d-none d-sm-inline-block">Durum</th>
                             <th class="w-1"></th>
-                            <th class="w-1"></th>
+                            <th class="w-1 d-none d-sm-inline-block "></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,7 +131,7 @@
                             <td class="text-secondary">
                                 {{ $item->getCategory->name }}
                             </td>
-                            <td class="text-secondary">
+                            <td class="text-secondary d-none d-sm-inline-block ">
                                 <div class="d-flex align-items-center">
                                 <x-dashboard.icon.status  status='{{$item->status->color() }}'/>
                                 {{$item->status->title() }}
@@ -142,7 +142,7 @@
                                     <x-dashboard.icon.delete color="red" />
                                 </a>
                             </td>
-                            <td>
+                            <td class="d-none d-sm-inline-block ">
                                 <a href="{{ route('page.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
                             </td>
                         </tr>

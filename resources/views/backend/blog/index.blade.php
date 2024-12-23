@@ -1,5 +1,6 @@
 @extends('backend.layout.app')
 @section('content')
+
 <div class="col-12 col-md-3">
     <div class="card">
         <div class="card-status-top bg-blue"></div>
@@ -7,9 +8,8 @@
             <h3 class="card-title">Kategoriler</h3>
             <div class="card-actions d-flex">
                 <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
+                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-icon btn-primary">
                         <x-dashboard.icon.add/>
-                       Kategori Ekle
                     </a>
                 </div>
             </div>
@@ -44,11 +44,6 @@
                 </tbody>
             </table>
 
-               
-            <div class="d-flex align-items-center justify-content-center mt-2">
-                {{ $all->appends(['siralama' => 'blog', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
-            </div>
-
 
         </div>
 
@@ -79,7 +74,7 @@
                     <form>
                         <select class="form-select" name="category_id" onchange="location = this.value;">
                             <option value="?category_id=0" {{ request('category_id') == 0 ? 'selected' :  null}}>Hepsi</option>
-                            @foreach ($categories->where('parent_id',1) as $item)
+                            @foreach ($categories->where('parent_id',3) as $item)
                                 <option value="?category_id={{ $item->id}}" {{ request('category_id') == $item->id ? 'selected' :  null}}>{{ $item->name}}</option>
                             @endforeach
                         </select>
@@ -98,7 +93,7 @@
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('blog.create')}}" title="Blog Oluştur" class="btn btn-icon" >
+                    <a href="{{ route('blog.create')}}" title="Blog Oluştur" class="btn btn-icon btn-primary" >
                         <x-dashboard.icon.add/>
                     </a>
                 </div>
@@ -187,6 +182,11 @@
                 </tbody>
             </table>
           
+               
+            <div class="d-flex align-items-center justify-content-center mt-2">
+                {{ $all->appends(['siralama' => 'blog', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
+            </div>
+
         </div>
         
         @else

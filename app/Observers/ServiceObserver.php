@@ -14,6 +14,7 @@ class ServiceObserver
     {
         Cache::forget('services');
         Cache::forget('categories');
+        Cache::forget('counts');
 
     }
 
@@ -23,6 +24,7 @@ class ServiceObserver
     public function updated(Service $service): void
     {
         Cache::forget('services');
+
     }
 
     /**
@@ -32,6 +34,8 @@ class ServiceObserver
     {
         Cache::forget('services');
         Cache::forget('categories');
+        Cache::forget('counts');
+
 
     }
 
@@ -41,6 +45,8 @@ class ServiceObserver
     public function restored(Service $service): void
     {
         Cache::forget('services');
+        Cache::forget('counts');
+
     }
 
     /**
@@ -49,5 +55,7 @@ class ServiceObserver
     public function forceDeleted(Service $service): void
     {
         Cache::forget('services');
+        Cache::forget('counts');
+
     }
 }
