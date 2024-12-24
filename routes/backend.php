@@ -27,33 +27,46 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 //Backend
 Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],function() {
     Route::get('/',[DashboardController::class, 'index'])->name('go');
-    Route::auto('/user',UserController::class);
-    Route::get('/activity', [UserController::class,'activity'])->name('activity');
-    Route::resource('/role',RoleController::class);
+
+    Route::group(["prefix"=>"site", 'middleware' => ['auth','web','go-access']],function() {
+        Route::auto('/category',CategoryController::class);
+        Route::auto('/blog',BlogController::class);
+        Route::auto('/faq',FaqController::class);
+        Route::auto('/service',ServiceController::class);
+        Route::get('/service-trash',[ServiceController::class,'trash'])->name('service.trash');
+        Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
+        Route::auto('/page',PageController::class);
+        Route::get('/page-trash',[PageController::class,'trash'])->name('page.trash');
+        Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
+    });
+
+    Route::group(["prefix"=>"crm", 'middleware' => ['auth','web','go-access']],function() {
+        Route::resource('/customer',CustomerController::class);
+        Route::resource('/offer',CustomerOfferController::class);
+        Route::resource('/works',CustomerWorkController::class);
+        Route::auto('/workflow', WorkFlowController::class);
+        Route::get('/customer/export', [CustomerController::class, 'export'])->name('customer.export');
+
+
+    });
+
+    Route::group(["prefix"=>"user", 'middleware' => ['auth','web','go-access']],function() {
+        Route::auto('/user',UserController::class);
+        Route::get('/activity', [UserController::class,'activity'])->name('activity');
+        Route::resource('/role',RoleController::class);
+    });
+
+    Route::group(["prefix"=>"settings", 'middleware' => ['auth','web','go-access']],function() {
+        Route::auto('/translation', TranslationController::class);
+        Route::auto('/language',LanguageController::class);
+        Route::auto('/settings',SettingController::class);
+
+    });
+
+    Route::group(["prefix"=>"shop", 'middleware' => ['auth','web','go-access']],function() {
+        Route::auto('/product',ProductController::class);
+
+    });
     
-    Route::resource('/customer',CustomerController::class);
-    Route::resource('/offer',CustomerOfferController::class);
-    Route::resource('/works',CustomerWorkController::class);
-    
-    
-    Route::auto('/page',PageController::class);
-    Route::get('/page-trash',[PageController::class,'trash'])->name('page.trash');
-    Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
-    Route::auto('/service',ServiceController::class);
-    Route::get('/service-trash',[ServiceController::class,'trash'])->name('service.trash');
-    Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
-    
-    Route::auto('/category',CategoryController::class);
-    Route::auto('/blog',BlogController::class);
-    Route::auto('/faq',FaqController::class);
-    Route::auto('/product',ProductController::class);
-    Route::auto('/language',LanguageController::class);
-    Route::auto('/settings',SettingController::class);
-    
-    Route::get('/customer/export', [CustomerController::class, 'export'])->name('customer.export');
-    
-    
-    Route::auto('/workflow', WorkFlowController::class);
-    Route::auto('/translation', TranslationController::class);
 });
 

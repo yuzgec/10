@@ -11,7 +11,7 @@ Route::redirect('/hakkimizda', '/kurumsal/hakkimizda', 301);
 Route::redirect('/isler', '/projeler', 301);
 Route::redirect('/izmir-karsiyaka', '/iletisim', 301);
 Route::redirect('/makale/izmir-karsiyaka-da-seo-yapan-firmalar/46', '/blog/izmirde-web-tasarim-yapan-ajanslar', 301);
-
+Route::redirect('makale/instagram-firma-hesabi-nasil-yapilir/27', '/blog/instagram-algoritmasi-nasil-calisir-etkilesiminizi-artirmanin-yollari', 301);
 
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 

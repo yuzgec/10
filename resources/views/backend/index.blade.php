@@ -5,7 +5,6 @@
 <div class="page-header d-print-none">
     <div class="col-12 d-flex justify-content-between mb-3">
         <x-dashboard.site.title title='Dashboard'/>
-        <x-dashboard.site.preview/>
     </div>
 </div>
 
@@ -15,144 +14,23 @@
         <div class="card">
             <div class="card-status-top bg-primary"></div>
             <div class="card-header">
-                <h3 class="card-title">Site Yönetimi</h3>
+                <h3 class="card-title"><x-dashboard.icon.home />  Site Yönetimi</h3>
             </div>
             <div class="card-body">
                 <div class="row">
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.menu-list />
-                                <div class="card-title mt-2 text-black">[{{$counts['categories']}}] Kategori</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="category"/>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.edit />
-                                <div class="card-title mt-2">[{{$counts['pages']}}] Sayfa</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="page"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.heart />
-                                <div class="card-title mt-2">[{{$counts['services']}}] Hizmet</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="service"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.blog />
-                                <div class="card-title mt-2">[{{$counts['blogs']}}] Blog</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="blog"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.question-mark />
-                                <div class="card-title mt-2">[{{$counts['faqs']}}] S.S.S</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="faq"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.image />
-                                <div class="card-title mt-2">[{{$counts['faqs']}}] Resim Galeri</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="faq"/>
-
-                        </div>
-                    </div>
-
-                    
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.video />
-                                <div class="card-title mt-2">[{{$counts['faqs']}}] Video Galeri</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="faq"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.user />
-                                <div class="card-title mt-2">[{{$counts['faqs']}}] Ekip</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="faq"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.slider />
-                                <div class="card-title mt-2">[{{$counts['faqs']}}] Slider</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="faq"/>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 mt-2">
-                        <div class="card card-link card-link-pop bg-primary-lt">
-                            <div class="card-status-bottom bg-primary"></div>
-                            <div class="card-body p-2 text-center ">
-                                <x-dashboard.icon.settings />
-                                <div class="card-title mt-2">[{{$counts['faqs']}}] Ayarlar</div>                         
-                            </div>
-                            <x-dashboard.site.home-card-link model="faq"/>
-
-                        </div>
-                    </div>
-
-
-                    
-                    
-    
-                </div>
-                
-                
+                    <x-dashboard.site.card-home-site model="category" count="{{$counts['categories']}}" icon="menu-list" name="Kategori"/>
+                    <x-dashboard.site.card-home-site model="page" count="{{$counts['pages']}}" icon="edit" name="Sayfa"/>
+                    <x-dashboard.site.card-home-site model="service" count="{{$counts['services']}}" icon="heart" name="Hizmet"/>
+                    <x-dashboard.site.card-home-site model="blog" count="{{$counts['blogs']}}" icon="blog" name="Blog"/>
+                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="question-mark" name="S.S.S"/>
+                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="image" name="Galeri"/>
+                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="video" name="Video"/>
+                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="user" name="Ekip"/>
+                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="slider" name="Slider"/>
+                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="settings" name="Ayarlar"/>
+                </div>               
             </div>
-            
-        </div>
 
-        <div class="card mt-3">
-            <div class="card-status-top bg-warning"></div>
             <div class="card-header">
                 <h3 class="card-title"><x-dashboard.icon.cart /> E-Ticaret Yönetimi</h3>
             </div>
@@ -175,13 +53,10 @@
                 </div>
                 
             </div>
-        </div>
 
 
-        <div class="card card-sm card-link card-link-pop bg-info-lt mt-3">
-            <div class="card-status-top bg-info"></div>
             <div class="card-header">
-                <h3 class="card-title"><x-dashboard.icon.cart /> Sipariş Yönetimi</h3>
+                <h3 class="card-title "><x-dashboard.icon.cart /> Sipariş Yönetimi</h3>
             </div>
 
             <div class="card-body">
@@ -214,7 +89,10 @@
                     </div>
                 </div>                                        
             </div>
+            
         </div>
+
+     
    
     </div>
       
