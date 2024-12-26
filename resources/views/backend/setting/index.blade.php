@@ -36,62 +36,54 @@
                         <div class="tab-content flex-grow-1">
                             @foreach($categories->where('parent_id', 8)  as $category)
                             <div class="tab-pane fade @if($loop->first) show active @endif" id="category-{{ $category->id }}">
-                                <div class="card table-responsive">
-                                    <table class="table table-vcenter card-table">
+                                <div class="card ">
+                                    <table class="table table-vcenter card-table table-responsive">
                                         <thead>
                                             <tr>
                                                 <th>Anahtar</th>
-                                                <th>Değer</th>
                                                 <th></th>
                                                 <th>Eylem</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($settings->where('category_id', $category->id) as $setting)
+                                            <form action="{{ route('settings.update', $setting->id) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
                                             <tr>
                                                 <td>{{ $setting->item }}</td>
+                                                
                                                 <td>
-                                                    @if($setting->isImage)
-                                                    <img src="{{ asset('storage/' . $setting->value) }}" alt="{{ $setting->item }}" width="50">
-                                                    @endif
+                                                  
+                                                    @switch($setting->isType->value)
+                                                        @case(\App\Enums\SettingsEnum::INPUT->value)
+                                                            <input type="text" name="value" value="{{ $setting->value }}" class="form-control">
+                                                            @break
+                                                        @case(\App\Enums\SettingsEnum::TEXTAREA->value)
+                                                            <textarea name="value" class="form-control">{{ $setting->value }}</textarea>
+                                                            @break
+                                                        @case(\App\Enums\SettingsEnum::CHECKBOX->value)
+                                                        @case(\App\Enums\SettingsEnum::BOOLEAN->value)
+                                                            <input type="checkbox" name="value" value="1" {{ $setting->value ? 'checked' : '' }}>
+                                                            @break
+                                                        @case(\App\Enums\SettingsEnum::PASSWORD->value)
+                                                            <input type="password" name="value" value="{{ $setting->value }}" class="form-control">
+                                                            @break
+                                                        @case(\App\Enums\SettingsEnum::FILE->value)
+                                                            <input type="file" name="value" class="form-control">
+                                                            @if($setting->value)
+                                                                <div class="mt-2">{{ $setting->value }}</div>
+                                                            @endif
+                                                            @break
+                                                    @endswitch
+
+                                                
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('settings.update', $setting->id) }}" method="POST" enctype="multipart/form-data">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        @switch($setting->isType->value)
-                                                            @case(\App\Enums\SettingsEnum::INPUT->value)
-                                                                <input type="text" name="value" value="{{ $setting->value }}" class="form-control">
-                                                                @break
-                                                            @case(\App\Enums\SettingsEnum::TEXTAREA->value)
-                                                                <textarea name="value" class="form-control">{{ $setting->value }}</textarea>
-                                                                @break
-                                                            @case(\App\Enums\SettingsEnum::CHECKBOX->value)
-                                                            @case(\App\Enums\SettingsEnum::BOOLEAN->value)
-                                                                <input type="checkbox" name="value" value="1" {{ $setting->value ? 'checked' : '' }}>
-                                                                @break
-                                                            @case(\App\Enums\SettingsEnum::PASSWORD->value)
-                                                                <input type="password" name="value" value="{{ $setting->value }}" class="form-control">
-                                                                @break
-                                                            @case(\App\Enums\SettingsEnum::FILE->value)
-                                                                <input type="file" name="value" class="form-control">
-                                                                @if($setting->value)
-                                                                    <div class="mt-2">Mevcut dosya: {{ $setting->value }}</div>
-                                                                @endif
-                                                                @break
-                                                        @endswitch
-
-                                                        @if($setting->isImage)
-                                                        <input type="file" name="image" class="form-control mt-2">
-                                                        @endif
-
-                                                </td>
-                                                <td>
-                                                    
                                                     <button type="submit" class="btn btn-primary btn-icon"><x-dashboard.icon.edit/></button>
-                                                </form>
                                                 </td>
                                             </tr>
+                                            </form>
                                             @endforeach
                                         </tbody>
                                     </table>
