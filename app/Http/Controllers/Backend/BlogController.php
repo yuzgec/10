@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Blog;
 use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
+use App\Services\ViewService;
 use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -12,11 +13,13 @@ use Spatie\Activitylog\Models\Activity;
 
 class BlogController extends Controller
 {   
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $cat = $this->categoryService->getChildrenBySlug('blog', [],['blogs']);
 
         $all = Blog::with(['getCategory', 'media'])
         ->lang()
@@ -30,16 +33,20 @@ class BlogController extends Controller
         ->rank()
         ->paginate(30);
 
-        
-        $topPages = Blog::orderByViews()->take(10)->get();
+        $viewService = app(ViewService::class);
+        $chartData = $viewService->getViewStats(
+            Blog::class,
+            $request->get('period', 'all'),
+            $request->get('category_id')
+        );
 
-        $chartData = [
-            'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
-            'views' => $topPages->pluck('views_count'), // Görüntülenme sayılarını al
-        ];
+        if ($request->ajax()) {
+            return response()->json([
+                'chartData' => $chartData
+            ]);
+        }
 
-        
-        return view('backend.blog.index',compact('all','chartData'));
+        return view('backend.blog.index',compact('all','chartData', 'cat'));
     }
 
     /**

@@ -1,54 +1,7 @@
 @extends('backend.layout.app') @section('content')
 
-<div class="col-12 col-md-3">
-    <div class="card">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">Kategoriler</h3>
-            <div class="card-actions d-flex">
+<x-dashboard.site.index-category-widget :cat="$cat" count="faqs_count"/>
 
-                <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
-                        <x-dashboard.icon.add/>
-                       Kategori Ekle
-                    </a>
-                </div>
-
-            </div>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-vcenter card-table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>IMG</th>
-                        <th>AD</th>
-                        <th class="w-1"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($categories->where('parent_id',5) as $item)
-                    <tr>
-                        <td>
-                            <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
-                        </td>
-                        <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
-                                {{$item->name}} <small>[{{ $item->faqs_count}}]</small>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
 <div class="col-12 col-md-9">
     <div class="card">
         <div class="card-status-top bg-blue"></div>

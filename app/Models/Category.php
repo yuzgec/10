@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
+use App\Enums\StatusEnum;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
+
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
 
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;

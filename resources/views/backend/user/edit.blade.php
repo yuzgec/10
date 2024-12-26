@@ -1,57 +1,57 @@
 @extends('backend.layout.app')
 @section('content')
-<div class="page-header d-print-none">
-    <div class="col-12 d-flex justify-content-between mb-3">
-        <x-dashboard.site.title title='Kullanıcı Oluştur'/>
-        <x-dashboard.site.preview/>
+<div class="col-12 col-md-8">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Kullanıcı Düzenle</h3>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('user.update', $user->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                
+                <div class="form-group mb-3">
+                    <label class="form-label">Ad Soyad</label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
+                           value="{{ old('name', $user->name) }}">
+                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                           value="{{ old('email', $user->email) }}">
+                    @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
+             
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Şifre (Boş bırakılırsa değişmez)</label>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                    @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Roller</label>
+                    <select name="roles[]" class="form-select @error('roles') is-invalid @enderror" multiple>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->name }}" 
+                                {{ in_array($role->name, $userRoles) ? 'selected' : '' }}>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('roles')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
+               
+
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-{!! html()->model($edit)->form('PUT', route('user.update', $edit->id))->open() !!}
-
-<div class="row">
-    <div class="col-md-6 col-12 mb-3">
-        <div class="card">
-            <div class="card-status-top bg-blue"></div>
-
-            <div class="card-header">Kullanıcı Bilgileri</div>
-            <div class="card-body">
-                <form action="{{ route('user.store') }}" method="POST">
-                    @csrf
-                    <x-dashboard.form.input label="Ad Soyad" name="name"/>
-                    <x-dashboard.form.input label="Email" name="email" />
-
-                    <div class="mb-3 row">
-                        <label class="col-3 col-form-label">Parola</label>
-                        <div class="col">
-                          <input type="password" class="form-control" name="password">
-                        </div>
-                      </div>
-
-                    <button class="btn btn-primary" type="submit">
-                        <x-dashboard.icon.add/> Ekle
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-12 mb-3">
-        <div class="card">
-            <div class="card-status-top bg-blue"></div>
-
-            <div class="card-header">Kullanıcı Rolleri</div>
-            <div class="card-body">
-                <div class="form-group">
-                <select name="roles" id="roles" class="form-control">
-                    <option value="">Rol Seçiniz</option>
-                    @foreach($roles as $item )
-                    <option value="{{ $item->name}}">{{ $item->name}}</option>
-                    @endforeach
-                 
-                </select>
-            </div>
-            </div>
-        </div>
-    </div>
-    {!! html()->form()->close() !!}
 @endsection

@@ -135,7 +135,7 @@
                         </td>
 
                         <td class="text-secondary">
-                            <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
+                            <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->id}} - Düzenle">
                             {{ $item->getCategory->name }}
                             </a>
                         </td>

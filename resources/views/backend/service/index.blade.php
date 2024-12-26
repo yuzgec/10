@@ -1,56 +1,8 @@
-@extends('backend.layout.app') @section('content')
+@extends('backend.layout.app') 
+@section('content')
 
-<div class="col-12 col-md-3 d-none d-sm-inline-block ">
-    <div class="card">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">Kategoriler</h3>
-            <div class="card-actions d-flex">
+<x-dashboard.site.index-category-widget :cat="$cat" count="services_count"/>
 
-                <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
-                        <x-dashboard.icon.add width="16" height="16"/>
-                        Ekle
-                    </a>
-                </div>
-
-            </div>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-vcenter card-table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>IMG</th>
-                        <th>AD</th>
-                        <th class="w-1"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($categories->where('parent_id',2) as $item)
-                    <tr>
-                        <td>
-                            <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
-                        </td>
-                        <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
-                                {{$item->name}} <small>[{{ $item->services_count}}]</small>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
-    
-</div>
 <div class="col-12 col-md-9">
     <div class="card">
         <div class="card-status-top bg-blue"></div>
@@ -127,7 +79,7 @@
                         </td>
 
                         <td class="text-secondary">
-                            <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
+                            <a href="{{ route('category.edit', $item->getCategory->id) }}" title=" {{ $item->getCategory->id}} - Düzenle">
                             {{ $item->getCategory->name }}
                             </a>
                         </td>
@@ -189,68 +141,13 @@
             <x-dashboard.site.not-found route="service"/>
         @endif
     </div>
-
-    <div class="card mt-3">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">En Çok Bakılan Sayfalar</h3>
-            <div class="card-actions">
-                <a href="#" class="btn">
-                    Gün
-                </a>
-                <a href="#" class="btn">
-                    Hafta
-                </a>
-                <a href="#" class="btn">
-                    Ay
-                </a>
-                <a href="#" class="btn">
-                    Yıl
-                </a>
-                <a href="#" class="btn">
-                    Hepsi
-                </a>
-              </div>
-        </div>
-        <div class="card-body">
-            <canvas id="topPagesChart" width="400" height="200"></canvas>
-        </div>
-    </div>
+    
+    <x-dashboard.charts.view-stats model="App\Models\Service" title="En Çok Bakılan Hizmetler" :category-id="request('category_id', null)" :limit="10" />
+    
 </div>
 @endsection
 
 @section('customJS')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const ctx = document.getElementById('topPagesChart').getContext('2d');
-
-        // Laravel'den gelen verileri kullan
-        const chartData = @json($chartData);
-        new Chart(ctx, {
-            type: 'bar', // Çubuk grafik
-            data: {
-                labels: chartData.labels, // Sayfa başlıkları
-                datasets: [{
-                    label: 'Görüntülenme Sayısı',
-                    data: chartData.views, // Görüntülenme sayıları
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Grafik rengi
-                    borderColor: 'rgba(75, 192, 192, 1)', // Çizgi rengi
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true // Y eksenini sıfırdan başlat
-                    }
-                }
-            }
-        });
-    });
-</script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const table = document.getElementById('sortableTable');

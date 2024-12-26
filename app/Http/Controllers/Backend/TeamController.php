@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use App\Services\ViewService;
 use App\Http\Requests\TeamRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
-use Barryvdh\Debugbar\Facades\Debugbar;
 
 class TeamController extends Controller
 {   
 
-    public function index()
+
+    public function index(Request $request)
     {
 
+        $cat = $this->categoryService->getChildrenBySlug('ekip', [],['teams']);
 
 
         $all = Team::with(['getCategory', 'media'])
@@ -31,17 +33,20 @@ class TeamController extends Controller
         ->rank()
         ->paginate(20);
 
-        Debugbar::info($all);
+        $viewService = app(ViewService::class);
+        $chartData = $viewService->getViewStats(
+            Team::class,
+            $request->get('period', 'all'),
+            $request->get('category_id')
+        );
 
+        if ($request->ajax()) {
+            return response()->json([
+                'chartData' => $chartData
+            ]);
+        }
 
-        $topPages = Team::orderByViews()->take(10)->get();
-
-        $chartData = [
-            'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
-            'views' => $topPages->pluck('views_count'), // Görüntülenme sayılarını al
-        ];
-
-        return view('backend.team.index',compact('all','chartData'));
+        return view('backend.team.index',compact('all','chartData', 'cat'));
     }
 
     public function create()

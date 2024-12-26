@@ -4,19 +4,26 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\CategoryService;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
+    public function indexAll(){
+        return view('backend.category.indexAll');
+    }
+    
     public function index()
     {
-        $all = Category::when(request('q'), function ($query) {
-            return $query->where('parent_id', request('q'));
-        })->get()->toFlatTree();
-
+        $all = $this->categoryService->getChildrenBySlug(request('q'));
         //dd($all);
         return view('backend.category.index',compact('all'));
     }
@@ -50,7 +57,7 @@ class CategoryController extends Controller
         }
 
         alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli kategori başarıyla eklendi.', 'success');
-        return redirect()->route('category.index');
+        return redirect()->route('category.indexAll');
     }
 
     /**
@@ -82,6 +89,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $update)
     {
+
+        if ($request->parent_id && $update->id == $request->parent_id) {
+            return back()->withErrors(['error' => 'Bir node kendisinin altına taşınamaz.']);
+        }
 
         tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
 

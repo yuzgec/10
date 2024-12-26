@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\LanguageController;
 use App\Http\Controllers\Backend\WorkFlowController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PermissionController;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Controllers\Backend\TranslationController;
 use App\Http\Controllers\Backend\CustomerWorkController;
@@ -58,6 +59,9 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::auto('/user',UserController::class);
         Route::get('/activity', [UserController::class,'activity'])->name('activity');
         Route::resource('/role',RoleController::class);
+        Route::resource('permission', PermissionController::class)->except(['show', 'edit', 'update']);
+        Route::post('permission/assign', [PermissionController::class, 'assignPermission'])->name('permission.assign');
+        Route::get('permission/role/{roleName}', [PermissionController::class, 'getRolePermissions'])->name('permission.getRolePermissions');
     });
 
     Route::group(["prefix"=>"settings", 'middleware' => ['auth','web','go-access']],function() {

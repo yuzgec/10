@@ -16,11 +16,14 @@ class FaqController extends Controller
      */
     public function index()
     {
+
+        $cat = $this->categoryService->getChildrenBySlug('sss', [],['faqs']);
+
         $all = Faq::with(['getCategory'])->whereHas('translations', function ($query){
             $query->where('name', 'like', '%'.request('q').'%');
         })->paginate(20);
         
-        return view('backend.faq.index',compact('all'));
+        return view('backend.faq.index',compact('all', 'cat'));
     }
 
     /**

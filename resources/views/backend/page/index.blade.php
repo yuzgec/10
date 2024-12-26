@@ -1,53 +1,8 @@
 @extends('backend.layout.app') 
 @section('content')
 
-    <div class="col-12 col-md-3 d-none d-sm-inline-block ">
-        <div class="card mb-3">
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h3 class="card-title">Kategoriler</h3>
-                <div class="card-actions d-flex">
+    <x-dashboard.site.index-category-widget :cat="$cat" count="pages_count"/>
 
-                    <div class="p-1">
-                        <a href="{{ route('category.create')}}" title="Sayfa Oluştur" class="btn btn-icon" >
-                            <x-dashboard.icon.add/>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-            
-            <div class="table-responsive">
-                <table class="table table-vcenter card-table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>AD</th>
-                            <th class="w-1"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($categories->where('parent_id',1) as $item)
-                        <tr>
-                          
-                            <td>
-                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
-                                    {{$item->name}} <small>[{{ $item->pages_count}}]</small>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit width="20"/></a>
-                            </td>
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-
-        
-    </div>
 
     <div class="col-12 col-md-9">
         <div class="card">
@@ -125,7 +80,7 @@
                             </td>
 
                             <td class="text-secondary">
-                                <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
+                                <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->id}} - Düzenle">
                                 {{ $item->getCategory->name }}
                                 </a>
                             </td>
@@ -190,16 +145,8 @@
 
         </div>
 
-        <div class="card mt-3">
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h3 class="card-title">En Çok Bakılan Sayfalar</h3>
-            
-            </div>
-            <div class="card-body">
-                <canvas id="topPagesChart" width="400" height="200"></canvas>
-            </div>
-        </div>
+        <x-dashboard.charts.view-stats model="App\Models\Page" title="En Çok Bakılan Haberler" :category-id="request('category_id', null)" :limit="10" />
+
     </div>
 
 @endsection

@@ -1,57 +1,6 @@
 @extends('backend.layout.app') 
 @section('content')
-
-    <div class="col-12 col-md-3 d-none d-sm-inline-block ">
-        <div class="card mb-3">
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h3 class="card-title">Kategoriler</h3>
-                <div class="card-actions d-flex">
-
-                    <div class="p-1">
-                        <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
-                            <x-dashboard.icon.add/>
-                                Kategori Ekle
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-            
-            <div class="table-responsive">
-                <table class="table table-vcenter card-table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>IMG</th>
-                            <th>AD</th>
-                            <th class="w-1"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($categories->where('parent_id',7) as $item)
-                        <tr>
-                            <td>
-                                <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
-                            </td>
-                            <td>
-                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
-                                    {{$item->name}} <small>[{{ $item->teams_count}}]</small>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
-                            </td>
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-
-        
-    </div>
+    <x-dashboard.site.index-category-widget :cat="$cat" count="teams_count"/>
 
     <div class="col-12 col-md-9">
         <div class="card">
@@ -75,7 +24,7 @@
                         <form>
                             <select class="form-select" name="category_id" onchange="location = this.value;">
                                 <option value="?category_id=0" {{ request('category_id') == 0 ? 'selected' :  null}}>Hepsi</option>
-                                @foreach ($categories->where('parent_id',7) as $item)
+                                @foreach ($categories->where('parent_id',32) as $item)
                                     <option value="?category_id={{ $item->id}}" {{ request('category_id') == $item->id ? 'selected' :  null}}>{{ $item->name}}</option>
                                 @endforeach
                             </select>
@@ -128,7 +77,7 @@
                         </td>
 
                         <td class="text-secondary">
-                            <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
+                            <a href="{{ route('category.edit', $item->getCategory->id) }}" title=" {{ $item->getCategory->id}} - Düzenle">
                             {{ $item->getCategory->name }}
                             </a>
                         </td>

@@ -6,6 +6,7 @@ use App\Models\Page;
 use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 
+use App\Services\ViewService;
 use App\Models\PageTranslation;
 use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
@@ -16,10 +17,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class PageController extends Controller
 {   
 
-    public function index()
+    public function index(Request $request)
     {
 
-        //dd($pages);
+        $cat = $this->categoryService->getChildrenBySlug('sayfa', [],['pages']);
+
 
         $all = Page::with(['getCategory', 'media'])
         ->lang()
@@ -33,14 +35,20 @@ class PageController extends Controller
         ->rank()
         ->paginate(20);
 
-        $topPages = Page::orderByViews()->take(10)->get();
+        $viewService = app(ViewService::class);
+        $chartData = $viewService->getViewStats(
+            Page::class,
+            $request->get('period', 'all'),
+            $request->get('category_id')
+        );
 
-        $chartData = [
-            'labels' => $topPages->pluck('name'), // Sayfa başlıklarını al
-            'views' => $topPages->pluck('views_count'), // Görüntülenme sayılarını al
-        ];
+        if ($request->ajax()) {
+            return response()->json([
+                'chartData' => $chartData
+            ]);
+        }
 
-        return view('backend.page.index',compact('all','chartData'));
+        return view('backend.page.index',compact('all','chartData', 'cat'));
     }
 
     public function create()
