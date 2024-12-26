@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Page;
+use App\Models\Team;
+use App\Models\Video;
 use App\Models\Service;
 use App\Models\Analysis;
 use App\Models\Category;
@@ -25,6 +27,8 @@ class DashboardController extends Controller
                 'blogs' => Blog::count(),
                 'faqs' => Faq::count(),
                 'categories' => Category::count(),
+                'teams' => Team::count(),
+                'videos' => Video::count(),
             ];
         });
 

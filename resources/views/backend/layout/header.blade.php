@@ -145,7 +145,7 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle"
+                                <a class="nav-link dropdown-toggle {{ Request::is('go/user/*') ? 'show' : '' }}"
                                     href="#navbar-help"
                                     data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside"
@@ -158,7 +158,7 @@
                                         Kullanıcı
                                     </span>
                                 </a>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu {{ Request::is('go/user/*') ? 'show' : '' }}">
                                     <a class="dropdown-item"
                                         href="{{ route('user.index')}}"
                                         title="Kullanıcı Listesi">
@@ -365,30 +365,30 @@
 
 
                                     <div class="dropend">
-                                        <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle {{ Request::is('go/site/team*') ? 'show' : '' }}" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                                         <x-dashboard.icon.user width="16" height="16"/> Ekip Yönetimi
                                         </a>
-                                        <div class="dropdown-menu">
+                                        <div class="dropdown-menu {{ Request::is('go/site/team*') ? 'show' : '' }}">
                                             <a class="dropdown-item"
-                                                href="{{ route('faq.index')}}"
-                                                title="Sayfa Listesi">
-                                                <x-dashboard.icon.menu-list width="16"/> S.S.S Listesi
+                                                href="{{ route('team.index')}}"
+                                                title="Ekip Listesi">
+                                                <x-dashboard.icon.menu-list width="16"/> Ekip Listesi
                                             </a>
                                             <a
                                                 class="dropdown-item"
-                                                href="{{ route('faq.create')}}"
-                                                title="Sayfa Oluştur">
-                                                <x-dashboard.icon.add width="16"/> S.S.S Oluştur
+                                                href="{{ route('team.create')}}"
+                                                title="Ekip Oluştur">
+                                                <x-dashboard.icon.add width="16"/> Ekip Oluştur
                                             </a>
 
                                             <a class="dropdown-item"
-                                                href="{{ route('category.index', ['q' => 5,'name' => 'SSS'])}}"
+                                                href="{{ route('category.index', ['q' => 7,'name' => 'Ekip'])}}"
                                                 title="Kategori Listesi">
                                                 <x-dashboard.icon.category width="16"/> Kategori Yönetimi
                                             </a>
                                             
-                                            <a class="dropdown-item" href="{{route('activity')}}" title="Etkinlikler">
-                                                <x-dashboard.icon.delete width="16"/> Silinmiş Sayfalar
+                                            <a class="dropdown-item" href="{{route('activity')}}" title="Silinmiş Ekip Üyesi">
+                                                <x-dashboard.icon.delete width="16"/> Silinmiş Ekip Üyesi
                                             </a>
                                         </div>
                                     </div>

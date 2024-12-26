@@ -19,14 +19,16 @@ class ViewShareProvider extends ServiceProvider
     public function boot(): void
     {
      
-        config()->set('settings', Setting::pluck('value','item')->all());
+        $settings = Cache::remember('settings',now()->addYear(5), function () {
+            return config()->set('settings', Setting::pluck('value','item')->all());
+        });
 
         $status = Cache::remember('status',now()->addYear(5), function () {
             return collect(StatusEnum::cases());
         });
 
         $categories = Cache::remember('categories',now()->addYear(5), function () {
-            return Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media'])->lang()->get()->toFlatTree();
+            return Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media','teams'])->lang()->get()->toFlatTree();
         });
 
         $services = Cache::remember('services',now()->addYear(5), function () {
@@ -34,7 +36,7 @@ class ViewShareProvider extends ServiceProvider
         });
 
         $pages = Cache::remember('pages',now()->addYear(5), function () {
-            return Page::with(['getCategory','media'])->active()->lang()->get();
+            return Page::with(['getCategory','media'])->active()->lang()->rank()->get();
         });
 
         $blog = Cache::remember('blogs',now()->addYear(5), function () {
@@ -45,8 +47,12 @@ class ViewShareProvider extends ServiceProvider
             return Language::active()->get();
         });
 
-        //dd($language);
+        $teams = Cache::remember('teams',now()->addYear(5), function () {
+            return Page::with(['getCategory','media'])->active()->lang()->rank()->get();
+        });
 
+        //dd($language);
+        //dd($categories->where('slug','video'));
   
         View::share([
             'blog'=> $blog,
@@ -54,6 +60,7 @@ class ViewShareProvider extends ServiceProvider
             'status' => $status,
             'services' => $services,
             'pages' => $pages,
+            'teams' => $teams,
             'language' => $language,
         ]);
     }

@@ -20,24 +20,36 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-class Service extends Model implements TranslatableContract,HasMedia,Viewable
+class Team extends Model implements TranslatableContract,HasMedia,Viewable
 {
     use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
 
-    protected $table = 'services';
+    protected $table = 'teams';
     protected $guarded = [];
 
-    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
+    public $translatedAttributes = ['name', 'slug','company', 'jobTitle','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
-   public function getCategory()
-    {
+    public function getCategory(){
         return $this->belongsTo(Category::class, 'category_id', 'id');
-    } 
-
-    public function faqs()
-    {
-        return $this->morphMany(Faq::class, 'faqable');
     }
+
+    public function scopeActive($query){
+        return $query->where('status', 1);
+    }
+
+    public function scopeRank($query){
+        return $query->orderBy('rank','asc');
+    }
+
+    public function scopeLang($query){
+        return $query->whereHas('translations', function ($query) {
+            $query->where('locale', app()->getLocale());
+        });
+    }
+
+    protected $casts = [
+        'status' => StatusEnum::class,
+    ];
 
     public function registerMediaCollections(): void
     {
@@ -62,25 +74,5 @@ class Service extends Model implements TranslatableContract,HasMedia,Viewable
             $this->addMediaConversion('small')->width(250)->nonOptimized();                     
         });
     }
-
-    public function scopeActive($query){
-        return $query->where('status', 1);
-    }
-
-    public function scopeRank($query){
-        return $query->orderBy('rank','asc');
-    }
-
-
-    public function scopeLang($query){
-        return $query->whereHas('translations', function ($query) {
-            $query->where('locale', app()->getLocale());
-        });
-    }
-
-
-    protected $casts = [
-        'status' => StatusEnum::class,
-    ];
 
 }

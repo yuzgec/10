@@ -25,7 +25,7 @@
                     <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="question-mark" name="S.S.S"/>
                     <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="image" name="Galeri"/>
                     <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="video" name="Video"/>
-                    <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="user" name="Ekip"/>
+                    <x-dashboard.site.card-home-site model="team" count="{{$counts['teams']}}" icon="user" name="Ekip"/>
                     <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="slider" name="Slider"/>
                     <x-dashboard.site.card-home-site model="faq" count="{{$counts['faqs']}}" icon="settings" name="Ayarlar"/>
                 </div>               

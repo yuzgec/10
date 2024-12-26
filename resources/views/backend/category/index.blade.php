@@ -33,6 +33,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>IMG</th>
                     <th>Kategori Adı</th>
                     <th>Kategori Türü</th>
                     <th class="w-1"></th>
@@ -48,6 +49,11 @@
                         @else
                         {{ $item->id}}
                         @endif
+                    </td>
+                    <td>
+                        <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'thumb')}}">
+                            <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
+                        </a>
                     </td>
                 
                     <td class="text-secondary text-capitalize">

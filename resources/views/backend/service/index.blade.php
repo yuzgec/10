@@ -116,7 +116,9 @@
                     @foreach ($all as $item)
                     <tr data-id="{{ $item->id }}">
                         <td>
-                            <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
+                            <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'thumb')}}">
+                                <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
+                            </a>
                         </td>
                         <td>
                             <a href="{{ route('service.edit',$item->id)}}" title=" {{$item->name}} - Düzenle">

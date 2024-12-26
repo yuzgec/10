@@ -54,6 +54,16 @@ class Category extends Model implements TranslatableContract,HasMedia,Viewable
         return $this->hasMany(Faq::class);
     }
 
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Team::class);
+    }
+
     public function registerMediaCollections(): void
     {
 

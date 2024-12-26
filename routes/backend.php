@@ -5,7 +5,9 @@ use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
@@ -31,11 +33,13 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     Route::group(["prefix"=>"site", 'middleware' => ['auth','web','go-access']],function() {
         Route::auto('/category',CategoryController::class);
         Route::auto('/blog',BlogController::class);
+        Route::auto('/video',VideoController::class);
         Route::auto('/faq',FaqController::class);
         Route::auto('/service',ServiceController::class);
         Route::get('/service-trash',[ServiceController::class,'trash'])->name('service.trash');
         Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
         Route::auto('/page',PageController::class);
+        Route::auto('/team',TeamController::class);
         Route::get('/page-trash',[PageController::class,'trash'])->name('page.trash');
         Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
     });

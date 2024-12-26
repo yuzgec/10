@@ -9,9 +9,8 @@
                 <div class="card-actions d-flex">
 
                     <div class="p-1">
-                        <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
+                        <a href="{{ route('category.create')}}" title="Sayfa Oluştur" class="btn btn-icon" >
                             <x-dashboard.icon.add/>
-                        Kategori Ekle
                         </a>
                     </div>
 
@@ -22,7 +21,6 @@
                 <table class="table table-vcenter card-table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>IMG</th>
                             <th>AD</th>
                             <th class="w-1"></th>
                         </tr>
@@ -30,16 +28,14 @@
                     <tbody>
                         @foreach ($categories->where('parent_id',1) as $item)
                         <tr>
-                            <td>
-                                <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
-                            </td>
+                          
                             <td>
                                 <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
                                     {{$item->name}} <small>[{{ $item->pages_count}}]</small>
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
+                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit width="20"/></a>
                             </td>
                         </tr>
                         @endforeach
@@ -104,14 +100,14 @@
 
             <div class="table-responsive">
                 <table class="table table-vcenter card-table table-striped table-hover" id="sortableTable">
-                    <thead>
+                <thead>
                         <tr>
                             <th>Img</th>
-                            <th>AD</th>
+                            <th>Ad</th>
                             <th>Kategori</th>
-                            <th class="d-none d-sm-inline-block">Durum</th>
+                            <th>Durum</th>
                             <th class="w-1"></th>
-                            <th class="w-1 d-none d-sm-inline-block "></th>
+                            <th class="w-1"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,19 +115,21 @@
                         <tr data-id="{{ $item->id }}">
                             <td>
                                 <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'thumb')}}">
-                                    <img src="{{ $item->getFirstMediaUrl('page', 'icon')}}" class="avatar me-2">
+                                    <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('page.edit',$item->id)}}" title="Düzenle">
+                                <a href="{{ route('page.edit',$item->id)}}" title=" {{$item->name}} - Düzenle">
                                     {{$item->name}}
                                 </a>
                             </td>
 
                             <td class="text-secondary">
+                                <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
                                 {{ $item->getCategory->name }}
+                                </a>
                             </td>
-                            <td class="text-secondary d-none d-sm-inline-block ">
+                            <td class="text-secondary">
                                 <div class="d-flex align-items-center">
                                 <x-dashboard.icon.status  status='{{$item->status->color() }}'/>
                                 {{$item->status->title() }}
@@ -142,7 +140,7 @@
                                     <x-dashboard.icon.delete color="red" />
                                 </a>
                             </td>
-                            <td class="d-none d-sm-inline-block ">
+                            <td>
                                 <a href="{{ route('page.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
                             </td>
                         </tr>
@@ -174,12 +172,12 @@
                             </div>
                         </div>
                         @endforeach
+
                     </tbody>
                 </table>
-
-                    
+                
                 <div class="d-flex align-items-center justify-content-center mt-2">
-                    {{ $all->appends(['siralama' => 'page', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
+                    {{ $all->appends(['siralama' => 'service', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
                 </div>
 
             

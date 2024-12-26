@@ -22,3 +22,6 @@ Route::get('/blog/{url}', [HomeController::class, 'blog'])->name('blog.detail');
 
 Route::post('/analysis', [HomeController::class, 'analysis'])->name('analysis');
 Route::get('/site-analiz-sonuc', [HomeController::class, 'analysis.result']);
+
+
+Route::get('/ekip/{url}', [HomeController::class, 'team'])->name('team.detail');

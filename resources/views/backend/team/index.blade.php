@@ -1,112 +1,112 @@
-@extends('backend.layout.app')
+@extends('backend.layout.app') 
 @section('content')
 
-<div class="col-12 col-md-3">
-    <div class="card">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">Kategoriler</h3>
-            <div class="card-actions d-flex">
-                <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-icon btn-primary">
-                        <x-dashboard.icon.add/>
-                    </a>
+    <div class="col-12 col-md-3 d-none d-sm-inline-block ">
+        <div class="card mb-3">
+            <div class="card-status-top bg-blue"></div>
+            <div class="card-header">
+                <h3 class="card-title">Kategoriler</h3>
+                <div class="card-actions d-flex">
+
+                    <div class="p-1">
+                        <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
+                            <x-dashboard.icon.add/>
+                                Kategori Ekle
+                        </a>
+                    </div>
+
                 </div>
             </div>
+            
+            <div class="table-responsive">
+                <table class="table table-vcenter card-table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>IMG</th>
+                            <th>AD</th>
+                            <th class="w-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categories->where('parent_id',7) as $item)
+                        <tr>
+                            <td>
+                                <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
+                            </td>
+                            <td>
+                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
+                                    {{$item->name}} <small>[{{ $item->teams_count}}]</small>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
+
         
-        <div class="table-responsive">
-            <table class="table table-vcenter card-table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>IMG</th>
-                        <th>AD</th>
-                        <th class="w-1"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($categories->where('parent_id',3) as $item)
-                    <tr>
-                        <td>
-                            <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
-                        </td>
-                        <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
-                                {{$item->name}} <small>[{{ $item->blogs_count}}]</small>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-
-
-        </div>
-
     </div>
-</div>
 
+    <div class="col-12 col-md-9">
+        <div class="card">
+            <div class="card-status-top bg-blue"></div>
+            @if($all->total() != 0)
 
-<div class="col-12 col-md-9">
-    <div class="card">
-        <div class="card-status-top bg-blue"></div>
-        @if($all->total() != 0)
+            <div class="card-header">
+                <h3 class="card-title">Ekip [{{ $all->total()}}]</h3>
+                <div class="card-actions d-flex">
+                    <div class="d-none d-sm-inline-block p-1">
+                        <form>
+                            <div class="input-icon mb-3">
+                                <input type="text" class="form-control" name="q" placeholder="Arama" value="{{ request('q')}}">
+                                <span class="input-icon-addon">
+                                    <x-dashboard.icon.search/>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="d-none d-sm-inline-block p-1">
+                        <form>
+                            <select class="form-select" name="category_id" onchange="location = this.value;">
+                                <option value="?category_id=0" {{ request('category_id') == 0 ? 'selected' :  null}}>Hepsi</option>
+                                @foreach ($categories->where('parent_id',7) as $item)
+                                    <option value="?category_id={{ $item->id}}" {{ request('category_id') == $item->id ? 'selected' :  null}}>{{ $item->name}}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                    @if(request('q'))
+                    <div class="p-1">
+                        <a href="{{ route('team.index')}}" class="btn btn-icon" title="Sayfayı Yenile">
+                            <x-dashboard.icon.refresh/>
+                        </a>
+                    </div>
+                    @endif
+                    <div class="p-1">
+                        <a href="{{ url()->previous() }}" class="btn btn-icon">
+                            <x-dashboard.icon.back/>
+                        </a>
+                    </div>
+                    <div class="p-1">
+                        <a href="{{ route('team.create')}}" title="Sayfa Oluştur" class="btn btn-icon" >
+                            <x-dashboard.icon.add/>
+                        </a>
+                    </div>
 
-     
-        <div class="card-header">
-            <h3 class="card-title">Bloglar [{{ $all->total()}}]</h3>
-            <div class="card-actions d-flex">
-                <div class="d-none d-sm-inline-block p-1">
-                    <form>
-                        <div class="input-icon mb-3">
-                            <input type="text" class="form-control" name="q" placeholder="Arama" value="{{ request('q')}}">
-                            <span class="input-icon-addon">
-                                <x-dashboard.icon.search/>
-                            </span>
-                        </div>
-                    </form>
                 </div>
-                <div class="d-none d-sm-inline-block p-1">
-                    <form>
-                        <select class="form-select" name="category_id" onchange="location = this.value;">
-                            <option value="?category_id=0" {{ request('category_id') == 0 ? 'selected' :  null}}>Hepsi</option>
-                            @foreach ($categories->where('parent_id',3) as $item)
-                                <option value="?category_id={{ $item->id}}" {{ request('category_id') == $item->id ? 'selected' :  null}}>{{ $item->name}}</option>
-                            @endforeach
-                        </select>
-                    </form>
-                </div>
-                @if(request('q'))
-                <div class="p-1">
-                    <a href="{{ route('blog.index')}}" class="btn btn-icon" title="Sayfayı Yenile">
-                        <x-dashboard.icon.refresh/>
-                    </a>
-                </div>
-                @endif
-                <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-icon">
-                        <x-dashboard.icon.back/>
-                    </a>
-                </div>
-                <div class="p-1">
-                    <a href="{{ route('blog.create')}}" title="Blog Oluştur" class="btn btn-icon btn-primary" >
-                        <x-dashboard.icon.add/>
-                    </a>
-                </div>
-
             </div>
-        </div>
-
-        <div class="table-responsive">
+            <div class="table-responsive">
         <table class="table table-vcenter card-table table-striped table-hover" id="sortableTable">
-                <thead>
+            <thead>
                     <tr>
                         <th>Img</th>
-                        <th>AD</th>
+                        <th>Ad</th>
                         <th>Kategori</th>
                         <th>Durum</th>
                         <th class="w-1"></th>
@@ -122,26 +122,20 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route('blog.edit',$item->id)}}" title="Düzenle">
+                            <a href="{{ route('team.edit',$item->id)}}" title=" {{$item->name}} - Düzenle">
                                 {{$item->name}}
                             </a>
                         </td>
+
                         <td class="text-secondary">
-                            <a href="{{ route('category.edit', $item->getCategory->slug)}}" title="{{ $item->getCategory->name }} - Düzenle">{{ $item->getCategory->name }}
-                        </td> 
+                            <a href="{{ route('category.edit', $item->getCategory->slug) }}" title=" {{ $item->getCategory->name }} - Düzenle">
+                            {{ $item->getCategory->name }}
+                            </a>
+                        </td>
                         <td class="text-secondary">
                             <div class="d-flex align-items-center">
                             <x-dashboard.icon.status  status='{{$item->status->color() }}'/>
-                                <div class="flex-column-reverse">
-                                    {{$item->status->title() }}
-                                    @if ($item->status->value == 2)
-                                        <div style="margin-top: px">
-                                            <small class="badge bg-{{$item->status->color() }} text-white">
-                                                {{ $item->publish_date}}
-                                            </small>
-                                        </div>
-                                    @endif
-                                </div>
+                            {{$item->status->title() }}
                             </div>
                         </td>
                         <td>
@@ -150,7 +144,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route('blog.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
+                            <a href="{{ route('team.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
                         </td>
                     </tr>
                     <div class="modal modal-blur fade" id="silmeonayi{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -168,7 +162,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" /></svg>
                                         İptal Et
                                     </a>
-                                    <form action="{{ route('blog.destroy', $item->id) }}" method="POST">
+                                    <form action="{{ route('team.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm ms-auto">
@@ -181,35 +175,34 @@
                         </div>
                     </div>
                     @endforeach
+
                 </tbody>
             </table>
-          
-               
+            
             <div class="d-flex align-items-center justify-content-center mt-2">
-                {{ $all->appends(['siralama' => 'blog', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
+                {{ $all->appends(['siralama' => 'service', 'q' => request('q'), 'category_id' => request('category_id')])->links() }}
             </div>
 
+          
         </div>
-        
-        @else
-            <x-dashboard.site.not-found route="blog"/>
-        @endif
+            @else
+                <x-dashboard.site.not-found route="team"/>
+            @endif
 
+        </div>
 
-    </div>
-    
-    <div class="card mt-3">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">En Çok Bakılan Sayfalar</h3>
-        
+        <div class="card mt-3">
+            <div class="card-status-top bg-blue"></div>
+            <div class="card-header">
+                <h3 class="card-title">En Çok Bakılan Ekip Üyesi</h3>
+            
+            </div>
+            <div class="card-body">
+                <canvas id="topPagesChart" width="400" height="200"></canvas>
+            </div>
         </div>
-        <div class="card-body">
-            <canvas id="topPagesChart" width="400" height="200"></canvas>
-        </div>
     </div>
-  
-</div>
+
 @endsection
 
 @section('customJS')
@@ -244,6 +237,7 @@
         });
     });
 </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const table = document.getElementById('sortableTable');
@@ -255,7 +249,7 @@
                     const rows = table.querySelectorAll('tr');
                     let order = Array.from(rows).map(row => row.dataset.id);
 
-                    fetch('{{ route('blog.sort') }}', {
+                    fetch('{{ route('team.sort') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

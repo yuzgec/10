@@ -4,119 +4,107 @@
 <div class="page-body">
     <div class="container-xl">
         <div class="row g-0">
-            <!-- Sol Taraf: Tab Bar -->
-            <div class="col-12 col-md-3 border-end">
-                <div class="card-body">
-                    <h4 class="subheader">Ayarlar</h4>
-                    <div class="list-group list-group-transparent">
-                        @foreach($categories->where('id', 8) as $category)
-                        <a href="#category-{{ $category->id }}" class="list-group-item list-group-item-action d-flex align-items-center" data-bs-toggle="tab">
-                            {{ $category->name }}
+            <div class="card">
+                <div class="card-status-top bg-blue"></div>
+                <div class="card-header">
+                    <h3 class="card-title"><x-dashboard.icon.settings/>Ayarlar</h3>
+                    <div class="card-actions">
+                        <a href="#" class="btn btn-primary btn-icon">
+                        <x-dashboard.icon.add/>
                         </a>
-                        @endforeach
                     </div>
-                </div>
-            </div>
-            
-            <!-- Sağ Taraf: Tab İçerikleri -->
-            <div class="col-12 col-md-9 d-flex flex-column">
-                <div class="tab-content">
-                @foreach($categories->where('id', 8) as $category)
-                <div class="tab-pane fade" id="category-{{ $category->id }}">
-                        <div class="card-body">
-                            <h2 class="mb-4">{{ $category->name }}</h2>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Value</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($settings->where('category_id', $category->id) as $setting)
-                                    <tr>
-                                        <td>{{ $setting->item }}</td>
-                                        <td>
-                                            @if($setting->isImage)
-                                            <img src="{{ asset('storage/' . $setting->value) }}" alt="{{ $setting->item }}" width="50">
-                                            @else
-                                            {{ $setting->value }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('settings.update', $setting->id) }}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                @if($setting->isType == \App\Enums\SettingsEnum::INPUT)
-                                                <input type="text" name="value" value="{{ $setting->value }}" class="form-control">
-                                                @elseif($setting->isType == \App\Enums\SettingsEnum::TEXTAREA)
-                                                <textarea name="value" class="form-control">{{ $setting->value }}</textarea>
-                                                @elseif($setting->isType == \App\Enums\SettingsEnum::CHECKBOX)
-                                                <input type="checkbox" name="value" value="1" {{ $setting->value ? 'checked' : '' }}>
-                                                @endif
+                    </div>
+                <div class="card-body d-flex">
+                    <div class="col-md-3">
+                      
+                            <ul class="nav flex-column nav-tabs me-3" data-bs-toggle="tabs" role="tablist">
+                                <div class="card">
+                                @foreach($categories->where('parent_id', 8) as $category)
+                                <li class="nav-item" role="presentation">
+                                    <a href="#category-{{ $category->id }}" class="nav-link @if($loop->first) active @endif" data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1">
+                                        <span class="p-2">{{ $category->name }}</span>
+                                    </a>
+                                </li>
+                                @endforeach
+                            </div>
+                            </ul>
+                       
+                    </div>
+                    <div class="col-md-9">
 
-                                                @if($setting->isImage)
-                                                <input type="file" name="image" class="form-control mt-2">
-                                                @endif
+                    <!-- Tab İçeriği -->
+                        <div class="tab-content flex-grow-1">
+                            @foreach($categories->where('parent_id', 8)  as $category)
+                            <div class="tab-pane fade @if($loop->first) show active @endif" id="category-{{ $category->id }}">
+                                <div class="card table-responsive">
+                                    <table class="table table-vcenter card-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Anahtar</th>
+                                                <th>Değer</th>
+                                                <th></th>
+                                                <th>Eylem</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($settings->where('category_id', $category->id) as $setting)
+                                            <tr>
+                                                <td>{{ $setting->item }}</td>
+                                                <td>
+                                                    @if($setting->isImage)
+                                                    <img src="{{ asset('storage/' . $setting->value) }}" alt="{{ $setting->item }}" width="50">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <form action="{{ route('settings.update', $setting->id) }}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        @switch($setting->isType->value)
+                                                            @case(\App\Enums\SettingsEnum::INPUT->value)
+                                                                <input type="text" name="value" value="{{ $setting->value }}" class="form-control">
+                                                                @break
+                                                            @case(\App\Enums\SettingsEnum::TEXTAREA->value)
+                                                                <textarea name="value" class="form-control">{{ $setting->value }}</textarea>
+                                                                @break
+                                                            @case(\App\Enums\SettingsEnum::CHECKBOX->value)
+                                                            @case(\App\Enums\SettingsEnum::BOOLEAN->value)
+                                                                <input type="checkbox" name="value" value="1" {{ $setting->value ? 'checked' : '' }}>
+                                                                @break
+                                                            @case(\App\Enums\SettingsEnum::PASSWORD->value)
+                                                                <input type="password" name="value" value="{{ $setting->value }}" class="form-control">
+                                                                @break
+                                                            @case(\App\Enums\SettingsEnum::FILE->value)
+                                                                <input type="file" name="value" class="form-control">
+                                                                @if($setting->value)
+                                                                    <div class="mt-2">Mevcut dosya: {{ $setting->value }}</div>
+                                                                @endif
+                                                                @break
+                                                        @endswitch
 
-                                                <button type="submit" class="btn btn-primary mt-2">Update</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                        @if($setting->isImage)
+                                                        <input type="file" name="image" class="form-control mt-2">
+                                                        @endif
+
+                                                </td>
+                                                <td>
+                                                    
+                                                    <button type="submit" class="btn btn-primary btn-icon"><x-dashboard.icon.edit/></button>
+                                                </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Create Modal -->
-    <div class="modal fade" id="createSettingModal" tabindex="-1" aria-labelledby="createSettingModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form action="{{ route('settings.store') }}" method="POST" enctype="multipart/form-data" class="modal-content">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createSettingModalLabel">Yeni Ayar Ekle</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-label">Item</div>
-                    <input type="text" name="item" class="form-control" required>
-                    
-                    <div class="form-label mt-3">Category</div>
-                    <select name="category_id" class="form-control" required>
-                        @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-
-                    <div class="form-label mt-3">Type</div>
-                    <select name="isType" class="form-control" required>
-                        <option value="{{ \App\Enums\SettingsEnum::INPUT }}">Input</option>
-                        <option value="{{ \App\Enums\SettingsEnum::TEXTAREA }}">Textarea</option>
-                        <option value="{{ \App\Enums\SettingsEnum::CHECKBOX }}">Checkbox</option>
-                    </select>
-
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" name="isImage" id="isImage">
-                        <label class="form-check-label" for="isImage">Is Image?</label>
-                    </div>
-
-                    <div class="form-label mt-3">Value</div>
-                    <input type="text" name="value" class="form-control">
-                    <input type="file" name="image" class="form-control mt-2">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
+ 
 </div>
 @endsection
