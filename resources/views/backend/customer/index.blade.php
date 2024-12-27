@@ -66,7 +66,9 @@
 
                     <tr>
                         <td>
-                            <img src="./static/avatars/010m.jpg" class="avatar me-2">
+                            <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'thumb')}}">
+                                <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
+                            </a>
                         </td>
                         <td>
                             <a href="{{ route('customer.edit',$item->id)}}" title="Düzenle">

@@ -16,9 +16,9 @@ class Input extends Component
     public $disabled;
     public $placeholder;
     public $maxlength;
+    public $icon;
 
-
-    public function __construct($label, $name, $class = "form-control",$column=3, $id=null, $disabled = false, $placeholder = null,$maxlength = null)
+    public function __construct($label, $name, $class = "form-control",$column=3, $id=null, $disabled = false, $placeholder = null,$maxlength = null, $icon=null)
     {
         $this->label = $label;
         $this->name = $name;
@@ -28,6 +28,7 @@ class Input extends Component
         $this->disabled = $disabled;
         $this->placeholder = $placeholder;
         $this->maxlength = $maxlength;
+        $this->icon = $icon;
     }
 
     public function render(): View|Closure|string

@@ -51,6 +51,8 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::resource('/works',CustomerWorkController::class);
         Route::auto('/workflow', WorkFlowController::class);
         Route::get('/customer/export', [CustomerController::class, 'export'])->name('customer.export');
+        Route::get('/districts/{city}', [CustomerController::class,'getDistricts']);
+
 
 
     });

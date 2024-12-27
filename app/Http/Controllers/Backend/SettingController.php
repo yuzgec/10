@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class SettingController extends Controller
 {
@@ -13,7 +14,12 @@ class SettingController extends Controller
     {
         $settings = Setting::with('getCategory')->get();
 
-        return view('backend.setting.index', compact('settings'));
+        $iconFiles = File::files(resource_path('views/components/dashboard/icon'));
+        $icons = collect($iconFiles)->map(function ($file) {
+            return str_replace('.blade.php', '', $file->getFilename());
+        });
+
+        return view('backend.setting.index', compact('settings','icons'));
     }
 
     public function store(Request $request)

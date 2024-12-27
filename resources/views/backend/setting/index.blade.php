@@ -25,6 +25,11 @@
                                     </a>
                                 </li>
                                 @endforeach
+                                <li class="nav-item" role="presentation">
+                                    <a href="#category-99" data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1" class="card card-link card-link-pop " >
+                                        <div class="card-body">İkonlar</div>
+                                    </a>
+                                </li>
                             </div>
                         </ul>
                     </div>
@@ -75,7 +80,7 @@
                                                     @endswitch
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary btn-icon"><x-dashboard.icon.edit/></button>
+                                                    <button type="submit" class="btn btn-primary btn-icon"><x-dashboard.icon.save/></button>
                                                 </td>
                                             </tr>
                                             </form>
@@ -85,6 +90,19 @@
                                 </div>
                             </div>
                             @endforeach
+                            <div class="tab-pane fade" id="category-99">
+                                <div class="card ">
+                                <div class="card-body d-flex flex-wrap gap-2">
+                                        @foreach ($icons as $icon)
+                                            @php $componentName = "dashboard.icon.$icon" @endphp
+                                            <div style="text-align: center;">
+                                                <x-dynamic-component :component="$componentName" width="42" height="42" />
+                                                <p>{{ $icon }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

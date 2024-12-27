@@ -37,39 +37,46 @@ class Customer extends Model implements HasMedia
     }
 
 
-    
     public function registerMediaCollections(): void
     {
+        $this->addMediaCollection('page')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-        $this
-        ->addMediaCollection('page')
-        ->useFallbackUrl('/backend/resimyok.jpg', 'thumb')
-        ->useFallbackUrl('/backend/resimyok.jpg', 'small')
-        ->useFallbackUrl('/backend/resimyok.jpg', 'icon')
-        ->registerMediaConversions(function (Media $media) {
-            $this
-            ->addMediaConversion('img')
-            ->width(1250)
-            ->nonOptimized();
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-            $this
-            ->addMediaConversion('thumb')
-            ->width(500)
-            ->nonOptimized();
-                
-            $this
-            ->addMediaConversion('small')
-            ->width(250)
-            ->nonOptimized();
-                     
-            $this
-            ->addMediaConversion('icon')
-            ->width(100)
-            ->nonOptimized();
-
-        });
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        if ($media === null) {
+            return;
+        }
+
+        $this->addMediaConversion('img')
+            ->width(1250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+            
+        $this->addMediaConversion('small')
+            ->width(250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+                 
+        $this->addMediaConversion('icon')
+            ->width(100)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+    }
 
     protected $casts = [
         'status' => CustomerEnum::class,

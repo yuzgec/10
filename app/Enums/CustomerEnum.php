@@ -5,6 +5,7 @@ namespace App\Enums;
 
 
 enum CustomerEnum : int {
+    case CUSTOMER       = 7;
     case NEW            = 6;
     case INTERESTED     = 1;
     case NOTINTERESTED  = 2;
@@ -21,6 +22,7 @@ enum CustomerEnum : int {
              self::WILLTHINK        => 'Düşünecek',
              self::BAN              => 'Aranmayacak',
              self::OFFERGIVEN       => 'Teklif Verildi',
+             self::CUSTOMER         => 'Müşteri',
         };
     }
 
@@ -32,6 +34,7 @@ enum CustomerEnum : int {
             self::WILLTHINK         => 'blue',
             self::BAN               => 'gray',
             self::OFFERGIVEN        => 'yellow',
+            self::CUSTOMER          => 'purple',
 
         };
     }

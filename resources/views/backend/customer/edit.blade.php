@@ -33,144 +33,92 @@
 </div>
 
 <div class="d-flex">
-    <div class="col-md-9 mb-3 p-1">
+    <div class="col-md-9">
         <div class="card mb-3">
             <div class="card-body">
-    
-                <x-dashboard.form.input label='Firma Adı' name='company_name'/>
-
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Yetkili / Personel </label>
-                    <div class="col-5">
-                        <x-dashboard.form.only-input label='Yetkili Adı' name='authorized_person' placeholder="Yetkili Kişi Adı"/>
-                    </div>
-                    <div class="col-4">
-                        <x-dashboard.form.only-input label='Personel Adı' name='staff_name' placeholder="Personel Adı"/>
-                    </div>
-                </div>
-
-                <x-dashboard.form.input label='E Mail' name='email'/>
-
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Telefon </label>
+                <div class="row">
                    
-                    <div class="col-5">
-                        <div class="input-group mb-2">
-                            <x-dashboard.form.only-input name='phone1' placeholder="Telefon Numarası"/>
+                        <x-dashboard.form.input label='Firma Adı' name='company_name' required placeholder="Firma Adı Giriniz"/>
+                  
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Yetkili / Personel</label>
+                            <div class="col-md-4">
+                                <x-dashboard.form.only-input label='Yetkili Adı' name='authorized_person' placeholder="Yetkili Kişi Adı" icon="user"/>
+                            </div>
+                            <div class="col-md-5">
+                                <x-dashboard.form.only-input label='Personel Adı' name='staff_name' placeholder="Personel Adı" icon="user"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2">
-                            <x-dashboard.form.only-input name='phone2' placeholder="Telefon Numarası"/>
-                        </div>
-                    </div>
-                </div>
+                 
 
 
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Vergi D. / Vergi No </label>
-                   
-                    <div class="col-5">
-                        <div class="input-group mb-2">
-                            <x-dashboard.form.only-input name='tax_place' placeholder="Vergi Dairesi"/>
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Vergi Daire/NO</label>
+                            <div class="col-md-4">
+                                <x-dashboard.form.only-input label='Vergi Dairesi' name='tax_place' placeholder="Vergi Dairesi"/>
+                            </div>
+                            <div class="col-md-5">
+                                <x-dashboard.form.only-input label='Vergi No' name='tax_number' placeholder="Vergi No"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2">
-                            <x-dashboard.form.only-input name='tax_number' placeholder="Vergi No"/>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Telefon / GSM</label>
+                            <div class="col-md-4">
+                                <x-dashboard.form.only-input icon="phone" label='Telefon' name='phone1' placeholder="Telefon Numarası"/>
+                            </div>
+                            <div class="col-md-5">
+                                <x-dashboard.form.only-input icon="phone" label='GSM' name='phone2' placeholder="GSM Numarası"/>
+                            </div>
                         </div>
-                    </div>
-                </div>
-    
-                <x-dashboard.form.input label='Yetkili Adı' name='authorized_person'/>
+                 
+                        <x-dashboard.form.input icon="envelope" label='E-posta' type="email" name='email' placeholder="E-posta Adresi"/>
+                    
+                        <x-dashboard.form.textarea label='Adres' name='address' placeholder="Adres Bilgisi"/>
 
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Seçenek </label>
-                    <div class="col-6 col-md-3">
-                        <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek1
-                            <input class="form-check-input switch" name="option1" type="checkbox" value="0">
-                        </label>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek2
-                            <input class="form-check-input switch" name="option2" type="checkbox" value="0">
-                        </label>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <label class="form-check form-check-single form-switch mt-2">&nbsp; Secenek3
-                            <input class="form-check-input switch" name="option3" type="checkbox" value="0">
-                        </label>
-                    </div>
-                   
-                </div>
-
-                <div class="form-group mb-3 row">
-                    <label class="form-label col-3 col-form-label">Web Site </label>
-                   
-                    <div class="col-5">
-                        <div class="input-group mb-2">
-                            <span class="input-group-text"><x-dashboard.icon.connect/></span>
-                            <x-dashboard.form.only-input name='website1' placeholder="Web Sitesi"/>
-
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Web Sitesi</label>
+                            <div class="col-md-4">
+                                <x-dashboard.form.only-input icon="home" label='Web Site 1' name='website1' placeholder="örn: example.com"/>
+                            </div>
+                            <div class="col-md-5">
+                                <x-dashboard.form.only-input icon="home" label='Web Site 2' name='website2' placeholder="örn: example.com"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2">
-                            <span class="input-group-text"><x-dashboard.icon.connect/></span>
-                            <x-dashboard.form.only-input name='website2' placeholder="Web Sitesi"/>
+
+
+                        <x-dashboard.form.textarea label='Not' name='address' placeholder="Adres Bilgisi"/>
+
+                    
+
+                    <div class="col-12">
+                        <label class="form-label">Seçenekler</label>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <label class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="option1">
+                                    <span class="form-check-label">Seçenek 1</span>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="option2">
+                                    <span class="form-check-label">Seçenek 2</span>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="option3">
+                                    <span class="form-check-label">Seçenek 3</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title"><x-dashboard.icon.add/>İş Oluştur</h3>
-
-
-                </div>
-        
-                <div class="card-body">
-                    <x-dashboard.form.input label='İş Adı' name='work_name' placeholder="İş Adı Giriniz"/>
-                    <x-dashboard.form.input label='Web Site' name='work_website' placeholder="Web Site Adı Giriniz"/>
-
-                    <div class="form-group mb-3 row">
-                        <label class="form-label col-3 col-form-label">İş Türü </label>
-                        <div class="col">
-                            <select name="work_category" class="form-control">
-                                @foreach ($type as $item)
-                                <option value="{{$item->id}}">{{ $item->name}}</option>
-                                @endforeach
-                            </select>
-                                
-                        </div>
-                    </div>
-        
-                    <div class="form-group mb-3 row">
-                        <label class="form-label col-3 col-form-label">Fiyat </label>
-                       
-                        <div class="col-5">
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><x-dashboard.icon.lira/></span>
-
-                                <input type="text" class="form-control" name="work_offer" placeholder="Teklif Fiyatı" autocomplete="off" value="{{ old('offer') }}">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><x-dashboard.icon.lira/></span>
-                                <input type="text" class="form-control" name="work_price" placeholder="son Fiyat" autocomplete="off" value="{{ old('price') }}">
-                            </div>
-                        </div>
-                    </div>
-        
-                    <x-dashboard.form.textarea label='Açıklama ' name='work_desc'/>
-      
-                </div>
-            </div>
     </div>
-    
     <div class="col-md-3 mb-3 p-1">
         <div class="card">
          

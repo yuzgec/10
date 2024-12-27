@@ -294,7 +294,7 @@
                                 </a>
 
                                 <a class="dropdown-item"
-                                    href="{{ route('category.index', ['q' => 5,'name' => 'SSS'])}}"
+                                href="{{ route('category.index', ['q' => 'sss','name' => 'SSS'])}}"
                                     title="Kategori Listesi">
                                     <x-dashboard.icon.category width="16"/> Kategori Yönetimi
                                 </a>

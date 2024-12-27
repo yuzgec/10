@@ -86,4 +86,9 @@ class CustomerController extends Controller
     {
         return Excel::download(new UsersExport, now().'customer.xlsx');
     }
+
+    public function getDistricts(City $city)
+    {
+        return response()->json($city->districts);
+    }
 }
