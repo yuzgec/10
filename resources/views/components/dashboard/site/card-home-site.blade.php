@@ -8,7 +8,8 @@
             </div>
         </div>
         <div class="card-status-bottom bg-{{ $color}}"></div>
-        <div class="card-body p-2 text-center ">
+        <div class="card-body p-2 text-center">
+            
             <div class="mt-2 text-{{ $color}}">
                 @if ($count > 0) [{{$count}}] @endif 
                 {{$name}}

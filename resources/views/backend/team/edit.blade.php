@@ -10,7 +10,7 @@
     <div class="card">
 
         <div class="card-header">
-            <h3 class="card-title">Ekip Düzenle [{{ $edit->name }}]</h3>
+            <h3 class="card-title"><x-dashboard.icon.user/> Ekip Düzenle [{{ $edit->name }}]</h3>
             <div class="card-actions d-flex">
                 
                 <div class="p-1">
@@ -22,7 +22,7 @@
                 <div class="p-1">
                     <a href="{{ route('team.detail', $edit->slug) }}" target="_blank" class="btn btn-outline-dark" title="{{$edit->name}} - Sayfasını Önizle">
                         <x-dashboard.icon.preview/>
-                        Sayfa Önizle
+                        Önizle
                     </a>
                 </div>
                 <div class="p-1">

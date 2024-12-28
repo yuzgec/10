@@ -82,4 +82,53 @@ class ViewService
             default => 'Tüm Zamanlar',
         };
     }
+
+    public function getMostViewedPages(int $limit = 10): Collection
+    {
+        // Tüm modelleri bir array'de toplayın
+        $models = collect([
+            \App\Models\Blog::class,
+            \App\Models\Blog::class,
+            \App\Models\Service::class,
+            \App\Models\Page::class,
+            \App\Models\Team::class,
+            \App\Models\Category::class,
+            \App\Models\Video::class,
+            // ... diğer modeller
+        ]);
+
+        $allViews = collect();
+
+        foreach ($models as $model) {
+            // Her model için en çok görüntülenenleri al
+            $views = $model::orderByViews('desc')
+                ->with('views')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'name' => $item->name,
+                        'url' => $item->slug, // veya route('blog.show', $item->slug) gibi
+                        'views' => $item->views_count,
+                        'percentage' => 0, // Sonra hesaplanacak
+                        'model_type' => class_basename($item)
+                    ];
+                });
+
+            $allViews = $allViews->concat($views);
+        }
+
+        // Görüntülenme sayısına göre sırala
+        $allViews = $allViews->sortByDesc('views');
+
+        // En yüksek görüntülenme sayısını bul
+        $maxViews = $allViews->max('views');
+
+        // Yüzdeleri hesapla
+        $allViews = $allViews->map(function ($item) use ($maxViews) {
+            $item['percentage'] = ($item['views'] / $maxViews) * 100;
+            return $item;
+        });
+
+        return $allViews->take($limit);
+    }
 } 

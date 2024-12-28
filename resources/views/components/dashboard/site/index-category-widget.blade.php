@@ -4,13 +4,13 @@
     <div class="card">
         <div class="card-status-top bg-blue"></div>
         <div class="card-header">
-            <h3 class="card-title">Kategoriler</h3>
+            <h3 class="card-title"><x-dashboard.icon.category/> Kategoriler</h3>
             <div class="card-actions d-flex">
-
                 <div class="p-1">
-                    <a href="{{ route('category.index',['q' => 'hizmet', 'name' => 'Hizmetler'])}}" title="Kategori Oluştur" class="btn btn-primary">
+                    <a  href="{{ route('category.index',['q' => 'hizmet', 'name' => 'Hizmetler'])}}" 
+                        title="Kategori Oluştur" 
+                        class="btn btn-primary btn-icon">
                         <x-dashboard.icon.add width="16" height="16"/>
-                        Ekle
                     </a>
                 </div>
 
@@ -31,15 +31,15 @@
                     @foreach ($cat as $item)
                     <tr>
                         <td>
-                            <img src="{{ $item->getFirstMediaUrl('page', 'small')}}" class="avatar me-2">
+                            <img src="{{ $item->getFirstMediaUrl('page', 'icon')}}" class="avatar me-2">
                         </td>
                         <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle">
+                            <a href="{{ route('category.edit',$item->id)}}" title="{{$item->name}} - Düzenle">
                                 {{$item->name}} <small>[{{ $item->$count }}]</small>
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route('category.edit',$item->id)}}" title="Düzenle"><x-dashboard.icon.edit/></a>
+                            <a href="{{ route('category.edit',$item->id)}}" title="{{$item->name}} - Düzenle"><x-dashboard.icon.edit/></a>
                         </td>
                     </tr>
                     @endforeach

@@ -1,9 +1,6 @@
 @extends('backend.layout.app') 
 @section('content')
-
     <x-dashboard.site.index-category-widget :cat="$cat" count="pages_count"/>
-
-
     <div class="col-12 col-md-9">
         <div class="card">
             <div class="card-status-top bg-blue"></div>
@@ -144,11 +141,8 @@
 
 
         </div>
-
         <x-dashboard.charts.view-stats model="App\Models\Page" title="En Çok Bakılan Haberler" :category-id="request('category_id', null)" :limit="10" />
-
     </div>
-
 @endsection
 
 @section('customJS')

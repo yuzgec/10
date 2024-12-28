@@ -11,6 +11,7 @@ use App\Models\Service;
 use App\Models\Analysis;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\ViewService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,6 +20,9 @@ class DashboardController extends Controller
     public function index(){
 
         $analysis = Analysis::all();
+        $mostViewedPages = app(ViewService::class)->getMostViewedPages();
+
+        //dd($mostViewedPages);
 
         $counts = Cache::remember('counts', now()->addYear(5), function () {
             return [
@@ -32,6 +36,6 @@ class DashboardController extends Controller
             ];
         });
 
-        return view('backend.index',compact('analysis','counts'));
+        return view('backend.index',compact('analysis','counts','mostViewedPages'));
     }
 }

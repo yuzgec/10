@@ -64,176 +64,173 @@
             
             <div class="card-body">
 
-                  @foreach($language as $lang)
-                  <div class="tab-content">
-                        <div class="tab-pane @if ($loop->first) active show @endif" id="{{$lang->lang}}" role="tabpanel">
+                @foreach($language as $lang)
+                <div class="tab-content">
+                    <div class="tab-pane @if ($loop->first) active show @endif" id="{{$lang->lang}}" role="tabpanel">
 
-                            <div class="card">
-                                <div class="card-status-top bg-blue"></div>
-                                <div class="card-body">
-                                    <x-dashboard.form.input label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
-                                    <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
-                                    <x-dashboard.form.text-area label='Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
+                        <div class="card">
+                            <div class="card-status-top bg-blue"></div>
+                            <div class="card-body">
+                                <x-dashboard.form.input label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
+                                <x-dashboard.form.text-area label='Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
+                            </div>
+                        </div>
+
+                        <x-dashboard.site.seo :lang="$lang" />
+
+                    </div>       
+                </div>
+                @endforeach
+                <div class="tab-content">
+                    <div class="tab-pane" id="image" role="tabpanel">
+                        
+                        <div class="row">
+
+                            <div class="col-md-6 col-12 mb-3">
+                                <div class="card">
+                                    <div class="card-stamp">
+                                        <div class="card-stamp-icon bg-blue">
+                                            <x-dashboard.icon.image/>
+                                        </div>
+                                    </div>
+                                    <div class="card-status-top bg-blue"></div>
+                                    <div class="card-header">
+                                        <h4 class="card-title"><x-dashboard.icon.image/>Image <small style="color:gray">(İlk Fotoğraf)</small></h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <input 
+                                                type="file" 
+                                                class="form-control image-preview-input mb-2" 
+                                                name="image" 
+                                                id="pageInput" 
+                                                data-preview-target="pagePreview"
+                                            >
+                                            <div class="text-center">
+                                                <img 
+                                                    src="{{ $edit->getFirstMediaUrl('page', 'thumb')}}" 
+                                                    style="width: 300px; cursor: pointer;" 
+                                                    id="pagePreview" 
+                                                    onclick="document.getElementById('pageInput').click()" 
+                                                    alt="Page Image"
+                                                >
+                                            </div>
+                                        </div>
+                                        
+                                        <label class="form-check form-switch mt-2">&nbsp; Kaldır
+                                            <input class="form-check-input switch" name="deleteImage" type="checkbox">
+                                        </label>
+                                        <small>Resmi kaldırmak için kullanın. Tekrar resim yükleyeceksiniz işaretlemenize gerek yoktur.</small>
+
+                                    </div>
                                 </div>
                             </div>
 
-                            <x-dashboard.site.seo :lang="$lang" />
-
-                        </div>       
-                    </div>
-                    @endforeach
-                    <div class="tab-content">
-                        <div class="tab-pane" id="image" role="tabpanel">
-                            
-                            <div class="row">
-
-                                <div class="col-md-6 col-12 mb-3">
-                                    <div class="card">
-                                        <div class="card-stamp">
-                                            <div class="card-stamp-icon bg-blue">
-                                                <x-dashboard.icon.image/>
-                                            </div>
+                            <div class="col-md-6 col-12 mb-3">
+                                <div class="card">
+                                    <div class="card-stamp">
+                                        <div class="card-stamp-icon bg-green">
+                                            <x-dashboard.icon.image/>
                                         </div>
-                                        <div class="card-status-top bg-blue"></div>
-                                        <div class="card-header">
-                                            <h4 class="card-title"><x-dashboard.icon.image/>Image <small style="color:gray">(İlk Fotoğraf)</small></h4>
-                                        </div>
-                                        <div class="card-body">
+                                    </div>
+                                    <div class="card-status-top bg-blue"></div>
+                                    <div class="card-header">
+                                        <h4 class="card-title"><x-dashboard.icon.image/>Cover <small style="color:gray">(Sayfa Üstüne Gelen Fotoğraf)</small></h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
                                             <div class="form-group">
                                                 <input 
                                                     type="file" 
                                                     class="form-control image-preview-input mb-2" 
-                                                    name="image" 
-                                                    id="pageInput" 
-                                                    data-preview-target="pagePreview"
+                                                    name="cover" 
+                                                    id="coverInput" 
+                                                    data-preview-target="coverPreview"
                                                 >
                                                 <div class="text-center">
                                                     <img 
-                                                        src="{{ $edit->getFirstMediaUrl('page', 'thumb')}}" 
+                                                        src="{{ $edit->getFirstMediaUrl('cover', 'thumb')}}" 
                                                         style="width: 300px; cursor: pointer;" 
-                                                        id="pagePreview" 
-                                                        onclick="document.getElementById('pageInput').click()" 
-                                                        alt="Page Image"
+                                                        id="coverPreview" 
+                                                        onclick="document.getElementById('coverInput').click()" 
+                                                        alt="Cover Image"
                                                     >
                                                 </div>
-                                            </div>
-                                            
-                                            <label class="form-check form-switch mt-2">&nbsp; Kaldır
-                                                <input class="form-check-input switch" name="deleteImage" type="checkbox">
-                                            </label>
-                                            <small>Resmi kaldırmak için kullanın. Tekrar resim yükleyeceksiniz işaretlemenize gerek yoktur.</small>
-
+                                            </div>                                              
                                         </div>
+                                        <label class="form-check form-switch mt-2">&nbsp; Kaldır
+                                            <input class="form-check-input switch" name="deleteCover" type="checkbox">
+                                        </label>
+                                        <small>Resmi kaldırmak için kullanın. Tekrar resim yükleyeceksiniz işaretlemenize gerek yoktur.</small>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6 col-12 mb-3">
-                                    <div class="card">
-                                        <div class="card-stamp">
-                                            <div class="card-stamp-icon bg-green">
-                                                <x-dashboard.icon.image/>
-                                            </div>
-                                        </div>
-                                        <div class="card-status-top bg-blue"></div>
-                                        <div class="card-header">
-                                            <h4 class="card-title"><x-dashboard.icon.image/>Cover <small style="color:gray">(Sayfa Üstüne Gelen Fotoğraf)</small></h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <input 
-                                                        type="file" 
-                                                        class="form-control image-preview-input mb-2" 
-                                                        name="cover" 
-                                                        id="coverInput" 
-                                                        data-preview-target="coverPreview"
-                                                    >
-                                                    <div class="text-center">
-                                                        <img 
-                                                            src="{{ $edit->getFirstMediaUrl('cover', 'thumb')}}" 
-                                                            style="width: 300px; cursor: pointer;" 
-                                                            id="coverPreview" 
-                                                            onclick="document.getElementById('coverInput').click()" 
-                                                            alt="Cover Image"
-                                                        >
-                                                    </div>
-                                                </div>                                              
-                                            </div>
-                                            <label class="form-check form-switch mt-2">&nbsp; Kaldır
-                                                <input class="form-check-input switch" name="deleteCover" type="checkbox">
-                                            </label>
-                                            <small>Resmi kaldırmak için kullanın. Tekrar resim yükleyeceksiniz işaretlemenize gerek yoktur.</small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12 mb-3">
-                                    <div class="card">
-                                        <div class="card-stamp">
-                                            <div class="card-stamp-icon bg-purple">
-                                                <x-dashboard.icon.image/>
-                                            </div>
-                                        </div>
-                                        <div class="card-status-top bg-blue"></div>
-
-                                        <div class="card-header">
-                                            <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri <small style="color:gray">(Sayfa Altına Gelen Galeri)</small></h4>
-                                        </div>
-                                        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                                            <input class="form-control mb-2" type="file" name="gallery[]" multiple>
-                                            <div class="table-responsive ">
-                                                <table class="table table-hover table-bordered table-center">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Sıra</th>
-                                                        <th>Resim</th>
-                                                        <th>Boyut</th>
-                                                        <th>Ad</th>
-                                                        <th>Sil</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="sortable-gallery">
-                                                        <div class="divide-y">
-                                                            @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
-                                                            <tr data-id="{{ $item->id }}">
-                                                                <td>{{ $item->order_column}}</td>
-
-                                                                <td>
-                                                                    <a data-fslightbox="gallery" href="{{ $item->getUrl() }}">
-                                                                        <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
-
-                                                                      </a>
-                                                                </td>
-                                                                <td style="background-color:{{ $item->size >= 819200 ? 'red' : 'green'}};color:white">
-                                                                    {{ intval($item->size / 1024)}} kb
-                                                                </td>
-                                                                <td>{{ $item->file_name}}
-                                                                </td>
-                                                                <td>
-                                                                    <button class="btn btn-danger btn-sm" title="Resim Sil">
-                                                                        <x-dashboard.icon.delete/> 
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </div>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
+
+                            <div class="col-md-12 col-12 mb-3">
+                                <div class="card">
+                                    <div class="card-stamp">
+                                        <div class="card-stamp-icon bg-purple">
+                                            <x-dashboard.icon.image/>
+                                        </div>
+                                    </div>
+                                    <div class="card-status-top bg-blue"></div>
+
+                                    <div class="card-header">
+                                        <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri <small style="color:gray">(Sayfa Altına Gelen Galeri)</small></h4>
+                                    </div>
+                                    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                        <input class="form-control mb-2" type="file" name="gallery[]" multiple>
+                                        <div class="table-responsive ">
+                                            <table class="table table-hover table-bordered table-center">
+                                                <thead>
+                                                <tr>
+                                                    <th>Sıra</th>
+                                                    <th>Resim</th>
+                                                    <th>Boyut</th>
+                                                    <th>Ad</th>
+                                                    <th>Sil</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="sortable-gallery">
+                                                    <div class="divide-y">
+                                                        @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
+                                                        <tr data-id="{{ $item->id }}">
+                                                            <td>{{ $item->order_column}}</td>
+
+                                                            <td>
+                                                                <a data-fslightbox="gallery" href="{{ $item->getUrl() }}">
+                                                                    <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
+
+                                                                    </a>
+                                                            </td>
+                                                            <td style="background-color:{{ $item->size >= 819200 ? 'red' : 'green'}};color:white">
+                                                                {{ intval($item->size / 1024)}} kb
+                                                            </td>
+                                                            <td>{{ $item->file_name}}
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-danger btn-sm" title="Resim Sil">
+                                                                    <x-dashboard.icon.delete/> 
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </div>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
-            
+                </div>
             </div>
         </div>
     
     </div>
-
 
     <div class="col-md-3 mb-3 p-1">
 
@@ -269,16 +266,20 @@
                 </label>
             </div>
         </div>
+
+        <x-dashboard.site.activity-log 
+        :model="App\Models\PageTranslation::class"
+        :model-id="$edit->id"
+    />
         
     </div>
 
-
-
+   
 </div>
 
 
 {!! html()->form()->close() !!}
-<x-dashboard.site.activities :activities="$activities" />
+
 
 
 @endsection
