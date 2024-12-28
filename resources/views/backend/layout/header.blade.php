@@ -551,6 +551,41 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('redirects.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <x-dashboard.icon.redirect width="20"/>
+                        </span>
+                        <span class="nav-link-title pt-1">
+                            Yönlendirme
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('language.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <x-dashboard.icon.language width="20"/>
+                        </span>
+                        <span class="nav-link-title pt-1">
+                            Diller
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('translation.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <x-dashboard.icon.comment width="20"/>
+                        </span>
+                        <span class="nav-link-title pt-1">
+                            Çeviri
+                        </span>
+                    </a>
+                </li>
+
+                
+
             </ul>
                         
           </div>

@@ -3,7 +3,7 @@
 <div class="card mb-3 card-link card-link-pop bg-primary-lt">
     <div class="card-status-top bg-primary"></div>
     <div class="card-header">
-        <h3 class="card-title">Top Pages</h3>
+        <h3 class="card-title"><x-dashboard.icon.star/> Top Pages</h3>
     </div>
     <div class="card-body">
        

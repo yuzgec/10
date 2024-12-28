@@ -171,7 +171,7 @@
                                 <div class="card">
                                     <div class="card-stamp">
                                         <div class="card-stamp-icon bg-purple">
-                                            <x-dashboard.icon.image/>
+                                            <x-dashboard.icon.gallery/>
                                         </div>
                                     </div>
                                     <div class="card-status-top bg-blue"></div>

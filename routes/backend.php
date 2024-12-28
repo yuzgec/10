@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Backend\FaqController;
+use App\Http\Controllers\Backend\RedirectController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
@@ -17,7 +18,6 @@ use App\Http\Controllers\Backend\LanguageController;
 use App\Http\Controllers\Backend\WorkFlowController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PermissionController;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Controllers\Backend\TranslationController;
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
@@ -70,6 +70,8 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::auto('/translation', TranslationController::class);
         Route::auto('/language',LanguageController::class);
         Route::auto('/settings',SettingController::class);
+        Route::resource('/redirects', RedirectController::class)->only(['index', 'store', 'destroy']);
+
 
     });
 

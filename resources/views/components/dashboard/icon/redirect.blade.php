@@ -9,4 +9,6 @@
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>
+    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-bounce"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 18h4"/><path
+    d="M3 8a9 9 0 0 1 9 9v1l1.428 -4.285a12 12 0 0 1 6.018 -6.938l.554 -.277"/><path d="M15 6h5v5"/>
+</svg>
