@@ -79,7 +79,10 @@
     <div class="col-md-3 mb-3 p-1">
 
         <x-dashboard.site.category parent="5" category="{{ $edit->category_id}}"/>
-       
+            <x-dashboard.site.activity-log 
+            :model="App\Models\FaqTranslation::class"
+            :model-id="$edit->id"
+        />
        
     </div>
 </div>

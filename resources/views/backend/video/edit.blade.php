@@ -258,7 +258,12 @@
                     <input name="linkedin" type="text" value="{{$edit->linkedin}}" class="form-control" placeholder="Linkedin Username">
                 </div>
             </div>
-        </div>
+        </div>,
+
+        <x-dashboard.site.activity-log 
+        :model="App\Models\VideoTranslation::class"
+        :model-id="$edit->id"
+    />
         
     </div>
 

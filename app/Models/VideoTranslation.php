@@ -11,12 +11,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VideoTranslation extends Model implements Viewable
 {
-    use HasFactory,HasSlug,InteractsWithViews;
+    use LogsActivityTrait,HasFactory,HasSlug,InteractsWithViews;
 
     public $timestamps = false;
     protected $guarded = [];
 
     protected $translationForeignKey = 'video_id';
+    protected $logAttributes = ['name', 'slug'];
+
+    public function getCustomAttributeNames()
+    {
+        return [ 'name' => 'Başlık', 'slug' => 'Link'];
+    }
 
 
     public function getSlugOptions() : SlugOptions

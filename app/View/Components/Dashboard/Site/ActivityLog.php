@@ -8,17 +8,17 @@ use Spatie\Activitylog\Models\Activity;
 class ActivityLog extends Component
 {
     public $activities;
-    public $translations;
 
     public function __construct($model, $modelId)
     {
-        // Model ve ID'ye göre aktiviteleri al
-        $this->activities = Activity::where('subject_type', 'like', '%Translation')
+        // Model ve ID'ye göre aktiviteleri al ve subject_type'ı tam olarak kontrol et
+        $this->activities = Activity::where('subject_type', $model)
             ->where('subject_id', $modelId)
             ->orderBy('created_at', 'desc')
             ->get()
             ->groupBy('created_at');
     }
+
 
     public function render()
     {

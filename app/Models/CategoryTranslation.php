@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Spatie\Sluggable\HasSlug;
+use App\Traits\LogsActivityTrait;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
@@ -11,13 +12,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryTranslation extends Model implements Viewable
 {
-    use HasFactory,HasSlug,InteractsWithViews;
+    use LogsActivityTrait,HasFactory,HasSlug,InteractsWithViews;
 
 
     public $timestamps = false;
     protected $guarded = [];
 
     protected $translationForeignKey = 'category_id';
+
+
+    protected $logAttributes = ['name', 'slug'];
+    public function getCustomAttributeNames()
+    {
+        return [ 'name' => 'Başlık', 'slug' => 'Link'];
+    }
 
 
     public function getSlugOptions() : SlugOptions

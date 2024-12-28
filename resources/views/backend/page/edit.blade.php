@@ -268,9 +268,9 @@
         </div>
 
         <x-dashboard.site.activity-log 
-        :model="App\Models\PageTranslation::class"
-        :model-id="$edit->id"
-    />
+            :model="App\Models\PageTranslation::class"
+            :model-id="$edit->id"
+        />
         
     </div>
 

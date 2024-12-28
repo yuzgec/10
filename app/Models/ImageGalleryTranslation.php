@@ -2,10 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\LogsActivityTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ImageGalleryTranslation extends Model
 {
-    use HasFactory;
+    use LogsActivityTrait,HasFactory;
+
+    protected $logAttributes = ['name', 'slug'];
+    public function getCustomAttributeNames()
+    {
+        return [ 'name' => 'Başlık', 'slug' => 'Link'];
+    }
+
+
+    
 }

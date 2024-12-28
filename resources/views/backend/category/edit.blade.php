@@ -79,7 +79,6 @@
 
     <div class="col-md-3 mb-3 p-1">
 
-
         <div class="card">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
@@ -130,17 +129,15 @@
                 <input class="form-control" type="file" name="cover">
             </div>
         </div>
+
+        <x-dashboard.site.activity-log 
+            :model="App\Models\CategoryTranslation::class"
+            :model-id="$edit->id"
+        />
      
     </div>
 
-    <div class="col-md-4 mb-3">
-        
-    </div>
-
-    <div class="col-md-4 mb-3">
-       
-    </div>
-
+   
 
 </div>
 {!! html()->form()->close() !!}

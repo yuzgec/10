@@ -259,6 +259,11 @@
                 </div>
             </div>
         </div>
+
+        <x-dashboard.site.activity-log 
+            :model="App\Models\TeamTranslation::class"
+            :model-id="$edit->id"
+        />
         
     </div>
 

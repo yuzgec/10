@@ -27,9 +27,13 @@
                             <div class="border-start border-2 ps-3 mt-2">
                                 @if(isset($activity->properties['old']) && isset($activity->properties['attributes']))
                                     @foreach($activity->properties['attributes'] as $key => $value)
+                                        @php
+                                            $customNames = $activity->subject?->getCustomAttributeNames() ?? [];
+                                            $fieldName = $customNames[$key] ?? ucfirst($key);
+                                        @endphp
                                         @if(isset($activity->properties['old'][$key]) && $activity->properties['old'][$key] !== $value)
                                             <div class="mb-2">
-                                                <div class="fw-bold text-muted">{{ ucfirst($key) }}</div>
+                                                <div class="fw-bold text-muted">{{ $fieldName }}</div>
                                                 <div class="d-flex gap-2 align-items-center">
                                                     <div class="text-danger bg-danger-lt px-2 py-1 rounded">
                                                         <small>{{ $activity->properties['old'][$key] ?: 'Boş' }}</small>
@@ -44,19 +48,11 @@
                                             </div>
                                         @endif
                                     @endforeach
-                                @elseif($activity->description == 'created')
-                                    <div class="text-success">
-                                        <x-dashboard.icon.add/> Yeni kayıt oluşturuldu
-                                    </div>
-                                @elseif($activity->description == 'deleted')
-                                    <div class="text-danger">
-                                        <x-dashboard.icon.delete/> Kayıt silindi
-                                    </div>
                                 @endif
 
                                 <div class="mt-2">
                                     <span class="badge bg-blue-lt">
-                                        {{ $activity->event == 'created' ? 'Oluşturma' : ($activity->event == 'updated' ? 'Güncelleme' : 'Silme') }}
+                                        {{ $activity->description }}
                                     </span>
                                     <span class="badge bg-purple-lt">
                                         {{ optional($activity->causer)->email ?? 'Sistem' }}
@@ -64,11 +60,6 @@
                                     <span class="badge bg-yellow-lt">
                                         IP: {{ $activity->properties['ip'] ?? 'Bilinmiyor' }}
                                     </span>
-                                    @if(isset($activity->properties['user_agent']))
-                                        <span class="badge bg-green-lt" title="{{ $activity->properties['user_agent'] }}">
-                                            {{ Str::limit($activity->properties['user_agent'], 30) }}
-                                        </span>
-                                    @endif
                                 </div>
                             </div>
                         </div>

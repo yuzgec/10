@@ -73,9 +73,6 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
         return $this->morphMany(Faq::class, 'faqable');
     }
 
- 
-
-
     public function registerMediaCollections(): void
     {
 

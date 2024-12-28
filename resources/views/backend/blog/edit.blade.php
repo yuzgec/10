@@ -263,6 +263,12 @@
                 </label>
             </div>
         </div>
+
+        <x-dashboard.site.activity-log 
+            :model="App\Models\CategoryTranslation::class"
+            :model-id="$edit->id"
+        />
+    
     </div>
 
 </div>
