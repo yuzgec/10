@@ -8,8 +8,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Backend\PermissionController;
 
 
-Route::redirect('/hakkimizda', '/kurumsal/hakkimizda', 301);
-Route::redirect('/isler', '/projeler', 301);
+
 Route::redirect('/izmir-karsiyaka', '/iletisim', 301);
 Route::redirect('/ajans/web-tasarim-hizmeti/39', '/izmir-ajans/web-tasarim', 301);
 Route::redirect('/makale/izmir-karsiyaka-da-seo-yapan-firmalar/46', '/blog/izmirde-web-tasarim-yapan-ajanslar', 301);
