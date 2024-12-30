@@ -12,7 +12,7 @@
             <div class="divide-y">
                 <div class="activity-group mb-3">
                     <div class="d-flex align-items-center mb-2">
-                        <span class="avatar avatar-sm me-2" style="background-image: url({{ optional($logs->first()->causer)->profile_photo_url ?? '/backend/avatar.png' }})"></span>
+                        <span class="avatar avatar-sm me-2" style="background-image: url({{ optional($logs->first()->causer)->profile_photo_url ?? '/backend/resimyok.jpg' }})"></span>
                         <div>
                             <strong>{{ optional($logs->first()->causer)->name ?? 'Sistem' }}</strong>
                             <div class="text-muted small">

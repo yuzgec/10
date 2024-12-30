@@ -9,29 +9,10 @@
     ->attribute('enctype', 'multipart/form-data')
     ->open() !!}
 
+<x-dashboard.crud.create-header route='faq' name="S.S.S"/>
 
-<div class="col-12 mb-3">
-    <div class="card">
-        <div class="card-status-top bg-blue"></div>
-        <div class="card-header">
-            <h3 class="card-title">S.S.S Ekle</h3>
-            <div class="card-actions d-flex">
-                <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-dark">
-                        <x-dashboard.icon.back/>
-                        Geri
-                    </a>
-                </div>
-                <div class="p-1">
-                    <button type="submit" title="S.S.S Oluştur" class="btn btn-primary">
-                        <x-dashboard.icon.save/>
-                        Kaydet
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 <div class="row">
     <div class="col-md-9 mb-3 p-1">
         <div class="card">
@@ -77,7 +58,7 @@
     </div>
 
     <div class="col-md-3 mb-3 p-1">
-        <x-dashboard.site.category parent="5"/>
+        <x-dashboard.crud.category :cat='$cat'/>
     </div>
 
 </div>
@@ -87,19 +68,5 @@
 
 
 @section('customJS')
-
-    @foreach($language as $lang)
-        <script type="text/javascript">
-            CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
-                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
-                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
-                filebrowserUploadMethod: 'form',
-                allowedContent: true,
-                height : 400,
-            });
-        </script>
-    @endforeach
-
+    @include('backend.layout.ck')
 @endsection

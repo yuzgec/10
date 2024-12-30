@@ -8,6 +8,7 @@ use App\Services\ViewService;
 use App\Http\Requests\TeamRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class TeamController extends Controller
 {   
@@ -51,21 +52,30 @@ class TeamController extends Controller
 
     public function create()
     {
-        return view('backend.team.create');
+        $cat = $this->categoryService->getChildrenBySlug('ekip');
+
+        return view('backend.team.create',compact('cat'));
     }
 
     public function store(TeamRequest $request)
     {
         $create = Team::create($request->except('image', 'cover', 'gallery'));
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->hasfile('image')){
-            $create->addMedia($request->image)->toMediaCollection('page');
-        }
 
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $create->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $create,
+                $files,
+                'gallery',
+            );
         }
 
         alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli ekip üyesi başarıyla eklendi.', 'success');
@@ -81,30 +91,31 @@ class TeamController extends Controller
     public function edit(string $id)
     {
         $edit = Team::withTrashed()->find($id);
+        $cat = $this->categoryService->getChildrenBySlug('ekip');
 
-        return view('backend.team.edit', compact('edit'));
+        return view('backend.team.edit', compact('edit','cat'));
     }
 
     public function update(TeamRequest $request, Team $update)
     {
-        //$update = Page::find($id);
-
         tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
 
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->deleteImage == "1"){
-            $update->media()->where('collection_name', 'page')->delete();
-        }
-
-        if($request->hasfile('image')){
-            $update->media()->where('collection_name', 'page')->delete();
-            $update->addMedia($request->image)->toMediaCollection('page');
-        }
-
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $update->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $update,
+                $files,
+                'gallery',
+                false
+            );
         }
 
         alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli ekip üyesi başarıyla güncellendi.', 'success');

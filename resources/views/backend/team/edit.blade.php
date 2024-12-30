@@ -6,36 +6,8 @@
     ->open() 
 !!}
 
-<div class="col-12 mb-3">
-    <div class="card">
+<x-dashboard.crud.edit-header :model='$edit' route="team" name="Ekip"/>
 
-        <div class="card-header">
-            <h3 class="card-title"><x-dashboard.icon.user/> Ekip Düzenle [{{ $edit->name }}]</h3>
-            <div class="card-actions d-flex">
-                
-                <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-dark" title="Geri Dön">
-                        <x-dashboard.icon.back/>
-                        Geri
-                    </a>
-                </div>
-                <div class="p-1">
-                    <a href="{{ route('team.detail', $edit->slug) }}" target="_blank" class="btn btn-outline-dark" title="{{$edit->name}} - Sayfasını Önizle">
-                        <x-dashboard.icon.preview/>
-                        Önizle
-                    </a>
-                </div>
-                <div class="p-1">
-                    <button type="submit" title="Formu Kaydet" class="btn btn-primary">
-                        <x-dashboard.icon.save/>
-                        Kaydet
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-9 mb-3 p-1">
         <div class="card">
@@ -46,20 +18,8 @@
             </div>
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
-                    @foreach($language as $properties)
-                    <li class="nav-item" role="presentation">
-                        <a href="#{{ $properties->lang }}" class="nav-link @if ($loop->first) active @endif" data-bs-toggle="tab">
-                            <img src="/flags/{{ $properties->lang }}.svg" width="20px"><span  style="margin-left:10px">{{ $properties->native }}</span>
-                        </a>
-                    </li>
-                    @endforeach
-                    <li class="nav-item" role="presentation">
-                        <a href="#image" class="nav-link" data-bs-toggle="tab">
-                            <span  style="margin-left:10px"><x-dashboard.icon.image/> Medya</span>
-                        </a>
-                    </li>
-                </ul>
+                <x-dashboard.crud.tab-menu :language='$language'></x-dashboard.crud.tab-menu>
+
             </div>
             
             <div class="card-body">
@@ -71,7 +31,9 @@
                             <div class="card">
                                 <div class="card-status-top bg-blue"></div>
                                 <div class="card-body">
-                                    <x-dashboard.form.input label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                    <x-dashboard.form.input label='Adı Soyadı' name='name:{{ $lang->lang }}' placeholder="Ad Soyad Giriniz ({{ $lang->native }})" maxlength="70"/>
+                                    <x-dashboard.form.input label='Mesleği' name='jobTitle:{{ $lang->lang }}' placeholder="Mesleği ({{ $lang->native }})" maxlength="40"/>
+                                    <x-dashboard.form.input label='Kurum' name='company:{{ $lang->lang }}' placeholder="Bağlı bulunduğu kurum ({{ $lang->native }})" maxlength="70"/>
                                     <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
                                     <x-dashboard.form.text-area label='Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
                                 </div>
@@ -100,29 +62,37 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <input 
-                                                    type="file" 
-                                                    class="form-control image-preview-input mb-2" 
-                                                    name="image" 
-                                                    id="pageInput" 
-                                                    data-preview-target="pagePreview"
-                                                >
-                                                <div class="text-center">
-                                                    <img 
-                                                        src="{{ $edit->getFirstMediaUrl('page', 'thumb')}}" 
-                                                        style="width: 300px; cursor: pointer;" 
-                                                        id="pagePreview" 
-                                                        onclick="document.getElementById('pageInput').click()" 
-                                                        alt="Page Image"
+                                                
+                                                <div class="image-preview-container">
+                                                    <input 
+                                                        type="file" 
+                                                        class="image-preview-input" 
+                                                        name="image" 
+                                                        id="pageImageInput"
+                                                        data-preview-target="pageImagePreview"
+                                                        accept="image/*"
                                                     >
+                                                    <img 
+                                                        src="{{ $edit->getFirstMediaUrl('page','img') }}" 
+                                                        id="pageImagePreview" 
+                                                        class="preview-image"
+                                                        alt="Preview"
+                                                    >
+                                                        <button 
+                                                            type="button" 
+                                                            class="delete-media-btn" 
+                                                            data-model-id="{{ $edit->id ?? '' }}"
+                                                            data-model-type="Page"
+                                                            data-collection="page"
+                                                            data-preview-target="imagePreview"
+                                                            title="Resmi Kaldır"
+                                                        >
+                                                        <x-dashboard.icon.delete width="50"/>
+                                                    </button>
+                                                    
                                                 </div>
+                                                
                                             </div>
-                                            
-                                            <label class="form-check form-switch mt-2">&nbsp; Kaldır
-                                                <input class="form-check-input switch" name="deleteImage" type="checkbox">
-                                            </label>
-                                            <small>Resmi kaldırmak için kullanın. Tekrar resim yükleyeceksiniz işaretlemenize gerek yoktur.</small>
-
                                         </div>
                                     </div>
                                 </div>
@@ -131,13 +101,15 @@
                                     <div class="card">
                                         <div class="card-stamp">
                                             <div class="card-stamp-icon bg-purple">
-                                                <x-dashboard.icon.image/>
+                                                <x-dashboard.icon.gallery/>
                                             </div>
                                         </div>
                                         <div class="card-status-top bg-blue"></div>
-
+    
                                         <div class="card-header">
-                                            <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri <small style="color:gray">(Sayfa Altına Gelen Galeri)</small></h4>
+                                            <h4 class="card-title"><x-dashboard.icon.gallery/>Foto Galeri
+                                                <small style="color:gray">(Sayfa Altına Gelen Galeri)</small>
+                                            </h4>
                                         </div>
                                         <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                                             <input class="form-control mb-2" type="file" name="gallery[]" multiple>
@@ -157,12 +129,11 @@
                                                             @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
                                                             <tr data-id="{{ $item->id }}">
                                                                 <td>{{ $item->order_column}}</td>
-
+    
                                                                 <td>
-                                                                    <a data-fslightbox="gallery" href="{{ $item->getUrl() }}">
-                                                                        <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
-
-                                                                      </a>
+                                                                    <a data-fslightbox="gallery" href="{{ $item->getUrl('thumb') }}">
+                                                                        <img src="{{ $item->getUrl('thumb')}}" width="50px">
+                                                                    </a>
                                                                 </td>
                                                                 <td style="background-color:{{ $item->size >= 819200 ? 'red' : 'green'}};color:white">
                                                                     {{ intval($item->size / 1024)}} kb
@@ -183,6 +154,7 @@
                                         </div>
                                     </div>
                                 </div>
+    
 
                             </div>
                         </div>
@@ -197,7 +169,7 @@
 
     <div class="col-md-3 mb-3 p-1">
 
-        <x-dashboard.site.category parent="32" category="{{ $edit->category_id}}"/>
+        <x-dashboard.crud.category :cat='$cat' :cat_id='$edit->category_id'/>
        
         <div class="card mt-2">
             <div class="card-status-top bg-blue"></div>
@@ -278,97 +250,13 @@
 @endsection
 
 @section('customJS')
-    @foreach($language as $lang)
-        <script type="text/javascript">
-            CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
-             
-                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
-                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
-                filebrowserUploadMethod: 'form',
-                allowedContent: true,
-                height : 400,
+    @include('backend.layout.ck')
+  
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                initGallerySortable('{{ route('team.gallerysort') }}');
             });
         </script>
-    @endforeach
-     {{--  Galeri Listeleme --}}
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const gallery = document.getElementById('sortable-gallery');
-            new Sortable(gallery, {
-                animation: 150,
-                onEnd: function (evt) {
-                    const order = Array.from(gallery.children).map(row => row.dataset.id);
-
-                    fetch('{{ route('page.gallerysort') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ order })
-                    }).then(response => response.json())
-                    .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Sıralama Başarıyla Yapıldı',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                        } else {
-                            Swal.fire({
-                                toast: true,
-                                position: 'top-end',
-                                icon: 'error',
-                                title: 'Bir hata oluştu!',
-                                showConfirmButton: false,
-                                timer: 3000
-                            });
-                        }
-                            }).catch(error => {
-                        Swal.fire({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'error',
-                            title: 'İstek başarısız oldu!',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                        console.error('Error:', error);
-                    });
-                }
-            });
-        });
-    </script>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.image-preview-input').forEach(input => {
-        input.addEventListener('change', function () {
-            previewImage(this);
-        });
-    });
-});
-
-function previewImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        const previewId = input.getAttribute('data-preview-target');
-
-        reader.onload = function (e) {
-            const previewElement = document.getElementById(previewId);
-            if (previewElement) {
-                previewElement.src = e.target.result;
-            }
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-</script>
+    @endpush
 @endsection

@@ -54,7 +54,9 @@ class PageController extends Controller
 
     public function create()
     {
-        return view('backend.page.create');
+        $cat = $this->categoryService->getChildrenBySlug('sayfa');
+
+        return view('backend.page.create', compact('cat'));
     }
 
     public function store(PageRequest $request)
@@ -94,10 +96,9 @@ class PageController extends Controller
     public function edit(string $id)
     {
         $edit = Page::withTrashed()->find($id);
+        $cat = $this->categoryService->getChildrenBySlug('sayfa');
 
-        $activities = Activity::where('subject_type', PageTranslation::class)->where('subject_id', $id)->orderBy('created_at', 'desc')->get();
-
-        return view('backend.page.edit', compact('edit','activities'));
+        return view('backend.page.edit', compact('edit','cat'));
     }
 
     public function update(PageRequest $request, Page $update)

@@ -31,7 +31,8 @@ class FaqController extends Controller
      */
     public function create()
     {
-        return view('backend.faq.create');
+        $cat = $this->categoryService->getChildrenBySlug('sss');
+        return view('backend.faq.create',compact('cat'));
     }
 
     /**
@@ -60,8 +61,10 @@ class FaqController extends Controller
     public function edit(string $id)
     {
         $edit = Faq::find($id)->firstOrFail();
+        
+        $cat = $this->categoryService->getChildrenBySlug('sss');
 
-        return view('backend.faq.edit',compact('edit'));
+        return view('backend.faq.edit',compact('edit', 'cat'));
     }
 
     /**

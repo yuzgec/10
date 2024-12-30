@@ -5,8 +5,7 @@ class MediaHandler {
     }
 
     init() {
-        // Debug için log ekleyelim
-        console.log('MediaHandler initialized');
+    
         
         document.querySelectorAll('.image-preview-container').forEach(container => {
             // Elementleri bul ve log'la
@@ -15,12 +14,7 @@ class MediaHandler {
             const deleteBtn = container.querySelector('.delete-media-btn');
             const uploadArea = container.querySelector('.upload-button');
 
-            console.log('Container elements:', {
-                input: input?.id,
-                preview: preview?.id,
-                hasDeleteBtn: !!deleteBtn,
-                hasUploadArea: !!uploadArea
-            });
+    
 
             // Input'u gizle
             if (input) {
@@ -28,15 +22,12 @@ class MediaHandler {
                 
                 // Input change event'i
                 input.onchange = (e) => {
-                    console.log('Input change event triggered', input.id);
                     const file = e.target.files[0];
                     if (file) {
-                        console.log('File selected:', file.name);
                         const reader = new FileReader();
                         reader.onload = (e) => {
                             if (preview) {
                                 preview.src = e.target.result;
-                                console.log('Preview updated for:', preview.id);
                                 if (deleteBtn) deleteBtn.style.display = 'flex';
                             }
                         };
@@ -50,7 +41,6 @@ class MediaHandler {
                 preview.onclick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Preview clicked:', preview.id);
                     input?.click();
                 };
             }
@@ -59,7 +49,6 @@ class MediaHandler {
                 uploadArea.onclick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Upload area clicked for input:', input?.id);
                     input?.click();
                 };
             }
@@ -69,12 +58,10 @@ class MediaHandler {
                 deleteBtn.onclick = async (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Delete button clicked');
                     
                     if (await this.handleMediaDelete(e)) {
                         if (preview) {
                             preview.src = this.defaultImage;
-                            console.log('Preview reset to default');
                         }
                         if (input) input.value = '';
                         deleteBtn.style.display = 'none';
@@ -120,7 +107,6 @@ class MediaHandler {
                     return true;
                 }
             } catch (error) {
-                console.error('Medya silme hatası:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Hata!',

@@ -25,7 +25,7 @@ use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
 
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
@@ -42,12 +42,8 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::auto('/video',VideoController::class);
         Route::auto('/faq',FaqController::class);
         Route::auto('/service',ServiceController::class);
-        Route::get('/service-trash',[ServiceController::class,'trash'])->name('service.trash');
-        Route::get('/restore/{id}', [ServiceController::class, 'restore'])->name('service.restore');
         Route::auto('/page',PageController::class);
         Route::auto('/team',TeamController::class);
-        Route::get('/page-trash',[PageController::class,'trash'])->name('page.trash');
-        Route::get('/restore/{id}', [PageController::class, 'restore'])->name('page.restore');
         Route::delete('/page/{id}/media', [PageController::class, 'deleteMedia'])->name('page.deleteMedia');
     });
 
@@ -74,7 +70,6 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::auto('/language',LanguageController::class);
         Route::auto('/settings',SettingController::class);
         Route::resource('/redirects', RedirectController::class)->only(['index', 'store', 'destroy']);
-        Route::post('/language/toggle/{id}', [LanguageController::class, 'toggle'])->name('language.toggle');
     });
 
     Route::group(["prefix"=>"shop"],function() {

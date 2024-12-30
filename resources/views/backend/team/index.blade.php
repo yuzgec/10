@@ -33,17 +33,17 @@
                         <tr data-id="{{ $item->id }}">
                             <x-dashboard.index.image :model="$item" />
 
-                            <x-dashboard.index.name :model="$item" route="blog"/>
+                            <x-dashboard.index.name :model="$item" route="team"/>
 
                             <x-dashboard.index.category :model="$item"/>
 
                             <x-dashboard.index.status :model="$item"/>
 
-                            <x-dashboard.index.delete-edit-button :model="$item" route="blog"/>
+                            <x-dashboard.index.delete-edit-button :model="$item" route="team"/>
 
                         </tr>
 
-                        <x-dashboard.index.delete-modal :model="$item" route="blog"/>
+                        <x-dashboard.index.delete-modal :model="$item" route="team"/>
 
                         @endforeach
 

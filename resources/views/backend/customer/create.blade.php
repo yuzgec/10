@@ -3,7 +3,7 @@
 
 {!! Html::form()
     ->method('POST')
-    ->action(route('customer.store'))
+    ->action(route('customers.store'))
     ->attribute('enctype', 'multipart/form-data')
     ->open() !!}
 
@@ -66,7 +66,7 @@
                  
                         <x-dashboard.form.input icon="envelope" label='E-posta' type="email" name='email' placeholder="E-posta Adresi"/>
                     
-                        <x-dashboard.form.textarea label='Adres' name='address' placeholder="Adres Bilgisi"/>
+                        <x-dashboard.form.text-area label='Adres' name='address' placeholder="Adres Bilgisi"/>
 
                         <div class="form-group mb-3 row">
                             <label class="form-label col-3 col-form-label">Web Sitesi</label>

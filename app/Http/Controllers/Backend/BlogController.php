@@ -10,6 +10,7 @@ use App\Http\Requests\PageRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Activity;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class BlogController extends Controller
 {   
@@ -54,7 +55,9 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('backend.blog.create');
+        $cat = $this->categoryService->getChildrenBySlug('blog');
+
+        return view('backend.blog.create', compact('cat'));
 
     }
 
@@ -65,20 +68,29 @@ class BlogController extends Controller
     {
         $create = Blog::create($request->except('image', 'cover', 'gallery'));
 
-        if($request->hasfile('image')){
-            $create->addMedia($request->image)->toMediaCollection('page');
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->hasfile('cover')){
-            $create->addMedia($request->cover)->toMediaCollection('cover');
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
 
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $create->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $create,
+                $files,
+                'gallery',
+            );
         }
-
         alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli blog başarıyla eklendi.', 'success');
         return redirect()->route('blog.index');
 
@@ -99,41 +111,40 @@ class BlogController extends Controller
     {
         $edit = Blog::withTrashed()->find($id);
 
-        $activities = Activity::where('subject_type', BlogTranslation::class)->where('subject_id', $id)->orderBy('created_at', 'desc')->get();
-        return view('backend.blog.edit', compact('edit','activities'));
+        $cat = $this->categoryService->getChildrenBySlug('blog');
+        return view('backend.blog.edit', compact('edit','cat'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PageRequest $request, string $id)
+    public function update(PageRequest $request, Blog $update)
     {
-        //dd($request->all());
-        $update = Blog::find($id);
-
         tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
 
-        if($request->deleteImage == "1"){
-            $update->media()->where('collection_name', 'page')->delete();
-        }
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->hasfile('image')){
-            $update->media()->where('collection_name', 'page')->delete();
-            $update->addMedia($request->image)->toMediaCollection('page');
-        }
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
 
-        if($request->hasfile('cover')){
-            $update->addMedia($request->cover)->toMediaCollection('cover');
-        }
-
-        if($request->deleteCover == "1"){
-            $update->media()->where('collection_name', 'cover')->delete();
-        }
-
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $update->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $update,
+                $files,
+                'gallery',
+                false
+            );
         }
 
         alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli blog başarıyla güncellendi.', 'success');

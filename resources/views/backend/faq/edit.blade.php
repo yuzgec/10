@@ -30,6 +30,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-9 mb-3 p-1">
         <div class="card">
@@ -78,7 +79,8 @@
 
     <div class="col-md-3 mb-3 p-1">
 
-        <x-dashboard.site.category parent="5" category="{{ $edit->category_id}}"/>
+            <x-dashboard.crud.category :cat='$cat' :cat_id='$edit->category_id'/>
+            
             <x-dashboard.site.activity-log 
             :model="App\Models\FaqTranslation::class"
             :model-id="$edit->id"
@@ -89,19 +91,5 @@
 {!! html()->form()->close() !!}
 @endsection
 @section('customJS')
-
-    @foreach($language as $lang)
-        <script type="text/javascript">
-            CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
-                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
-                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
-                filebrowserUploadMethod: 'form',
-                allowedContent: true,
-                height : 400,
-            });
-        </script>
-    @endforeach
-
+    @include('backend.layout.ck')
 @endsection

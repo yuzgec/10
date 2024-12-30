@@ -7,13 +7,15 @@ use App\Models\Category;
 use App\Enums\StatusEnum;
 
 use Illuminate\Http\Request;
+use App\Services\ViewService;
+use App\Services\MediaService;
+use App\Services\CategoryService;
 use App\Http\Requests\PageRequest;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Spatie\Activitylog\Models\Activity;
 use CyrildeWit\EloquentViewable\Support\Period;
-use App\Services\CategoryService;
-use App\Services\MediaService;
-use App\Services\ViewService;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ServiceController extends Controller
 {   
@@ -59,7 +61,8 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('backend.service.create');
+        $cat = $this->categoryService->getChildrenBySlug('hizmet');
+        return view('backend.service.create', compact('cat'));
 
     }
 
@@ -70,18 +73,28 @@ class ServiceController extends Controller
     {
         $create = Service::create($request->except('image', 'cover', 'gallery'));
 
-        if($request->hasfile('image')){
-            $create->addMedia($request->image)->toMediaCollection('page');
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->hasfile('cover')){
-            $create->addMedia($request->cover)->toMediaCollection('cover');
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
 
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $create->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $create,
+                $files,
+                'gallery',
+            );
         }
 
         alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli hizmet başarıyla eklendi.', 'success');
@@ -103,8 +116,8 @@ class ServiceController extends Controller
     public function edit(string $id)
     {
         $edit = Service::with('getCategory')->withTrashed()->find($id);
-        $activities = Activity::where('subject_type', ServiceTranslation::class)->where('subject_id', $id)->orderBy('created_at', 'desc')->get();
-        return view('backend.service.edit', compact('edit', 'activities'));
+        $cat = $this->categoryService->getChildrenBySlug('hizmet');
+        return view('backend.service.edit', compact('edit', 'cat'));
     }
 
     /**
@@ -112,38 +125,33 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        //dd($request->all());
         $update = Service::withTrashed()->find($service->id);
 
         tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
 
         $this->mediaService->updateMedia(
-            $service, 
+            $update, 
             $request->file('image'),
-            $request->input('deleteImage'),
             'page',
             false
         );
 
         $this->mediaService->updateMedia(
-            $service, 
+            $update, 
             $request->file('cover'),
-            $request->input('deleteCover'),
             'cover',
-            true
+            false
         );
 
-        // Çoklu medya işlemi (gallery)
         if ($request->hasFile('gallery')) {
-            foreach ($request->file('gallery') as $file) {
-                $this->mediaService->handleMediaUpload(
-                    $service,
-                    $file,
-                    'gallery',
-                    false,
-                    true
-                );
-            }
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $update,
+                $files,
+                'gallery',
+                false
+            );
         }
 
         alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli hizmet başarıyla güncellendi.', 'success');
@@ -180,25 +188,20 @@ class ServiceController extends Controller
     public function sort(Request $request)
     {
         $order = $request->input('order');
-
         foreach ($order as $index => $id) {
             Service::where('id', $id)->update(['rank' => $index + 1]);
         }
-
         Cache::forget('services');
-
-
         return response()->json(['success' => true]);
     }
 
     public function gallerysort(Request $request)
     {
+        //Log::info($request->all());
         $order = $request->input('order'); // Array of media IDs in new order
-
         foreach ($order as $index => $id) {
             Media::where('id', $id)->update(['order_column' => $index + 1]);
         }
-
         return response()->json(['success' => true]);
     }
 }

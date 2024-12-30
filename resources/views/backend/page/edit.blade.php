@@ -6,60 +6,14 @@
     ->open() 
 !!}
 
-<div class="col-12 mb-3">
-    <div class="card">
+<x-dashboard.crud.edit-header :model='$edit' route="page" name="Sayfa"/>
 
-        <div class="card-header">
-            <h3 class="card-title">Sayfa Düzenle [{{ $edit->name }}]</h3>
-            <div class="card-actions d-flex">
-                
-                <div class="p-1">
-                    <a href="{{ route('page.index')}}" class="btn btn-outline-dark" title="Geri Dön">
-                        <x-dashboard.icon.back/>
-                        Geri
-                    </a>
-                </div>
-                <div class="p-1">
-                    <a href="{{ route('page.detail', $edit->slug) }}" target="_blank" class="btn btn-outline-dark" title="{{$edit->name}} - Sayfasını Önizle">
-                        <x-dashboard.icon.preview/>
-                        Sayfa Önizle
-                    </a>
-                </div>
-                <div class="p-1">
-                    <button type="submit" title="Formu Kaydet" class="btn btn-primary">
-                        <x-dashboard.icon.save/>
-                        Kaydet
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-9 mb-3 p-1">
         <div class="card">
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-yellow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
-                </div>
-            </div>
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist" id="tab-menu">
-                    @foreach($language as $properties)
-                    <li class="nav-item" role="presentation">
-                        <a href="#{{ $properties->lang }}" class="nav-link @if ($loop->first) active @endif" data-bs-toggle="tab">
-                            <img src="/flags/{{ $properties->lang }}.svg" width="20px"><span  style="margin-left:10px">{{ $properties->native }}</span>
-                        </a>
-                    </li>
-                    @endforeach
-                    <li class="nav-item" role="presentation">
-                        <a href="#image" class="nav-link" data-bs-toggle="tab">
-                            <span  style="margin-left:10px"><x-dashboard.icon.image/> Medya</span>
-                        </a>
-                    </li>
-                </ul>
+                <x-dashboard.crud.tab-menu :language='$language'></x-dashboard.crud.tab-menu>
             </div>
             
             <div class="card-body">
@@ -187,7 +141,7 @@
                                     <div class="card-status-top bg-blue"></div>
 
                                     <div class="card-header">
-                                        <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri
+                                        <h4 class="card-title"><x-dashboard.icon.gallery/>Foto Galeri
                                             <small style="color:gray">(Sayfa Altına Gelen Galeri)</small>
                                         </h4>
                                     </div>
@@ -245,7 +199,7 @@
 
     <div class="col-md-3 mb-3 p-1">
 
-        <x-dashboard.site.category parent="1" category="{{ $edit->category_id}}"/>
+        <x-dashboard.crud.category :cat='$cat' :cat_id='$edit->category_id'/>
        
         <div class="card mt-2">
             <div class="card-status-top bg-blue"></div>
