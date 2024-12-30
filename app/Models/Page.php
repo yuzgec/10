@@ -35,27 +35,47 @@ class Page extends Model implements TranslatableContract,HasMedia,Viewable
     public function faqs(){
         return $this->morphMany(Faq::class, 'faqable');
     }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('page')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-    public function registerMediaCollections(): void{
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-        $this->addMediaCollection('page')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
-            $this->addMediaConversion('img')->width(1250)->nonOptimized();
-            $this->addMediaConversion('thumb')->width(500)->nonOptimized();
-            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
-            $this->addMediaConversion('icon')->width(100)->nonOptimized();
-        });
+        $this->addMediaCollection('cover')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+    }
 
-        $this->addMediaCollection('gallery')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
-            $this->addMediaConversion('img')->width(1250)->nonOptimized();
-            $this->addMediaConversion('thumb')->width(500)->nonOptimized();
-            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
-            $this->addMediaConversion('icon')->width(100)->nonOptimized();
-        });
+    public function registerMediaConversions(Media $media = null): void
+    {
+        if ($media === null) {
+            return;
+        }
 
-        $this->addMediaCollection('cover')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
-            $this->addMediaConversion('img')->width(1250)->nonOptimized();
-            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
-        });
+        $this->addMediaConversion('img')
+            ->width(1250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+            
+        $this->addMediaConversion('small')
+            ->width(250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+                 
+        $this->addMediaConversion('icon')
+            ->width(100)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
     }
 
     public function scopeActive($query){

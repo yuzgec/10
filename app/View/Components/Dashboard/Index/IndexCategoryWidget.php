@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Dashboard\Site;
+namespace App\View\Components\Dashboard\Index;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -21,6 +21,6 @@ class IndexCategoryWidget extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.dashboard.site.index-category-widget');
+        return view('components.dashboard.index.index-category-widget');
     }
 }

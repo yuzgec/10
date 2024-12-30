@@ -28,6 +28,7 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
     use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
 
     protected $guarded = [];
+    protected $with = ['translations', 'variants.attributes', 'attributes'];
 
     public $translatedAttributes = 
     ['name',
@@ -57,11 +58,11 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
     }
 
     public function variants(){
-        return $this->hasMany(ProductVariant::class);
+        return $this->hasMany(ProductVariants::class);
     }
 
     public function attributes(){
-        return $this->hasMany(ProductAttribute::class);
+        return $this->hasMany(ProductAttributes::class);
     }
 
     public function getCategory(){
@@ -75,25 +76,45 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
 
     public function registerMediaCollections(): void
     {
+        $this->addMediaCollection('page')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-        $this->addMediaCollection('page')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
-            $this->addMediaConversion('img')->width(1250)->nonOptimized();
-            $this->addMediaConversion('thumb')->width(500)->nonOptimized();
-            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
-            $this->addMediaConversion('icon')->width(100)->nonOptimized();
-        });
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-        $this->addMediaCollection('gallery')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
-            $this->addMediaConversion('img')->width(1250)->nonOptimized();
-            $this->addMediaConversion('thumb')->width(500)->nonOptimized();
-            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
-            $this->addMediaConversion('icon')->width(100)->nonOptimized();
-        });
+        $this->addMediaCollection('cover')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+    }
 
-        $this->addMediaCollection('cover')->useFallbackUrl('/backend/resimyok.jpg')->registerMediaConversions(function (Media $media) {
-            $this->addMediaConversion('img')->width(1250)->nonOptimized();
-            $this->addMediaConversion('small')->width(250)->nonOptimized();                     
-        });
+    public function registerMediaConversions(Media $media = null): void
+    {
+        if ($media === null) {
+            return;
+        }
+
+        $this->addMediaConversion('img')
+            ->width(1250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+            
+        $this->addMediaConversion('small')
+            ->width(250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+                 
+        $this->addMediaConversion('icon')
+            ->width(100)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
     }
 
     protected $casts = [
@@ -104,6 +125,26 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
     public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
+    }
+
+    public function hasVariants(): bool
+    {
+        return $this->variants()->count() > 0;
+    }
+
+    public function getBasePrice()
+    {
+        return $this->hasVariants() 
+            ? $this->variants()->min('price') 
+            : $this->price;
+    }
+
+    public function isInStock(): bool
+    {
+        if ($this->hasVariants()) {
+            return $this->variants()->where('stock', '>', 0)->exists();
+        }
+        return $this->stock > 0;
     }
 
 }

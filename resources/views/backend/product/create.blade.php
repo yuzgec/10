@@ -1,161 +1,266 @@
 @extends('backend.layout.app')
 
 @section('content')
-
-
-{!! html()->form()
-    ->method('POST')
-    ->action(route('product.store'))
-    ->attribute('enctype', 'multipart/form-data')
-    ->open() !!}
-
-<div class="col-12 mb-3">
+<div class="col-12">
     <div class="card">
-        <div class="card-status-top bg-blue"></div>
         <div class="card-header">
-            <h3 class="card-title">Sayfa Listesi</h3>
-            <div class="card-actions d-flex">
-                
-                <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-dark">
-                        <x-dashboard.icon.back/>
-                        Geri
-                    </a>
-                </div>
-                <div class="p-1">
-                    <button type="submit" title="sayfa Oluştur" class="btn btn-primary">
-                        <x-dashboard.icon.save/>
-                        Kaydet
-                    </a>
-                </div>
-
-            </div>
+            <h3 class="card-title">Yeni Ürün Ekle</h3>
         </div>
+
+        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="card-body">
+                <div class="row">
+                    {{-- Dil Sekmeleri --}}
+                    <div class="col-12">
+                        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <li class="nav-item">
+                                    <a href="#{{ $localeCode }}" class="nav-link {{ $loop->first ? 'active' : '' }}" data-bs-toggle="tab">
+                                        <img src="/flags/{{ $localeCode }}.svg" width="20"> {{ $properties['native'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    {{-- Dil İçerikleri --}}
+                    <div class="col-12 mt-3">
+                        <div class="tab-content">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <div class="tab-pane {{ $loop->first ? 'active show' : '' }}" id="{{ $localeCode }}">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Ürün Adı ({{ $localeCode }})</label>
+                                                <input type="text" class="form-control" name="{{ $localeCode }}[name]" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Kısa Açıklama ({{ $localeCode }})</label>
+                                                <textarea class="form-control" name="{{ $localeCode }}[short]" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Detaylı Açıklama ({{ $localeCode }})</label>
+                                                <textarea class="editor" name="{{ $localeCode }}[desc]"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- Genel Bilgiler --}}
+                    <div class="col-12 mt-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Ürün Detayları</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Kategori</label>
+                                            <select name="category_id" class="form-select">
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Marka</label>
+                                            <select name="brand_id" class="form-select">
+                                                @foreach($brands as $brand)
+                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Durum</label>
+                                            <select name="status" class="form-select">
+                                                <option value="1">Aktif</option>
+                                                <option value="0">Pasif</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Varyant Seçimi --}}
+                    <div class="col-12 mt-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h4>Varyantlar</h4>
+                                <label class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="hasVariants">
+                                    <span class="form-check-label">Varyantlı Ürün</span>
+                                </label>
+                            </div>
+                            
+                            {{-- Basit Ürün Bilgileri --}}
+                            <div id="simpleProduct" class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fiyat</label>
+                                            <input type="number" step="0.01" class="form-control" name="price">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Stok</label>
+                                            <input type="number" class="form-control" name="stock">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">SKU</label>
+                                            <input type="text" class="form-control" name="sku">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Varyant Bilgileri --}}
+                            <div id="variantProduct" class="card-body" style="display: none;">
+                                <div class="variant-list">
+                                    <div class="variant-item mb-4">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Varyant Adı</label>
+                                                    <input type="text" class="form-control" name="variants[0][name]">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Fiyat</label>
+                                                    <input type="number" step="0.01" class="form-control" name="variants[0][price]">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Stok</label>
+                                                    <input type="number" class="form-control" name="variants[0][stock]">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="mb-3">
+                                                    <label class="form-label">SKU</label>
+                                                    <input type="text" class="form-control" name="variants[0][sku]">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Resimler</label>
+                                                    <input type="file" class="form-control" name="variants[0][images][]" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="addVariant">
+                                    Yeni Varyant Ekle
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Ürün Resimleri --}}
+                    <div class="col-12 mt-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Ürün Resimleri</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Ana Resim</label>
+                                            <input type="file" class="form-control" name="image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Kapak Resmi</label>
+                                            <input type="file" class="form-control" name="cover">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Galeri</label>
+                                            <input type="file" class="form-control" name="gallery[]" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-9 mb-3 p-1">
-        <div class="card">
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-yellow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
-                </div>
-            </div>
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Genel Bilgiler</h4>
-            </div>
-            <div class="card-body">
-                <x-dashboard.form.input label='Sayfa Adı' name='name' placeholder="Sayfa Adı Giriniz" maxlength="40"/>
-                <x-dashboard.form.text-area label='Kısa Açıklama' name='short'/>
-                <x-dashboard.form.text-area label='Açıklama' name='desc' id='desc'/>
-            </div>
-        </div>
-    
-    </div>
 
-    <div class="col-md-3 mb-3 p-1">
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const hasVariants = document.getElementById('hasVariants');
+    const simpleProduct = document.getElementById('simpleProduct');
+    const variantProduct = document.getElementById('variantProduct');
+    const addVariantBtn = document.getElementById('addVariant');
+    let variantCount = 1;
+
+    // Varyant switch kontrolü
+    hasVariants.addEventListener('change', function() {
+        simpleProduct.style.display = this.checked ? 'none' : 'block';
+        variantProduct.style.display = this.checked ? 'block' : 'none';
+    });
+
+    // Yeni varyant ekleme
+    addVariantBtn.addEventListener('click', function() {
+        const variantList = document.querySelector('.variant-list');
+        const newVariant = document.querySelector('.variant-item').cloneNode(true);
         
-        <x-dashboard.site.category parent="1"/>
-        
-        <div class="card mt-2">
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/> Yayınlama</h4>
-            </div>
-            <div class="card-body">  
-                <div class="mb-3">
-                    @foreach ($status->take(4) as $item)
-                        <label class="form-check">
-                            <input class="form-check-input" type="radio" name="status" value="{{$item->value}}" required>
-                            <span class="form-check-label">{{ $item->title()}}</span>
-                        </label>
-                    @endforeach
-                </div>
+        // Input isimlerini güncelle
+        newVariant.querySelectorAll('input').forEach(input => {
+            input.name = input.name.replace('[0]', `[${variantCount}]`);
+            input.value = '';
+        });
 
-                <hr>
-                <label class="form-check form-switch mt-2">&nbsp; Google İndex
-                    <input class="form-check-input switch" name="addGoogle" type="checkbox" value="1" checked>
-                </label>
-                <label class="form-check form-switch mt-2">&nbsp; Yorum Yapılabilir
-                    <input class="form-check-input switch" name="addComment" type="checkbox" value="0">
-                </label>
-                <label class="form-check form-switch mt-2">&nbsp; İçeriği Kaldır
-                    <input class="form-check-input switch" name="deleteContent" type="checkbox" value="0">
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-blue">
-                    <x-dashboard.icon.image/>
-                </div>
-            </div>
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Image</h4>
-            </div>
-            <div class="card-body">
-                <input class="form-control" type="file" name="image">
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-green">
-                    <x-dashboard.icon.image/>
-                </div>
-            </div>
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Cover</h4>
-            </div>
-            <div class="card-body">
-                <input class="form-control" type="file" name="cover">
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-status-top bg-blue"></div>
-            <div class="card-stamp">
-                <div class="card-stamp-icon bg-purple">
-                    <x-dashboard.icon.image/>
-                </div>
-            </div>
-            <div class="card-header">
-                <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri</h4>
-            </div>
-            <div class="card-body">
-                <input class="form-control" type="file" name="gallery[]" multiple>
-            </div>
-        </div>
-    </div>
-
-    <x-dashboard.site.seo/>
-
-</div>
-
-{!! html()->form()->close() !!}
-
-@endsection
-
-@section('customJS')
+        variantList.appendChild(newVariant);
+        variantCount++;
+    });
+});
+</script>
+@endpush
+@foreach($language as $lang)
 <script type="text/javascript">
-    CKEDITOR.replace( 'desc', {
-        filebrowserUploadUrl: "{{ route('page.index', ['_token' => csrf_token()]) }}",
+    CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
+        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
+        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
         filebrowserUploadMethod: 'form',
         allowedContent: true,
         height : 400,
         
+
     });
 </script>
-
-
+@endforeach
 @endsection

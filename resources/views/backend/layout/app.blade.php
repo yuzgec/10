@@ -8,20 +8,13 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>GO Dijital | Gelişmiş Yönetim Paneli</title>
         <link rel="shortcut icon" href="/frontend/img/fav.jpg">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         @include('backend.layout.css') 
         @livewireStyles
         @yield('customCSS')
         @livewireStyles
-        <style>
-            .character-count {
-                color: green;
-            }
-            .over-limit {
-                color: red;
-            }
-        </style>
         <script src="/backend/ckeditor/ckeditor.js"></script>
+        <link rel="stylesheet" href="{{ asset('backend/css/form-submit.css') }}">
 
 
     </head>
@@ -83,5 +76,7 @@
         @yield('customJS')
 
         @stack('scripts')
+
+        <script src="{{ asset('backend/js/form-submit.js') }}"></script>
     </body>
 </html>

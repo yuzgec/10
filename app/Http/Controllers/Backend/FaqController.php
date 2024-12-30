@@ -21,7 +21,7 @@ class FaqController extends Controller
 
         $all = Faq::with(['getCategory'])->whereHas('translations', function ($query){
             $query->where('name', 'like', '%'.request('q').'%');
-        })->paginate(20);
+        })->rank()->paginate(20);
         
         return view('backend.faq.index',compact('all', 'cat'));
     }
@@ -88,5 +88,19 @@ class FaqController extends Controller
         alert()->html('Başarıyla Silindi','Soru başarıyla silindi.', 'warning');
         return redirect()->route('faq.index');
            
+    }
+
+
+    public function sort(Request $request)
+    {
+        $order = $request->input('order');
+
+        foreach ($order as $index => $id) {
+            Faq::where('id', $id)->update(['rank' => $index + 1]);
+        }
+
+        Cache::forget('pages');
+
+        return response()->json(['success' => true, 'message' => 'selam']);
     }
 }

@@ -49,14 +49,24 @@ class MediaService
     public function handleMultipleMediaUpload(
         HasMedia $model, 
         array $files, 
-        string $collection
+        string $collection,
+        bool $keepOriginal = false
     ): Collection {
         $uploadedMedia = collect();
         foreach ($files as $file) {
-            $uploadedMedia->push(
-                $model->addMedia($file)->toMediaCollection($collection)
-            );
+            $media = $model->addMedia($file)->toMediaCollection($collection);
+            
+            // Orijinal dosyayı sil
+            if (!$keepOriginal && $media) {
+                $originalPath = $media->getPath();
+                if (file_exists($originalPath)) {
+                    unlink($originalPath);
+                }
+            }
+
+            $uploadedMedia->push($media);
         }
+        
         return $uploadedMedia;
     }
 
@@ -76,21 +86,20 @@ class MediaService
     public function updateMedia(
         HasMedia $model,
         ?UploadedFile $file,
-        $deleteFile,
         string $collection,
         bool $keepOriginal = false
     ): void {
-        if (!empty($deleteFile)) {
-            $this->deleteMedia($model, $collection);
-            return;
-        }
-
+        // Eğer yeni bir dosya yüklenmişse
         if ($file instanceof UploadedFile) {
+            // Eski medyayı sil
+            $this->deleteMedia($model, $collection);
+            
+            // Yeni dosyayı yükle
             $this->handleMediaUpload(
                 $model, 
                 $file, 
                 $collection, 
-                true, 
+                true, // Eski dosyayı sil
                 $keepOriginal
             );
         }
@@ -149,5 +158,30 @@ class MediaService
         string $collection
     ): void {
         $model->clearMediaCollection($collection);
+    }
+
+    /**
+     * Belirli bir medyayı sil
+     */
+    public function deleteSingleMedia(HasMedia $model, string $collection): bool
+    {
+        try {
+            $media = $model->getFirstMedia($collection);
+            if ($media) {
+                $media->delete();
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Medya varlığını kontrol et
+     */
+    public function hasMedia(HasMedia $model, string $collection): bool
+    {
+        return $model->hasMedia($collection);
     }
 } 

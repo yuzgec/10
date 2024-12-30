@@ -31,13 +31,19 @@ class RedirectController extends Controller
         }
 
         Cache::forget('redirect_' . $redirect->from_url);
-        return back()->with('success', 'Yönlendirme başarıyla eklendi.');
+
+        alert()->html('Başarıyla Eklendi','Yönlendirme başarıyla eklendi.', 'success');
+
+        return redirect()->back();
     }
 
     public function destroy(Redirect $redirect)
     {
         Cache::forget('redirect_' . $redirect->from_url);
         $redirect->delete();
-        return back()->with('success', 'Yönlendirme silindi.');
+
+        alert()->html('Başarıyla Silindi','Yönlendirme başarıyla eklendi.', 'info');
+        return redirect()->back();
+      
     }
 } 

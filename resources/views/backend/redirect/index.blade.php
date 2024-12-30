@@ -1,14 +1,5 @@
 @extends('backend.layout.app')
-
 @section('content')
-@if(session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-@if(session('error'))
-<div class="alert alert-danger">{{ session('error') }}</div>
-@endif
-<div class="col-12 col-md-12">
     <div class="card">
         <div class="card-status-top bg-blue"></div>
 
@@ -50,15 +41,17 @@
             <table class="table table-vcenter card-table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Eski URL</th>
                         <th>Yeni URL</th>
                         <th>Durum Kodu</th>
-                        <th>İşlemler</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($redirects as $redirect)
                         <tr>
+                            <td>{{ $redirect->id }}</td>
                             <td>{{ $redirect->from_url }}</td>
                             <td>{{ $redirect->to_url }}</td>
                             <td>{{ $redirect->status_code }}</td>
@@ -66,7 +59,7 @@
                                 <form action="{{ route('redirects.destroy', $redirect) }}" method="POST" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                    <button type="submit" class="btn btn-danger btn-icon"><x-dashboard.icon.delete/></button>
                                 </form>
                             </td>
                         </tr>
@@ -76,12 +69,6 @@
 
         </div>
     </div>
-</div>
-
-  
-
-
-
     {{ $redirects->links() }}
 </div>
 @endsection 

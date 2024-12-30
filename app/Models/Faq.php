@@ -32,6 +32,20 @@ class Faq extends Model implements TranslatableContract
         return $this->belongsTo(Category::class, 'category_id', 'id');
     } 
 
+    public function scopeActive($query){
+        return $query->where('status', 1);
+    }
+
+    public function scopeLang($query){
+        return $query->whereHas('translations', function ($query) {
+            $query->where('locale', app()->getLocale());
+        });
+    }
+
+    public function scopeRank($query){
+        return $query->orderBy('rank','asc');
+    }
+
     protected $casts = [
         'status' => StatusEnum::class,
     ];

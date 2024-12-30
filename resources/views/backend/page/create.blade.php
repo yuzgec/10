@@ -1,11 +1,11 @@
 @extends('backend.layout.app')
-
 @section('content')
 {!! Html::form()
     ->method('POST')
     ->action(route('page.store'))
     ->attribute('enctype', 'multipart/form-data')
-    ->open() !!}
+    ->open()
+!!}
 
 <div class="col-12 mb-3">
     <div class="card">
@@ -15,7 +15,7 @@
             <div class="card-actions d-flex">
                 
                 <div class="p-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-dark" title="Geri">
+                    <a href="{{ route('page.index')}}" class="btn btn-outline-dark" title="Geri">
                         <x-dashboard.icon.back/>
                         Geri
                     </a>
@@ -41,7 +41,7 @@
             </div>
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
+                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist" id="tab-menu">
                     @foreach($language as $properties)
                     <li class="nav-item" role="presentation">
                         <a href="#{{ $properties->lang }}" class="nav-link @if ($loop->first) active @endif" data-bs-toggle="tab">
@@ -92,7 +92,27 @@
                                             <h4 class="card-title"><x-dashboard.icon.image/>Image</h4>
                                         </div>
                                         <div class="card-body">
-                                            <input class="form-control" type="file" name="image">
+                                            <div class="image-preview-container">
+                                                <input 
+                                                    type="file" 
+                                                    class="image-preview-input" 
+                                                    name="image" 
+                                                    id="pageImageInput"
+                                                    data-preview-target="pageImagePreview"
+                                                    accept="image/*"
+                                                >
+                                                <img 
+                                                    src="/backend/resimyok.jpg" 
+                                                    id="pageImagePreview"
+                                                    class="preview-image mb-2"
+                                                    alt="Preview"
+                                                >
+                                                <div class="upload-button">
+                                                    <x-dashboard.icon.add-image width="12"/>
+                                                    <p class="text-muted">Resim yüklemek için tıklayın veya sürükleyin</p>
+                                                    <small class="text-muted">PNG, JPG veya JPEG</small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +129,27 @@
                                             <h4 class="card-title"><x-dashboard.icon.image/>Cover</h4>
                                         </div>
                                         <div class="card-body">
-                                            <input class="form-control" type="file" name="cover">
+                                            <div class="image-preview-container">
+                                                <input 
+                                                    type="file" 
+                                                    class="image-preview-input" 
+                                                    name="cover" 
+                                                    id="coverInput"
+                                                    data-preview-target="coverPreview"
+                                                    accept="image/*"
+                                                >
+                                                <img 
+                                                    src="/backend/resimyok.jpg" 
+                                                    id="coverPreview" 
+                                                    class="preview-image mb-2"
+                                                    alt="Cover"
+                                                >
+                                                <div class="upload-button">
+                                                   <x-dashboard.icon.add-image/>
+                                                    <p class="text-muted">Cover resmi yüklemek için tıklayın veya sürükleyin</p>
+                                                    <small class="text-muted">PNG, JPG veya JPEG</small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -119,11 +159,11 @@
                                         <div class="card-status-top bg-blue"></div>
                                         <div class="card-stamp">
                                             <div class="card-stamp-icon bg-purple">
-                                                <x-dashboard.icon.image/>
+                                                <x-dashboard.icon.gallery/>
                                             </div>
                                         </div>
                                         <div class="card-header">
-                                            <h4 class="card-title"><x-dashboard.icon.image/>Foto Galeri</h4>
+                                            <h4 class="card-title"><x-dashboard.icon.gallery/>Foto Galeri</h4>
                                         </div>
                                         <div class="card-body">
                                             <input class="form-control" type="file" name="gallery[]" multiple>
@@ -187,21 +227,5 @@
 @endsection
 
 @section('customJS')
-
-    @foreach($language as $lang)
-        <script type="text/javascript">
-            CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
-                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
-                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
-                filebrowserUploadMethod: 'form',
-                allowedContent: true,
-                height : 400,
-                
-
-            });
-        </script>
-    @endforeach
-
+    @include('backend.layout.ck')
 @endsection

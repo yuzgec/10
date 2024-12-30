@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
                 <!-- Tab Başlıkları -->
-                <ul class="nav nav-tabs" id="languageTabs" role="tablist">
+                <ul class="nav nav-tabs" id="languageTabs" role="tablist" id="tab-menu">
                     @foreach ($locales as $index => $locale)
                         <li class="nav-item" role="presentation">
                             <button class="nav-link {{ $index === 0 ? 'active' : '' }}" 

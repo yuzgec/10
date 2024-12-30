@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Services\MediaService;
 
 class PageController extends Controller
 {   
@@ -21,7 +22,6 @@ class PageController extends Controller
     {
 
         $cat = $this->categoryService->getChildrenBySlug('sayfa', [],['pages']);
-
 
         $all = Page::with(['getCategory', 'media'])
         ->lang()
@@ -33,7 +33,8 @@ class PageController extends Controller
             $query->where('category_id', request('category_id'));
         })
         ->rank()
-        ->paginate(20);
+        ->paginate(10);
+
 
         $viewService = app(ViewService::class);
         $chartData = $viewService->getViewStats(
@@ -60,28 +61,34 @@ class PageController extends Controller
     {
         $create = Page::create($request->except('image', 'cover', 'gallery'));
 
-        if($request->hasfile('image')){
-            $create->addMedia($request->image)->toMediaCollection('page');
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->hasfile('cover')){
-            $create->addMedia($request->cover)->toMediaCollection('cover');
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
 
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $create->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $create,
+                $files,
+                'gallery',
+            );
         }
 
         alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli sayfa başarıyla eklendi.', 'success');
+        
         return redirect()->route('page.index');
 
-    }
-
-    public function show(string $id)
-    {
-        //
     }
 
     public function edit(string $id)
@@ -95,32 +102,31 @@ class PageController extends Controller
 
     public function update(PageRequest $request, Page $update)
     {
-        //$update = Page::find($id);
-
         tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
 
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        if($request->deleteImage == "1"){
-            $update->media()->where('collection_name', 'page')->delete();
-        }
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
 
-        if($request->hasfile('image')){
-            $update->media()->where('collection_name', 'page')->delete();
-            $update->addMedia($request->image)->toMediaCollection('page');
-        }
-
-        if($request->hasfile('cover')){
-            $update->addMedia($request->cover)->toMediaCollection('cover');
-        }
-
-        if($request->deleteCover == "1"){
-            $update->media()->where('collection_name', 'cover')->delete();
-        }
-
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $update->addMedia($item)->toMediaCollection('gallery');
-            }
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $update,
+                $files,
+                'gallery',
+                false
+            );
         }
 
         alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli sayfa başarıyla güncellendi.', 'success');
@@ -133,13 +139,10 @@ class PageController extends Controller
      */
     public function destroy(string $id)
     {
-
         $delete = Page::findOrFail($id);
         $delete->delete();
-
         alert()->html('Başarıyla Silindi','Sayfa başarıyla silindi.', 'warning');
         return redirect()->route('page.index');
-
     }
 
     public function trash(){
@@ -172,11 +175,9 @@ class PageController extends Controller
     public function gallerysort(Request $request)
     {
         $order = $request->input('order'); // Array of media IDs in new order
-
         foreach ($order as $index => $id) {
             Media::where('id', $id)->update(['order_column' => $index + 1]);
         }
-
         return response()->json(['success' => true]);
     }
 }

@@ -33,8 +33,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-
-        
         Paginator::useBootstrap();
         Carbon::setLocale(config('app.locale'));
 
@@ -45,12 +43,7 @@ class AppServiceProvider extends ServiceProvider
         Team::observe(TeamObserver::class);
 
         //$lang = $languages->pluck('lang')->toArray(); // Sadece `lang` değerleri bir array olarak
-        //dd($lang);
-
         //Config::set('translatable.locales', $lang);        
         //Config::set('laravellocalization.supportedLocales', $supportedLocales);
-
-
-
     }
 }

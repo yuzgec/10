@@ -195,7 +195,6 @@
                                                         @foreach ($edit->getMedia('gallery')->sortBy('order_column') as $item)
                                                         <tr data-id="{{ $item->id }}">
                                                             <td>{{ $item->order_column}}</td>
-
                                                             <td>
                                                                 <img src="{{ $item->getUrl() }}" class="" width="50px" height="25px"/>
                                                             </td>
@@ -279,21 +278,7 @@
 @endsection
 
 @section('customJS')
-@foreach($language as $lang)
-    <script type="text/javascript">
-        CKEDITOR.replace( 'desc:{{ $lang->lang }}', {
-
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{ csrf_token() }}',
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{ csrf_token() }}',
-            filebrowserUploadMethod: 'form',
-            allowedContent: true,
-            height : 400,
-        });
-    </script>
-    
-@endforeach
+@include('backend.layout.ck')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const gallery = document.getElementById('sortable-gallery');
@@ -339,7 +324,6 @@
                         showConfirmButton: false,
                         timer: 3000
                     });
-                    console.error('Error:', error);
                 });
             }
         });
@@ -347,29 +331,4 @@
 </script>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-document.querySelectorAll('.image-preview-input').forEach(input => {
-    input.addEventListener('change', function () {
-        previewImage(this);
-    });
-});
-});
-
-function previewImage(input) {
-if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    const previewId = input.getAttribute('data-preview-target');
-
-    reader.onload = function (e) {
-        const previewElement = document.getElementById(previewId);
-        if (previewElement) {
-            previewElement.src = e.target.result;
-        }
-    };
-
-    reader.readAsDataURL(input.files[0]);
-}
-}
-</script>
 @endsection

@@ -13,7 +13,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('go')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.home width="20"/>
+                            <x-dashboard.icon.home width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Anasayfa
@@ -28,7 +28,7 @@
                         role="button"
                         aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.user width="20"/>
+                            <x-dashboard.icon.user width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             CRM
@@ -108,7 +108,7 @@
                         role="button"
                         aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.user width="20"/>
+                            <x-dashboard.icon.user width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             İ.K.
@@ -152,7 +152,7 @@
                         role="button"
                         aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.user width="20"/>
+                            <x-dashboard.icon.user width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Kullanıcı
@@ -191,7 +191,7 @@
                         role="button"
                         aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.user width="20"/>
+                            <x-dashboard.icon.user width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Site Yönetimi
@@ -456,7 +456,7 @@
                         role="button"
                         aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.cart width="20"/>
+                            <x-dashboard.icon.cart width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             E-Ticaret
@@ -543,7 +543,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('settings.index')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.settings width="20"/>
+                            <x-dashboard.icon.settings width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Ayarlar
@@ -554,7 +554,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('redirects.index')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.redirect width="20"/>
+                            <x-dashboard.icon.redirect width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Yönlendirme
@@ -565,7 +565,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('language.index')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.language width="20"/>
+                            <x-dashboard.icon.language width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Diller
@@ -576,7 +576,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('translation.index')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <x-dashboard.icon.comment width="20"/>
+                            <x-dashboard.icon.comment width="20" height="20"/>
                         </span>
                         <span class="nav-link-title pt-1">
                             Çeviri

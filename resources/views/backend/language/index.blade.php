@@ -53,7 +53,14 @@
                         <td><img src="{{asset('/flags/'.$item->lang.'.svg')}}" alt="{{$item->lang}}"></td>
                         <td>{{$item->name}}</td>
                         <td>{{$item->native}}</td>
-                        <td>{{$item->active}}</td>
+                        <td>
+                            <label class="form-check form-switch">
+                                <input class="form-check-input toggle-language" 
+                                       type="checkbox" 
+                                       data-id="{{ $item->id }}"
+                                       {{ $item->active ? 'checked' : '' }}>
+                            </label>
+                        </td>
                         <td></td>
         
                     </tr>
@@ -70,6 +77,74 @@
     </div>
   
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tüm toggle switchleri seç
+    const toggles = document.querySelectorAll('.toggle-language');
+
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const languageId = this.dataset.id;
+            const isActive = this.checked;
+
+            // CSRF token al
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+
+            // Ajax isteği gönder
+            fetch(`/go/settings/language/toggle/${languageId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({
+                    active: isActive
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Başarılı mesajı göster
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                } else {
+                    // Hata durumunda switch'i eski haline getir
+                    this.checked = !this.checked;
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Bir hata oluştu!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+            })
+            .catch(error => {
+                // Hata durumunda switch'i eski haline getir
+                this.checked = !this.checked;
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Bir hata oluştu!',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            });
+        });
+    });
+});
+</script>
+@endpush
 
 
 @endsection

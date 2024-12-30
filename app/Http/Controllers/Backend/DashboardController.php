@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Services\ViewService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DashboardController extends Controller
 {
@@ -37,5 +38,18 @@ class DashboardController extends Controller
         });
 
         return view('backend.index',compact('analysis','counts','mostViewedPages'));
+    }
+
+    public function gallerysort(Request $request)
+    {
+        $order = $request->input('order'); // Array of media IDs in new order
+
+        dd($order);
+
+        foreach ($order as $index => $id) {
+            Media::where('id', $id)->update(['order_column' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

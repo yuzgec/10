@@ -29,16 +29,14 @@ class Category extends Model implements TranslatableContract,HasMedia,Viewable
 
     public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
-
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 
     public function pages()
     {
         return $this->hasMany(Page::class);
-    }
-
-    public function services()
-    {
-        return $this->hasMany(Service::class);
     }
 
     public function blogs()

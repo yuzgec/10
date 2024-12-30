@@ -11,7 +11,20 @@ class ProductAttributes extends Model
 
     protected $guarded = [];
 
+    // Özellik tiplerini tanımla
+    const TYPES = [
+        'select' => 'Seçim',
+        'color' => 'Renk',
+        'size' => 'Beden',
+        'text' => 'Metin',
+        // ... diğer özellik tipleri
+    ];
+
     public function product(){
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
-}
+
+    public function values(){
+        return $this->hasMany(ProductAttributeValue::class);
+    }
+} 
