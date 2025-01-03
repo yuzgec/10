@@ -33,7 +33,6 @@
                         </ul>
                     </div>
                     <div class="col-md-9">
-                    <!-- Tab İçeriği -->
                         <div class="tab-content flex-grow-1">
                             @foreach($categories->where('parent_id', 8)  as $category)
                             <div class="tab-pane fade @if($loop->first) show active @endif" id="category-{{ $category->id }}">
@@ -89,19 +88,28 @@
                                 </div>
                             </div>
                             @endforeach
-                            <div class="tab-pane fade" id="category-99">
-                                <div class="card ">
-                                <div class="card-body d-flex flex-wrap gap-2">
-                                        @foreach ($icons as $icon)
-                                            @php $componentName = "dashboard.icon.$icon" @endphp
-                                            <div style="text-align: center;">
+
+                            <div class="tab-pane fade" id="category-99">  
+                                <div class="row">
+                                    @foreach ($icons as $icon)
+                                    <div class="col-md-2 mb-2">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                @php $componentName = "dashboard.icon.$icon" @endphp
+                                                <div style="text-align: center;">
                                                 <x-dynamic-component :component="$componentName" width="42" height="42" />
+                                               
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-center">
                                                 <p>{{ $icon }}</p>
                                             </div>
-                                        @endforeach
+                                        </div>  
                                     </div>
+                                    @endforeach
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

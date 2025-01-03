@@ -19,7 +19,7 @@ class TeamTranslation extends Model implements Viewable
     protected $guarded = [];
 
     protected $translationForeignKey = 'team_id';
-    protected $logAttributes = ['name', 'slug','facebook'];
+    protected $logAttributes = ['name', 'slug', 'facebook', 'twitter', 'linkedin', 'instagram', 'youtube'];
 
     // Özel alan isimleri
     public function getCustomAttributeNames()

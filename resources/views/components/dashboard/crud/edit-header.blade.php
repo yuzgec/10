@@ -1,4 +1,4 @@
-@props(['model', 'route', 'name'])
+@props(['model', 'route', 'name', 'action'])
 <div class="col-12 mb-3">
     <div class="card">
 

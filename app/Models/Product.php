@@ -2,78 +2,109 @@
 
 namespace App\Models;
 
-use App\Enums\StatusEnum;
+use Spatie\Tags\HasTags;
+use App\Enums\ProductType;
 
 use Spatie\MediaLibrary\HasMedia;
-
-
-
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Translatable;
-
-
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+
+
 
 class Product extends Model implements TranslatableContract,HasMedia,Viewable
 {
     use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
+    
+    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
-    protected $guarded = [];
-    protected $with = ['translations', 'variants.attributes', 'attributes'];
-
-    public $translatedAttributes = 
-    ['name',
-     'slug',
-     'short',
-     'desc',
-     'seoKey',
-     'seoDesc',
-     'seoTitle',
-     'cargo_text',
-     'campagin_text',
-     'payment_text',
-     'tab1_name',
-     'tab1_content',
-     'tab2_name',
-     'tab2_content',
-     'tab3_name',
-     'tab3_content',
-     'tab4_name',
-     'tab4_content',
-     'tab5_name',
-     'tab5_content',
+    protected $fillable = [
+        'name', 'slug', 'short', 'desc', 'type',
+        'price', 'discount_price', 'stock', 'sku',
+        'featured', 'purchase_note', 'tax_status',
+        'tax_class', 'manage_stock', 'weight',
+        'dimension_unit', 'length', 'width', 'height',
+        'external_url', 'button_text', 'status',
+        'campaign_text', 'cargo_text', 'warranty_text', 'pay_text', 'return_text', 'exchange_text', 'refund_text', 'cancel_text', 'contact_text'
     ];
 
-    public function brand(){
-        return $this->belongsTo(ProductBrand::class, 'brand_id');
-    }
+    protected $casts = [
+        'featured' => 'boolean',
+        'manage_stock' => 'boolean',
+        'status' => 'boolean',
+        'price' => 'decimal:2',
+        'discount_price' => 'decimal:2',
+        'weight' => 'decimal:2',
+        'length' => 'decimal:2',
+        'width' => 'decimal:2',
+        'height' => 'decimal:2',
+        'type' => ProductType::class,
+    ];
 
-    public function variants(){
-        return $this->hasMany(ProductVariants::class);
-    }
+    // İlişkiler
 
-    public function attributes(){
-        return $this->hasMany(ProductAttributes::class);
-    }
-
-    public function getCategory(){
-        return $this->belongsTo(Category::class, 'category_id');
-    }
-
-    public function faqs()
+    public function variations()
     {
-        return $this->morphMany(Faq::class, 'faqable');
+        return $this->hasMany(ProductVariation::class);
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(ProductCategory::class, 'category_product', 'product_id', 'product_category_id');
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(ProductMeta::class);
+    }
+
+    // Yardımcı metodlar
+    public function isVariable(): bool
+    {
+        return $this->type === ProductType::VARIABLE;
+    }
+
+    public function isSimple(): bool
+    {
+        return $this->type === ProductType::SIMPLE;
+    }
+
+    public function isGrouped(): bool
+    {
+        return $this->type === ProductType::GROUPED;
+    }
+
+    public function isExternal(): bool
+    {
+        return $this->type === ProductType::EXTERNAL;
+    }
+
+    public function getFinalPrice(): float
+    {
+        return $this->discount_price ?? $this->price;
+    }
+
+    public function hasDiscount(): bool
+    {
+        return !is_null($this->discount_price);
+    }
+
+    public function scopeLang($query){
+        return $query->whereHas('translations', function ($query) {
+            $query->where('locale', app()->getLocale());
+        });
+    }
+
+    // Media koleksiyonları
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('page')
@@ -116,35 +147,4 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
             ->keepOriginalImageFormat()
             ->performOnCollections('page', 'gallery');
     }
-
-    protected $casts = [
-        'status' => StatusEnum::class,
-    ];
-
-
-    public function media(): MorphMany
-    {
-        return $this->morphMany(Media::class, 'model');
-    }
-
-    public function hasVariants(): bool
-    {
-        return $this->variants()->count() > 0;
-    }
-
-    public function getBasePrice()
-    {
-        return $this->hasVariants() 
-            ? $this->variants()->min('price') 
-            : $this->price;
-    }
-
-    public function isInStock(): bool
-    {
-        if ($this->hasVariants()) {
-            return $this->variants()->where('stock', '>', 0)->exists();
-        }
-        return $this->stock > 0;
-    }
-
-}
+} 

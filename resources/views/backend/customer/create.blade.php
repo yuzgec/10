@@ -3,7 +3,7 @@
 
 {!! Html::form()
     ->method('POST')
-    ->action(route('customers.store'))
+    ->action(route('customer.store'))
     ->attribute('enctype', 'multipart/form-data')
     ->open() !!}
 

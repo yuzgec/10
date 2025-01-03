@@ -2,32 +2,25 @@
 
 namespace App\Models;
 
-use App\Enums\StatusEnum;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia;
-
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
-
 use Spatie\MediaLibrary\InteractsWithMedia;
-
 use Illuminate\Database\Eloquent\SoftDeletes;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
 
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-class Category extends Model implements TranslatableContract,HasMedia,Viewable
+class Category extends Model implements HasMedia, TranslatableContract,Viewable
 {
-    use HasFactory,SoftDeletes,NodeTrait,InteractsWithMedia,Translatable,InteractsWithViews;
+    use SoftDeletes, InteractsWithMedia, Translatable, NodeTrait,InteractsWithViews;
 
-
-    protected $table = 'categories';
+    public $translatedAttributes = ['name', 'slug', 'short', 'desc', 'seoTitle', 'seoDesc', 'seoKey'];
     protected $guarded = [];
-
-    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
     public function services()
     {
@@ -43,10 +36,7 @@ class Category extends Model implements TranslatableContract,HasMedia,Viewable
     {
         return $this->hasMany(Blog::class);
     }
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+
 
     public function faqs()
     {
@@ -63,47 +53,60 @@ class Category extends Model implements TranslatableContract,HasMedia,Viewable
         return $this->hasMany(Team::class);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', true);
+    }
+
+    public function scopeLang($query)
+    {
+        return $query->whereHas('translations', function ($query) {
+            $query->where('locale', '=', app()->getLocale());
+        });
+    }
+
+
     public function registerMediaCollections(): void
     {
+        $this->addMediaCollection('page')
+            ->useFallbackUrl('/backend/resimyok.jpg');
 
-        $this
-        ->addMediaCollection('page')
-        ->useFallbackUrl('/backend/resimyok.jpg', 'thumb')
-        ->useFallbackUrl('/backend/resimyok.jpg', 'small')
-        ->useFallbackUrl('/backend/resimyok.jpg', 'icon')
-        ->registerMediaConversions(function (Media $media) {
-            $this
-            ->addMediaConversion('img')
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+
+        $this->addMediaCollection('cover')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        if ($media === null) {
+            return;
+        }
+
+        $this->addMediaConversion('img')
             ->width(1250)
-            ->nonOptimized();
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
 
-            $this
-            ->addMediaConversion('thumb')
+        $this->addMediaConversion('thumb')
             ->width(500)
-            ->nonOptimized();
-                
-            $this
-            ->addMediaConversion('small')
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+            
+        $this->addMediaConversion('small')
             ->width(250)
-            ->nonOptimized();
-                     
-            $this
-            ->addMediaConversion('icon')
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+                 
+        $this->addMediaConversion('icon')
             ->width(100)
-            ->nonOptimized();
-
-        });
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
     }
-
-    public function scopeLang($query){
-        return $query->whereHas('translations', function ($query) {
-            $query->where('locale', app()->getLocale());
-        });
-    }
-
-    protected $casts = [
-        'status' => StatusEnum::class,
-    ];
-    
 
 }

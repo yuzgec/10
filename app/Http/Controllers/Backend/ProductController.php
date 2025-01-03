@@ -2,238 +2,171 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\ProductBrand;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\Product\SimpleProductRequest;
+use App\Http\Requests\Product\VariableProductRequest;
+use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\Category;
+use App\Models\ProductCategory;
+use App\Services\ProductService;
+use App\Services\VariationService;
+use Illuminate\Http\Request;
+use Spatie\Tags\Tag;
 
 class ProductController extends Controller
 {
+    protected $productService;
+    protected $variationService;
+
+    public function __construct(ProductService $productService, VariationService $variationService)
+    {
+        $this->productService = $productService;
+        $this->variationService = $variationService;
+    }
+
     public function index()
     {
-        $all = Product::with(['getCategory', 'brand'])
-            ->when(request('q'), function($query) {
-                $query->whereHas('translations', function($q) {
-                    $q->where('name', 'like', '%'.request('q').'%')
-                      ->orWhere('slug', 'like', '%'.request('q').'%');
-                });
-            })
+        $products = Product::with(['variations'])
+            ->withCount('variations')
+            ->lang()
             ->latest()
             ->paginate(20);
 
-        return view('backend.product.index', compact('all'));
+            //dd($products);
+
+        return view('backend.product.index', compact('products'));
     }
 
     public function create()
     {
-        $categories = Category::with('translations')->get();
-        $brands = ProductBrand::get();
-        return view('backend.product.create', compact('categories', 'brands'));
+        return view('backend.product.create.select-type');
     }
 
-    public function store(ProductRequest $request)
+    public function createSimple()
     {
-        DB::beginTransaction();
+        $categories = ProductCategory::with('translations')
+            ->where('status', true)
+            ->orderBy('rank')
+            ->get();
+        $tags = Tag::all();
+        
+        return view('backend.product.create.simple', compact('categories', 'tags'));
+    }
+
+    public function createVariable()
+    {
+        $categories = ProductCategory::with('translations')
+            ->where('status', true)
+            ->orderBy('rank')
+            ->get();
+        $tags = Tag::all();
+        $attributes = ProductAttribute::with('values')->get();
+        
+        return view('backend.product.create.variable', compact('categories', 'tags', 'attributes'));
+    }
+
+    public function storeSimple(SimpleProductRequest $request)
+    {
         try {
-            // Ana ürünü oluştur
-            $product = Product::create([
-                'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id,
-                'status' => $request->status,
-                'price' => $request->price,
-                'stock' => $request->stock,
-                'sku' => $request->sku,
-                'has_variants' => $request->boolean('has_variants'),
-            ]);
+            $product = $this->productService->create(array_merge(
+                $request->validated(),
+                ['type' => 'simple']
+            ));
 
-            // Çeviriler için
-            foreach(config('translatable.locales') as $locale) {
-                $product->translateOrNew($locale)->fill($request->$locale)->save();
+            alert()->html('Başarıyla Eklendi','<b>'.$product->name.'</b> isimli ürün başarıyla eklendi.', 'success');
+            return redirect() ->route('product.index');
+
+        } catch (\Exception $e) {
+
+            alert()->html('HATA',$e->getMessage(), 'error');
+            return redirect()->back();
+
+        }
+    }
+
+    public function storeVariable(VariableProductRequest $request)
+    {
+        try {
+            $product = $this->productService->create(array_merge(
+                $request->validated(),
+                ['type' => 'variable']
+            ));
+
+            if (!empty($request->variations)) {
+                $this->variationService->createVariations($product, $request->variations);
             }
 
-            // Varyantları ekle
-            if ($request->has_variants && $request->has('variants')) {
-                foreach ($request->variants as $variant) {
-                    $newVariant = $product->variants()->create([
-                        'name' => $variant['name'],
-                        'sku' => $variant['sku'],
-                        'price' => $variant['price'],
-                        'stock' => $variant['stock'],
-                        'status' => $variant['status'] ?? true
-                    ]);
-
-                    // Varyant resimleri
-                    if (isset($variant['images'])) {
-                        foreach ($variant['images'] as $image) {
-                            $newVariant->addMedia($image)
-                                     ->toMediaCollection('variant');
-                        }
-                    }
-                }
-            }
-
-            // Ana ürün resimleri
-            if ($request->hasFile('image')) {
-                $product->addMedia($request->image)
-                       ->toMediaCollection('page');
-            }
-
-            if ($request->hasFile('cover')) {
-                $product->addMedia($request->cover)
-                       ->toMediaCollection('cover');
-            }
-
-            if ($request->hasFile('gallery')) {
-                foreach ($request->gallery as $image) {
-                    $product->addMedia($image)
-                           ->toMediaCollection('gallery');
-                }
-            }
-
-            DB::commit();
             return redirect()
                 ->route('product.index')
-                ->with('success', 'Ürün başarıyla oluşturuldu');
+                ->with('success', 'Ürün başarıyla oluşturuldu.');
 
         } catch (\Exception $e) {
-            DB::rollback();
             return back()
-                ->with('error', 'Bir hata oluştu: ' . $e->getMessage())
-                ->withInput();
+                ->withInput()
+                ->with('error', 'Bir hata oluştu: ' . $e->getMessage());
         }
     }
 
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $edit = Product::with(['translations', 'variants.media', 'media'])
-                      ->findOrFail($id);
-        $categories = Category::with('translations')->get();
-        $brands = ProductBrand::with('translations')->get();
+        $product->load(['translations', 'categories.translations', 'variations.attributes']);
+        $categories = ProductCategory::with('translations')
+            ->where('status', true)
+            ->orderBy('rank')
+            ->get();
+        $tags = Tag::all();
+        $attributes = ProductAttribute::with('values')->get();
 
-        return view('backend.product.edit', compact('edit', 'categories', 'brands'));
+        $view = $product->isVariable() ? 'variable' : 'simple';
+        
+        return view("backend.product.edit.{$view}", compact(
+            'product',
+            'categories',
+            'tags',
+            'attributes'
+        ));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, Product $product)
     {
-        DB::beginTransaction();
+        $requestClass = $product->isVariable() 
+            ? VariableProductRequest::class 
+            : SimpleProductRequest::class;
+
+        $validated = app($requestClass)->validate($request->all());
+
         try {
-            $product = Product::findOrFail($id);
+            $this->productService->update($product, $validated);
 
-            // Ana ürün güncelleme
-            $product->update([
-                'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id,
-                'status' => $request->status,
-                'price' => $request->price,
-                'stock' => $request->stock,
-                'sku' => $request->sku,
-                'has_variants' => $request->boolean('has_variants'),
-            ]);
-
-            // Çevirileri güncelle
-            foreach(config('translatable.locales') as $locale) {
-                $product->translateOrNew($locale)->fill($request->$locale)->save();
+            if ($product->isVariable() && !empty($request->variations)) {
+                $product->variations()->delete();
+                $this->variationService->createVariations($product, $request->variations);
             }
 
-            // Varyantları güncelle
-            if ($request->has_variants && $request->has('variants')) {
-                // Mevcut varyantları sil
-                $product->variants()->delete();
-
-                // Yeni varyantları ekle
-                foreach ($request->variants as $variant) {
-                    $newVariant = $product->variants()->create([
-                        'name' => $variant['name'],
-                        'sku' => $variant['sku'],
-                        'price' => $variant['price'],
-                        'stock' => $variant['stock'],
-                        'status' => $variant['status'] ?? true
-                    ]);
-
-                    // Varyant resimleri
-                    if (isset($variant['images'])) {
-                        foreach ($variant['images'] as $image) {
-                            $newVariant->addMedia($image)
-                                     ->toMediaCollection('variant');
-                        }
-                    }
-                }
-            }
-
-            // Medya güncellemeleri
-            if ($request->hasFile('image')) {
-                $product->clearMediaCollection('page');
-                $product->addMedia($request->image)
-                       ->toMediaCollection('page');
-            }
-
-            if ($request->hasFile('cover')) {
-                $product->clearMediaCollection('cover');
-                $product->addMedia($request->cover)
-                       ->toMediaCollection('cover');
-            }
-
-            if ($request->hasFile('gallery')) {
-                $product->clearMediaCollection('gallery');
-                foreach ($request->gallery as $image) {
-                    $product->addMedia($image)
-                           ->toMediaCollection('gallery');
-                }
-            }
-
-            DB::commit();
             return redirect()
                 ->route('product.index')
-                ->with('success', 'Ürün başarıyla güncellendi');
+                ->with('success', 'Ürün başarıyla güncellendi.');
 
         } catch (\Exception $e) {
-            DB::rollback();
             return back()
-                ->with('error', 'Bir hata oluştu: ' . $e->getMessage())
-                ->withInput();
+                ->withInput()
+                ->with('error', 'Bir hata oluştu: ' . $e->getMessage());
         }
     }
 
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         try {
-            $product = Product::findOrFail($id);
-            $product->delete();
+            $this->productService->delete($product);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Ürün başarıyla silindi'
-            ]);
+            return redirect()
+                ->route('product.index')
+                ->with('success', 'Ürün başarıyla silindi.');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Bir hata oluştu: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-    // Medya silme işlemi için
-    public function deleteMedia(Request $request)
-    {
-        try {
-            $product = Product::findOrFail($request->product_id);
-            $media = $product->media()->findOrFail($request->media_id);
-            $media->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Resim başarıyla silindi'
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Bir hata oluştu'
-            ], 500);
+            return back()
+                ->with('error', 'Bir hata oluştu: ' . $e->getMessage());
         }
     }
 }

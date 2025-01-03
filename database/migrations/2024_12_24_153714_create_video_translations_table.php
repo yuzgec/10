@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('video_translations', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->foreignId('video_id')->constrained()->onDelete('cascade');
+            $table->unique(['video_id', 'locale']);
+            $table->string('locale')->index();
+
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
+
             
             $table->longtext('short')->nullable();
             $table->longtext('desc')->nullable();
@@ -25,11 +30,6 @@ return new class extends Migration
             $table->string('seoDesc')->nullable();
             $table->string('seoKey')->nullable();
 
-            $table->integer('video_id')->unsigned();
-            $table->string('locale')->index();
-
-            $table->unique(['video_id', 'locale']);
-            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
         });
     }
 

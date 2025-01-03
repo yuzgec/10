@@ -30,9 +30,9 @@ class TranslationController extends Controller
      */
     public function create()
     {
-        $locales = config('laravellocalization.supportedLocales'); 
+        $all = LanguageLine::all();
 
-        return view('backend.translations.create',['locales' => array_keys($locales)]);
+        return view('backend.translations.create',compact('all'));
     }
 
     /**
@@ -42,7 +42,7 @@ class TranslationController extends Controller
     {
         $request->validate([
             'group' => 'required|string|max:255',
-            'key' => 'required|string|max:255|unique:language_lines,group',
+            'key' => 'required|string|max:255|unique:language_lines,key',
             'translations' => 'required|array',
             'translations.*' => 'required|string|max:255',
         ]);
@@ -57,37 +57,45 @@ class TranslationController extends Controller
         return redirect()->route('translation.index')->with('success', 'Translation created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
-        $edit = LanguageLine::where('id',$id)->first();
-        $a = config('laravellocalization.supportedLocales');
-        $locales = array_keys($a);
+        $edit = LanguageLine::findOrFail($id);
+        $locales = config('laravellocalization.supportedLocales');
 
-        return view('backend.translations.edit', compact('edit','locales'));
+        return view('backend.translations.edit', [
+            'locales' => array_keys($locales),
+            'edit' => $edit
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(TranslationRequest $request, string $id)
     {
-        //
+        try {
+            $translation = LanguageLine::findOrFail($id);
+            
+            $translation->update([
+                'group' => $request->input('group'),
+                'key' => $request->input('key'),
+                'text' => $request->input('translations'),
+            ]);
+
+            alert()->html('Başarıyla Güncellendi', 'Çeviri başarıyla güncellendi.', 'success');
+            return redirect()->route('translation.index');
+
+        } catch (\Exception $e) {
+
+            alert()->html('HATA', $e->getMessage(), 'error');
+
+            return redirect()->back();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

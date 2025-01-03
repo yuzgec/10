@@ -6,7 +6,7 @@
             <h3 class="card-title">Kullanıcı Düzenle</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('user.update', $user->id) }}" method="POST">
+            <form action="{{ route('user.update', $user->id) }}" method="POST" data-action="update">
                 @csrf
                 @method('PUT')
                 

@@ -11,7 +11,11 @@ return new class extends Migration
     {
         Schema::create('analysis', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name');
+            $table->string('normalized_url');
+            $table->string('folder_name'); // Yeni alan
+            $table->string('desktop_image')->nullable();
+            $table->string('mobile_image')->nullable();
             $table->string('ip')->nullable();
             $table->string('lang')->default('tr');
             $table->boolean('read')->default(false);

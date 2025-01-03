@@ -1,6 +1,11 @@
 @extends('backend.layout.app')
 @section('content')
-{!! html()->model($edit)->form('PUT', route('faq.update', $edit->id))->open() !!}
+
+{!! html()->model($edit)->form('PUT', route('faq.update', $edit->id))
+    ->attribute('data-action', 'update')
+    ->open() 
+!!}
+
 <div class="col-12 mb-3">
     <div class="card">
 

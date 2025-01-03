@@ -161,17 +161,15 @@ return [
          */
         Livewire\LivewireServiceProvider::class,
         Spatie\Html\HtmlServiceProvider::class,
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        App\Providers\ViewShareProvider::class,
         App\Providers\LocaleServiceProvider::class,
-
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
+        App\Providers\ViewShareProvider::class,
         App\Providers\RouteServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,

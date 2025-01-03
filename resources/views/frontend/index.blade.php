@@ -250,13 +250,15 @@
 
             <div class="flex flex-wrap mx-[-15px]">
                 <div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+                    <form action="{{ route('analysis.store') }}" method="POST">
+                        @csrf    
                         <div class="form-floating input-group relative">
                             <input
                             type="text"
                             class="form-control border-0 relative block w-full text-[.75rem] font-medium text-[#60697b] bg-[#fefefe] bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] duration-[0.15s] ease-in-out focus:text-[#60697b] focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] focus:!border-[rgba(63,120,224,0.5)] focus-visible:!outline-0 placeholder:text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] leading-[1.25]"
                             placeholder="Site Linkinizi Giriniz"
                             id="analyze"
-                            name="name">
+                            name="url">
                             <label class="inline-block text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none border origin-[0_0] px-4 py-[0.6rem] border-solid border-transparent left-0 top-0 font-Manrope" for="analyze">
                                 Site Linki Giriniz...
                             </label>
@@ -264,6 +266,7 @@
                                 Analiz Et
                             </button>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -290,7 +293,7 @@
                         data-items-xs="1">
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                            @foreach ($blog->take(5) as $item )
+                            @foreach ($blog as $item )
                                 <div class="swiper-slide">
                                     <div class="item-inner">
                                         <article>
@@ -348,6 +351,12 @@
             </div>
         </div>
     </section>        
+
+@if (session('info'))
+    <div class="alert alert-info">
+        {{ session('info') }}
+    </div>
+@endif
 
 @endsection
 

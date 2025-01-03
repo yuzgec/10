@@ -3,6 +3,7 @@
 
 {!! html()->model($edit)->form('PUT', route('service.update', $edit->id))
     ->attribute('enctype', 'multipart/form-data')
+    ->attribute('data-action', 'update')
     ->open() 
 !!}
 

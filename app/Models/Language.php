@@ -17,4 +17,8 @@ class Language extends Model
     public function scopeActive($query){
         return $query->where('active', true);
     }
+
+    protected $casts = [
+        'active' => 'boolean'
+    ];
 }

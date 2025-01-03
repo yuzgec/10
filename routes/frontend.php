@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AnalysisController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/iletisim', [HomeController::class, 'contactus'])->name('contactus');
@@ -20,8 +21,7 @@ Route::get('/bloglar', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/blog-kategori/{url}', [HomeController::class, 'blogCategory'])->name('blog.category');
 Route::get('/blog/{url}', [HomeController::class, 'blog'])->name('blog.detail');
 
-Route::post('/analysis', [HomeController::class, 'analysis'])->name('analysis');
-Route::get('/site-analiz-sonuc', [HomeController::class, 'analysis.result']);
-
-
 Route::get('/ekip/{url}', [HomeController::class, 'team'])->name('team.detail');
+
+Route::post('/analysis', [AnalysisController::class, 'store'])->name('analysis.store');
+Route::get('/analysis/{id}', [AnalysisController::class, 'show'])->name('analysis.show');

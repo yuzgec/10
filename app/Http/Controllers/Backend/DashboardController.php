@@ -7,11 +7,13 @@ use App\Models\Blog;
 use App\Models\Page;
 use App\Models\Team;
 use App\Models\Video;
+use App\Models\Product;
 use App\Models\Service;
 use App\Models\Analysis;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\ViewService;
+use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -32,6 +34,8 @@ class DashboardController extends Controller
                 'blogs' => Blog::count(),
                 'faqs' => Faq::count(),
                 'categories' => Category::count(),
+                'productCategories' => ProductCategory::count(),
+                'products' => Product::count(),
                 'teams' => Team::count(),
                 'videos' => Video::count(),
             ];

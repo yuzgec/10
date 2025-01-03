@@ -1,6 +1,8 @@
 <?php
 
 use App\Enums\StatusEnum;
+use App\Enums\VideoEnum;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,15 +15,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id('id');
 
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
 
             $table->integer('videoCode')->nullable();
+            $table->integer('type')->default(VideoEnum::VIDEO->value);
 
             $table->string('status')->default(StatusEnum::PUBLISHED->value);
             $table->integer('rank')->nullable();
+
+            $table->date('publish_date')->default(now());
+            $table->string('publish_password')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
-
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProductTranslation extends Model
 {
-    use HasFactory,HasSlug;
-
-    public $timestamps = false;
-    protected $guarded = [];
 
     protected $translationForeignKey = 'product_id';
-    
-    public function getSlugOptions() : SlugOptions
+
+    protected $fillable = [
+        'product_id',
+        'locale',
+        'name',
+        'slug',
+        'short',
+        'desc',
+        'purchase_note'
+    ];
+
+    public function product()
     {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug')
-            ->allowDuplicateSlugs();
+        return $this->belongsTo(Product::class);
     }
-}
+} 

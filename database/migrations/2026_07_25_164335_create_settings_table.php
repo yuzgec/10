@@ -14,12 +14,11 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+
             $table->string('item');
             $table->string('value')->nullable();
             $table->boolean('isImage')->default(false);
-
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             
             $table->integer('isType')->default(SettingsEnum::INPUT->value);
         });

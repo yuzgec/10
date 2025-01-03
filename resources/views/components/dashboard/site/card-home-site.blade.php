@@ -1,4 +1,4 @@
-@props(['model', 'count', 'icon', 'name','color' => 'primary','size' => 4])
+@props(['model', 'count', 'icon', 'name','color' => 'primary','size' => 4, 'category' => false])
 @php $componentName = "dashboard.icon.$icon" @endphp
 <div class="col-sm-{{ $size}} col-12 mt-2">
     <div class="card card-link card-link-pop bg-{{ $color}}-lt">
@@ -16,9 +16,15 @@
             </div>                         
         </div>
         <div class="card-footer text-center">
-            <a href="{{ route($model.'.index')}}" class="btn btn-icon" title="{{$name}} Listele">
-                <x-dashboard.icon.menu-list width="16" height="16"/>
-            </a>
+            @if ($category)
+                <a href="{{ route($model.'.indexAll')}}" class="btn btn-icon" title="{{$name}} Listele">
+                    <x-dashboard.icon.menu-list width="16" height="16"/>
+                </a>
+                @else
+                <a href="{{ route($model.'.index')}}" class="btn btn-icon" title="{{$name}} Listele">
+                    <x-dashboard.icon.menu-list width="16" height="16"/>
+                </a>                 
+            @endif
             <a href="{{ route($model.'.create')}}" class="btn btn-icon btn-{{ $color}}" title="{{$name}} Ekle">
                 <x-dashboard.icon.add width="16" height="16"/>
             </a>

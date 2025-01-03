@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\StatusEnum;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,7 +14,18 @@ return new class extends Migration
     {
         Schema::create('video_galleries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            
+            $table->boolean('addGoogle')->default(true);
+            $table->boolean('addComment')->default(false);
+            $table->boolean('deleteContent')->default(false);
+
+            $table->string('status')->default(StatusEnum::PUBLISHED->value);
+            $table->integer('rank')->nullable();
+            $table->date('publish_date')->default(now());
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -13,9 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->id('id');
+
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
 
             $table->string('instagram')->nullable();
             $table->string('facebook')->nullable();
@@ -28,7 +28,8 @@ return new class extends Migration
             $table->string('status')->default(StatusEnum::PUBLISHED->value);
             $table->integer('rank')->nullable();
 
-            $table->date('publish_date')->nullable();
+            $table->date('publish_date')->default(now());
+            $table->string('publish_password')->nullable();
 
             
             $table->timestamps();

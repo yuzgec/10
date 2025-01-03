@@ -61,11 +61,9 @@
                                                     <td>{{ $translation->key }}</td>
                                                     <td>{{ $translation->text[$locale] }}</td>
                                                     <td>
-                                                        <!-- Düzenle Butonu -->
-                                                        <a 
-                                                                href="{{ route('translation.edit', $translation->id)}}">
-                                                                <x-dashboard.icon.edit/>
-                                                    </a>
+                                                        <a href="{{ route('translation.edit', $translation->id)}}">
+                                                            <x-dashboard.icon.edit/>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endif

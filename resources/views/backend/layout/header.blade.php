@@ -447,9 +447,9 @@
                 </li>
 
 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {{ Request::is('go/shop*') ? 'show' : '' }}">
                     <a
-                        class="nav-link dropdown-toggle"
+                        class="nav-link dropdown-toggle {{ Request::is('go/shop*') ? 'text-white' : '' }}"
                         href="#navbar-help"
                         data-bs-toggle="dropdown"
                         data-bs-auto-close="outside"
@@ -462,12 +462,12 @@
                             E-Ticaret
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{ Request::is('go/shop/products*') ? 'show' : '' }}">
                         <div class="dropend">
                             <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 Ürünler
                             </a>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu {{ Request::is('go/shop/products*') ? 'show' : '' }}">
                                 <a
                                     class="dropdown-item"
                                     href="{{ route('product.index')}}"

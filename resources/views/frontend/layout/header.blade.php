@@ -40,7 +40,7 @@
                                     class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
                                     href="{{ route('home')}}"
                                     title="Anasayfa">
-                                    Anasayfa
+                                    {{ __('site.anasayfa')}}
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
@@ -48,7 +48,7 @@
                                     href="#"
                                     data-bs-toggle="dropdown"
                                     title="Kurumsal">
-                                    Kurumsal
+                                    {{ __('site.hakkimizda')}}
                                 </a>
                                 <ul class="dropdown-menu">
                                     @foreach ($pages as $item )
@@ -106,10 +106,10 @@
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
                                     href="{{ route('contactus')}}"
                                     title="İletişim">
-                                    İletişim
+                                    {{ __('site.iletisim')}}
                                 </a>
                             </li>
-                           {{--  @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li class="nav-item">
 
                                 <a class="nav-link !text-[.85rem] !tracking-[normal] hover:!text-[#a07cc5] after:!text-[#a07cc5]"
@@ -119,7 +119,7 @@
                                         {{ $localeCode  }}
                                     </a>
                                 </li>
-                            @endforeach --}}
+                            @endforeach 
                         </ul>
 
                         <div class="offcanvas-footer xl:hidden lg:hidden">

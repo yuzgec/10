@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -9,35 +8,60 @@ use Spatie\Permission\Models\Permission;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        $arr = ['users','customers','crm', 'page', 'service','settings','workflow','offer','blog','faq', 'slider', 'gallery', 'product', 'brand'];
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // İzinleri oluşturun
-        Permission::create(['name'=> 'crm']);
-        Permission::create(['name'=> 'shop']);
-        Permission::create(['name'=> 'site']);
-        
-        foreach($arr as $i){
-            Permission::create(['name'=> $i. ' show']);
-            Permission::create(['name'=> $i. ' index']);
-            Permission::create(['name'=> $i. ' edit']);
-            Permission::create(['name'=> $i. ' create']);
-            Permission::create(['name'=> $i. ' store']);
-            Permission::create(['name'=> $i. ' update']);
-            Permission::create(['name'=> $i. ' delete']);
-            Permission::create(['name'=> $i. ' recovery']);
+        // Temel izinleri oluştur
+        $permissions = [
+            'access-go',
+            'view-dashboard',
+            'manage-users',
+            'manage-roles',
+            'manage-products',
+            'manage-categories',
+            'manage-brands',
+            'manage-attributes',
+            'manage-orders',
+            'manage-customers',
+            'manage-settings',
+            'manage-services',
+            'manage-pages',
+            'manage-teams',
+            'manage-blogs',
+            'manage-comments',
+            'manage-media',
+            'manage-payments',
+            'manage-reports',
+            'manage-notifications',
+            'manage-seo',
+            'manage-sitemap',
+            'manage-backup',
+            'manage-logs',
+            'manage-cache',
+            'manage-maintenance',
+            'manage-updates',
+            'manage-translations'
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
         }
 
-        $role = Role::create(['name' => 'customer']);
-        $role->givePermissionTo(['crm']);
-
-        $role = Role::create(['name' => 'website']);
-        $role = Role::create(['name' => 'shop']);
-
+        // Admin rolü oluştur ve tüm izinleri ver
         $role = Role::create(['name' => 'admin']);
         $role->givePermissionTo(Permission::all());
 
-        
+        // Editor rolü oluştur ve bazı izinleri ver
+        $role = Role::create(['name' => 'editor']);
+        $role->givePermissionTo([
+            'access-go',
+            'view-dashboard',
+            'manage-products',
+            'manage-categories',
+            'manage-brands',
+            'manage-attributes',
+        ]);
     }
 }

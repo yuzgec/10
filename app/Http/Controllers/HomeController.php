@@ -146,30 +146,8 @@ class HomeController extends Controller
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır.');
         SEOMeta::setCanonical(url()->full());
 
-        //dd($all);
-
         return view('frontend.blog.blog-category',compact('all', 'category'));
 
-    }
-
-
-    public function analysis(Request $request){
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $create = Analysis::create([
-            'name' => strip_tags($request->input('name')),
-        ]);
-        /* 
-
-        $desktop = Browsershot::url($request->name)->windowSize(1920, 1080)->save(public_path('/storage/analysis/desktop.jpg'));
-        $mobile = Browsershot::url($request->name)->device('iPhone X')->save(public_path('/storage/mobile.jpg'));
-        */
-        //return view('frontend.page.analysis',compact('desktop','mobile'));
-
-        return redirect()->route('home');
-    }
+    }  
 
 }

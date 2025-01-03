@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('team_translations', function (Blueprint $table) {
-            $table->increments('id');
+
+            $table->id();
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
+            $table->string('locale')->index();
+            $table->unique(['team_id', 'locale']);
 
             $table->string('name')->nullable();
             $table->string('company')->nullable();
@@ -25,12 +29,7 @@ return new class extends Migration
             $table->string('seoTitle')->nullable();
             $table->string('seoDesc')->nullable();
             $table->string('seoKey')->nullable();
-
-            $table->integer('team_id')->unsigned();
-            $table->string('locale')->index();
-
-            $table->unique(['team_id', 'locale']);
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+           
         });
     }
 

@@ -22,6 +22,7 @@ class CategoryTranslation extends Model implements Viewable
 
 
     protected $logAttributes = ['name', 'slug'];
+    
     public function getCustomAttributeNames()
     {
         return [ 'name' => 'Başlık', 'slug' => 'Link'];

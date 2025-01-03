@@ -28,7 +28,7 @@ class ViewShareProvider extends ServiceProvider
         });
 
         $categories = Cache::remember('categories',now()->addYear(5), function () {
-            return Category::withCount(['pages', 'services', 'blogs', 'faqs', 'products','media','teams'])->lang()->get()->toFlatTree();
+            return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams'])->lang()->get()->toFlatTree();
         });
 
         $services = Cache::remember('services',now()->addYear(5), function () {

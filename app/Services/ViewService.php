@@ -3,6 +3,12 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use App\Models\Blog;
+use App\Models\Page;
+use App\Models\Team;
+use App\Models\Video;
+use App\Models\Service;
+use App\Models\Category;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use CyrildeWit\EloquentViewable\Support\Period;
@@ -87,29 +93,27 @@ class ViewService
     {
         // Tüm modelleri bir array'de toplayın
         $models = collect([
-            \App\Models\Blog::class,
-            \App\Models\Blog::class,
-            \App\Models\Service::class,
-            \App\Models\Page::class,
-            \App\Models\Team::class,
-            \App\Models\Category::class,
-            \App\Models\Video::class,
+            Blog::class,
+            Service::class,
+            Page::class,
+            Team::class,
+            Category::class,
+            Video::class,
             // ... diğer modeller
         ]);
 
         $allViews = collect();
 
         foreach ($models as $model) {
-            // Her model için en çok görüntülenenleri al
             $views = $model::orderByViews('desc')
                 ->with('views')
                 ->get()
                 ->map(function ($item) {
                     return [
-                        'name' => $item->name,
-                        'url' => $item->slug, // veya route('blog.show', $item->slug) gibi
+                        'name' => $this->getModelName($item),
+                        'url' => $this->getModelUrl($item),
                         'views' => $item->views_count,
-                        'percentage' => 0, // Sonra hesaplanacak
+                        'percentage' => 0,
                         'model_type' => class_basename($item)
                     ];
                 });
@@ -125,10 +129,42 @@ class ViewService
 
         // Yüzdeleri hesapla
         $allViews = $allViews->map(function ($item) use ($maxViews) {
-            $item['percentage'] = ($item['views'] / $maxViews) * 100;
+            if ($maxViews > 0 && isset($item['views'])) {
+                $item['percentage'] = ($item['views'] / $maxViews) * 100;
+            }
             return $item;
         });
 
         return $allViews->take($limit);
+    }
+
+    private function getModelName($model)
+    {
+        if (method_exists($model, 'getTranslation')) {
+            return $model->getTranslation('name', app()->getLocale());
+        }
+        
+        if (isset($model->name)) {
+            return $model->name;
+        }
+        
+        if (isset($model->title)) {
+            return $model->title;
+        }
+        
+        return 'Unnamed';
+    }
+
+    private function getModelUrl($model)
+    {
+        if (method_exists($model, 'getTranslation')) {
+            return $model->getTranslation('slug', app()->getLocale());
+        }
+        
+        if (isset($model->slug)) {
+            return $model->slug;
+        }
+        
+        return '#';
     }
 } 

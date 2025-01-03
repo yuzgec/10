@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <x-dashboard.site.card-home-site model="category" count="{{$counts['categories']}}" icon="menu-list" name="Kategori"/>
+                    <x-dashboard.site.card-home-site model="category" count="{{$counts['categories']}}" icon="menu-list" name="Kategori" category="true"/>
                     <x-dashboard.site.card-home-site model="page" count="{{$counts['pages']}}" icon="edit" name="Sayfa"/>
                     <x-dashboard.site.card-home-site model="service" count="{{$counts['services']}}" icon="heart" name="Hizmet"/>
                     <x-dashboard.site.card-home-site model="blog" count="{{$counts['blogs']}}" icon="blog" name="Blog"/>
@@ -53,7 +53,35 @@
                                 </a>
                             </div>
                         </div>
-                    </div>                    
+                    </div> 
+                    <div class="col-sm-3 mt-2">
+                        <div class="card card-link card-link-pop bg-warning-lt">
+                            <div class="card-status-bottom bg-warning"></div>
+                            <div class="card-body p-2 text-center ">
+                                <x-dashboard.icon.edit />
+                                <div class="card-title mt-2 text-black">[{{$counts['categories']}}] Kategori</div>                         
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="{{ route('product.index')}}" title="Kategori Yönetimi" class="btn btn-outline-warning text-black">
+                                    Ürün Yönetimi
+                                </a>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="col-sm-3 mt-2">
+                        <div class="card card-link card-link-pop bg-warning-lt">
+                            <div class="card-status-bottom bg-warning"></div>
+                            <div class="card-body p-2 text-center ">
+                                <x-dashboard.icon.edit />
+                                <div class="card-title mt-2 text-black">[{{$counts['categories']}}] Kategori</div>                         
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="{{ route('product.index')}}" title="Kategori Yönetimi" class="btn btn-outline-warning text-black">
+                                    Ürün Yönetimi
+                                </a>
+                            </div>
+                        </div>
+                    </div>                                
                 </div>
                 
             </div>

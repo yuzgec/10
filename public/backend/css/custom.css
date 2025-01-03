@@ -130,4 +130,80 @@ transition: opacity 0.3s ease;
     background: #c82333;
     transform: scale(1.1) !important;
     box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+}
+
+/* Tema geçiş animasyonu */
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode styles */
+[data-bs-theme="dark"] {
+    --tblr-body-bg: #1d1e2f !important;
+    --tblr-bg-surface: #242442 !important;
+    --tblr-card-bg: #242442 !important;
+    --tblr-border-color: #2d2d4a !important;
+    --tblr-body-color: #f1f5f9 !important;
+    --tblr-muted: #8e94a0 !important;
+}
+
+[data-bs-theme="dark"] .navbar,
+[data-bs-theme="dark"] .card,
+[data-bs-theme="dark"] .footer,
+[data-bs-theme="dark"] .dropdown-menu {
+    background: var(--tblr-card-bg) !important;
+    border-color: var(--tblr-border-color) !important;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: var(--tblr-body-bg) !important;
+    border-color: var(--tblr-border-color) !important;
+    color: var(--tblr-body-color) !important;
+}
+
+[data-bs-theme="dark"] .dropdown-item:hover {
+    background-color: var(--tblr-border-color) !important;
+}
+
+[data-bs-theme="dark"] .text-muted {
+    color: var(--tblr-muted) !important;
+}
+
+[data-bs-theme="dark"] .border {
+    border-color: var(--tblr-border-color) !important;
+}
+
+/* Tema switch butonları için stil */
+body .navbar .theme-switch-btn.nav-link {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 100;
+}
+
+body .navbar .theme-switch-btn.nav-link:hover {
+    opacity: 1;
+    background-color: rgba(var(--tblr-primary-rgb), 0.1);
+}
+
+body .navbar .theme-switch-btn.nav-link .icon {
+    stroke: currentColor;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block !important;
+}
+
+/* Display override */
+.hide-theme-light {
+    display: none !important;
+}
+
+.hide-theme-light.show {
+    display: flex !important;
 } 

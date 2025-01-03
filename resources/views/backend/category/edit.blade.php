@@ -3,6 +3,7 @@
 @section('content')
 {!! html()->model($edit)->form('PUT', route('category.update', $edit->id))
     ->attribute('enctype', 'multipart/form-data')
+    ->attribute('data-action', 'update')
     ->open() 
 !!}
 

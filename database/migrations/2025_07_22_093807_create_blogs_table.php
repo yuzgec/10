@@ -13,19 +13,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blogs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+
           
+
             $table->boolean('addGoogle')->default(true);
             $table->boolean('addComment')->default(false);
             $table->boolean('deleteContent')->default(false);
 
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-
             $table->string('status')->default(StatusEnum::PUBLISHED->value);
             $table->integer('rank')->nullable();
 
-            $table->date('publish_date')->nullable();
+            $table->date('publish_date')->default(now());
             $table->string('publish_password')->nullable();
 
             

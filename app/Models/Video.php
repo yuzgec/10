@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\VideoEnum;
+
 use App\Enums\StatusEnum;
 
 use Spatie\MediaLibrary\HasMedia;
-
 use Illuminate\Database\Eloquent\Model;
+
 use Astrotomic\Translatable\Translatable;
 
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -14,7 +16,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
-
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -50,6 +51,7 @@ class Video extends Model implements TranslatableContract,HasMedia,Viewable
 
     protected $casts = [
         'status' => StatusEnum::class,
+        'type' => VideoEnum::class,
     ];
 
 }

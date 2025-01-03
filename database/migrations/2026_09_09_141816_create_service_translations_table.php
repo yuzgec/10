@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('service_translations', function (Blueprint $table) {
             $table->id();
+
+
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->string('locale')->index();
+            $table->unique(['service_id', 'locale']);
+
+
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->longtext('short')->nullable();
@@ -23,11 +30,6 @@ return new class extends Migration
             $table->string('seoDesc')->nullable();
             $table->string('seoKey')->nullable();
 
-            $table->integer('service_id')->unsigned();
-            $table->string('locale')->index();
-
-            $table->unique(['service_id', 'locale']);
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -4,9 +4,25 @@ namespace App\Services;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class CategoryService
 {
+    public function getAll()
+    {
+        return Category::with('translations')
+            ->withCount([
+                'pages',
+                'services',
+                'blogs',
+                'faqs',
+                'teams',
+                'media'
+            ])
+            ->orderBy('rank')
+            ->get();
+    }
+
     public function getChildrenBySlug(string $slug, array $with = [], array $withCount = []): Collection
     {
         $parentCategory = Category::whereTranslation('slug', $slug, app()->getLocale())->first();
