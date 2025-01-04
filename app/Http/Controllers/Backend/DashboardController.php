@@ -23,6 +23,7 @@ class DashboardController extends Controller
     public function index(){
 
         $analysis = Analysis::all();
+        
         $mostViewedPages = app(ViewService::class)->getMostViewedPages();
 
         //dd($mostViewedPages);
@@ -35,7 +36,6 @@ class DashboardController extends Controller
                 'faqs' => Faq::count(),
                 'categories' => Category::count(),
                 'productCategories' => ProductCategory::count(),
-                'products' => Product::count(),
                 'teams' => Team::count(),
                 'videos' => Video::count(),
             ];

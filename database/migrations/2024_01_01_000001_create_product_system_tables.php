@@ -2,6 +2,7 @@
 
 use App\Enums\StatusEnum;
 use App\Enums\ProductType;
+use App\Enums\ProductAttributeType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -53,10 +54,9 @@ return new class extends Migration
         // 3. Product Attributes
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->enum('type', ['text', 'select', 'radio', 'color'])->default('select');
+            $table->string('type')->default(ProductAttributeType::SELECT->value); // enum yerine string kullanıyoruz
             $table->boolean('status')->default(true);
+            $table->integer('rank')->default(0);
             $table->timestamps();
         });
 

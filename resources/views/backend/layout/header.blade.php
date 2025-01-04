@@ -474,9 +474,38 @@
                                     title="Sayfa Listesi">
                                     Ürün Listesi
                                 </a>
-
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ route('product.create.simple') }}"
+                                    title="Tekli Ürün Ekle">
+                                    Tekli Ürün Ekle
+                                </a>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ route('product.create.variable') }}"
+                                    title="Varyantlı Ürün Ekle">
+                                    Varyantlı Ürün Ekle
+                                </a>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ route('product-categories.index') }}"
+                                    title="Varyantlı Ürün Ekle">
+                                    Ürün Kategorisi
+                                </a>
                             </div>
                         </div>
+                        
+                        <div class="dropend">
+                            <a class="dropdown-item" href="{{ route('tags.index') }}">
+                                Etiketler
+                            </a>
+                        </div>
+                        <div class="dropend">
+                            <a class="dropdown-item" href="{{ route('product-attributes.index') }}">
+                                Özellikler
+                            </a>
+                        </div>
+                        
                         <div class="dropend">
                             <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 Siparişler

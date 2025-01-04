@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('lang', 2);
             $table->string('name');
             $table->string('native');
+            $table->integer('rank')->nullable();
             $table->string('regional');
             $table->string('script')->nullable();
             $table->boolean('active')->default(false);

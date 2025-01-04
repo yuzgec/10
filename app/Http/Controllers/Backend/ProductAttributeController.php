@@ -11,7 +11,7 @@ class ProductAttributeController extends Controller
 {
     public function index()
     {
-        $attributes = ProductAttribute::with('translations', 'values')
+        $attributes = ProductAttribute::with('values')
             ->latest()
             ->paginate(20);
 
@@ -25,8 +25,9 @@ class ProductAttributeController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
+        $request->validate([
+            'name' => 'required|array',
+            'name.*' => 'required|string|max:255',
             'type' => 'required|in:select,color,button',
             'values' => 'required|array|min:1',
             'values.*' => 'required|string|max:255',
@@ -35,16 +36,24 @@ class ProductAttributeController extends Controller
 
         try {
             $attribute = ProductAttribute::create([
-                'name' => $validated['name'],
-                'slug' => Str::slug($validated['name']),
-                'type' => $validated['type'],
+                'type' => $request->type
             ]);
 
-            foreach ($validated['values'] as $key => $value) {
+            // Çeviriler
+            foreach ($request->name as $locale => $name) {
+                $attribute->translations()->create([
+                    'locale' => $locale,
+                    'name' => $name,
+                    'slug' => Str::slug($name)
+                ]);
+            }
+
+            // Değerler
+            foreach ($request->values as $key => $value) {
                 $attribute->values()->create([
                     'value' => $value,
                     'slug' => Str::slug($value),
-                    'color_code' => $validated['colors'][$key] ?? null,
+                    'color_code' => $request->type === 'color' ? $request->colors[$key] : null,
                     'sort_order' => $key,
                 ]);
             }

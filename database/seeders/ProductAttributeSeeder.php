@@ -12,9 +12,13 @@ class ProductAttributeSeeder extends Seeder
     {
         // Renk özelliği
         $color = ProductAttribute::create([
-            'name' => 'Renk',
-            'slug' => 'renk',
             'type' => 'color'
+        ]);
+
+        // Renk çevirileri
+        $color->translations()->createMany([
+            ['locale' => 'tr', 'name' => 'Renk', 'slug' => 'renk'],
+            ['locale' => 'en', 'name' => 'Color', 'slug' => 'color']
         ]);
 
         $colors = [
@@ -36,9 +40,13 @@ class ProductAttributeSeeder extends Seeder
 
         // Beden özelliği
         $size = ProductAttribute::create([
-            'name' => 'Beden',
-            'slug' => 'beden',
             'type' => 'select'
+        ]);
+
+        // Beden çevirileri
+        $size->translations()->createMany([
+            ['locale' => 'tr', 'name' => 'Beden', 'slug' => 'beden'],
+            ['locale' => 'en', 'name' => 'Size', 'slug' => 'size']
         ]);
 
         $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];

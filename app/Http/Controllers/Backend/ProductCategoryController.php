@@ -9,36 +9,35 @@ use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
 {
-    protected $categoryService;
+    private $productCategoryService;
 
-    public function __construct(ProductCategoryService $categoryService)
+    public function __construct(ProductCategoryService $productCategoryService)
     {
-        $this->categoryService = $categoryService;
+        $this->productCategoryService = $productCategoryService;
     }
 
     public function index()
     {
-        $categories = $this->categoryService->getAll();
-        return view('backend.product.category.index', compact('categories'));
+        $all = $this->productCategoryService->getAll();
+        return view('backend.product.category.index', compact('all'));
     }
 
     public function create()
     {
-        $categories = $this->categoryService->getForSelect();
+        $categories = $this->productCategoryService->getForSelect();
         return view('backend.product.category.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'tr.name' => 'required|string|max:255',
-            'en.name' => 'required|string|max:255',
+            'name.*' => 'required|string|max:255',
             'parent_id' => 'nullable|exists:product_categories,id',
             'status' => 'boolean'
         ]);
 
         try {
-            $this->categoryService->create($request->all());
+            $this->productCategoryService->create($request->all());
             return redirect()
                 ->route('product-categories.index')
                 ->with('success', 'Kategori başarıyla oluşturuldu.');
@@ -51,22 +50,21 @@ class ProductCategoryController extends Controller
 
     public function edit(ProductCategory $category)
     {
-        $categories = $this->categoryService->getForSelect()
+        $edit = $this->productCategoryService->getForSelect()
             ->where('id', '!=', $category->id);
-        return view('backend.product.category.edit', compact('category', 'categories'));
+        return view('backend.product.category.edit', compact('category', 'edit'));
     }
 
     public function update(Request $request, ProductCategory $category)
     {
         $request->validate([
-            'tr.name' => 'required|string|max:255',
-            'en.name' => 'required|string|max:255',
+            'name.*' => 'required|string|max:255',
             'parent_id' => 'nullable|exists:product_categories,id',
             'status' => 'boolean'
         ]);
 
         try {
-            $this->categoryService->update($category, $request->all());
+            $this->productCategoryService->update($category, $request->all());
             return redirect()
                 ->route('product-categories.index')
                 ->with('success', 'Kategori başarıyla güncellendi.');
@@ -80,7 +78,7 @@ class ProductCategoryController extends Controller
     public function destroy(ProductCategory $category)
     {
         try {
-            $this->categoryService->delete($category);
+            $this->productCategoryService->delete($category);
             return redirect()
                 ->route('product-categories.index')
                 ->with('success', 'Kategori başarıyla silindi.');
@@ -89,10 +87,10 @@ class ProductCategoryController extends Controller
         }
     }
 
-    public function updateOrder(Request $request)
+    public function order(Request $request)
     {
         try {
-            $this->categoryService->updateOrder($request->items);
+            $this->productCategoryService->updateOrder($request->items);
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'error' => $e->getMessage()]);

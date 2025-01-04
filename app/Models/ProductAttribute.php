@@ -3,27 +3,31 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+use App\Enums\ProductAttributeType;
 
-class ProductAttribute extends Model
+class ProductAttribute extends Model implements TranslatableContract
 {
+    use Translatable;
+
+    public $translatedAttributes = ['name'];
+    
     protected $fillable = [
-        'name',
         'slug',
         'type',
-        'status'
+        'status',
+        'rank'
     ];
 
     protected $casts = [
+        'type' => ProductAttributeType::class,
         'status' => 'boolean'
     ];
 
     public function values()
     {
-        return $this->hasMany(ProductAttributeValue::class, 'product_attribute_id');
+        return $this->hasMany(ProductAttributeValue::class);
     }
 
-    public function translations()
-    {
-        return $this->hasMany(ProductAttributeTranslation::class, 'product_attribute_id');
-    }
 } 

@@ -91,7 +91,9 @@ class ViewService
 
     public function getMostViewedPages(int $limit = 10): Collection
     {
-        // Tüm modelleri bir array'de toplayın
+        // URL'den veya session'dan locale'i al
+        $locale = request('locale', app()->getLocale());
+        
         $models = collect([
             Blog::class,
             Service::class,
@@ -99,20 +101,28 @@ class ViewService
             Team::class,
             Category::class,
             Video::class,
-            // ... diğer modeller
         ]);
 
         $allViews = collect();
 
         foreach ($models as $model) {
             $views = $model::orderByViews('desc')
-                ->with('views')
+                ->with(['translations', 'views'])
                 ->get()
-                ->map(function ($item) {
+                ->map(function ($item) use ($locale) {
+                    // Translation'dan ismi al
+                    $translation = $item->translations
+                        ->where('locale', $locale)
+                        ->first();
+                    
+                    // Dile göre görüntülenme sayısını al
+                    $viewCount = $item->views()
+                        ->where('collection', $locale)
+                        ->count();
+                    
                     return [
-                        'name' => $this->getModelName($item),
-                        'url' => $this->getModelUrl($item),
-                        'views' => $item->views_count,
+                        'name' => $translation ? $translation->name : 'Unnamed',
+                        'views' => $viewCount,
                         'percentage' => 0,
                         'model_type' => class_basename($item)
                     ];
@@ -136,35 +146,5 @@ class ViewService
         });
 
         return $allViews->take($limit);
-    }
-
-    private function getModelName($model)
-    {
-        if (method_exists($model, 'getTranslation')) {
-            return $model->getTranslation('name', app()->getLocale());
-        }
-        
-        if (isset($model->name)) {
-            return $model->name;
-        }
-        
-        if (isset($model->title)) {
-            return $model->title;
-        }
-        
-        return 'Unnamed';
-    }
-
-    private function getModelUrl($model)
-    {
-        if (method_exists($model, 'getTranslation')) {
-            return $model->getTranslation('slug', app()->getLocale());
-        }
-        
-        if (isset($model->slug)) {
-            return $model->slug;
-        }
-        
-        return '#';
     }
 } 

@@ -26,6 +26,8 @@ use App\Http\Controllers\Backend\TranslationController;
 
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
+use App\Http\Controllers\Backend\ProductVariantController;
+use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductAttributeController;
 
 
@@ -87,7 +89,9 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     Route::group(["prefix"=>"shop"],function() {
 
         Route::auto('tags', TagController::class);
-
+        Route::auto('product-categories', ProductCategoryController::class);
+        Route::auto('product-attributes', ProductAttributeController::class);
+        Route::auto('product-variants', ProductVariantController::class);
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('product.index');
             Route::get('/create', [ProductController::class, 'create'])->name('product.create');
@@ -119,9 +123,7 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
                 ->name('product.sort-images');
         });
     
-        // Özellik yönetimi rotaları
-        Route::resource('product-attributes', ProductAttributeController::class)
-            ->except(['show']);
+    
     });
 
     
