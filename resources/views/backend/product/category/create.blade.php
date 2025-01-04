@@ -89,7 +89,7 @@
             <div class="card-body">
                 <select class="form-select tomselected {{$errors->has('category_id') ? 'is-invalid'  : ''}}" name="parent_id">
                     <option value="">Üst Kategori</option>
-                    @foreach ($categories as $item)
+                    @foreach ($p_categories as $item)
                     <option value="{{ $item->id}}"> {{ ($item->parent_id == null ? $item->name : '-'.$item->name)}}</option>
                     @endforeach
                 </select>

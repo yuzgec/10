@@ -462,12 +462,12 @@
                             E-Ticaret
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Request::is('go/shop/products*') ? 'show' : '' }}">
+                    <div class="dropdown-menu {{ Request::is('go/shop/products*') || Request::is('go/shop/product-categories*') || Request::is('go/shop/tags*') || Request::is('go/shop/product-attributes*') ? 'show' : '' }}">
                         <div class="dropend">
                             <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 Ürünler
                             </a>
-                            <div class="dropdown-menu {{ Request::is('go/shop/products*') ? 'show' : '' }}">
+                            <div class="dropdown-menu {{ Request::is('go/shop/products*') || Request::is('go/shop/product-categories*') || Request::is('go/shop/tags*') || Request::is('go/shop/product-attributes*') ? 'show' : '' }}">
                                 <a
                                     class="dropdown-item"
                                     href="{{ route('product.index')}}"
@@ -486,13 +486,15 @@
                                     title="Varyantlı Ürün Ekle">
                                     Varyantlı Ürün Ekle
                                 </a>
-                                <a
-                                    class="dropdown-item"
-                                    href="{{ route('product-categories.index') }}"
-                                    title="Varyantlı Ürün Ekle">
-                                    Ürün Kategorisi
-                                </a>
+                             
                             </div>
+                        </div>
+
+                        
+                        <div class="dropend">
+                            <a class="dropdown-item" href="{{ route('product-categories.index') }}">
+                                Ürün Kategorisi
+                            </a>
                         </div>
                         
                         <div class="dropend">

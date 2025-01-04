@@ -24,9 +24,9 @@ class ProductCategoryController extends Controller
 
     public function create()
     {
-        $categories = $this->productCategoryService->getForSelect();
-        return view('backend.product.category.create', compact('categories'));
+        return view('backend.product.category.create');
     }
+
 
     public function store(Request $request)
     {

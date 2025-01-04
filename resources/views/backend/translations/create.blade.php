@@ -37,9 +37,9 @@
                 <x-dashboard.form.input label='Group Adı' name='group' placeholder="Group Adı Giriniz"/>
                 <x-dashboard.form.input label='Anahtar Adı' name='key' placeholder="Anahtar Adı Giriniz"/>
 
-                @foreach ($locales as $locale)
+                @foreach ($language as $locale)
                     <div class="mb-3">
-                        <x-dashboard.form.input label='Çeviri [{{ $locale }}]' name="translations[{{ $locale }}]" placeholder="Anahtar Adı Giriniz"/>
+                        <x-dashboard.form.input label='Çeviri [{{ $locale->lang }}]' name="translations[{{ $locale->lang }}]" placeholder="Anahtar Adı Giriniz"/>
                     </div>
                 @endforeach
 

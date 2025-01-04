@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Category;
 use App\Models\Language;
 use App\Enums\StatusEnum;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +31,11 @@ class ViewShareProvider extends ServiceProvider
         $categories = Cache::remember('categories',now()->addYear(5), function () {
             return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams'])->lang()->get()->toFlatTree();
         });
+
+        $p_categories = Cache::remember('p_categories',now()->addYear(5), function () {
+            return ProductCategory::withCount(['products','media'])->lang()->get()->toFlatTree();
+        });
+
 
         $services = Cache::remember('services',now()->addYear(5), function () {
             return Service::with(['getCategory','media'])->active()->lang()->rank()->get();
@@ -62,6 +68,7 @@ class ViewShareProvider extends ServiceProvider
             'pages' => $pages,
             'teams' => $teams,
             'language' => $language,
+            'p_categories' => $p_categories,
         ]);
     }
 }

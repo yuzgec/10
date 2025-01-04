@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="p-1">
-                    <a href="{{ route('category.create')}}" title="Kategori Oluştur" class="btn btn-primary">
+                    <a href="{{ route('product-categories.create')}}" title="Kategori Oluştur" class="btn btn-primary">
                         <x-dashboard.icon.add/>
                         Ekle
                     </a>
@@ -70,7 +70,7 @@
                     </td>
 
                     <td>
-                        <a href="{{ route('category.edit', $item->id)}}">Düzenle</a>
+                        <a href="{{ route('product-categories.edit', $item->id)}}">Düzenle</a>
                     </td>
                 </tr>
                 @endforeach

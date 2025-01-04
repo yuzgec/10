@@ -41,7 +41,6 @@ class Blog extends Model implements TranslatableContract,HasMedia,Viewable
         return $this->belongsTo(Category::class, 'category_id', 'id');
     } 
 
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('page')

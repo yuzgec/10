@@ -31,11 +31,10 @@
             <x-dashboard.form.input label='Group' name='group' :value="$edit->group"/>
             <x-dashboard.form.input label='Key' name='key' :value="$edit->key"/>
             
-            @foreach($locales as $locale)
+                @foreach ($language as $locale)
                 <x-dashboard.form.input 
-                    label="{{ strtoupper($locale) }} Çeviri" 
-                    name="translations[{{ $locale }}]" 
-                    :value="$edit->text[$locale] ?? ''"
+                    label="{{ strtoupper($locale->lang) }} Çeviri" 
+                    name="translations[{{ $locale->lang }}]" 
                 />
             @endforeach
         </div>

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class ProductCategory extends Model implements TranslatableContract, HasMedia
 {
@@ -45,4 +46,49 @@ class ProductCategory extends Model implements TranslatableContract, HasMedia
             $query->where('locale', '=', app()->getLocale());
         });
     }
+
+    
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('page')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+
+        $this->addMediaCollection('cover')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        if ($media === null) {
+            return;
+        }
+
+        $this->addMediaConversion('img')
+            ->width(1250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+            
+        $this->addMediaConversion('small')
+            ->width(250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+                 
+        $this->addMediaConversion('icon')
+            ->width(100)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+    }
+
 }
