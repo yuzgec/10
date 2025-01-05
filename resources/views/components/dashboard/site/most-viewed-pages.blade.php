@@ -10,11 +10,9 @@
                     <x-dashboard.icon.language/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    @php
-                        $currentLocale = app()->getLocale();
-                    @endphp
+            
                     @foreach($language as $lang)
-                        <a class="dropdown-item {{ $currentLocale === $lang->lang ? 'active' : '' }}" 
+                        <a class="dropdown-item {{ app()->getLocale() === $lang->lang ? 'active' : '' }}" 
                            href="{{ request()->fullUrlWithQuery(['locale' => $lang->lang]) }}">
                             {{ $lang->native }}
                         </a>
@@ -46,12 +44,12 @@
                                         <span class="visually-hidden">{{ number_format($page['percentage'], 2) }}%</span>
                                     </div>
                                 </div>
-                                <div class="progressbg-text" title="{{ $page['name'] }}">
+                                <div class="progressbg-text" title="{{ $page['model_type'] }}" style="font-size: 10px;">
                                     {{ Str::limit($page['name'], 20) }}
                                 </div>
                             </div>
                         </td>
-                        <td class="w-1 fw-bold text-end">{{ $page['views'] }}</td>
+                        <td class="w-1 fw-bold text-end" style="font-size: 12px;">{{ $page['views'] }}</td>
                     </tr>
                 @endforeach
             </tbody>

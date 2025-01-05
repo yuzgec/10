@@ -11,29 +11,22 @@ class SimpleProductRequest extends FormRequest
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         $rules = [
-            'image' => 'nullable|image|max:2048',
-            'gallery.*' => 'nullable|image|max:2048',
-            'sku' => 'required|string|max:100|unique:products,sku,' . ($this->product->id ?? ''),
+            'sku' => 'required|unique:products,sku',
             'price' => 'required|numeric|min:0',
-            'discount_price' => 'nullable|numeric|min:0|lt:price',
             'stock' => 'required|integer|min:0',
-            'featured' => 'boolean',
-            'status' => 'boolean',
-            'categories' => 'nullable|array',
-            'categories.*' => 'exists:categories,id',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:product_categories,id',
             'tags' => 'nullable|array',
-            'tags.*' => 'string|max:100',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ];
 
-        // Çoklu dil validasyonları
-        foreach (config('app.locales') as $locale) {
-            $rules["name:$locale"] = 'required|string|max:255';
-            $rules["short:$locale"] = 'nullable|string|max:1000';
-            $rules["desc:$locale"] = 'nullable|string|max:50000';
-            $rules["purchase_note:$locale"] = 'nullable|string|max:1000';
+        // Aktif diller için validasyon
+        foreach (config('app.languages', ['tr']) as $lang) {
+            $rules["name:$lang"] = 'required|string|max:255';
+            $rules["description:$lang"] = 'nullable|string';
         }
 
         return $rules;
@@ -46,7 +39,6 @@ class SimpleProductRequest extends FormRequest
             'gallery.*' => 'Galeri görseli',
             'sku' => 'SKU',
             'price' => 'Fiyat',
-            'discount_price' => 'İndirimli fiyat',
             'stock' => 'Stok',
             'featured' => 'Öne çıkan',
             'status' => 'Durum',
@@ -54,12 +46,10 @@ class SimpleProductRequest extends FormRequest
             'tags' => 'Etiketler',
         ];
 
-        // Çoklu dil attribute isimleri
-        foreach (config('app.locales') as $locale) {
-            $attributes["name:$locale"] = "Ürün adı ($locale)";
-            $attributes["short:$locale"] = "Kısa açıklama ($locale)";
-            $attributes["desc:$locale"] = "Detaylı açıklama ($locale)";
-            $attributes["purchase_note:$locale"] = "Satın alma notu ($locale)";
+        // Dil alanları için özel isimler
+        foreach (config('app.languages', ['tr']) as $lang) {
+            $attributes["name:$lang"] = "Ürün adı ($lang)";
+            $attributes["description:$lang"] = "Açıklama ($lang)";
         }
 
         return $attributes;
@@ -67,11 +57,25 @@ class SimpleProductRequest extends FormRequest
 
     public function messages()
     {
-        return [
+        $messages = [
+            'sku.required' => 'SKU alanı zorunludur',
             'sku.unique' => 'Bu SKU kodu zaten kullanılmış',
-            'price.required' => 'Lütfen ürün fiyatını girin',
-            'discount_price.lt' => 'İndirimli fiyat normal fiyattan düşük olmalıdır',
-            'stock.required' => 'Lütfen stok miktarını girin',
+            'price.required' => 'Fiyat alanı zorunludur',
+            'price.numeric' => 'Fiyat sayısal bir değer olmalıdır',
+            'price.min' => 'Fiyat 0\'dan büyük olmalıdır',
+            'stock.required' => 'Stok alanı zorunludur',
+            'stock.integer' => 'Stok tam sayı olmalıdır',
+            'stock.min' => 'Stok 0\'dan büyük olmalıdır',
+            'categories.required' => 'En az bir kategori seçmelisiniz',
         ];
+
+        // Dil alanları için özel mesajlar
+        foreach (config('app.languages', ['tr']) as $lang) {
+            $messages["name:$lang.required"] = "$lang dilinde ürün adı zorunludur";
+            $messages["name:$lang.string"] = "$lang dilinde ürün adı metin olmalıdır";
+            $messages["name:$lang.max"] = "$lang dilinde ürün adı en fazla 255 karakter olabilir";
+        }
+
+        return $messages;
     }
 } 

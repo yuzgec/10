@@ -29,7 +29,7 @@
                                         {{ $attribute->translations->where('locale', app()->getLocale())->first()->name ?? '' }}
                                     </td>
                                     <td>
-                                        <span class="badge {{ $attribute->type->badge() }}">
+                                        <span class="badge text-white {{ $attribute->type->badge() }}">
                                             {{ $attribute->type->label() }}
                                         </span>
                                     </td>

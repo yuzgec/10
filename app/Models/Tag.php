@@ -2,16 +2,12 @@
 
 namespace App\Models;
 
-use Spatie\Tags\Tag as BaseTag;
-use Illuminate\Support\Collection;
+use Spatie\Tags\Tag as SpatieTag;
 
-class Tag extends BaseTag
+class Tag extends SpatieTag
 {
-    public static function getTypes(): Collection
+    public static function getLocale(): string
     {
-        return collect([
-            'product',
-            'blog'
-        ]);
+        return app()->getLocale();
     }
-} 
+}

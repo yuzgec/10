@@ -17,6 +17,7 @@ use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Activitylog\Models\Activity;
 
 class DashboardController extends Controller
 {
@@ -55,5 +56,32 @@ class DashboardController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function activities()
+    {
+        $activities = Activity::with('causer', 'subject')
+            ->latest()
+            ->paginate(50);
+
+        return view('backend.dashboard.activities', compact('activities'));
+    }
+
+    public function deleteActivity($id)
+    {
+        try {
+            $activity = Activity::findOrFail($id);
+            $activity->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Aktivite kaydı başarıyla silindi'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Aktivite silinirken bir hata oluştu'
+            ], 500);
+        }
     }
 }

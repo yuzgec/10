@@ -88,6 +88,7 @@
                     <a href="{{ route('logs.index')}}" class="dropdown-item"><x-dashboard.icon.log width="16" height="16"/> Log</a>
                     <a href="{{ route('route.list')}}" class="dropdown-item"><x-dashboard.icon.log width="16" height="16"/> Rotalar</a>
                     <a href="{{ route('cache.clear')}}" class="dropdown-item"><x-dashboard.icon.log width="16" height="16"/> Cache Temizle</a>
+                    <a href="{{ route('activities')}}" class="dropdown-item"><x-dashboard.icon.history width="16" height="16"/> Aktiviteler</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="dropdown-item"><x-dashboard.icon.logout width="16" height="16"/> Çıkış Yap</button>

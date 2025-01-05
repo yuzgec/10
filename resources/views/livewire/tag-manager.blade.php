@@ -70,3 +70,11 @@
     </style>
     @endpush
 </div> 
+
+<script>
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('notify', (data) => {
+            toastr[data.type](data.message);
+        });
+    });
+</script> 

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 use Spatie\Sluggable\HasSlug;
+use App\Traits\LogsActivityTrait;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Model;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

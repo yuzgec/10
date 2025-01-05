@@ -1,9 +1,10 @@
 @extends('backend.layout.app')
 
 @section('content')
+
 {!! html()->form()
     ->method('POST')
-    ->action(route('product.store.variable'))
+    ->action(route('product.store.simple'))
     ->attribute('enctype', 'multipart/form-data')
     ->open()
 !!}

@@ -14,6 +14,11 @@ class TagManager extends Component
     public $type;
     public $model;
 
+    protected $messages = [
+        'tag.exists' => 'Bu etiket zaten eklenmiş.',
+        'tag.created' => 'Yeni etiket oluşturuldu.',
+    ];
+
     public function mount($type = 'product', $selectedTags = [], $model = null)
     {
         $this->type = $type;
@@ -38,9 +43,44 @@ class TagManager extends Component
     public function addTag($tagName)
     {
         $tagName = trim($tagName);
-        if (!empty($tagName) && !in_array($tagName, $this->selectedTags)) {
+        if (!empty($tagName)) {
+            if (in_array($tagName, $this->selectedTags)) {
+                $this->dispatch('notify', [
+                    'type' => 'error',
+                    'message' => 'Bu etiket zaten eklenmiş.'
+                ]);
+                return;
+            }
+
+            // Etiket var mı kontrol et
+            $tag = Tag::withType($this->type)
+                ->where('name->tr', $tagName)
+                ->orWhere('name->en', $tagName)
+                ->first();
+
+            // Etiket yoksa oluştur
+            if (!$tag) {
+                $tag = Tag::create([
+                    'type' => $this->type,
+                    'name' => [
+                        'tr' => $tagName,
+                        'en' => $tagName
+                    ],
+                    'slug' => [
+                        'tr' => Str::slug($tagName),
+                        'en' => Str::slug($tagName)
+                    ]
+                ]);
+
+                $this->dispatch('notify', [
+                    'type' => 'success',
+                    'message' => 'Yeni etiket oluşturuldu.'
+                ]);
+            }
+
             $this->selectedTags[] = $tagName;
         }
+        
         $this->tagInput = '';
         $this->suggestions = [];
     }

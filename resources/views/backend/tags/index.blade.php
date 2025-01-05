@@ -22,6 +22,7 @@
                                     <th>Ad</th>
                                     <th>Slug</th>
                                     <th>Tür</th>
+                                    <th>Kullanım</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
@@ -32,7 +33,12 @@
                                     <td>{{ $tag->slug }}</td>
                                     <td>{{ $tag->type }}</td>
                                     <td>
-                                        <form action="{{ route('tags.destroy', $tag) }}" method="POST" class="d-inline">
+                                        <a href="{{ route('tags.products', $tag) }}" class="badge bg-blue">
+                                            {{ $tag->products_count }} ürün
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('tags.destroy', $tag) }}" method="POST" class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Sil</button>
@@ -101,6 +107,27 @@ document.getElementById('tagForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         window.location.reload();
+    });
+});
+
+// SweetAlert2 entegrasyonu
+$('.delete-form').on('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: "Bu etiketi silmek istediğinize emin misiniz?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Evet, sil!',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
     });
 });
 </script>

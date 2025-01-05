@@ -32,7 +32,9 @@ class BackupSeeder extends Seeder
         'languages',
         'language_lines',
         'translations',
-        'media'
+        'media',
+        'cache',
+        'cache_locks',
         // ... diğer tablolar
     ];
 

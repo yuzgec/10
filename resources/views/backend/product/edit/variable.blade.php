@@ -188,8 +188,8 @@
                                     <div class="card-body">
                                         <select name="tags[]" class="form-select" multiple data-tags="true">
                                             @foreach($tags as $tag)
-                                                <option value="{{ $tag->name }}" 
-                                                        {{ in_array($tag->name, old('tags', $product->tags->pluck('name')->toArray())) ? 'selected' : '' }}>
+                                                <option value="{{ $tag->id }}" 
+                                                        {{ in_array($tag->id, old('tags', $product->tags->pluck('id')->toArray())) ? 'selected' : '' }}>
                                                     {{ $tag->name }}
                                                 </option>
                                             @endforeach

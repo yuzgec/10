@@ -23,18 +23,38 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model implements TranslatableContract,HasMedia,Viewable
 {
-    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
+    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews,HasTags;
     
     public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
     protected $fillable = [
-        'name', 'slug', 'short', 'desc', 'type',
-        'price', 'discount_price', 'stock', 'sku',
-        'featured', 'purchase_note', 'tax_status',
-        'tax_class', 'manage_stock', 'weight',
-        'dimension_unit', 'length', 'width', 'height',
-        'external_url', 'button_text', 'status',
-        'campaign_text', 'cargo_text', 'warranty_text', 'pay_text', 'return_text', 'exchange_text', 'refund_text', 'cancel_text', 'contact_text'
+        'sku',
+        'price',
+        'discount_price',
+        'stock',
+        'type',
+        'featured',
+        'status',
+        'purchase_note',
+        'tax_status',
+        'tax_class',
+        'manage_stock',
+        'weight',
+        'dimension_unit',
+        'length',
+        'width',
+        'height',
+        'external_url',
+        'button_text',
+        'campaign_text',
+        'cargo_text',
+        'warranty_text',
+        'pay_text',
+        'return_text',
+        'exchange_text',
+        'refund_text',
+        'cancel_text',
+        'contact_text'
     ];
 
     protected $casts = [

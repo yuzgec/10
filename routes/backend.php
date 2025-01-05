@@ -44,7 +44,9 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
     Route::post('/logs/clear', [LogController::class, 'clear'])->name('logs.clear');
     Route::get('routes', [RouteListController::class, 'index'])->name('route.list');
-    
+    Route::get('/activities', [DashboardController::class, 'activities'])->name('activities');
+    Route::delete('/activities/clear', [DashboardController::class, 'clearActivities'])->name('dashboard.activities.clear');
+    Route::delete('/dashboard/activities/{id}', [DashboardController::class, 'deleteActivity'])->name('dashboard.activities.delete');
     Route::get('cache/clear', function(){
         Artisan::call('cache:clear');
         alert()->html('Başarıyla Temizlendi','<b>Cache</b> başarıyla temizlendi.', 'success');
@@ -89,6 +91,10 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     Route::group(["prefix"=>"shop"],function() {
 
         Route::auto('tags', TagController::class);
+        Route::get('tags/{tag}/products', [TagController::class, 'products'])->name('tags.products');
+        Route::get('tags/{tag}/blogs', [TagController::class, 'blogs'])->name('tags.blogs');
+
+        
         Route::auto('product-categories', ProductCategoryController::class);
         Route::auto('product-attributes', ProductAttributeController::class);
         Route::auto('product-variants', ProductVariantController::class);

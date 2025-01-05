@@ -165,8 +165,8 @@
                     <div class="card-body">
                         <select name="tags[]" class="form-select" multiple data-tags="true">
                             @foreach($tags as $tag)
-                                <option value="{{ $tag->name }}" 
-                                        {{ in_array($tag->name, old('tags', [])) ? 'selected' : '' }}>
+                                <option value="{{ $tag->id }}" 
+                                        {{ in_array($tag->id, old('tags', [])) ? 'selected' : '' }}>
                                     {{ $tag->name }}
                                 </option>
                             @endforeach

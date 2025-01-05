@@ -28,15 +28,6 @@ class ViewShareProvider extends ServiceProvider
             return collect(StatusEnum::cases());
         });
 
-        $categories = Cache::remember('categories',now()->addYear(5), function () {
-            return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams'])->lang()->get()->toFlatTree();
-        });
-
-        $p_categories = Cache::remember('p_categories',now()->addYear(5), function () {
-            return ProductCategory::withCount(['products','media'])->lang()->get()->toFlatTree();
-        });
-
-
         $services = Cache::remember('services',now()->addYear(5), function () {
             return Service::with(['getCategory','media'])->active()->lang()->rank()->get();
         });
@@ -56,6 +47,15 @@ class ViewShareProvider extends ServiceProvider
         $teams = Cache::remember('teams',now()->addYear(5), function () {
             return Page::with(['getCategory','media'])->active()->lang()->rank()->get();
         });
+
+
+        $categories = Cache::remember('categories',now()->addYear(5), function () {
+            return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams'])->lang()->get()->toFlatTree();
+        });
+
+        $p_categories = Cache::remember('p_categories',now()->addYear(5), function () {
+            return ProductCategory::withCount(['products','media'])->lang()->get()->toFlatTree();
+        }); 
 
         //dd($language);
         //dd($categories->where('slug','video'));

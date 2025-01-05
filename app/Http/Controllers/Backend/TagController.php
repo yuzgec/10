@@ -11,7 +11,9 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::withType('product')->get();
+        $tags = Tag::withType('product')
+            ->withCount('products')
+            ->get();
         return view('backend.tags.index', compact('tags'));
     }
 
@@ -39,7 +41,17 @@ class TagController extends Controller
 
     public function destroy(Tag $tag)
     {
-        $tag->delete();
-        return redirect()->back()->with('success', 'Etiket silindi');
+        try {
+            $tag->delete();
+            return redirect()->back()->with('success', 'Etiket başarıyla silindi');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Etiket silinirken bir hata oluştu');
+        }
+    }
+
+    public function products(Tag $tag)
+    {
+        $products = $tag->products()->paginate(20);
+        return view('backend.tags.products', compact('tag', 'products'));
     }
 } 
