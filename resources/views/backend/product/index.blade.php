@@ -49,20 +49,9 @@
                             @endif
                         </td>
                         <td>
-                            @switch($product->type)
-                                @case('simple')
-                                    <span class="badge text-white  bg-blue">Basit</span>
-                                    @break
-                                @case('variable')
-                                    <span class="badge text-white  bg-purple">Varyantlı</span>
-                                    @break
-                                @case('grouped')
-                                    <span class="badge text-white  bg-green">Gruplanmış</span>
-                                    @break
-                                @case('external')
-                                    <span class="badge text-white  bg-yellow">Harici</span>
-                                    @break
-                            @endswitch
+                            <span class="badge text-white {{ $product->type->badge() }}">
+                                {{ $product->type->label() }}
+                            </span>
                         </td>
                         <td>
                             @if($product->isVariable())

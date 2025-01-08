@@ -50,7 +50,7 @@ class VariationService
         }
     }
 
-    private function generateVariationKey(ProductVariation $variation): void
+    public function generateVariationKey(ProductVariation $variation): void
     {
         $attributes = $variation->attributes()
             ->orderBy('attribute_id')

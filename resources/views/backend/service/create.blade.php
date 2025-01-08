@@ -26,7 +26,7 @@
                         <div class="card">
                             <div class="card-status-top bg-blue"></div>
                             <div class="card-body">
-                                <x-dashboard.form.input label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                <x-dashboard.form.input required label='Hizmet Adı' name='name:{{ $lang->lang }}' placeholder="Hizmet Adı Giriniz ({{ $lang->native }})" maxlength="75"/>
                                 <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
                                 <x-dashboard.form.text-area label='Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
                             </div>

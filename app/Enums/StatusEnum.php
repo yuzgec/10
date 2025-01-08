@@ -8,7 +8,6 @@ enum StatusEnum : int {
     case DRAFT          = 3;
     case LOCKED         = 4;
 
-
     public function title(){
         return match ($this) {
             self::UNPUBLISHED       => 'Yayınlanmamış',
@@ -27,7 +26,6 @@ enum StatusEnum : int {
         };
     }
 
-
     public function id() : string{
         return match ($this) {
             self::PUBLISHED         => '',
@@ -36,6 +34,4 @@ enum StatusEnum : int {
             self::LOCKED            => 'showPassInput',
         };
     }
-
-
 }

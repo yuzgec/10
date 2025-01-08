@@ -2,6 +2,7 @@
 
 <div class="col-12">
     <div class="card">
+        <div class="card-status-top bg-blue"></div>
 
         <div class="card-header">
             <h3 class="card-title">Müşteri Listesi [{{ $all->total()}}]</h3>
@@ -66,24 +67,30 @@
 
                     <tr>
                         <td>
-                            <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'thumb')}}">
-                                <img src="{{ $item->getFirstMediaUrl('page', 'thumb')}}" class="avatar me-2">
+                            <a data-fslightbox="gallery" href="{{ $item->getFirstMediaUrl('page', 'img')}}">
+                                <img src="{{ $item->getFirstMediaUrl('page', 'icon')}}" class="avatar me-2">
                             </a>
                         </td>
                         <td>
                             <a href="{{ route('customer.edit',$item->id)}}" title="Düzenle">
-                                {{$item->company_name}}
+                                {{ $item->company_name }}
+                                <div class="text-muted">
+                                    <small style="font-size: 10px;">
+                                        {{ optional($item->city)->name }} -
+                                        {{ optional($item->district)->name }}
+                                    </small>
+                                </div>
                             </a>
                         </td>
                         <td class="text-secondary">
-                            {{ $item->email}}
+                            {{ $item->email1}}
                         </td>
                         <td class="text-secondary">
                             {{ $item->phone1}}
                         </td>
 
                         <td class="text-white">
-                            <a href="{{ route('offer.index',['name' => 'offer','customer_id' => $item->id])}}" title="Tekliflere Git">
+                            <a href="{{ route('customer-offers.create',['name' => $item->company_name,'customer_id' => $item->id])}}" title="Tekliflere Git">
                                 <span class="avatar bg-black text-white">{{ $item->offers_count}}</span>
                             </a>
                         </td>
@@ -95,7 +102,9 @@
                         </td>
 
                         <td class="text-secondary">
-                            {{$item->status->title()}}
+                            <span class="badge text-white p-1 bg-{{ $item->status->color()}}">
+                                {{$item->status->title()}}
+                            </span>
                         </td>
 
                         <td>

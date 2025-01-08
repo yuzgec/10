@@ -14,18 +14,28 @@ class SimpleProductRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'sku' => 'required|unique:products,sku',
+            'image' => 'nullable|image|max:2048',
+            'gallery.*' => 'nullable|image|max:2048',
+            'sku' => 'required|string|max:255|unique:products,sku',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'featured' => 'boolean',
+            'status' => 'boolean',
             'categories' => 'required|array',
             'categories.*' => 'exists:product_categories,id',
             'tags' => 'nullable|array',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'tags.*' => 'exists:tags,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'tax_status' => 'required|in:taxable,none',
+            'tax_class_id' => 'nullable|required_if:tax_status,taxable|exists:tax_classes,id',
+            'selectedAttributes' => 'nullable|array',
+            'selectedAttributes.*' => 'nullable|exists:product_attribute_values,id'
         ];
 
-        // Aktif diller için validasyon
+        // Dil alanları için kurallar
         foreach (config('app.languages', ['tr']) as $lang) {
             $rules["name:$lang"] = 'required|string|max:255';
+            $rules["slug:$lang"] = 'nullable|string|max:255';
             $rules["description:$lang"] = 'nullable|string';
         }
 
@@ -44,6 +54,11 @@ class SimpleProductRequest extends FormRequest
             'status' => 'Durum',
             'categories' => 'Kategoriler',
             'tags' => 'Etiketler',
+            'brand_id' => 'Marka',
+            'tax_status' => 'Vergi durumu',
+            'tax_class_id' => 'Vergi sınıfı',
+            'selectedAttributes' => 'Özellikler',
+            'selectedAttributes.*' => 'Özellik değeri'
         ];
 
         // Dil alanları için özel isimler

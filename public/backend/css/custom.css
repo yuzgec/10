@@ -1,58 +1,20 @@
-.delete-media-btn {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    background: #dc3545;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.3s ease;
-    padding: 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 3;
-    color: white;
-}
-
-.image-preview-container:hover .delete-media-btn {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.delete-media-btn:hover {
-    background: #c82333;
-    transform: scale(1.1) !important;
-    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
-}
-
-/* Container'ın relative pozisyonunu koruyalım */
 .image-preview-container {
     position: relative;
-    cursor: pointer;
-    padding: 20px;
-    border: 2px dashed #ddd;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    border: 2px dashed #ccc;
+    padding: 10px;
     text-align: center;
-    background: #f8f9fa;
-    min-height: 200px;
-    overflow: visible;
+    transition: all 0.3s;
 }
 
-.image-preview-input {
-    display: none;
+.image-preview-container.dragover {
+    border-color: #2fb344;
+    background: rgba(47, 179, 68, 0.1);
 }
 
 .preview-image {
     max-width: 100%;
     height: auto;
-    position: relative;
-    z-index: 2;
+    cursor: pointer;
 }
 
 .upload-button {
@@ -64,6 +26,16 @@
     width: 100%;
     text-align: center;
     z-index: 3;
+}
+
+.image-size-info {
+    color: #555;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.image-preview-input {
+    display: none;
 }
 
 .centered-table {

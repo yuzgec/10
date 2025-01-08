@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\TaxClass;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -12,31 +13,21 @@ class ProductSeeder extends Seeder
 {
     public function run()
     {
-        // Basit Ürünler
         $this->createSimpleProducts();
-        
-        // Varyantlı Ürünler
         $this->createVariableProducts();
     }
 
     private function createSimpleProducts()
     {
+        $brand = Brand::where('name', 'GO Dijital')->first();
+
         $products = [
             [
-                'name' => [
-                    'tr' => 'iPhone 14 Pro',
-                    'en' => 'iPhone 14 Pro'
-                ],
+                'name' => 'iPhone 14 Pro',
                 'price' => 54999,
-                'brand_id' => Brand::where('name', 'Apple')->first()->id
-            ],
-            [
-                'name' => [
-                    'tr' => 'Samsung Galaxy S23',
-                    'en' => 'Samsung Galaxy S23'
-                ],
-                'price' => 44999,
-                'brand_id' => Brand::where('name', 'Samsung')->first()->id
+                'stock' => rand(10, 100),
+                'weight' => 0.174,
+                'dimension_unit' => 'mm',
             ]
         ];
 
@@ -44,79 +35,82 @@ class ProductSeeder extends Seeder
             $product = Product::create([
                 'type' => 'simple',
                 'price' => $item['price'],
-                'stock' => rand(10, 100),
+                'stock' => $item['stock'],
                 'sku' => Str::random(8),
-                'brand_id' => $item['brand_id'],
+                'brand_id' => $brand->id,
                 'featured' => rand(0, 1),
-                'status' => true
+                'status' => 'published',
+                'manage_stock' => true,
+                'weight' => $item['weight'],
+                'dimension_unit' => $item['dimension_unit'],
+                'addGoogle' => true,
+                'addComment' => false,
+                'deleteContent' => false,
             ]);
 
-            // Çeviriler
-            foreach ($item['name'] as $locale => $name) {
-                $product->translations()->create([
-                    'locale' => $locale,
-                    'name' => $name,
-                    'slug' => Str::slug($name),
-                    'short' => "Bu bir örnek {$name} açıklamasıdır.",
-                    'desc' => "Bu bir örnek {$name} detaylı açıklamasıdır."
-                ]);
-            }
+            $product->translations()->create([
+                'locale' => 'tr',
+                'name' => $item['name'],
+                'slug' => Str::slug($item['name']),
+                'short' => "Bu bir örnek {$item['name']} kısa açıklamasıdır.",
+                'desc' => "Bu bir örnek {$item['name']} detaylı açıklamasıdır.",
+                'seoTitle' => $item['name'],
+                'seoDesc' => "En uygun fiyatlarla {$item['name']} satın alın",
+                'seoKey' => strtolower($item['name'])
+            ]);
         }
     }
 
     private function createVariableProducts()
     {
+        $brand = Brand::where('name', 'GO Dijital')->first();
+        $colorAttribute = ProductAttribute::where('type', 'color')->first();
+        $sizeAttribute = ProductAttribute::where('type', 'select')->first();
+
         $products = [
             [
-                'name' => [
-                    'tr' => 'Nike Spor Ayakkabı',
-                    'en' => 'Nike Sports Shoe'
-                ],
-                'brand_id' => Brand::where('name', 'Nike')->first()->id
-            ],
-            [
-                'name' => [
-                    'tr' => 'Adidas Tişört',
-                    'en' => 'Adidas T-Shirt'
-                ],
-                'brand_id' => Brand::where('name', 'Adidas')->first()->id
+                'name' => 'Nike Spor Ayakkabı',
+                'weight' => 0.3,
+                'dimension_unit' => 'cm',
             ]
         ];
-
-        $colorAttribute = ProductAttribute::where('slug', 'renk')->first();
-        $sizeAttribute = ProductAttribute::where('slug', 'beden')->first();
 
         foreach ($products as $item) {
             $product = Product::create([
                 'type' => 'variable',
-                'brand_id' => $item['brand_id'],
+                'brand_id' => $brand->id,
                 'featured' => rand(0, 1),
-                'status' => true
+                'status' => 'published',
+                'weight' => $item['weight'],
+                'dimension_unit' => $item['dimension_unit'],
+                'manage_stock' => true,
+                'addGoogle' => true,
+                'addComment' => false,
+                'deleteContent' => false,
             ]);
 
-            // Çeviriler
-            foreach ($item['name'] as $locale => $name) {
-                $product->translations()->create([
-                    'locale' => $locale,
-                    'name' => $name,
-                    'slug' => Str::slug($name),
-                    'short' => "Bu bir örnek {$name} açıklamasıdır.",
-                    'desc' => "Bu bir örnek {$name} detaylı açıklamasıdır."
-                ]);
-            }
+            $product->translations()->create([
+                'locale' => 'tr',
+                'name' => $item['name'],
+                'slug' => Str::slug($item['name']),
+                'short' => "Bu bir örnek {$item['name']} kısa açıklamasıdır.",
+                'desc' => "Bu bir örnek {$item['name']} detaylı açıklamasıdır.",
+                'seoTitle' => $item['name'],
+                'seoDesc' => "En uygun fiyatlarla {$item['name']} satın alın",
+                'seoKey' => strtolower($item['name'])
+            ]);
 
-            // Varyantlar
+            // Varyasyonları doğrudan oluştur
             foreach ($colorAttribute->values as $color) {
                 foreach ($sizeAttribute->values as $size) {
                     $variant = $product->variations()->create([
-                        'name' => "{$item['name']['tr']} - {$color->value} / {$size->value}",
                         'sku' => Str::random(8),
                         'price' => rand(300, 1000),
                         'stock' => rand(5, 50),
-                        'status' => true
+                        'status' => true,
                     ]);
 
-                    // Varyant özellikleri
+                    // Varyasyon özelliklerini ekle
                     $variant->attributes()->createMany([
                         [
                             'attribute_id' => $colorAttribute->id,
@@ -126,6 +120,11 @@ class ProductSeeder extends Seeder
                             'attribute_id' => $sizeAttribute->id,
                             'value_id' => $size->id
                         ]
+                    ]);
+
+                    // Variation key oluştur
+                    $variant->update([
+                        'variation_key' => "{$color->id}-{$size->id}"
                     ]);
                 }
             }

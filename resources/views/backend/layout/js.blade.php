@@ -9,6 +9,5 @@
 <script src="/backend/libs/fslightbox/index.js"></script>
 <script src="/backend/js/sortable.js"></script>
 <script src="/backend/js/charactercounter.js"></script>
-<script src="/backend/js/image-preview.js"></script>
 <script src="/backend/js/media-handler.js?ver=2"></script>
 <script src="/backend/js/custom.js?ver=2"></script>

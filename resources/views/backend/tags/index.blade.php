@@ -29,7 +29,7 @@
                             <tbody>
                                 @foreach($tags as $tag)
                                 <tr>
-                                    <td>{{ $tag->name }}</td>
+                                    <td>{{ is_array($tag->name) ? $tag->name['tr'] : $tag->name }}</td>
                                     <td>{{ $tag->slug }}</td>
                                     <td>{{ $tag->type }}</td>
                                     <td>
@@ -69,16 +69,11 @@
                         <label class="form-label">Türkçe Ad</label>
                         <input type="text" class="form-control" name="name" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">İngilizce Ad</label>
-                        <input type="text" class="form-control" name="name_en">
-                    </div>
+                
                     <div class="mb-3">
                         <label class="form-label">Tür</label>
                         <select class="form-select" name="type" required>
                             <option value="product">Ürün</option>
-                            <option value="blog">Blog</option>
-                            <option value="service">Hizmet</option>
                         </select>
                     </div>
                 </div>
@@ -93,20 +88,27 @@
 
 @push('scripts')
 <script>
-document.getElementById('tagForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    fetch('{{ route("tags.store") }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify(Object.fromEntries(new FormData(this)))
-    })
-    .then(response => response.json())
-    .then(data => {
-        window.location.reload();
+document.addEventListener('DOMContentLoaded', function() {
+    const tagForm = document.getElementById('tagForm');
+    tagForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        fetch('{{ route("tags.store") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(Object.fromEntries(new FormData(this)))
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload(); // Sayfayı yenile
+            } else {
+                // Hata mesajı göster
+            }
+        });
     });
 });
 

@@ -60,21 +60,30 @@ class ProductService
 
     private function prepareProductData(array $data): array
     {
+        // Non-translatable alanlar
         $productData = [
-            'sku' => $data['sku'],
-            'price' => $data['price'],
+            'sku' => $data['sku'] ?? null,
+            'price' => $data['price'] ?? 0,
             'stock' => $data['stock'] ?? 0,
-            'type' => $data['type'],
+            'type' => $data['type'] ?? 'simple',
             'featured' => $data['featured'] ?? false,
             'status' => $data['status'] ?? true,
+            'brand_id' => $data['brand_id'] ?? null,
+            'tax_status' => $data['tax_status'] ?? 'none',
+            'tax_class_id' => $data['tax_class_id'] ?? null,
+            
+            // Dimension verileri eklendi
+            'weight' => $data['weight'] ?? null,
+            'dimension_unit' => $data['dimension_unit'] ?? 'cm',
+            'length' => $data['length'] ?? null,
+            'width' => $data['width'] ?? null,
+            'height' => $data['height'] ?? null,
         ];
 
-        // Çevirili alanları ekle
-        foreach (['name', 'description', 'seo_title', 'seo_description', 'seo_keywords'] as $field) {
-            if (isset($data[$field])) {
-                $productData[$field] = is_array($data[$field]) 
-                    ? $data[$field] 
-                    : [$this->languages[0] => $data[$field]];
+        // Translatable alanları direkt aktar
+        foreach ($data as $key => $value) {
+            if (str_contains($key, ':')) {
+                $productData[$key] = $value;
             }
         }
 

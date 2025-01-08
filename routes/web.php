@@ -42,10 +42,7 @@ if($selectLang == 1){
 
 }
 
-//Frontend
-
-
 require __DIR__.'/backend.php';
 require __DIR__.'/auth.php';
 
-// Permission routes
+// Döviz kuru route'ları

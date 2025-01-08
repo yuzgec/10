@@ -2,12 +2,28 @@
 
 namespace App\Models;
 
-use Spatie\Tags\Tag as SpatieTag;
+use Spatie\Sluggable\HasSlug;
+use App\Traits\LogsActivityTrait;
+use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
 
-class Tag extends SpatieTag
+class Tag extends Model
 {
-    public static function getLocale(): string
+    use HasSlug,LogsActivityTrait;
+
+    protected $logAttributes = ['name'];
+    protected $fillable = ['name', 'type'];
+
+    public function getSlugOptions(): SlugOptions
     {
-        return app()->getLocale();
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    public function products()
+    {
+        return $this->morphedByMany(Product::class, 'taggable');
     }
 }
+

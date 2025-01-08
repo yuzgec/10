@@ -12,6 +12,9 @@
         ->id($id) !!}
     </div>
     @else
+        @if($label)
+            <label class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+        @endif
         {!! Html::text($name)
         ->class($class . ($errors->has($name) ? ' is-invalid' : ''))
         ->placeholder($placeholder)

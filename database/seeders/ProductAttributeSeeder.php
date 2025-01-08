@@ -12,7 +12,9 @@ class ProductAttributeSeeder extends Seeder
     {
         // Renk özelliği
         $color = ProductAttribute::create([
-            'type' => 'color'
+            'type' => 'color',
+            'status' => true,
+            'rank' => 1
         ]);
 
         // Renk çevirileri
@@ -30,17 +32,31 @@ class ProductAttributeSeeder extends Seeder
         ];
 
         foreach ($colors as $index => $c) {
-            $color->values()->create([
-                'value' => $c['value'],
-                'slug' => Str::slug($c['value']),
+            $value = $color->values()->create([
                 'color_code' => $c['color_code'],
                 'sort_order' => $index
+            ]);
+
+            // Değer çevirileri
+            $value->translations()->createMany([
+                [
+                    'locale' => 'tr',
+                    'value' => $c['value'],
+                    'slug' => Str::slug($c['value'])
+                ],
+                [
+                    'locale' => 'en',
+                    'value' => $this->getColorNameInEnglish($c['value']),
+                    'slug' => Str::slug($this->getColorNameInEnglish($c['value']))
+                ]
             ]);
         }
 
         // Beden özelliği
         $size = ProductAttribute::create([
-            'type' => 'select'
+            'type' => 'select',
+            'status' => true,
+            'rank' => 2
         ]);
 
         // Beden çevirileri
@@ -52,11 +68,34 @@ class ProductAttributeSeeder extends Seeder
         $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
         foreach ($sizes as $index => $s) {
-            $size->values()->create([
-                'value' => $s,
-                'slug' => Str::slug($s),
+            $value = $size->values()->create([
                 'sort_order' => $index
             ]);
+
+            // Değer çevirileri - beden için TR ve EN aynı
+            $value->translations()->createMany([
+                [
+                    'locale' => 'tr',
+                    'value' => $s,
+                    'slug' => Str::slug($s)
+                ],
+                [
+                    'locale' => 'en',
+                    'value' => $s,
+                    'slug' => Str::slug($s)
+                ]
+            ]);
         }
+    }
+
+    private function getColorNameInEnglish($turkishName)
+    {
+        return [
+            'Siyah' => 'Black',
+            'Beyaz' => 'White',
+            'Kırmızı' => 'Red',
+            'Mavi' => 'Blue',
+            'Yeşil' => 'Green'
+        ][$turkishName] ?? $turkishName;
     }
 } 

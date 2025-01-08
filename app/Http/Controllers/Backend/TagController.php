@@ -19,24 +19,20 @@ class TagController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|string'
-        ]);
+        try {
+            $tag = Tag::create([
+                'name' => $request->name,
+                'type' => $request->type ?? 'product'
+            ]);
 
-        $tag = Tag::create([
-            'name' => [
-                'tr' => $request->name,
-                'en' => $request->name_en ?? $request->name
-            ],
-            'slug' => [
-                'tr' => Str::slug($request->name),
-                'en' => Str::slug($request->name_en ?? $request->name)
-            ],
-            'type' => $request->type
-        ]);
-
-        return response()->json($tag);
+            return response()->json([
+                'success' => true,
+                'id' => $tag->id,
+                'name' => $tag->name
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
     }
 
     public function destroy(Tag $tag)

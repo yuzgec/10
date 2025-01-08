@@ -18,6 +18,7 @@
         <link rel="shortcut icon" href="/frontend/img/fav.jpg">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @include('backend.layout.css') 
+        @stack('styles')
         @yield('customCSS')
         @livewireStyles
         <script src="/backend/ckeditor/ckeditor.js"></script>
@@ -33,7 +34,7 @@
                
                 <div class="page-body">
                     <div class="container">
-                    <div class="row">
+                        <div class="row">
                             @include('backend.layout.alert')
 
                             @if ($errors->any())

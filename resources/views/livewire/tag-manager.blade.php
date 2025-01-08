@@ -1,28 +1,28 @@
-<div>
     <div class="card mb-3">
         <div class="card-status-top bg-blue"></div>
         <div class="card-header">
-            <h3 class="card-title">Etiketler</h3>
+            <h3 class="card-title"><x-dashboard.icon.tag/> Etiketler</h3>
         </div>
         <div class="card-body">
             <div class="mb-3">
                 <div class="tag-input-wrapper position-relative">
                     <input 
                         type="text" 
-                        wire:model.live="tagInput"
-                        wire:keydown.enter.prevent="addTag($event.target.value)"
-                        wire:keydown.tab.prevent="selectFirstSuggestion"
+                        wire:model.live.debounce.300ms="tagInput"
+                        wire:keydown.enter.prevent="addTag"
+                        wire:keydown.tab.prevent="addTag"
+                        wire:keydown.arrow-down.prevent="$set('highlightIndex', 0)"
                         class="form-control"
-                        placeholder="Etiket eklemek için yazın..."
+                        placeholder="Etiket eklemek için yazın ve enter'a basın..."
                     >
                     
                     @if(!empty($suggestions))
                     <div class="tag-suggestions position-absolute w-100 bg-white border rounded-bottom">
-                        @foreach($suggestions as $tag)
+                        @foreach($suggestions as $suggestion)
                         <div class="suggestion-item p-2 cursor-pointer hover:bg-light" 
-                             wire:click="addTag('{{ $tag }}')"
-                             @if($loop->first) id="first-suggestion" @endif>
-                            {{ $tag }}
+                             wire:click="selectSuggestion('{{ $suggestion['name'] }}')"
+                             wire:key="suggestion-{{ $suggestion['id'] }}">
+                            {{ $suggestion['name'] }}
                         </div>
                         @endforeach
                     </div>
@@ -31,21 +31,13 @@
             </div>
 
             <div class="selected-tags">
-                @foreach($selectedTags as $index => $tag)
-                <span class="badge text-white bg-primary me-1 mb-1">
-                    {{ $tag }}
-                    <a href="#" wire:click.prevent="removeTag({{ $index }})" class="text-white ms-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M18 6L6 18M6 6l12 12"/>
-                        </svg>
-                    </a>
-                </span>
+                @foreach($tags as $tag)
+                    <span class="badge text-white bg-primary me-1 mb-1 p-2">
+                        {{ $tag->name }}
+                        <a href="#" wire:click.prevent="removeTag({{ $tag->id }})" class="text-white ms-1">×</a>
+                    </span>
                 @endforeach
             </div>
-
-            @foreach($selectedTags as $tag)
-            <input type="hidden" name="tags[]" value="{{ $tag }}">
-            @endforeach
         </div>
     </div>
 
@@ -58,23 +50,25 @@
         position: absolute;
         top: 100%;
         left: 0;
-        z-index: 1000;
+        z-index: 9999;
         max-height: 200px;
         overflow-y: auto;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background: #fff;
+        width: 100%;
+        border: 1px solid #dee2e6;
+        border-radius: 0 0 4px 4px;
+    }
+    .suggestion-item {
+        padding: 8px 12px;
+        border-bottom: 1px solid #f0f0f0;
     }
     .suggestion-item:hover {
         background-color: #f8f9fa;
         cursor: pointer;
     }
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
     </style>
-    @endpush
-</div> 
-
-<script>
-    document.addEventListener('livewire:initialized', () => {
-        Livewire.on('notify', (data) => {
-            toastr[data.type](data.message);
-        });
-    });
-</script> 
+    @endpush 

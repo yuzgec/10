@@ -35,6 +35,11 @@ class BackupSeeder extends Seeder
         'media',
         'cache',
         'cache_locks',
+        'product_categories',
+        'brands',
+        'customer_work_types',
+        'cities',
+        'districts'
         // ... diğer tablolar
     ];
 

@@ -103,8 +103,10 @@ class PageController extends Controller
 
     public function update(PageRequest $request, Page $update)
     {
-        tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
+        //dd($request->all());
+        tap($update)->update($request->except('image', 'cover', 'gallery'));
 
+   
         $this->mediaService->updateMedia(
             $update, 
             $request->file('image'),

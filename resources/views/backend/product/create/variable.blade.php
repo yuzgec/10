@@ -45,7 +45,7 @@
                             </ul>
 
                             <div class="tab-content">
-                                @foreach(config('app.locales') as $locale)
+                                @foreach($language as $locale)
                                 <div class="tab-pane @if($loop->first) active show @endif" id="{{ $locale }}">
                                     <div class="mb-3 mt-3">
                                         <label class="form-label required">Ürün Adı ({{ strtoupper($locale) }})</label>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="card-body">
                         <select name="categories[]" class="form-select" multiple>
-                            @foreach($categories as $category)
+                            @foreach($cat as $category)
                                 <option value="{{ $category->id }}" 
                                         {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>
                                     {{ $category->name }}

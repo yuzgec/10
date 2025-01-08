@@ -17,6 +17,7 @@ use CyrildeWit\EloquentViewable\Support\Period;
 use CyrildeWit\EloquentViewable\Contracts\Views;
 
 
+
 class HomeController extends Controller
 {
     public function index(){

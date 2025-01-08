@@ -15,8 +15,10 @@ class OnlyInput extends Component
     public $placeholder;
     public $maxlength;
     public $icon;
+    public $required;
+    public $label;
 
-    public function __construct($name, $class = "form-control", $id=null, $disabled = false, $placeholder = null, $maxlength=250, $icon=null)
+    public function __construct($name, $class = "form-control", $id=null, $disabled = false, $placeholder = null, $maxlength=250, $icon=null, $required = false, $label = null)
     {
         $this->name = $name;
         $this->class = $class;
@@ -25,6 +27,8 @@ class OnlyInput extends Component
         $this->placeholder = $placeholder;
         $this->maxlength = $maxlength;
         $this->icon = $icon;
+        $this->required = $required;
+        $this->label = $label;
     }
 
     public function render(): View|Closure|string

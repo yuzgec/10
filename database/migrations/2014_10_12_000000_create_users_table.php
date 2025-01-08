@@ -1,6 +1,5 @@
 <?php
 
-use App\Traits\ProtectedTables;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,9 +15,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('phone')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -26,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        
         Schema::dropIfExists('users');
     }
 };

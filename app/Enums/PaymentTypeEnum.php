@@ -1,14 +1,11 @@
 <?php
 
-
 namespace App\Enums;
-
 
 enum PaymentTypeEnum : int {
     case CASH           = 1;
     case EFT            = 2;
     case CREDITCARD     = 3;
-
 
     public function title(){
         return match ($this) {

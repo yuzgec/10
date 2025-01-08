@@ -1,20 +1,16 @@
 <?php
 
-
 namespace App\Enums;
+enum CurrencyEnum: string {
+    case TL = 'TRY';
+    case USD = 'USD';
+    case EUR = 'EUR';
 
-
-enum CurrencyEnum : int {
-    case TRY     = 1;
-    case DOLAR   = 2;
-    case EURO    = 3;
-
-
-    public function title(){
+    public function symbol(): string {
         return match ($this) {
-             self::TRY      => 'Türk Lira',
-             self::DOLAR    => 'Dolar',
-             self::EURO     => 'Euro',
+            self::TL => '₺',
+            self::USD => '$',
+            self::EUR => '€',
         };
     }
 }

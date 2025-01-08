@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class ProductVariantController extends Controller
 {
@@ -28,22 +29,26 @@ class ProductVariantController extends Controller
             'name.*' => 'required|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'sku' => 'required|unique:product_variants,sku'
+            'sku' => 'required|unique:product_variations'
         ]);
 
-        $variant = new ProductVariant();
-        $variant->product_id = $product_id;
-        $variant->price = $request->price;
-        $variant->stock = $request->stock;
-        $variant->sku = $request->sku;
-        $variant->status = $request->status ? 1 : 0;
-        $variant->save();
+        $variant = ProductVariant::create([
+            'product_id' => $product_id,
+            'sku' => $request->sku,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'status' => $request->status ? 1 : 0
+        ]);
 
-        // Çeviriler için
-        foreach ($request->name as $locale => $name) {
-            $variant->translateOrNew($locale)->name = $name;
+        // Çeviriler
+        foreach (config('app.languages') as $locale) {
+            $variant->translateOrNew($locale)->name = $request->name[$locale];
+            $variant->translateOrNew($locale)->slug = Str::slug($request->name[$locale]);
         }
         $variant->save();
+
+        // Variation key oluştur
+        $this->variationService->generateVariationKey($variant);
 
         Cache::forget('product_variants');
         
@@ -64,24 +69,27 @@ class ProductVariantController extends Controller
             'name.*' => 'required|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'sku' => 'required|unique:product_variants,sku,' . $id
+            'sku' => 'required|unique:product_variations,sku,' . $id
         ]);
 
         $variant = ProductVariant::findOrFail($id);
-        $variant->price = $request->price;
-        $variant->stock = $request->stock;
-        $variant->sku = $request->sku;
-        $variant->status = $request->status ? 1 : 0;
-        $variant->save();
+        
+        $variant->update([
+            'sku' => $request->sku,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'status' => $request->status ? 1 : 0
+        ]);
 
-        // Çeviriler için
-        foreach ($request->name as $locale => $name) {
-            $variant->translateOrNew($locale)->name = $name;
+        // Çeviriler
+        foreach (config('app.languages') as $locale) {
+            $variant->translateOrNew($locale)->name = $request->name[$locale];
+            $variant->translateOrNew($locale)->slug = Str::slug($request->name[$locale]);
         }
         $variant->save();
 
         Cache::forget('product_variants');
-
+        
         alert()->success('Başarılı', 'Varyant başarıyla güncellendi.');
         return redirect()->route('product.variant.index', $product_id);
     }

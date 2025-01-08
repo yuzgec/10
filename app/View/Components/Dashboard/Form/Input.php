@@ -17,8 +17,9 @@ class Input extends Component
     public $placeholder;
     public $maxlength;
     public $icon;
+    public $required;
 
-    public function __construct($label, $name, $class = "form-control",$column=3, $id=null, $disabled = false, $placeholder = null,$maxlength = null, $icon=null)
+    public function __construct($label, $name, $class = "form-control",$column=3, $id=null, $disabled = false, $placeholder = null,$maxlength = null, $icon=null, $required = false)
     {
         $this->label = $label;
         $this->name = $name;
@@ -29,6 +30,7 @@ class Input extends Component
         $this->placeholder = $placeholder;
         $this->maxlength = $maxlength;
         $this->icon = $icon;
+        $this->required = $required;
     }
 
     public function render(): View|Closure|string

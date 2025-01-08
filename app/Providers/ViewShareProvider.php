@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Models\Blog;
 use App\Models\Page;
+use App\Models\Brand;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Category;
 use App\Models\Language;
 use App\Enums\StatusEnum;
+use App\Models\ExchangeRate;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
@@ -41,7 +43,10 @@ class ViewShareProvider extends ServiceProvider
         });
 
         $language = Cache::remember('language',now()->addYear(5), function () {
-            return Language::active()->get();
+            return Language::active()
+                ->select(['id', 'lang', 'native', 'rank'])
+                ->orderBy('rank')
+                ->get();
         });
 
         $teams = Cache::remember('teams',now()->addYear(5), function () {
@@ -57,6 +62,12 @@ class ViewShareProvider extends ServiceProvider
             return ProductCategory::withCount(['products','media'])->lang()->get()->toFlatTree();
         }); 
 
+        $brands = Cache::remember('brands',now()->addYear(5), function () {
+            return Brand::with(['media'])->get();
+        });
+
+       
+
         //dd($language);
         //dd($categories->where('slug','video'));
   
@@ -69,6 +80,8 @@ class ViewShareProvider extends ServiceProvider
             'teams' => $teams,
             'language' => $language,
             'p_categories' => $p_categories,
+            'brands' => $brands
+
         ]);
     }
 }

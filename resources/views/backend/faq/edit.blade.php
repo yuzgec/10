@@ -65,7 +65,7 @@
                             <div class="card">
                                 <div class="card-status-top bg-blue"></div>
                                 <div class="card-body">
-                                    <x-dashboard.form.input label='SSS Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                    <x-dashboard.form.input required label='SSS Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="120"/>
                                     <x-dashboard.form.text-area label='SSS Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
                                 </div>
                             </div>

@@ -1,6 +1,5 @@
 <?php 
 
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\LogController;
 use App\Http\Controllers\Backend\TagController;
@@ -16,22 +15,22 @@ use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CalendarController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\LanguageController;
 use App\Http\Controllers\Backend\RedirectController;
 use App\Http\Controllers\Backend\WorkFlowController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\RouteListController;
 use App\Http\Controllers\Backend\PermissionController;
+
 use App\Http\Controllers\Backend\TranslationController;
 
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
+use App\Http\Controllers\Backend\OfferTemplateController;
 use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductAttributeController;
-
-
-
 
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth','go-access']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -65,12 +64,23 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     });
 
     Route::group(["prefix"=>"crm"],function() {
+        Route::get('/customer/districts/{cityId}', [CustomerController::class, 'getDistricts'])->name('customer.districts');
         Route::auto('/customer',CustomerController::class);
-        Route::auto('/offer',CustomerOfferController::class);
+        
         Route::auto('/works',CustomerWorkController::class);
         Route::auto('/workflow', WorkFlowController::class);
+        Route::auto('/customer-offers', CustomerOfferController::class);
         Route::get('/districts/{city}', [CustomerController::class,'getDistricts']);
+        Route::auto('/offer-templates', OfferTemplateController::class);
     });
+
+    Route::prefix('exchange-rates')->group(function () {
+        Route::post('convert', [CustomerOfferController::class, 'convertCurrency'])->name('exchange-rates.convert');
+        Route::get('current-rate', [CustomerOfferController::class, 'getCurrentRate'])->name('exchange-rates.current-rate');
+    });
+    
+    // Teklif şablonları rotaları
+  
 
     Route::group(["prefix"=>"user"],function() {
         Route::auto('/user',UserController::class);
@@ -127,6 +137,11 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
                 ->name('product.delete-image');
             Route::post('/sort-images', [ProductController::class, 'sortImages'])
                 ->name('product.sort-images');
+            
+            Route::put('/{product}/update-simple', [ProductController::class, 'updateSimple'])
+                ->name('product.update.simple');
+            Route::put('/{product}/update-variable', [ProductController::class, 'updateVariable'])
+                ->name('product.update.variable');
         });
     
     

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Enums;
-
 
 enum SettingsEnum : int {
     case FILE           = 1;
@@ -12,7 +10,6 @@ enum SettingsEnum : int {
     case PASSWORD       = 5;
     case HIDDEN         = 6;
     case BOOLEAN        = 7;
-
 
     public function title(){
         return match ($this) {

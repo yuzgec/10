@@ -13,6 +13,11 @@ use App\Services\ProductService;
 use App\Services\VariationService;
 use Illuminate\Http\Request;
 use Spatie\Tags\Tag;
+use Illuminate\Support\Str;
+use App\Models\TaxClass;
+use App\Models\ProductAttributeValue;
+use App\Models\Language;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -27,8 +32,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with(['variations'])
-            ->withCount('variations')
+        $products = Product::withCount('variations')
             ->lang()
             ->latest()
             ->paginate(20);
@@ -45,43 +49,70 @@ class ProductController extends Controller
 
     public function createSimple()
     {
-        $categories = ProductCategory::with('translations')
+        $cat = ProductCategory::lang()
             ->where('status', true)
             ->orderBy('rank')
             ->get();
         $tags = Tag::all();
+        $taxClasses = TaxClass::all();
+        $attributes = ProductAttribute::with('values')->get();
         
-        return view('backend.product.create.simple', compact('categories', 'tags'));
+        return view('backend.product.create.simple', compact('cat', 'tags', 'taxClasses', 'attributes'));
     }
 
     public function createVariable()
     {
-        $categories = ProductCategory::with('translations')
+        $cat = ProductCategory::lang()
             ->where('status', true)
             ->orderBy('rank')
             ->get();
         $tags = Tag::all();
         $attributes = ProductAttribute::with('values')->get();
         
-        return view('backend.product.create.variable', compact('categories', 'tags', 'attributes'));
+        return view('backend.product.create.variable', compact('cat', 'tags', 'attributes'));
     }
 
     public function storeSimple(SimpleProductRequest $request)
     {
         try {
+            $data = $request->validated();
+            
+            if ($data['tax_status'] === 'none') {
+                $data['tax_class_id'] = null;
+            }
+            
+            // Dimension verilerini ekle
+            $data = array_merge($data, [
+                'weight' => $request->input('weight'),
+                'dimension_unit' => $request->input('dimension_unit'),
+                'length' => $request->input('length'),
+                'width' => $request->input('width'),
+                'height' => $request->input('height')
+            ]);
+
             $product = $this->productService->create(array_merge(
-                $request->validated(),
+                $data,
                 ['type' => 'simple']
             ));
 
-            alert()->html('Başarıyla Eklendi','<b>'.$product->name.'</b> isimli ürün başarıyla eklendi.', 'success');
-            return redirect() ->route('product.index');
+            if (!empty($request->selectedAttributes)) {
+                foreach ($request->selectedAttributes as $attributeId => $valueId) {
+                    if ($valueId) {
+                        $product->productAttributes()->create([
+                            'attribute_id' => $attributeId,
+                            'value_id' => $valueId
+                        ]);
+                    }
+                }
+            }
+
+            alert()->success('Başarılı', 'Ürün başarıyla oluşturuldu.')->persistent(true, false);
+            return redirect()->route('product.index');
 
         } catch (\Exception $e) {
-
-            alert()->html('HATA',$e->getMessage(), 'error');
-            return redirect()->back();
-
+            alert()->error('Hata', $e->getMessage())->persistent(true, false);
+            \Log::error('Ürün oluşturma hatası: ' . $e->getMessage());
+            return back()->withInput();
         }
     }
 
@@ -111,7 +142,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $product->load(['translations', 'categories.translations', 'variations.attributes']);
-        $categories = ProductCategory::with('translations')
+        $cat = ProductCategory::lang()
             ->where('status', true)
             ->orderBy('rank')
             ->get();
@@ -122,7 +153,7 @@ class ProductController extends Controller
         
         return view("backend.product.edit.{$view}", compact(
             'product',
-            'categories',
+            'cat',
             'tags',
             'attributes'
         ));
@@ -167,6 +198,71 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return back()
                 ->with('error', 'Bir hata oluştu: ' . $e->getMessage());
+        }
+    }
+
+    public function updateSimple(Request $request, Product $product)
+    {
+        try {
+            $data = $request->validate([
+                'name:*' => 'required',
+                'slug:*' => 'required',
+                'description:*' => 'nullable',
+                'short_description:*' => 'nullable',
+                'sku' => 'required|unique:products,sku,' . $product->id,
+                'barcode' => 'nullable|unique:products,barcode,' . $product->id,
+                'stock' => 'required|numeric|min:0',
+                'price' => 'required|numeric|min:0',
+                'sale_price' => 'nullable|numeric|min:0',
+                'categories' => 'required|array',
+                'categories.*' => 'exists:product_categories,id',
+                'tags' => 'nullable|array',
+                'brand_id' => 'nullable|exists:brands,id',
+                'tax_id' => 'nullable|exists:taxes,id',
+                'status' => 'required|boolean',
+                'featured' => 'required|boolean',
+                'weight' => 'nullable|numeric',
+                'dimension_unit' => 'nullable|in:mm,cm,m',
+                'length' => 'nullable|numeric',
+                'width' => 'nullable|numeric',
+                'height' => 'nullable|numeric',
+                'selectedAttributes' => 'nullable|array',
+            ]);
+
+            DB::beginTransaction();
+
+            // Ürünü güncelle
+            $this->productService->update($product, $data);
+
+            // Kategorileri güncelle
+            $product->categories()->sync($request->input('categories', []));
+
+            // Etiketleri güncelle
+            if ($request->has('tags')) {
+                $product->tags()->sync($request->input('tags'));
+            }
+
+            // Özellikleri güncelle
+            if ($request->has('selectedAttributes')) {
+                $attributes = [];
+                foreach ($request->selectedAttributes as $attributeId => $valueId) {
+                    if (!empty($valueId)) {
+                        $attributes[$attributeId] = ['value_id' => $valueId];
+                    }
+                }
+                $product->productAttributes()->sync($attributes);
+            }
+
+            DB::commit();
+
+            alert()->success('Başarılı', 'Ürün başarıyla güncellendi.')->persistent(true, false);
+            return redirect()->route('product.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('Hata', $e->getMessage())->persistent(true, false);
+            \Log::error('Ürün güncelleme hatası: ' . $e->getMessage());
+            return back()->withInput();
         }
     }
 }

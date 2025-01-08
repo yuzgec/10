@@ -27,35 +27,7 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
     
     public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
-    protected $fillable = [
-        'sku',
-        'price',
-        'discount_price',
-        'stock',
-        'type',
-        'featured',
-        'status',
-        'purchase_note',
-        'tax_status',
-        'tax_class',
-        'manage_stock',
-        'weight',
-        'dimension_unit',
-        'length',
-        'width',
-        'height',
-        'external_url',
-        'button_text',
-        'campaign_text',
-        'cargo_text',
-        'warranty_text',
-        'pay_text',
-        'return_text',
-        'exchange_text',
-        'refund_text',
-        'cancel_text',
-        'contact_text'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'featured' => 'boolean',
@@ -122,6 +94,28 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
         return $query->whereHas('translations', function ($query) {
             $query->where('locale', app()->getLocale());
         });
+    }
+
+    public function attributes()
+    {
+        return $this->belongsToMany(ProductAttribute::class, 'product_attribute_relations', 'product_id', 'attribute_id')
+            ->withPivot('value_id');
+    }
+
+    public function attributeValues()
+    {
+        return $this->belongsToMany(ProductAttributeValue::class, 'product_attribute_values_simple', 'product_id', 'value_id')
+            ->withTimestamps();
+    }
+
+    public function productAttributes()
+    {
+        return $this->hasMany(ProductAttributeRelation::class);
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->withoutGlobalScope('order');
     }
 
     // Media koleksiyonları

@@ -6,6 +6,7 @@
     ->method('POST')
     ->action(route('product.store.simple'))
     ->attribute('enctype', 'multipart/form-data')
+    ->attribute('data-action', 'create')
     ->open()
 !!}
 <x-dashboard.crud.create-header route='product' name="Ürün"/>
@@ -15,7 +16,13 @@
         <div class="card">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <x-dashboard.crud.tab-menu :language='$language'></x-dashboard.crud.tab-menu>
+                <x-dashboard.crud.tab-menu :language='$language'>
+                    <li class="nav-item" role="presentation">
+                        <a href="#properties" class="nav-link" data-bs-toggle="tab">
+                            <span  style="margin-left:10px"><x-dashboard.icon.star/> Özellikler</span>
+                        </a>
+                    </li>
+                </x-dashboard.crud.tab-menu>
             </div>
             
             <div class="card-body">
@@ -26,7 +33,7 @@
                         <div class="card">
                             <div class="card-status-top bg-blue"></div>
                             <div class="card-body">
-                                <x-dashboard.form.input label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                <x-dashboard.form.input label='Ürün Adı' name='name:{{ $lang->lang }}' placeholder="Ürün Adı Giriniz ({{ $lang->native }})" maxlength="40" required="true" />
                                 <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
                                 <x-dashboard.form.text-area label='Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
                             </div>
@@ -132,6 +139,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-content">
+                    <div class="tab-pane" id="properties" role="tabpanel">
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <livewire:product-attribute-manager />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <livewire:tag-manager type="product" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <livewire:brand-manager :selected-id="$brand->id ?? null" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <livewire:tax-manager />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <livewire:product-dimension-manager :product="$product ?? null" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     
@@ -147,39 +181,19 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label class="form-label required">SKU</label>
-                    <input type="text" class="form-control @error('sku') is-invalid @enderror" 
-                            name="sku" value="{{ old('sku') }}" required>
-                    @error('sku')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-dashboard.form.only-input name="sku" label="SKU" required="true" />
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label required">Fiyat</label>
-                    <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" 
-                            name="price" value="{{ old('price') }}" required>
-                    @error('price')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-dashboard.form.only-number-input name="price" label="Fiyat" required="true" />
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">İndirimli Fiyat</label>
-                    <input type="number" step="0.01" class="form-control @error('discount_price') is-invalid @enderror" 
-                            name="discount_price" value="{{ old('discount_price') }}">
-                    @error('discount_price')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-dashboard.form.only-number-input name="discount_price" label="İndirimli Fiyat" />
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label required">Stok</label>
-                    <input type="number" class="form-control @error('stock') is-invalid @enderror" 
-                            name="stock" value="{{ old('stock') }}" required>
-                    @error('stock')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-dashboard.form.only-number-input name="stock" label="Stok" required="true" />
                 </div>
 
                 <div class="mb-3">
@@ -197,6 +211,7 @@
                         <span class="form-check-label">Aktif</span>
                     </label>
                 </div>
+
             </div>
         </div>
 
@@ -209,7 +224,7 @@
             <div class="card-body">
                 <div class="mb-3">
                     <select name="categories[]" class="form-select" multiple data-tags="true">
-                        @foreach($categories as $category)
+                        @foreach($cat as $category)
                             <option value="{{ $category->id }}" 
                                     {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>
                                 {{ $category->name }}
@@ -219,9 +234,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Etiketler -->
-        <livewire:tag-manager type="product" />
 
         <div class="mt-3">
             <button type="submit" class="btn btn-primary w-100">
@@ -235,7 +247,6 @@
 
 @push('scripts')
 <script>
-    // TomSelect için
     document.addEventListener("DOMContentLoaded", function() {
         var categorySelect = document.querySelector('select[name="categories[]"]');
         new TomSelect(categorySelect, {
@@ -247,14 +258,36 @@
         new TomSelect(tagSelect, {
             plugins: ['remove_button'],
             maxItems: null,
-            create: true
+            valueField: 'id',
+            labelField: 'name',
+            searchField: 'name',
+            create: async function(input) {
+                const response = await $.post('/go/shop/tags/store', {
+                    name: input,
+                    _token: document.querySelector('meta[name="csrf-token"]').content
+                });
+                return {
+                    id: response.id,
+                    name: response.name
+                };
+            }
         });
     });
 
+    document.getElementById('tax_status').addEventListener('change', function() {
+        const taxClassWrapper = document.getElementById('tax_class_wrapper');
+        taxClassWrapper.style.display = this.value === 'none' ? 'none' : 'block';
+    });
+
+    // Sayfa yüklendiğinde kontrol et
+    document.addEventListener('DOMContentLoaded', function() {
+        const taxStatus = document.getElementById('tax_status');
+        const taxClassWrapper = document.getElementById('tax_class_wrapper');
+        taxClassWrapper.style.display = taxStatus.value === 'none' ? 'none' : 'block';
+    });
 </script>
-@endpush 
+
+@include('backend.layout.ck')
+@endpush
 
 
-@section('customJS')
-    @include('backend.layout.ck')
-@endsection

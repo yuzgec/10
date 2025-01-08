@@ -8,7 +8,10 @@
         filebrowserImageUploadUrl: '/filemanager/upload?type=Images&_token={{ csrf_token() }}',
         filebrowserUploadMethod: 'form',
         allowedContent: true,
-        height : 400,
+        height : 350,
     });
+    
+    CKEDITOR.replace('short:{{ $lang->lang }}', {!! json_encode(config('ckeditor.short')) !!});
+  
 </script>
 @endforeach

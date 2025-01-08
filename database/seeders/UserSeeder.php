@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     {
         // Admin kullanıcısı oluştur
         User::create([
-            'name' => 'Admin',
+            'name' => 'GO Dijital',
             'email' => 'olcayy@gmail.com',
             'password' => Hash::make('DEneme1911'),
             'email_verified_at' => now(),

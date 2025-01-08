@@ -9,7 +9,9 @@
                 </h2>
             </div>
             <div class="col-auto ms-auto">
-                <form action="{{ route('dashboard.activities.clear') }}" method="POST" class="d-inline">
+                <form action="{{ route('dashboard.activities.clear') }}" method="POST" 
+                class="d-inline" onsubmit="return confirm('Tüm aktivite kayıtları silinecek. Emin misiniz?')"
+                data-action="delete">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
@@ -44,7 +46,7 @@
                         @forelse($activities as $activity)
                             <tr id="activity-{{ $activity->id }}">
                                 <td>
-                                    <span class="badge bg-{{ $activity->description == 'created' ? 'green' : ($activity->description == 'updated' ? 'blue' : 'red') }}-lt">
+                                    <span class="badge bg-{{ $activity->description == 'Eklendi' ? 'green' : ($activity->description == 'Güncellendi' ? 'blue' : 'red') }}-lt">
                                         {{ $activity->description }}
                                     </span>
                                 </td>
@@ -57,32 +59,28 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if(isset($activity->properties['attributes']))
-                                        <details>
-                                            <summary>Değişiklikleri Göster</summary>
-                                            <div class="mt-2">
+                                    <button type="button" class="btn btn-info btn-sm" onclick="showChanges({{ $activity->id }})" {{ empty($activity->properties['attributes']) ? 'disabled' : '' }}>
+                                        Değişiklikleri Göster
+                                    </button>
+                                    <div id="changes-{{ $activity->id }}" class="d-none">
+                                        @if(isset($activity->properties['attributes']))
+                                            <ul>
                                                 @foreach($activity->properties['attributes'] as $key => $value)
                                                     @if(isset($activity->properties['old'][$key]) && $activity->properties['old'][$key] !== $value)
-                                                        <div class="mb-1">
-                                                            <strong>{{ $key }}:</strong>
-                                                            <span class="text-danger">{{ $activity->properties['old'][$key] ?: 'Boş' }}</span>
-                                                            →
-                                                            <span class="text-success">{{ $value ?: 'Boş' }}</span>
-                                                        </div>
+                                                        <li><strong>{{ $key }}:</strong> <span class="text-danger">{{ $activity->properties['old'][$key] ?: 'Boş' }}</span> → <span class="text-success">{{ $value ?: 'Boş' }}</span></li>
                                                     @endif
                                                 @endforeach
-                                            </div>
-                                        </details>
-                                    @endif
+                                            </ul>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td>
                                     @if($activity->causer)
                                         <div class="d-flex align-items-center">
-                                            <span class="avatar avatar-xs me-2" style="background-image: url({{ $activity->causer->profile_photo_url }})"></span>
                                             {{ $activity->causer->name }}
                                         </div>
                                     @else
-                                        Sistem
+                                        GO Dijital
                                     @endif
                                 </td>
                                 <td>{{ $activity->properties['ip'] ?? '-' }}</td>
@@ -92,13 +90,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                   
-                                        <button type="button" 
-                                                class="btn btn-danger btn-sm"
-                                                onclick="deleteActivity({{ $activity->id }})">
-                                            <x-dashboard.icon.delete/>
-                                        </button>
-                                  
+                                    
+                                    <button type="button" 
+                                            class="btn btn-danger btn-sm"
+                                            onclick="deleteActivity({{ $activity->id }})">
+                                        <x-dashboard.icon.delete/>
+                                    </button>
+                            
                                 </td>
                             </tr>
                         @empty
@@ -112,6 +110,20 @@
             
             <div class="mt-4">
                 {{ $activities->links() }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityModalLabel">Değişiklikler</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent"></div>
             </div>
         </div>
     </div>
@@ -141,6 +153,16 @@ function deleteActivity(id) {
             toastr.error('Bir hata oluştu');
         });
     }
+}
+
+function showChanges(activityId) {
+    const changes = document.getElementById(`changes-${activityId}`).innerHTML;
+    if (changes.trim() === '') {
+        return;
+    }
+    document.getElementById('modalContent').innerHTML = changes;
+    const activityModal = new bootstrap.Modal(document.getElementById('activityModal'));
+    activityModal.show();
 }
 </script>
 @endpush

@@ -9,97 +9,72 @@ use Illuminate\Support\Str;
 class TagManager extends Component
 {
     public $tagInput = '';
-    public $suggestions = [];
     public $selectedTags = [];
+    public $suggestions = [];
+    public $tags = [];
     public $type;
     public $model;
 
-    protected $messages = [
-        'tag.exists' => 'Bu etiket zaten eklenmiş.',
-        'tag.created' => 'Yeni etiket oluşturuldu.',
-    ];
-
-    public function mount($type = 'product', $selectedTags = [], $model = null)
+    public function mount($type = 'product', $model = null)
     {
         $this->type = $type;
         $this->model = $model;
-        $this->selectedTags = $selectedTags;
+
+        if ($model) {
+            $this->selectedTags = $model->tags()->pluck('id')->toArray();
+            $this->tags = Tag::whereIn('id', $this->selectedTags)->get()->keyBy('id');
+        }
     }
 
-    public function updatedTagInput()
+    public function updatedTagInput($value)
     {
-        if (strlen($this->tagInput) >= 2) {
-            $this->suggestions = Tag::withType($this->type)
-                ->where('name->tr', 'like', '%' . $this->tagInput . '%')
-                ->orWhere('name->en', 'like', '%' . $this->tagInput . '%')
+        if (strlen($value) >= 3) {
+            $this->suggestions = Tag::where('name', 'like', "%{$value}%")
+                ->where('type', $this->type)
+                ->limit(5)
                 ->get()
-                ->pluck('name')
                 ->toArray();
         } else {
             $this->suggestions = [];
         }
     }
 
-    public function addTag($tagName)
+    public function selectSuggestion($name)
     {
-        $tagName = trim($tagName);
-        if (!empty($tagName)) {
-            if (in_array($tagName, $this->selectedTags)) {
-                $this->dispatch('notify', [
-                    'type' => 'error',
-                    'message' => 'Bu etiket zaten eklenmiş.'
-                ]);
-                return;
-            }
-
-            // Etiket var mı kontrol et
-            $tag = Tag::withType($this->type)
-                ->where('name->tr', $tagName)
-                ->orWhere('name->en', $tagName)
-                ->first();
-
-            // Etiket yoksa oluştur
-            if (!$tag) {
-                $tag = Tag::create([
-                    'type' => $this->type,
-                    'name' => [
-                        'tr' => $tagName,
-                        'en' => $tagName
-                    ],
-                    'slug' => [
-                        'tr' => Str::slug($tagName),
-                        'en' => Str::slug($tagName)
-                    ]
-                ]);
-
-                $this->dispatch('notify', [
-                    'type' => 'success',
-                    'message' => 'Yeni etiket oluşturuldu.'
-                ]);
-            }
-
-            $this->selectedTags[] = $tagName;
-        }
-        
-        $this->tagInput = '';
-        $this->suggestions = [];
+        $this->tagInput = $name;
+        $this->addTag();
     }
 
-    public function removeTag($index)
+    public function addTag()
     {
-        unset($this->selectedTags[$index]);
-        $this->selectedTags = array_values($this->selectedTags);
+        if (empty($this->tagInput)) return;
+
+        try {
+            $tag = Tag::firstOrCreate(
+                ['name' => trim($this->tagInput)],
+                ['type' => $this->type]
+            );
+
+            if (!in_array($tag->id, $this->selectedTags)) {
+                $this->selectedTags[] = $tag->id;
+                $this->tags[$tag->id] = $tag;
+            }
+
+            $this->tagInput = '';
+            $this->suggestions = [];
+        } catch (\Exception $e) {
+            \Log::error('Product Tag oluşturma hatası: ' . $e->getMessage());
+        }
     }
 
-    public function selectFirstSuggestion()
+    public function removeTag($tagId)
     {
-        if (!empty($this->suggestions)) {
-            $this->addTag($this->suggestions[0]);
-        }
+        $this->selectedTags = array_values(array_diff($this->selectedTags, [$tagId]));
+        unset($this->tags[$tagId]);
     }
 
     public function render()
     {
         return view('livewire.tag-manager');
     }
-} 
+}

@@ -25,7 +25,7 @@
                         <div class="card">
                             <div class="card-status-top bg-blue"></div>
                             <div class="card-body">
-                                <x-dashboard.form.input label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
+                                <x-dashboard.form.input required label='Sayfa Adı' name='name:{{ $lang->lang }}' placeholder="Sayfa Adı Giriniz ({{ $lang->native }})" maxlength="40"/>
                                 <x-dashboard.form.text-area label='Kısa Açıklama' name='short:{{ $lang->lang }}'/>
                                 <x-dashboard.form.text-area label='Açıklama' name='desc:{{ $lang->lang }}' id='desc'/>
                             </div>
@@ -70,7 +70,7 @@
                                                         type="button" 
                                                         class="delete-media-btn" 
                                                         data-model-id="{{ $edit->id ?? '' }}"
-                                                        data-model-type="Page"
+                                                        data-model-type="Service"
                                                         data-collection="page"
                                                         data-preview-target="imagePreview"
                                                         title="Resmi Kaldır"
@@ -119,7 +119,7 @@
                                                     type="button" 
                                                     class="delete-media-btn" 
                                                     data-model-id="{{ $edit->id ?? '' }}"
-                                                    data-model-type="Page"
+                                                    data-model-type="Service"
                                                     data-collection="cover"
                                                     data-preview-target="coverPreview"
                                                     title="Resmi Kaldır">

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class District extends Model
 {
     protected $guarded = [];
+    public $timestamps = false;
 
     public function city(): BelongsTo
     {

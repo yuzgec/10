@@ -10,7 +10,7 @@ class BrandSeeder extends Seeder
 {
     public function run()
     {
-        $brands = ['GO Dijital', 'Apple', 'Samsung', 'Nike', 'Adidas', 'Puma'];
+        $brands = ['GO Dijital', 'Marka Adı'];
 
         foreach ($brands as $brandName) {
             Brand::create([

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class City extends Model
 {
     protected $guarded = [];
+    public $timestamps = false;
 
     public function districts(): HasMany
     {

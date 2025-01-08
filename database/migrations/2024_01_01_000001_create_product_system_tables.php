@@ -21,6 +21,16 @@ return new class extends Migration
             $table->softDeletes();
         });
 
+        
+        Schema::create('tax_classes', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->decimal('rate', 5, 2);
+            $table->boolean('is_default')->default(false);
+            $table->timestamps();
+        });
+
         // 2. Products
         Schema::create('products', function (Blueprint $table) {
             $table->id();
@@ -33,7 +43,7 @@ return new class extends Migration
             $table->boolean('featured')->default(false);
             $table->text('purchase_note')->nullable();
             $table->enum('tax_status', ['taxable', 'none'])->default('taxable');
-            $table->string('tax_class')->nullable();
+            $table->foreignId('tax_class_id')->nullable()->constrained();
             $table->boolean('manage_stock')->default(true);
             $table->decimal('weight', 10, 2)->nullable();
             $table->string('dimension_unit')->nullable();
@@ -60,34 +70,62 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 4. Product Attribute Values
+        Schema::create('product_attribute_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_attribute_id')->constrained('product_attributes')->onDelete('cascade');
+            $table->string('locale')->index();
+            $table->string('name');
+            $table->string('slug');
+            
+            $table->unique(['product_attribute_id', 'locale'], 'pat_attribute_locale_unique');
+            $table->unique(['locale', 'slug'], 'pat_locale_slug_unique');
+        });
+
+        // Product Attribute Values tablosu
         Schema::create('product_attribute_values', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_attribute_id')->constrained()->onDelete('cascade');
-            $table->string('value');
-            $table->string('slug');
             $table->string('color_code')->nullable();
             $table->integer('sort_order')->default(0);
             $table->timestamps();
+        });
+
+        // Product Attribute Value Translations tablosu
+        Schema::create('p_attr_val_trans', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_attribute_value_id');
+            $table->string('locale');
+            $table->string('value');
+            $table->string('slug');
+            
+            $table->foreign('product_attribute_value_id')
+                ->references('id')
+                ->on('product_attribute_values')
+                ->onDelete('cascade');
         });
 
         // 5. Product Variations
         Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->string('name');
             $table->string('sku')->unique();
-            $table->string('variation_key')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('discount_price', 10, 2)->nullable();
             $table->integer('stock');
-            $table->decimal('weight', 10, 2)->nullable();
-            $table->decimal('length', 10, 2)->nullable();
-            $table->decimal('width', 10, 2)->nullable();
-            $table->decimal('height', 10, 2)->nullable();
-            $table->integer('sort_order')->default(0);
             $table->boolean('status')->default(true);
+            $table->string('variation_key')->nullable();
             $table->timestamps();
+        });
+
+        // Product Variation Translations
+        Schema::create('p_var_trans', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_variation_id')->constrained('product_variations')->onDelete('cascade');
+            $table->string('locale');
+            $table->string('name');
+            $table->string('slug');
+            
+            $table->unique(['product_variation_id', 'locale']);
         });
 
         // 6. Product Variation Attributes
@@ -135,16 +173,78 @@ return new class extends Migration
             $table->unique(['product_id', 'locale']);
             $table->unique(['locale', 'slug']);
         });
+
+
+        Schema::create('product_attribute_relations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('attribute_id')->constrained('product_attributes')->onDelete('cascade');
+            $table->foreignId('value_id')->constrained('product_attribute_values')->onDelete('cascade');
+            $table->timestamps();
+
+            // Unique constraint ekleyelim
+            $table->unique(['product_id', 'attribute_id']);
+        });
+
+        
+        Schema::create('product_categories', function (Blueprint $table) {
+            $table->id();
+            $table->nestedSet();
+            
+            $table->boolean('addGoogle')->default(true);
+            $table->boolean('addComment')->default(false);
+            $table->boolean('deleteContent')->default(false);
+
+            $table->string('status')->default(StatusEnum::PUBLISHED->value);
+            $table->integer('rank')->nullable();
+
+            $table->date('publish_date')->default(now());
+            $table->string('publish_password')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('product_category_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_category_id')->constrained()->onDelete('cascade');
+            $table->string('locale');
+            $table->string('name');
+            $table->string('slug');
+            $table->longtext('short')->nullable();
+            $table->longtext('desc')->nullable();
+            $table->string('seoTitle')->nullable();
+            $table->string('seoDesc')->nullable();
+            $table->string('seoKey')->nullable();
+            $table->unique(['product_category_id', 'locale']);
+        });
+
+        // Pivot tablo
+        Schema::create('category_product', function (Blueprint $table) {
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_category_id')->constrained()->onDelete('cascade');
+            $table->primary(['product_id', 'product_category_id']);
+        });
+
     }
 
     public function down()
     {
+        Schema::dropIfExists('brands');
+        Schema::dropIfExists('tax_classes');
+        Schema::dropIfExists('products');
         Schema::dropIfExists('product_translations');
         Schema::dropIfExists('product_variation_attributes');
         Schema::dropIfExists('product_variations');
         Schema::dropIfExists('product_attribute_values');
         Schema::dropIfExists('product_attributes');
-        Schema::dropIfExists('products');
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('category_product');
+        Schema::dropIfExists('product_category_translations');
+        Schema::dropIfExists('product_categories');
+        Schema::dropIfExists('product_attribute_relations');
+        Schema::dropIfExists('product_attribute_translations');
+        Schema::dropIfExists('p_attr_val_trans');
+        Schema::dropIfExists('p_var_trans');
+        Schema::dropIfExists('product_variation_attributes');
     }
 }; 

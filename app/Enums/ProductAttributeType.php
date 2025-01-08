@@ -11,7 +11,7 @@ enum ProductAttributeType: string
     public function label(): string
     {
         return match($this) {
-            self::SELECT => 'Seçim Kutusu',
+            self::SELECT => 'Seçim',
             self::COLOR => 'Renk',
             self::BUTTON => 'Buton'
         };

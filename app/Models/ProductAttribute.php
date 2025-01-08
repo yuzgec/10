@@ -25,6 +25,16 @@ class ProductAttribute extends Model implements TranslatableContract
         'status' => 'boolean'
     ];
 
+    public function scopeLang($query){
+        return $query->whereHas('translations', function ($query) {
+            $query->where('locale', app()->getLocale());
+        });
+    }
+
+    public function scopeRank($query){
+        return $query->orderBy('rank','asc');
+    }
+
     public function values()
     {
         return $this->hasMany(ProductAttributeValue::class);

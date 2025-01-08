@@ -6,7 +6,12 @@
         <div class="card-header">
             <h3 class="card-title"><x-dashboard.icon.log/> Sistem Logları</h3>
             <div class="card-actions">
-                <form action="{{ route('logs.clear') }}" method="POST" class="d-inline">
+                <form 
+                    action="{{ route('logs.clear') }}"
+                    method="POST"
+                    class="d-inline"
+                    data-action="delete" 
+                    onsubmit="return confirm('Logları temizlemek istediğinize emin misiniz?')">
                     @csrf
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Logları temizlemek istediğinize emin misiniz?')">
                         <x-dashboard.icon.delete/>
@@ -36,7 +41,7 @@
                                 </td>
                                 <td>
                                     <details>
-                                        <summary>{{ Str::limit(strip_tags($log['content']), 100) }}</summary>
+                                        <summary>{{ Str::limit(strip_tags($log['content']), 200) }}</summary>
                                         <pre class="mt-2" style="white-space: pre-wrap;">{{ $log['content'] }}</pre>
                                     </details>
                                 </td>

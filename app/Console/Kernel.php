@@ -16,6 +16,11 @@ class Kernel extends ConsoleKernel
         //$schedule->command('logs:clear')->days(15);
         $schedule->command('logs:clear')->everyMinute();
 
+        // Her gün sabah 9:30'da kurları güncelle (TCMB genelde 9:30'da yayınlıyor)
+        $schedule->command('exchange-rates:fetch')
+                ->dailyAt('09:30')
+                ->weekdays() // Sadece hafta içi
+                ->withoutOverlapping();
     }
 
     /**

@@ -14,10 +14,13 @@
                 'type' => 'number',
                 'min' => $min ?? null,
                 'max' => $max ?? null,
-                'step' => $step ?? '0.01'
+                'step' => $step ?? '1'
             ]) !!}
     </div>
     @else
+    @if($label)
+        <label class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+    @endif
     {!! Html::text($name)
         ->class($class . ($errors->has($name) ? ' is-invalid' : ''))
         ->placeholder($placeholder)
@@ -26,7 +29,7 @@
             'type' => 'number',
             'min' => $min ?? null,
             'max' => $max ?? null,
-            'step' => $step ?? '0.01'
+            'step' => $step ?? '1'
         ]) !!}
     @endif
 

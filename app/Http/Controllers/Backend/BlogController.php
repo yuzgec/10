@@ -120,7 +120,7 @@ class BlogController extends Controller
      */
     public function update(PageRequest $request, Blog $update)
     {
-        tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
+        tap($update)->update($request->except('image', 'cover', 'gallery'));
 
         $this->mediaService->updateMedia(
             $update, 

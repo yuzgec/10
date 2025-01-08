@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Enums;
-
 
 enum CustomerEnum : int {
     case CUSTOMER       = 7;
@@ -30,9 +28,9 @@ enum CustomerEnum : int {
         return match ($this) {
             self::NEW               => 'black',
             self::INTERESTED        => 'green',
-            self::NOTINTERESTED     => 'red',
+            self::NOTINTERESTED     => 'orange',
             self::WILLTHINK         => 'blue',
-            self::BAN               => 'gray',
+            self::BAN               => 'red',
             self::OFFERGIVEN        => 'yellow',
             self::CUSTOMER          => 'purple',
 

@@ -16,8 +16,12 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             BrandSeeder::class,
             ProductAttributeSeeder::class,
+            TaxClassSeeder::class,
             ProductSeeder::class,
             ProductCategorySeeder::class,
+            TagSeeder::class,
+            CitySeeder::class,
+            DistrictSeeder::class,
         ]);
     }
 }

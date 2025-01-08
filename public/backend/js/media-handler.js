@@ -1,56 +1,51 @@
 class MediaHandler {
     constructor() {
-        this.defaultImage = '/backend/resimyok.jpg';
+        this.defaltImage = '/backend/resimyok.jpg';
         this.init();
     }
 
     init() {
-    
-        
         document.querySelectorAll('.image-preview-container').forEach(container => {
-            // Elementleri bul ve log'la
             const input = container.querySelector('.image-preview-input');
             const preview = container.querySelector('.preview-image');
             const deleteBtn = container.querySelector('.delete-media-btn');
             const uploadArea = container.querySelector('.upload-button');
 
-    
-
             // Input'u gizle
             if (input) {
                 input.style.display = 'none';
                 
+                // Drag & Drop olayları
+                container.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    container.classList.add('dragover');
+                });
+
+                container.addEventListener('dragleave', () => {
+                    container.classList.remove('dragover');
+                });
+
+                container.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    container.classList.remove('dragover');
+                    const file = e.dataTransfer.files[0];
+                    this.handleFileSelect(file, preview, deleteBtn, uploadArea);
+                });
+
                 // Input change event'i
                 input.onchange = (e) => {
                     const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            if (preview) {
-                                preview.src = e.target.result;
-                                if (deleteBtn) deleteBtn.style.display = 'flex';
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
+                    this.handleFileSelect(file, preview, deleteBtn, uploadArea);
                 };
             }
 
             // Tıklama olayları
             if (preview) {
-                preview.onclick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    input?.click();
-                };
+                preview.onclick = () => input?.click();
             }
 
             if (uploadArea) {
-                uploadArea.onclick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    input?.click();
-                };
+                uploadArea.onclick = () => input?.click();
             }
 
             // Silme butonu
@@ -60,15 +55,45 @@ class MediaHandler {
                     e.stopPropagation();
                     
                     if (await this.handleMediaDelete(e)) {
-                        if (preview) {
-                            preview.src = this.defaultImage;
-                        }
-                        if (input) input.value = '';
+                        preview.src = this.defaultImage;
+                        input.value = '';
                         deleteBtn.style.display = 'none';
+                        uploadArea.style.display = 'block';
                     }
                 };
             }
+
+            // Eğer resim varsa upload alanını gizle
+            if (preview && preview.src && preview.src !== this.defaultImage) {
+                uploadArea.style.display = 'none';
+            }
         });
+    }
+
+    handleFileSelect(file, preview, deleteBtn, uploadArea) {
+        const existingInfo = preview.parentNode.querySelector('.image-size-info');
+        if (existingInfo) {
+            existingInfo.remove();
+        }
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const sizeInfo = document.createElement('p');
+                    sizeInfo.className = 'image-size-info';
+                    sizeInfo.textContent = `Boyut: ${Math.round(file.size / 1024)} KB, Piksel: ${img.naturalWidth} x ${img.naturalHeight}`;
+                    preview.parentNode.appendChild(sizeInfo);
+                };
+
+                if (deleteBtn) deleteBtn.style.display = 'flex';
+                if (uploadArea) uploadArea.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
     }
 
     async handleMediaDelete(e) {
@@ -120,9 +145,23 @@ class MediaHandler {
         }
         return false;
     }
+
+    if (deleteBtn) {
+        deleteBtn.style.display = 'flex'; // Butonun görünür olmasını sağla
+        deleteBtn.onclick = async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (await this.handleMediaDelete(e)) {
+                preview.src = this.defaultImage;
+                input.value = '';
+                deleteBtn.style.display = 'none';
+                uploadArea.style.display = 'block';
+            }
+        };
+    }
 }
 
-// Sayfa yüklendiğinde başlat
 document.addEventListener('DOMContentLoaded', () => {
     new MediaHandler();
 }); 

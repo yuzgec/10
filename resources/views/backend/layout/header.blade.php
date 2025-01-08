@@ -34,24 +34,45 @@
                             CRM
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ Request::is('go/crm*') ? 'show' : '' }}">
+                    <div class="dropdown-menu {{ Request::is('go/crm/customer*') ? 'show' : '' }}">
                         
                         <div class="dropend">
                             <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <x-dashboard.icon.add width="16"/> Müşteri
+                                <x-dashboard.icon.bussiness width="16"/> Müşteri
                             </a>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu {{ Request::is('go/crm/customer*') ? 'show' : '' }}">
                                 <a href="{{ route('customer.index')}}" class="dropdown-item">
-                                    Müşteri Listesi
+                                    <x-dashboard.icon.menu-list width="16"/> Müşteri Listesi
                                 </a>
                                 <a href="{{ route('customer.create')}}" class="dropdown-item">
-                                    Müşteri Ekle
+                                    <x-dashboard.icon.add width="16"/> Müşteri Ekle
                                 </a>
                                 <a href="{{ route('customer.index')}}" class="dropdown-item">
                                     Müşteri Raporları
                                 </a>
                             </div>
                         </div>
+
+
+                        <div class="dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                <x-dashboard.icon.bussiness width="16"/> Teklifler
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="{{ route('customer-offers.index')}}" class="dropdown-item">
+                                    <x-dashboard.icon.menu-list width="16"/> Teklif Listesi
+                                </a>
+                                <a href="{{ route('customer-offers.create')}}" class="dropdown-item">
+                                    <x-dashboard.icon.add width="16"/> Teklif Oluştur
+                                </a>
+                                <a href="{{ route('offer-templates.index')}}" class="dropdown-item">
+                                    <x-dashboard.icon.theme width="16"/> Teklif Şablonlar
+                                </a>
+                            </div>
+                        </div>
+
+                      
+                    
                         <div class="dropend">
                             <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 <x-dashboard.icon.date width="16"/> Randevu
@@ -73,12 +94,7 @@
                             </div>
                         </div>
 
-                        <a class="dropdown-item"
-                            href="{{ route('offer.index')}}"
-                            title="Kullanıcı Oluştur">
-                            <x-dashboard.icon.pdf width="16"/> Teklifler
-                        </a>
-                        
+                     
                         <a class="dropdown-item"
                             href="{{ route('workflow.index')}}"
                             title="Kullanıcı Oluştur">

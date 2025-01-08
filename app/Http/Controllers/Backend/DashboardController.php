@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Service;
 use App\Models\Analysis;
 use App\Models\Category;
+use App\Models\ExchangeRate;
 use Illuminate\Http\Request;
 use App\Services\ViewService;
 use App\Models\ProductCategory;
@@ -27,7 +28,8 @@ class DashboardController extends Controller
         
         $mostViewedPages = app(ViewService::class)->getMostViewedPages();
 
-        //dd($mostViewedPages);
+        // Döviz kurlarını al
+       
 
         $counts = Cache::remember('counts', now()->addYear(5), function () {
             return [
@@ -42,7 +44,7 @@ class DashboardController extends Controller
             ];
         });
 
-        return view('backend.index',compact('analysis','counts','mostViewedPages'));
+        return view('backend.index', compact('analysis', 'counts', 'mostViewedPages'));
     }
 
     public function gallerysort(Request $request)
