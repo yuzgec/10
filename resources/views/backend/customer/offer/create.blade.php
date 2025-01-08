@@ -344,85 +344,88 @@ $(document).ready(function() {
 });
 
 // Currency değiştiğinde çalışacak fonksiyon
-document.querySelector('select[name="currency"]').addEventListener('change', async function() {
-    const newCurrency = this.value;
-    const oldCurrency = this.dataset.currentCurrency || 'TRY';
+$('select[name="currency"]').on('change', async function() {
+    const newCurrency = $(this).val();
+    const oldCurrency = $(this).data('current-currency') || 'TRY';
     
     // Aynı para birimi seçildiyse işlem yapma
     if (newCurrency === oldCurrency) {
         return;
     }
 
-    this.dataset.currentCurrency = newCurrency;
+    try {
+        // Tüm kalemleri yeni para birimine çevir
+        const promises = [];
+        $('.item-row').each(function() {
+            const $row = $(this);
+            const $amountInput = $row.find('input[name$="[amount]"]');
+            const amount = parseFloat($amountInput.val()) || 0;
 
-    // Tüm kalemleri yeni para birimine çevir
-    const items = document.querySelectorAll('.item-row');
-    for (const row of items) {
-        const amountInput = row.querySelector('input[name^="items"][name$="[amount]"]');
-        const amount = parseFloat(amountInput.value) || 0;
-
-        try {
-            const response = await fetch('/exchange-rates/convert', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    amount: amount,
-                    from_currency: oldCurrency,
-                    to_currency: newCurrency
-                })
-            });
-
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.message || 'Döviz çevirme işlemi başarısız');
+            if (amount > 0) {
+                const promise = $.ajax({
+                    url: '{{ route("exchange-rates.convert") }}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        amount: amount,
+                        from_currency: oldCurrency,
+                        to_currency: newCurrency
+                    }
+                }).then(response => {
+                    if (response.success && typeof response.amount === 'number') {
+                        $amountInput.val(response.amount.toFixed(2));
+                        calculateTotal($row.attr('id').replace('item-', ''));
+                    }
+                });
+                promises.push(promise);
             }
+        });
 
-            if (data.success && typeof data.amount === 'number') {
-                amountInput.value = data.amount.toFixed(2);
-                calculateTotal(row.id.replace('item-', ''));
-            } else {
-                throw new Error('Geçersiz sunucu yanıtı');
-            }
-        } catch (error) {
-            console.error('Döviz çevirme hatası:', error);
-            alert(`Döviz çevirme hatası: ${error.message}`);
-            // Hata durumunda eski para birimine geri dön
-            this.value = oldCurrency;
-            this.dataset.currentCurrency = oldCurrency;
-            return;
-        }
+        await Promise.all(promises);
+        $(this).data('current-currency', newCurrency);
+        calculateTotals();
+        showCurrentRate();
+
+    } catch (error) {
+        console.error('Döviz çevirme hatası:', error);
+        alert('Döviz çevirme işlemi sırasında bir hata oluştu.');
+        // Hata durumunda eski para birimine geri dön
+        $(this).val(oldCurrency);
+        $(this).data('current-currency', oldCurrency);
     }
-
-    // Tüm toplamları güncelle
-    calculateTotals();
-
-    // Güncel kur bilgisini göster
-    showCurrentRate();
 });
 
 // Güncel kur bilgisini göster
 async function showCurrentRate() {
-    const currency = document.querySelector('select[name="currency"]').value;
+    const currency = $('select[name="currency"]').val();
     if (currency === 'TRY') {
-        document.getElementById('current-rate-info').textContent = '';
+        $('#current-rate-info').text('');
         return;
     }
 
     try {
-        const response = await fetch(`/exchange-rates/current-rate?currency=${currency}`);
-        const data = await response.json();
-        if (data.success && data.rate) {
-            const message = `1 ${currency} = ${data.rate.selling_rate} TRY`;
-            document.getElementById('current-rate-info').textContent = message;
+        const response = await $.ajax({
+            url: '{{ route("exchange-rates.current-rate") }}',
+            method: 'GET',
+            data: { currency }
+        });
+
+        if (response.success && response.rate) {
+            const message = `1 ${currency} = ${response.rate.selling_rate} TRY`;
+            $('#current-rate-info').text(message);
         }
     } catch (error) {
         console.error('Kur bilgisi alma hatası:', error);
+        $('#current-rate-info').text('Kur bilgisi alınamadı');
     }
 }
+
+// Sayfa yüklendiğinde kur bilgisini göster
+$(document).ready(function() {
+    showCurrentRate();
+});
 </script>
 @endpush
 @endsection
