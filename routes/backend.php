@@ -28,7 +28,9 @@ use App\Http\Controllers\Backend\TranslationController;
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
 use App\Http\Controllers\Backend\OfferTemplateController;
+use App\Http\Controllers\Backend\GoogleCalendarController;
 use App\Http\Controllers\Backend\ProductVariantController;
+use App\Http\Controllers\Backend\CustomerPaymentController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Backend\ProductAttributeController;
 
@@ -66,12 +68,22 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     Route::group(["prefix"=>"crm"],function() {
         Route::get('/customer/districts/{cityId}', [CustomerController::class, 'getDistricts'])->name('customer.districts');
         Route::auto('/customer',CustomerController::class);
-        
-        Route::auto('/works',CustomerWorkController::class);
+        Route::auto('/customer-payments',CustomerPaymentController::class);
+
+        Route::auto('/customer-works',CustomerWorkController::class);
+        Route::put('/customer-works/{customerWork}/status', [CustomerWorkController::class, 'updateStatus'])->name('customer-works.update-status');
+        Route::get('/customer-works/{customerWork}/calendar', [CustomerWorkController::class, 'calendar'])->name('customer-works.calendar');
+        Route::auto('/payments', CustomerPaymentController::class);
+        Route::put('/payments/{customerPayment}/status', [CustomerPaymentController::class, 'updateStatus'])->name('customer-payments.update-status');
         Route::auto('/workflow', WorkFlowController::class);
         Route::auto('/customer-offers', CustomerOfferController::class);
+        Route::put('/customer-offers/{offer}/status', [CustomerOfferController::class, 'updateStatus'])->name('customer-offers.update-status');
         Route::get('/districts/{city}', [CustomerController::class,'getDistricts']);
         Route::auto('/offer-templates', OfferTemplateController::class);
+
+        Route::get('calendar/connect', [GoogleCalendarController::class, 'connect'])->name('calendar.connect');
+        Route::get('calendar/callback', [GoogleCalendarController::class, 'callback'])->name('calendar.callback');
+        Route::get('calendar/disconnect', [GoogleCalendarController::class, 'disconnect'])->name('calendar.disconnect');
     });
 
     Route::prefix('exchange-rates')->group(function () {

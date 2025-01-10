@@ -88,14 +88,14 @@ class OfferTemplateController extends Controller
             $template->items()->create($item);
         }
 
-        return redirect()->route('backend.offer-templates.index')
+        return redirect()->route('offer-templates.index')
             ->with('success', 'Teklif şablonu başarıyla güncellendi.');
     }
 
     public function destroy(OfferTemplate $template)
     {
         $template->delete();
-        return redirect()->route('backend.offer-templates.index')
+        return redirect()->route('offer-templates.index')
             ->with('success', 'Teklif şablonu başarıyla silindi.');
     }
 
@@ -108,7 +108,7 @@ class OfferTemplateController extends Controller
 
         $offer = $template->createOffer($request->customer_id);
 
-        return redirect()->route('backend.customer-offers.edit', $offer)
+        return redirect()->route('customer-offers.edit', $offer)
             ->with('success', 'Teklif şablondan başarıyla oluşturuldu.');
     }
 } 

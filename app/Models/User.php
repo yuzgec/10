@@ -22,7 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone'
+        'phone',
+        'google_calendar_token',
+        'google_calendar_id',
+        'google_calendar_connected_at'
     ];
 
     /**
@@ -43,6 +46,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'status' => 'boolean'
+        'status' => 'boolean',
+        'google_calendar_connected_at' => 'datetime'
     ];
 }

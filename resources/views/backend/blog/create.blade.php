@@ -4,6 +4,7 @@
     ->method('POST')
     ->action(route('blog.store'))
     ->attribute('enctype', 'multipart/form-data')
+    ->attribute('data-action', 'create')
     ->open()
 !!}
 

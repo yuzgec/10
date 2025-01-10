@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('backend.offer-templates.update', $template) }}" method="POST" id="templateForm">
+                    <form action="{{ route('offer-templates.update', $template) }}" method="POST" id="templateForm">
                         @csrf
                         @method('PUT')
 
@@ -131,7 +131,7 @@
                         <div class="row mt-4">
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Kaydet</button>
-                                <a href="{{ route('backend.offer-templates.index') }}" class="btn btn-secondary">İptal</a>
+                                <a href="{{ route('offer-templates.index') }}" class="btn btn-secondary">İptal</a>
                             </div>
                         </div>
                     </form>

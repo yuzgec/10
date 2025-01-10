@@ -3,6 +3,17 @@
 @section('content')
 <form action="{{ route('customer-offers.store') }}" method="POST">
     @csrf
+    {!! html()
+        ->form()
+        ->method('POST')
+        ->action(route('customer-offers.store'))
+        ->attribute('enctype', 'multipart/form-data')
+        ->attribute('data-action', 'create')
+        ->open() 
+    !!}
+
+    {{ html()->hidden('created_by', auth()->user()->id) }}
+    {{ html()->hidden('updated_by', auth()->user()->id) }}
 
     <div class="col-md-12 mb-3">
         <div class="card">

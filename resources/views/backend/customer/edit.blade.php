@@ -1,10 +1,13 @@
 @extends('backend.layout.app')
 @section('content')
 
-{!! html()->model($edit)->form('PUT', route('customer.update', $edit->id))
-->attribute('enctype', 'multipart/form-data') 
-->open() 
+{!! html()->model($edit)
+    ->form('PUT', route('customer.update', $edit->id))
+    ->attribute('enctype', 'multipart/form-data') 
+    ->attribute('data-action', 'update')
+    ->open() 
 !!}
+{{ html()->hidden('updated_by', auth()->user()->id) }}
     <div class="col-md-12 mb-3">
         <div class="card">
             <div class="card-status-top bg-blue"></div>

@@ -31,6 +31,8 @@ class CustomerFactory extends Factory
             'linkedin'  => 'linkedin.com/godijital.net',
             'tiktok'    => 'tiktok.com/godijital.net',
             'youtube'   => 'youtube.com/godijital.net',
+            'created_by' => 1,
+            'updated_by' => 1,
 
         ];
     }

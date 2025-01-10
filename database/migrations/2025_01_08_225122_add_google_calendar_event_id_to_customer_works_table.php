@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exchange_rates', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('customer_works', function (Blueprint $table) {
+            $table->string('google_calendar_event_id')->nullable()->after('updated_by');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exchange_rates');
+        Schema::table('customer_works', function (Blueprint $table) {
+            $table->dropColumn('google_calendar_event_id');
+        });
     }
 };

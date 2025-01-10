@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ExchangeRate;
 use App\Models\OfferTemplate;
+use App\Models\CustomerWork;
+use App\Enums\CustomerWorkStatusEnum;
 
 class CustomerOfferController extends Controller
 {
@@ -96,6 +98,7 @@ class CustomerOfferController extends Controller
     public function update(Request $request, CustomerOffer $offer)
     {
         try {
+            $oldStatus = $offer->status;
             tap($offer)->update($request->except('items'));
 
             // Teklif kalemlerini güncelle
@@ -113,12 +116,67 @@ class CustomerOfferController extends Controller
                 }
             }
 
+            // Eğer teklif onaylandıysa ve önceden onaylı değilse iş kaydı oluştur
+            if ($offer->status === CustomerOfferStatusEnum::APPROVED && $oldStatus !== CustomerOfferStatusEnum::APPROVED) {
+                $this->createCustomerWork($offer);
+            }
+
             alert()->success('Başarılı', 'Teklif başarıyla güncellendi.');
             return redirect()->route('customer-offers.show', $offer);
 
         } catch (\Exception $e) {
             alert()->error('Hata', 'Teklif güncellenirken bir hata oluştu: ' . $e->getMessage());
             return back()->withInput();
+        }
+    }
+
+    /**
+     * Onaylanan teklifler için iş kaydı oluşturur
+     */
+    private function createCustomerWork(CustomerOffer $offer)
+    {
+        try {
+            $totalAmount = $offer->items->sum('total');
+            
+            CustomerWork::create([
+                'customer_id' => $offer->customer_id,
+                'offer_id' => $offer->id,
+                'status' => CustomerWorkStatusEnum::PENDING,
+                'start_date' => now(),
+                'delivery_date' => now()->addDays(30), // Varsayılan 30 gün
+                'total_amount' => $totalAmount,
+                'progress' => 0,
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id(),
+            ]);
+
+        } catch (\Exception $e) {
+            report($e); // Hatayı logla
+        }
+    }
+
+    /**
+     * Teklif durumunu günceller
+     */
+    public function updateStatus(Request $request, CustomerOffer $offer)
+    {
+        try {
+            $validated = $request->validate([
+                'status' => 'required|in:' . implode(',', array_column(CustomerOfferStatusEnum::cases(), 'value'))
+            ]);
+
+            $oldStatus = $offer->status;
+            $offer->status = $validated['status'];
+            $offer->save();
+
+            // Eğer teklif onaylandıysa ve önceden onaylı değilse iş kaydı oluştur
+            if ($offer->status === CustomerOfferStatusEnum::APPROVED && $oldStatus !== CustomerOfferStatusEnum::APPROVED) {
+                $this->createCustomerWork($offer);
+            }
+
+            return redirect()->back()->with('success', 'Teklif durumu başarıyla güncellendi.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Teklif durumu güncellenirken bir hata oluştu.');
         }
     }
 

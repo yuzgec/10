@@ -47,8 +47,8 @@
                                 <a href="{{ route('customer.create')}}" class="dropdown-item">
                                     <x-dashboard.icon.add width="16"/> Müşteri Ekle
                                 </a>
-                                <a href="{{ route('customer.index')}}" class="dropdown-item">
-                                    Müşteri Raporları
+                                <a href="{{ route('customer-payments.index')}}" class="dropdown-item">
+                                    Ödemeler
                                 </a>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
 
                      
                         <a class="dropdown-item"
-                            href="{{ route('workflow.index')}}"
+                            href="{{ route('customer-works.index')}}"
                             title="Kullanıcı Oluştur">
                             <x-dashboard.icon.date width="16"/> İş Takvimi
                         </a>

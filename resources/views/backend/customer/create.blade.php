@@ -1,11 +1,15 @@
 @extends('backend.layout.app')
 @section('content')
 
-{!! Html::form()
+{!! html()->form()
     ->method('POST')
     ->action(route('customer.store'))
     ->attribute('enctype', 'multipart/form-data')
+    ->attribute('data-action', 'create')
     ->open() !!}
+
+    {{ html()->hidden('created_by', auth()->user()->id) }}
+    {{ html()->hidden('updated_by', auth()->user()->id) }}
 
 <div class="col-12 mb-3">
     <div class="card">

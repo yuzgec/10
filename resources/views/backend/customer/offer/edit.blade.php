@@ -15,9 +15,13 @@
         </div>
     </div>
 
-    <form action="{{ route('customer-offers.update', $offer) }}" method="POST">
-        @csrf
-        @method('PUT')
+    {!! html()->model($offer)
+        ->form('PUT', route('customer-offers.update', $offer->id))
+        ->attribute('enctype', 'multipart/form-data') 
+        ->attribute('data-action', 'update')
+        ->open() 
+        !!}
+{{ html()->hidden('updated_by', auth()->user()->id) }}
         <div class="row">
             <div class="col-md-9">
                 <div class="card">

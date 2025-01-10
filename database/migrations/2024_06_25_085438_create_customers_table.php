@@ -8,6 +8,7 @@ use App\Enums\CustomerOfferStatusEnum;
 use App\Enums\CustomerOrderStatusEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use App\Enums\CustomerWorkPaymentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
@@ -17,6 +18,28 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('offer_templates', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('currency')->default('TRY');
+            $table->text('description')->nullable();
+            $table->text('terms')->nullable();
+            $table->text('notes')->nullable();
+            $table->boolean('is_default')->default(false);
+            $table->timestamps();
+        });
+
+        Schema::create('offer_template_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('offer_template_id')->constrained()->onDelete('cascade');
+            $table->string('item_name');
+            $table->integer('unit')->default(1);
+            $table->decimal('amount', 10, 2);
+            $table->decimal('discount', 5, 2)->default(0);
+            $table->decimal('tax', 5, 2)->default(20);
+            $table->timestamps();
+        });
+
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('company_name')->nullable();
@@ -46,6 +69,8 @@ return new class extends Migration
             $table->integer('status')->default(CustomerEnum::NEW->value);
             $table->integer('medium')->default(CustomerMediumEnum::UNKNOWN->value);
             $table->date('firstdate_at')->default(now());
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -54,6 +79,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('offer_no')->unique();
+            $table->foreignId('template_id')->nullable()->constrained('offer_templates')->nullOnDelete();
             $table->string('name');
             $table->text('desc')->nullable();
             $table->enum('currency', array_column(CurrencyEnum::cases(), 'value'))->default(CurrencyEnum::TL->value);
@@ -64,6 +90,8 @@ return new class extends Migration
             $table->text('terms')->nullable();
             $table->boolean('is_sent')->default(false);
             $table->timestamp('sent_at')->nullable();
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -80,21 +108,45 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('customer_payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('offer_id')->constrained('customer_offers')->onDelete('cascade');
-            $table->decimal('amount', 10, 2);
-            $table->date('payment_date');
-            $table->integer('status')->default(CustomerOrderStatusEnum::PENDING->value);
-            $table->timestamps();
-        });
-
         Schema::create('customer_works', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->foreignId('offer_id')->constrained('customer_offers')->onDelete('cascade');
-            $table->integer('status')->default(CustomerWorkStatusEnum::WORKING->value);
+            $table->integer('status')->default(CustomerWorkStatusEnum::PENDING->value);
+            $table->date('start_date');
+            $table->date('delivery_date');
+            $table->date('completed_date')->nullable();
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
+            $table->integer('progress')->default(0);
+            $table->decimal('total_amount', 10, 2);
+            $table->decimal('advance_payment', 10, 2)->default(0);
+            $table->decimal('remaining_payment', 10, 2)->default(0);
+            $table->decimal('total_paid', 10, 2)->default(0);
+            $table->decimal('total_remaining', 10, 2)->default(0);
+            $table->integer('payment_status')->default(CustomerWorkPaymentStatusEnum::PENDING->value);
+            $table->date('last_payment_date')->nullable();
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+
+
+        Schema::create('customer_payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('offer_id')->constrained('customer_offers')->onDelete('cascade');
+            $table->foreignId('customer_work_id')->constrained('customer_works')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->date('payment_date');
+            $table->enum('payment_type', ['advance', 'progress', 'final']);
+            $table->text('description')->nullable();
+            $table->integer('status')->default(CustomerOrderStatusEnum::PENDING->value);
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->constrained('users');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -108,5 +160,7 @@ return new class extends Migration
         Schema::dropIfExists('customer_offer_items');
         Schema::dropIfExists('customer_payments');
         Schema::dropIfExists('customer_works');
+        Schema::dropIfExists('offer_template_items');
+        Schema::dropIfExists('offer_templates');
     }
 };

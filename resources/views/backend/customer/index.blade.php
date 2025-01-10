@@ -96,7 +96,7 @@
                         </td>
 
                         <td class="text-secondary">
-                            <a href="{{ route('works.index',['name' => 'work', 'customer_id' => $item->id])}}" title="İşlere Git">
+                            <a href="{{ route('customer-works.index',['name' => 'work', 'customer_id' => $item->id])}}" title="İşlere Git">
                                 <span class="avatar">{{ $item->works_count}}</span>
                             </a>
                         </td>

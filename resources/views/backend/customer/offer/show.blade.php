@@ -180,6 +180,30 @@
                         </div>
                     </div>
 
+                    <form action="{{ route('customer-offers.update-status', $offer) }}" method="POST" class="mb-3">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">Durumu Güncelle</label>
+                            <select name="status" class="form-select @error('status') is-invalid @enderror" required>
+                                @foreach(\App\Enums\CustomerOfferStatusEnum::cases() as $status)
+                                    <option value="{{ $status->value }}" 
+                                            {{ $offer->status === $status ? 'selected' : '' }}>
+                                        {{ $status->title() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-save"></i> Durumu Güncelle
+                        </button>
+                    </form>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Teklif Tarihi:</label>
                         <div>{{ $offer->offer_date->format('d.m.Y') }}</div>

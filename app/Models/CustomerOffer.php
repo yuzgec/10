@@ -40,9 +40,9 @@ class CustomerOffer extends Model
         return $this->hasMany(CustomerPayment::class, 'offer_id');
     }
 
-    public function works()
+    public function customerWork()
     {
-        return $this->hasMany(CustomerWork::class, 'offer_id');
+        return $this->hasOne(CustomerWork::class, 'offer_id');
     }
 
     // Teklif numarası oluşturma
