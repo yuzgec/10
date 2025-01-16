@@ -6,7 +6,9 @@ use App\Models\Blog;
 use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Services\ViewService;
+use App\Http\Requests\BlogRequest;
 use App\Http\Requests\PageRequest;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Activity;
@@ -64,37 +66,46 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PageRequest $request)
+    public function store(BlogRequest $request)
     {
-        $create = Blog::create($request->except('image', 'cover', 'gallery'));
+        try {
+            DB::beginTransaction();
 
-        $this->mediaService->handleMediaUpload(
-            $create, 
-            $request->file('image'),
-            'page',
-            false
-        );
+            $create = Blog::create($request->except('image', 'cover', 'gallery'));
 
-        $this->mediaService->handleMediaUpload(
-            $create, 
-            $request->file('cover'),
-            'cover',
-            false
-        );
-
-        if ($request->hasFile('gallery')) {
-            $files = $request->file('gallery');
-            
-            $this->mediaService->handleMultipleMediaUpload(
-                $create,
-                $files,
-                'gallery',
+            $this->mediaService->handleMediaUpload(
+                $create, 
+                $request->file('image'),
+                'page',
+                false
             );
-        }
-        alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli blog başarıyla eklendi.', 'success');
-        return redirect()->route('blog.index');
 
+            $this->mediaService->handleMediaUpload(
+                $create, 
+                $request->file('cover'),
+                'cover',
+                false
+            );
+
+            if ($request->hasFile('gallery')) {
+                $this->mediaService->handleMultipleMediaUpload(
+                    $create,
+                    $request->file('gallery'),
+                    'gallery'
+                );
+            }
+
+            DB::commit();
+            alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli blog başarıyla eklendi.', 'success');
+            return redirect()->route('blog.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('Hata','Blog eklenirken bir hata oluştu: ' . $e->getMessage());
+            return back();
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -118,52 +129,44 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PageRequest $request, Blog $update)
+    public function update(BlogRequest $request, Blog $update)
     {
-        tap($update)->update($request->except('image', 'cover', 'gallery'));
+        try {
+            DB::beginTransaction();
 
-        $this->mediaService->updateMedia(
-            $update, 
-            $request->file('image'),
-            'page',
-            false
-        );
+            $update->update($request->except('image', 'cover', 'gallery'));
 
-        $this->mediaService->updateMedia(
-            $update, 
-            $request->file('cover'),
-            'cover',
-            false
-        );
-
-        if ($request->hasFile('gallery')) {
-            $files = $request->file('gallery');
-            
-            $this->mediaService->handleMultipleMediaUpload(
-                $update,
-                $files,
-                'gallery',
+            $this->mediaService->handleMediaUpload(
+                $update, 
+                $request->file('image'),
+                'page',
                 false
             );
+
+            $this->mediaService->handleMediaUpload(
+                $update, 
+                $request->file('cover'),
+                'cover',
+                false
+            );
+
+            if ($request->hasFile('gallery')) {
+                $this->mediaService->handleMultipleMediaUpload(
+                    $update,
+                    $request->file('gallery'),
+                    'gallery'
+                );
+            }
+
+            DB::commit();
+            alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli blog başarıyla güncellendi.', 'success');
+            return redirect()->route('blog.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('Hata','Blog güncellenirken bir hata oluştu: ' . $e->getMessage());
+            return back();
         }
-
-        alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli blog başarıyla güncellendi.', 'success');
-        return redirect()->route('blog.index');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-
-        $delete = Blog::findOrFail($id);
-        $delete->delete();
-
-        alert()->html('Başarıyla Silindi','Sayfa başarıyla silindi.', 'warning');
-        return redirect()->route('page.index');
-
     }
 
     public function trash(){
@@ -171,13 +174,71 @@ class BlogController extends Controller
         return view('backend.page.trash',compact('all'));
     }
 
-    public function restore($id){
+    /**
+     * Remove the specified resource from storage.
+     */
+public function destroy(Blog $destroy)
+{
+    try {
+        DB::beginTransaction();
 
-        $restore = Blog::withTrashed()->find($id);
-        $restore->restore();
+        // Sadece softDelete yap, medya dosyalarını silme
+        $destroy->delete();
 
-        alert()->html('Başarıyla Geri Alındı','Sayfa başarıyla geri yüklendi.', 'success');
-        return redirect()->route('page.index');
+        DB::commit();
+        alert()->html('Başarıyla Silindi','<b>'.$destroy->name.'</b> isimli blog başarıyla silindi.', 'success');
+        return redirect()->route('blog.index');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        alert()->error('Hata','Blog silinirken bir hata oluştu: ' . $e->getMessage());
+        return back();
+    }
+}
+
+// Eğer gerçekten silmek istersek (forceDelete) ayrı bir metod ekleyebiliriz
+public function forceDestroy(Blog $blog)
+{
+    try {
+        DB::beginTransaction();
+
+        // Önce medya dosyalarını sil
+        $blog->clearMediaCollection('page');
+        $blog->clearMediaCollection('cover');
+        $blog->clearMediaCollection('gallery');
+
+        // Sonra kaydı tamamen sil
+        $blog->forceDelete();
+
+        DB::commit();
+        alert()->html('Kalıcı Olarak Silindi','<b>'.$blog->name.'</b> isimli blog kalıcı olarak silindi.', 'success');
+        return redirect()->route('blog.index');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        alert()->error('Hata','Blog kalıcı olarak silinirken bir hata oluştu: ' . $e->getMessage());
+        return back();
+    }
+}
+
+// Geri yükleme metodu
+    public function restore($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $blog = Blog::withTrashed()->findOrFail($id);
+            $blog->restore();
+
+            DB::commit();
+            alert()->html('Başarıyla Geri Yüklendi','<b>'.$blog->name.'</b> isimli blog başarıyla geri yüklendi.', 'success');
+            return redirect()->route('blog.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('Hata','Blog geri yüklenirken bir hata oluştu: ' . $e->getMessage());
+            return back();
+        }
     }
 
     public function sort(Request $request)

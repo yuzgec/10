@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Observers\ProductObserver;
+use App\Models\TaxClass;
 
 class ProductService
 {
@@ -64,6 +65,7 @@ class ProductService
         $productData = [
             'sku' => $data['sku'] ?? null,
             'price' => $data['price'] ?? 0,
+            'discount_price' => $data['discount_price'] ?? 0,
             'stock' => $data['stock'] ?? 0,
             'type' => $data['type'] ?? 'simple',
             'featured' => $data['featured'] ?? false,
@@ -72,13 +74,51 @@ class ProductService
             'tax_status' => $data['tax_status'] ?? 'none',
             'tax_class_id' => $data['tax_class_id'] ?? null,
             
-            // Dimension verileri eklendi
+            // Dimension verileri
             'weight' => $data['weight'] ?? null,
             'dimension_unit' => $data['dimension_unit'] ?? 'cm',
             'length' => $data['length'] ?? null,
             'width' => $data['width'] ?? null,
             'height' => $data['height'] ?? null,
+
+            // Stok Yönetimi
+            'manage_stock' => $data['manage_stock'] ?? true,
+            'min_stock_level' => $data['min_stock_level'] ?? null,
+            'max_stock_level' => $data['max_stock_level'] ?? null,
+            'stock_status' => $data['stock_status'] ?? 'in_stock',
+            'allow_backorders' => $data['allow_backorders'] ?? false,
+            'notify_low_stock' => $data['notify_low_stock'] ?? true,
+            'low_stock_threshold' => $data['low_stock_threshold'] ?? null,
+            'show_stock_quantity' => $data['show_stock_quantity'] ?? true,
+
+            // Kargo & Teslimat
+            'requires_shipping' => $data['requires_shipping'] ?? true,
+            'delivery_time' => $data['delivery_time'] ?? null,
+
+            // Özel Alanlar
+            'warranty_period' => $data['warranty_period'] ?? null,
+            'manufacturing_place' => $data['manufacturing_place'] ?? null,
+            'barcode' => $data['barcode'] ?? null,
         ];
+
+        // Vergi hesaplama
+        if ($data['tax_status'] === 'taxable' && isset($data['tax_class_id'])) {
+            $taxClass = TaxClass::find($data['tax_class_id']);
+            if ($taxClass) {
+                // Fiyat vergili olarak girilmiştir, vergi hariç fiyatı hesaplayalım
+                $price = $data['price'];
+                $taxRate = $taxClass->rate / 100;
+                
+                // Vergi hariç fiyat = Vergili fiyat / (1 + vergi oranı)
+                $productData['price'] = round($price / (1 + $taxRate), 2);
+                
+                // İndirimli fiyat varsa onu da hesaplayalım
+                if (!empty($data['discount_price'])) {
+                    $discountPrice = $data['discount_price'];
+                    $productData['discount_price'] = round($discountPrice / (1 + $taxRate), 2);
+                }
+            }
+        }
 
         // Translatable alanları direkt aktar
         foreach ($data as $key => $value) {
@@ -100,6 +140,11 @@ class ProductService
         // Etiketler
         if (isset($data['tags'])) {
             $product->tags()->sync($data['tags']);
+        }
+
+        // İlişkili Ürünler
+        if (isset($data['related_products'])) {
+            $product->relatedProducts()->sync($data['related_products']);
         }
     }
 

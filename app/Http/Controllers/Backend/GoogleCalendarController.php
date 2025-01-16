@@ -40,23 +40,13 @@ class GoogleCalendarController extends Controller
     public function callback(Request $request)
     {
         if (!$request->has('code')) {
-            \Log::error('Google Calendar callback - code parametresi eksik');
-            return redirect()->route('customer-works.index')
-                ->with('error', 'Google Calendar bağlantısı başarısız oldu.');
+            return redirect()->route('customer-works.index');
         }
-
         try {
-            \Log::debug('Google Calendar callback başladı', [
-                'code' => $request->code
-            ]);
-
+  
             // Token al
             $token = $this->client->fetchAccessTokenWithAuthCode($request->code);
             
-            \Log::debug('Token alındı', [
-                'token' => $token
-            ]);
-
             // Calendar servisini başlat
             $service = new Google_Service_Calendar($this->client);
             
@@ -70,10 +60,6 @@ class GoogleCalendarController extends Controller
                 }
             }
 
-            \Log::debug('Takvim bilgileri alındı', [
-                'calendar_id' => $primaryCalendar ? $primaryCalendar->id : null
-            ]);
-
             // Kullanıcı bilgilerini güncelle
             $user = Auth::user();
             $user->google_calendar_token = json_encode($token);
@@ -81,27 +67,15 @@ class GoogleCalendarController extends Controller
             $user->google_calendar_connected_at = now();
             $user->save();
 
-            \Log::debug('Kullanıcı bilgileri güncellendi', [
-                'user_id' => $user->id,
-                'calendar_id' => $user->google_calendar_id,
-                'token' => $user->google_calendar_token ? 'var' : 'yok'
-            ]);
-
-            // Config'i temizle
+               // Config'i temizle
             \Artisan::call('config:clear');
             \Artisan::call('cache:clear');
 
-            return redirect()->route('customer-works.index')
-                ->with('success', 'Google Calendar başarıyla bağlandı.');
+            return redirect()->route('customer-works.index');
 
         } catch (\Exception $e) {
-            \Log::error('Google Calendar callback hatası: ' . $e->getMessage(), [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            
-            return redirect()->route('customer-works.index')
-                ->with('error', 'Google Calendar bağlantısı sırasında bir hata oluştu.');
+
+            return redirect()->route('customer-works.index');
         }
     }
 
@@ -126,13 +100,11 @@ class GoogleCalendarController extends Controller
             $user->google_calendar_connected_at = null;
             $user->save();
 
-            return redirect()->route('customer-works.index')
-                ->with('success', 'Google Calendar bağlantısı başarıyla kaldırıldı.');
+            return redirect()->route('customer-works.index');
 
         } catch (\Exception $e) {
             report($e);
-            return redirect()->route('customer-works.index')
-                ->with('error', 'Google Calendar bağlantısı kaldırılırken bir hata oluştu.');
+            return redirect()->route('customer-works.index');
         }
     }
 } 

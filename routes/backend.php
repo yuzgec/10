@@ -91,8 +91,6 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::get('current-rate', [CustomerOfferController::class, 'getCurrentRate'])->name('exchange-rates.current-rate');
     });
     
-    // Teklif şablonları rotaları
-  
 
     Route::group(["prefix"=>"user"],function() {
         Route::auto('/user',UserController::class);
@@ -120,45 +118,23 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
         Route::auto('product-categories', ProductCategoryController::class);
         Route::auto('product-attributes', ProductAttributeController::class);
         Route::auto('product-variants', ProductVariantController::class);
-        Route::prefix('products')->group(function () {
-            Route::get('/', [ProductController::class, 'index'])->name('product.index');
-            Route::get('/create', [ProductController::class, 'create'])->name('product.create');
-            
-            // Ürün tipleri
-            Route::get('/create/simple', [ProductController::class, 'createSimple'])
-                ->name('product.create.simple');
-            Route::get('/create/variable', [ProductController::class, 'createVariable'])
-                ->name('product.create.variable');
-            
-            Route::post('/store/simple', [ProductController::class, 'storeSimple'])
-                ->name('product.store.simple');
-            Route::post('/store/variable', [ProductController::class, 'storeVariable'])
-                ->name('product.store.variable');
-            
-            Route::get('/{product}/edit', [ProductController::class, 'edit'])
-                ->name('product.edit');
-            Route::put('/{product}', [ProductController::class, 'update'])
-                ->name('product.update');
-            Route::delete('/{product}', [ProductController::class, 'destroy'])
-                ->name('product.destroy');
-            
-            // Medya yönetimi
-            Route::post('/upload-image', [ProductController::class, 'uploadImage'])
-                ->name('product.upload-image');
-            Route::delete('/delete-image/{media}', [ProductController::class, 'deleteImage'])
-                ->name('product.delete-image');
-            Route::post('/sort-images', [ProductController::class, 'sortImages'])
-                ->name('product.sort-images');
-            
-            Route::put('/{product}/update-simple', [ProductController::class, 'updateSimple'])
-                ->name('product.update.simple');
-            Route::put('/{product}/update-variable', [ProductController::class, 'updateVariable'])
-                ->name('product.update.variable');
+
+        Route::prefix('/products')->group(function () {
+           Route::auto('/product', ProductController::class);
+
+           Route::get('/create/simple', [ProductController::class, 'createSimple'])->name('product.create.simple');
+           Route::get('/create/variable', [ProductController::class, 'createVariable'])->name('product.create.variable');
+           Route::post('/store/simple', [ProductController::class, 'storeSimple'])->name('product.store.simple');
+           Route::post('/store/variable', [ProductController::class, 'storeVariable'])->name('product.store.variable');
+           Route::put('/{product}/update-simple', [ProductController::class, 'updateSimple'])->name('product.update.simple');
+           Route::put('/{product}/update-variable', [ProductController::class, 'updateVariable'])->name('product.update.variable');
         });
     
     
     });
 
-    
+
 });
+
+
 

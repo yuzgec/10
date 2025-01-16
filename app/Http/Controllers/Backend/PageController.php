@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Services\MediaService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class PageController extends Controller
 {   
@@ -61,36 +63,52 @@ class PageController extends Controller
 
     public function store(PageRequest $request)
     {
-        $create = Page::create($request->except('image', 'cover', 'gallery'));
+        try {
+            DB::beginTransaction();
 
-        $this->mediaService->handleMediaUpload(
-            $create, 
-            $request->file('image'),
-            'page',
-            false
-        );
+            // Validasyon hatalarını yakalayalım
+            if (!$request->validated()) {
+                throw new \Exception('Validasyon hatası');
+            }
 
-        $this->mediaService->handleMediaUpload(
-            $create, 
-            $request->file('cover'),
-            'cover',
-            false
-        );
+            $create = Page::create($request->except('image', 'cover', 'gallery'));
 
-        if ($request->hasFile('gallery')) {
-            $files = $request->file('gallery');
-            
-            $this->mediaService->handleMultipleMediaUpload(
-                $create,
-                $files,
-                'gallery',
+            $this->mediaService->handleMediaUpload(
+                $create, 
+                $request->file('image'),
+                'page',
+                false
             );
+
+            $this->mediaService->handleMediaUpload(
+                $create, 
+                $request->file('cover'),
+                'cover',
+                false
+            );
+
+            if ($request->hasFile('gallery')) {
+                $files = $request->file('gallery');
+                
+                $this->mediaService->handleMultipleMediaUpload(
+                    $create,
+                    $files,
+                    'gallery',
+                );
+            }
+
+            DB::commit();
+            alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli sayfa başarıyla eklendi.', 'success');
+            return redirect()->route('page.index');
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('Hata','Sayfa eklenirken bir hata oluştu: ' . $e->getMessage());
+            return back()->withInput();
         }
-
-        alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli sayfa başarıyla eklendi.', 'success');
-        
-        return redirect()->route('page.index');
-
     }
 
     public function edit(string $id)

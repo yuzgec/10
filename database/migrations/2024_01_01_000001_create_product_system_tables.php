@@ -39,13 +39,25 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('discount_price', 10, 2)->nullable();
             $table->integer('stock')->nullable();
-            $table->string('sku')->nullable()->unique();
+            $table->string('sku')->unique();
             $table->boolean('featured')->default(false);
             $table->text('purchase_note')->nullable();
             $table->enum('tax_status', ['taxable', 'none'])->default('taxable');
             $table->foreignId('tax_class_id')->nullable()->constrained();
-            $table->boolean('manage_stock')->default(true);
+            $table->boolean('manage_stock')->default(false);
+            $table->integer('min_stock_level')->nullable();
+            $table->integer('max_stock_level')->nullable();
+            $table->enum('stock_status', ['in_stock', 'out_of_stock', 'on_backorder'])->default('in_stock');
+            $table->boolean('allow_backorders')->default(false);
+            $table->boolean('notify_low_stock')->default(false);
+            $table->integer('low_stock_threshold')->nullable();
+            $table->boolean('show_stock_quantity')->default(true);
+            $table->boolean('requires_shipping')->default(false);
+            $table->integer('delivery_time')->nullable();
             $table->decimal('weight', 10, 2)->nullable();
+            $table->integer('warranty_period')->nullable();
+            $table->string('manufacturing_place')->nullable();
+            $table->string('barcode')->nullable();
             $table->string('dimension_unit')->nullable();
             $table->decimal('length', 10, 2)->nullable();
             $table->decimal('width', 10, 2)->nullable();
@@ -226,6 +238,20 @@ return new class extends Migration
             $table->primary(['product_id', 'product_category_id']);
         });
 
+        // Related Products pivot table
+        Schema::create('related_products', function (Blueprint $table) {
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('related_product_id')->constrained('products')->onDelete('cascade');
+            $table->timestamps();
+            $table->primary(['product_id', 'related_product_id']);
+        });
+
+        Schema::create('product_related', function (Blueprint $table) {
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('related_product_id')->constrained('products')->onDelete('cascade');
+            $table->primary(['product_id', 'related_product_id']);
+        });
+
     }
 
     public function down()
@@ -246,5 +272,7 @@ return new class extends Migration
         Schema::dropIfExists('p_attr_val_trans');
         Schema::dropIfExists('p_var_trans');
         Schema::dropIfExists('product_variation_attributes');
+        Schema::dropIfExists('related_products');
+        Schema::dropIfExists('product_related');
     }
 }; 

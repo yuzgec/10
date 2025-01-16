@@ -2,92 +2,180 @@
 
 namespace App\Models;
 
-use Spatie\Tags\HasTags;
 use App\Enums\ProductType;
-
+use App\Services\MediaService;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
 
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-
-
-class Product extends Model implements TranslatableContract,HasMedia,Viewable
+class Product extends Model implements TranslatableContract, HasMedia
 {
-    use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews,HasTags;
-    
-    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
+    use Translatable, SoftDeletes, InteractsWithMedia;
 
-    protected $guarded = [];
+    public $translatedAttributes = ['name', 'slug', 'description'];
+
+    protected $fillable = [
+        'sku',
+        'price',
+        'stock',
+        'featured',
+        'status',
+        'brand_id',
+        'tax_status',
+        'tax_class_id',
+        // Stok Yönetimi
+        'manage_stock',
+        'min_stock_level',
+        'stock_status',
+        'allow_backorders',
+        'notify_low_stock',
+        'low_stock_threshold',
+        'show_stock_quantity',
+        // Kargo & Teslimat
+        'requires_shipping',
+        'delivery_time',
+        // Özel Alanlar
+        'warranty_period',
+        'manufacturing_place',
+        'barcode'
+    ];
 
     protected $casts = [
         'featured' => 'boolean',
-        'manage_stock' => 'boolean',
         'status' => 'boolean',
+        'manage_stock' => 'boolean',
+        'allow_backorders' => 'boolean',
+        'notify_low_stock' => 'boolean',
+        'show_stock_quantity' => 'boolean',
+        'requires_shipping' => 'boolean',
         'price' => 'decimal:2',
-        'discount_price' => 'decimal:2',
-        'weight' => 'decimal:2',
-        'length' => 'decimal:2',
-        'width' => 'decimal:2',
-        'height' => 'decimal:2',
-        'type' => ProductType::class,
+        'stock' => 'integer',
+        'min_stock_level' => 'integer',
+        'low_stock_threshold' => 'integer',
+        'delivery_time' => 'integer',
+        'warranty_period' => 'integer',
+        'type' => ProductType::class
     ];
-
-    // İlişkiler
 
     public function variations()
     {
         return $this->hasMany(ProductVariation::class);
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function taxClass()
+    {
+        return $this->belongsTo(TaxClass::class);
+    }
+
     public function categories()
     {
-        return $this->belongsToMany(ProductCategory::class, 'category_product', 'product_id', 'product_category_id');
+        return $this->belongsToMany(ProductCategory::class, 'category_product');
     }
 
-    public function meta()
+    public function tags()
     {
-        return $this->hasMany(ProductMeta::class);
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    // Yardımcı metodlar
-    public function isVariable(): bool
+    public function attributeValues()
     {
-        return $this->type === ProductType::VARIABLE;
+        return $this->belongsToMany(ProductAttributeValue::class, 'product_attribute_value');
     }
 
-    public function isSimple(): bool
+    public function relatedProducts()
     {
-        return $this->type === ProductType::SIMPLE;
+        return $this->belongsToMany(Product::class, 'product_related', 'product_id', 'related_product_id');
     }
 
-    public function isGrouped(): bool
+    public function productAttributes()
     {
-        return $this->type === ProductType::GROUPED;
+        return $this->hasMany(ProductAttributeRelation::class);
     }
 
-    public function isExternal(): bool
+    public function registerMediaCollections(): void
     {
-        return $this->type === ProductType::EXTERNAL;
+        MediaService::registerMediaCollections($this);
     }
 
-    public function getFinalPrice(): float
+    public function registerMediaConversions(Media $media = null): void
     {
-        return $this->discount_price ?? $this->price;
+        MediaService::registerMediaConversions($this, $media, true);
     }
 
-    public function hasDiscount(): bool
+    public function isLowStock(): bool
     {
-        return !is_null($this->discount_price);
+        if (!$this->manage_stock || !$this->notify_low_stock || !$this->low_stock_threshold) {
+            return false;
+        }
+
+        return $this->stock <= $this->low_stock_threshold;
+    }
+
+    public function canBackorder(): bool
+    {
+        return $this->manage_stock && $this->allow_backorders;
+    }
+
+    public function isInStock(): bool
+    {
+        if (!$this->manage_stock) {
+            return true;
+        }
+
+        if ($this->stock_status === 'out_of_stock') {
+            return false;
+        }
+
+        if ($this->stock_status === 'on_backorder') {
+            return $this->canBackorder();
+        }
+
+        return $this->stock > 0;
+    }
+
+    public function getStockStatusTextAttribute(): string
+    {
+        if (!$this->manage_stock) {
+            return 'Stok takibi kapalı';
+        }
+
+        switch ($this->stock_status) {
+            case 'in_stock':
+                return 'Stokta';
+            case 'out_of_stock':
+                return 'Stok yok';
+            case 'on_backorder':
+                return 'Ön sipariş';
+            default:
+                return 'Bilinmiyor';
+        }
+    }
+
+    public function getDeliveryTimeTextAttribute(): string
+    {
+        if (!$this->requires_shipping) {
+            return 'Kargo gerektirmez';
+        }
+
+        if (!$this->delivery_time) {
+            return 'Belirtilmemiş';
+        }
+
+        return "{$this->delivery_time} gün";
+    }
+
+    
+    public function scopeActive($query){
+        return $query->where('status', 1);
     }
 
     public function scopeLang($query){
@@ -96,69 +184,18 @@ class Product extends Model implements TranslatableContract,HasMedia,Viewable
         });
     }
 
-    public function attributes()
-    {
-        return $this->belongsToMany(ProductAttribute::class, 'product_attribute_relations', 'product_id', 'attribute_id')
-            ->withPivot('value_id');
+    public function scopeRank($query){
+        return $query->orderBy('rank','asc');
     }
 
-    public function attributeValues()
+    public function isVariable(): bool
     {
-        return $this->belongsToMany(ProductAttributeValue::class, 'product_attribute_values_simple', 'product_id', 'value_id')
-            ->withTimestamps();
+        return $this->type === ProductType::VARIABLE->value;
     }
 
-    public function productAttributes()
+    public function isSimple(): bool
     {
-        return $this->hasMany(ProductAttributeRelation::class);
+        return $this->type === ProductType::SIMPLE->value;
     }
 
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'taggable')->withoutGlobalScope('order');
-    }
-
-    // Media koleksiyonları
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('page')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('gallery')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('cover')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        if ($media === null) {
-            return;
-        }
-
-        $this->addMediaConversion('img')
-            ->width(1250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-
-        $this->addMediaConversion('thumb')
-            ->width(500)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-            
-        $this->addMediaConversion('small')
-            ->width(250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-                 
-        $this->addMediaConversion('icon')
-            ->width(100)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-    }
 } 

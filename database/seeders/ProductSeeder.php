@@ -87,6 +87,7 @@ class ProductSeeder extends Seeder
                 'addGoogle' => true,
                 'addComment' => false,
                 'deleteContent' => false,
+                'sku' => rand(1, 999999),
             ]);
 
             $product->translations()->create([

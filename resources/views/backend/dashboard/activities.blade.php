@@ -10,7 +10,7 @@
             </div>
             <div class="col-auto ms-auto">
                 <form action="{{ route('dashboard.activities.clear') }}" method="POST" 
-                class="d-inline" onsubmit="return confirm('Tüm aktivite kayıtları silinecek. Emin misiniz?')"
+                class="d-inline"
                 data-action="delete">
                     @csrf
                     @method('DELETE')

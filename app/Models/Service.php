@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Enums\StatusEnum;
 
-use Spatie\MediaLibrary\HasMedia;
+use App\Services\MediaService;
 
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+
 use Astrotomic\Translatable\Translatable;
 
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -14,7 +16,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
-
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -36,50 +37,17 @@ class Service extends Model implements TranslatableContract,HasMedia,Viewable
 
     public function faqs()
     {
-        return $this->morphMany(Faq::class, 'faqable');
+        return $this->morphToMany(Faq::class, 'faqable');
     }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('page')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('gallery')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('cover')
-            ->useFallbackUrl('/backend/resimyok.jpg');
+        MediaService::registerMediaCollections($this);
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
-        if ($media === null) {
-            return;
-        }
-
-        $this->addMediaConversion('img')
-            ->width(1250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-
-        $this->addMediaConversion('thumb')
-            ->width(500)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-            
-        $this->addMediaConversion('small')
-            ->width(250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-                 
-        $this->addMediaConversion('icon')
-            ->width(100)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
+        MediaService::registerMediaConversions($this, $media, false);
     }
 
     public function scopeActive($query){

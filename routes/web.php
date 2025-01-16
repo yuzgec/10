@@ -23,6 +23,7 @@ Route::redirect('/makale/google-reklamlari-ile-firmanizi-ilk-adim-oteye-tasiyin/
 
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
+
 $selectLang = Language::active()->get()->count();
 
 if($selectLang == 1){
@@ -44,5 +45,3 @@ if($selectLang == 1){
 
 require __DIR__.'/backend.php';
 require __DIR__.'/auth.php';
-
-// Döviz kuru route'ları

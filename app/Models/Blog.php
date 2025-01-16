@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use App\Services\MediaService;
 
 class Blog extends Model implements TranslatableContract,HasMedia,Viewable
 {
@@ -43,45 +44,12 @@ class Blog extends Model implements TranslatableContract,HasMedia,Viewable
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('page')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('gallery')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('cover')
-            ->useFallbackUrl('/backend/resimyok.jpg');
+        MediaService::registerMediaCollections($this);
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
-        if ($media === null) {
-            return;
-        }
-
-        $this->addMediaConversion('img')
-            ->width(1250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-
-        $this->addMediaConversion('thumb')
-            ->width(500)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-            
-        $this->addMediaConversion('small')
-            ->width(250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-                 
-        $this->addMediaConversion('icon')
-            ->width(100)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
+        MediaService::registerMediaConversions($this, $media, false);
     }
 
     public function scopeActive($query){

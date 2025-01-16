@@ -1,4 +1,9 @@
-@php $componentName = "dashboard.icon.$icon" @endphp
+@php
+    // Noktalı syntax için error kontrolü
+    $hasError = str_contains($name, '.') 
+        ? $errors->has(str_replace(['.', '[]', '[', ']'], ['.*', '', '.', ''], $name))
+        : $errors->has($name);
+@endphp
 
 <div class="form-group mb-3 row">
     <label class="form-label col-{{$column}} col-form-label {{ $required ? 'required' : '' }}">{{$label}}</label>
@@ -9,23 +14,25 @@
                     <x-dynamic-component :component="$componentName" width="16" height="16" />
                 </span>
                 {!! Html::text($name)
-                    ->class($class . ($errors->has($name) ? ' is-invalid' : ''))
+             ->class([$class, $errors->has($name) ? 'is-invalid' : ''])
                     ->placeholder($placeholder)
                     ->attribute('maxlength', $maxlength ?? null)
-                    ->id($id) !!}
-           
+                    ->id($id) 
+                !!}
             </div>
         @else
             {!! Html::text($name)
-                ->class($class . ($errors->has($name) ? ' is-invalid' : ''))
+                ->class([$class, $errors->has($name) ? 'is-invalid' : ''])
                 ->placeholder($placeholder)
                 ->attribute('maxlength', $maxlength ?? null)
                 ->id($id) !!}
         @endif
             
-        @if($errors->has($name))
+        @if($hasError)
             <div class="invalid-feedback" style="display: block">
-                {{ $errors->first($name) }}
+                {{ str_contains($name, '.') 
+                    ? $errors->first(str_replace(['.', '[]', '[', ']'], ['.*', '', '.', ''], $name))
+                    : $errors->first($name) }}
             </div>
         @endif
         

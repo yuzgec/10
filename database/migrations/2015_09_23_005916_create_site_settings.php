@@ -36,11 +36,9 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-
             $table->string('item');
             $table->string('value')->nullable();
             $table->boolean('isImage')->default(false);
-            
             $table->integer('isType')->default(SettingsEnum::INPUT->value);
         });
     }

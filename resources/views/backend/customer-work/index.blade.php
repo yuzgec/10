@@ -62,10 +62,8 @@
                                         <td>{{ $work->id }}</td>
                                         <td>
                                             {{ $work->customer->company_name }}
-                                            @if($work->customer->authorized_person)
-                                                <br>
-                                                <small class="text-muted">{{ $work->customer->authorized_person }}</small>
-                                            @endif
+                                            <br>
+                                            <small class="text-muted">{{ $work->customer->website1 }}</small>
                                         </td>
                                         <td>
                                             {{ $work->offer->offer_no }}
@@ -84,13 +82,13 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-{{ $work->status->color() }}">
+                                            <span class="badge text-white p-2 bg-{{ $work->status->color() }}">
                                                 {{ $work->status->title() }}
                                             </span>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <span class="badge bg-{{ $work->payment_status->color() }} mb-1">
+                                                <span class="badge text-white p-2 bg-{{ $work->payment_status->color() }} mb-1">
                                                     {{ $work->payment_status->title() }}
                                                 </span>
                                                 <small class="text-muted">{{ $work->payment_status_text }}</small>

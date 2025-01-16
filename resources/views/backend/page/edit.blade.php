@@ -7,6 +7,8 @@
     ->open() 
 !!}
 
+<input type="hidden" name="id" value="{{ $edit->id }}">
+
 <x-dashboard.crud.edit-header :model='$edit' route="page" name="Sayfa"/>
 
 <div class="row">

@@ -215,24 +215,124 @@
             </div>
         </div>
 
-        <!-- Kategoriler -->
+        <!-- Stok Yönetimi -->
         <div class="card mb-3">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <h3 class="card-title">Kategoriler</h3>
+                <h3 class="card-title">Stok Yönetimi</h3>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <select name="categories[]" class="form-select" multiple data-tags="true">
-                        @foreach($cat as $category)
-                            <option value="{{ $category->id }}" 
-                                    {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="manage_stock" name="manage_stock" value="1">
+                        <label class="form-check-label" for="manage_stock">Stok Takibi</label>
+                    </div>
+                </div>
+
+                <div id="stockFields" style="display: none;">
+                    <!-- Stok alanları -->
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label class="form-label">Minimum Stok Seviyesi</label>
+                                <input type="number" class="form-control" name="min_stock_level" value="{{ old('min_stock_level') }}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label class="form-label">Maksimum Stok Seviyesi</label>
+                                <input type="number" class="form-control" name="max_stock_level" value="{{ old('max_stock_level') }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Stok Durumu</label>
+                        <select name="stock_status" class="form-select">
+                            <option value="in_stock" {{ old('stock_status') == 'in_stock' ? 'selected' : '' }}>Stokta</option>
+                            <option value="out_of_stock" {{ old('stock_status') == 'out_of_stock' ? 'selected' : '' }}>Stok Yok</option>
+                            <option value="on_backorder" {{ old('stock_status') == 'on_backorder' ? 'selected' : '' }}>Ön Sipariş</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="allow_backorders" name="allow_backorders" value="1">
+                            <label class="form-check-label" for="allow_backorders">Ön Siparişe İzin Ver</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="notify_low_stock" name="notify_low_stock" value="1">
+                            <label class="form-check-label" for="notify_low_stock">Düşük Stok Bildirimi</label>
+                        </div>
+                    </div>
+
+                    <div id="lowStockFields" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label">Düşük Stok Eşiği</label>
+                            <input type="number" class="form-control" name="low_stock_threshold" value="{{ old('low_stock_threshold') }}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="show_stock_quantity" name="show_stock_quantity" value="1" checked>
+                            <label class="form-check-label" for="show_stock_quantity">Stok Miktarını Göster</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="requires_shipping" name="requires_shipping" value="1">
+                        <label class="form-check-label" for="requires_shipping">Kargo Gerekli</label>
+                    </div>
+                </div>
+
+                <div id="shippingFields" style="display: none;">
+                    <div class="mb-3">
+                        <label class="form-label">Teslimat Süresi (Gün)</label>
+                        <input type="number" class="form-control" name="delivery_time" value="{{ old('delivery_time') }}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <x-dashboard.form.only-number-input name="shipping_cost" label="Kargo Ücreti" step="0.01" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Özel Alanlar -->
+        <div class="card mb-3">
+            <div class="card-status-top bg-blue"></div>
+            <div class="card-header">
+                <h3 class="card-title">Özel Alanlar</h3>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <x-dashboard.form.only-number-input name="warranty_period" label="Garanti Süresi (Ay)" />
+                </div>
+                <div class="mb-3">
+                    <x-dashboard.form.only-input name="manufacturing_place" label="Üretim Yeri" />
+                </div>
+                <div class="mb-3">
+                    <x-dashboard.form.only-input name="barcode" label="Barkod" />
                 </div>
             </div>
+        </div>
+
+  
+
+        <!-- Kategoriler -->
+        <div class="card mb-3">
+            <select name="categories[]" id="categories" class="form-select" multiple required>
+                @foreach($cat as $category)
+                    <option value="{{ $category->id }}">{{ $category->translate(app()->getLocale())->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mt-3">
@@ -246,48 +346,31 @@
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var categorySelect = document.querySelector('select[name="categories[]"]');
-        new TomSelect(categorySelect, {
-            plugins: ['remove_button'],
-            maxItems: null
-        });
 
-        var tagSelect = document.querySelector('select[name="tags[]"]');
-        new TomSelect(tagSelect, {
-            plugins: ['remove_button'],
-            maxItems: null,
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            create: async function(input) {
-                const response = await $.post('/go/shop/tags/store', {
-                    name: input,
-                    _token: document.querySelector('meta[name="csrf-token"]').content
-                });
-                return {
-                    id: response.id,
-                    name: response.name
-                };
-            }
-        });
-    });
-
-    document.getElementById('tax_status').addEventListener('change', function() {
-        const taxClassWrapper = document.getElementById('tax_class_wrapper');
-        taxClassWrapper.style.display = this.value === 'none' ? 'none' : 'block';
-    });
-
-    // Sayfa yüklendiğinde kontrol et
-    document.addEventListener('DOMContentLoaded', function() {
-        const taxStatus = document.getElementById('tax_status');
-        const taxClassWrapper = document.getElementById('tax_class_wrapper');
-        taxClassWrapper.style.display = taxStatus.value === 'none' ? 'none' : 'block';
-    });
-</script>
 
 @include('backend.layout.ck')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const manageStock = document.getElementById('manage_stock');
+    const stockFields = document.getElementById('stockFields');
+    const notifyLowStock = document.getElementById('notify_low_stock');
+    const lowStockFields = document.getElementById('lowStockFields');
+    const requiresShipping = document.getElementById('requires_shipping');
+    const shippingFields = document.getElementById('shippingFields');
+
+    manageStock.addEventListener('change', function() {
+        stockFields.style.display = this.checked ? 'block' : 'none';
+    });
+
+    notifyLowStock.addEventListener('change', function() {
+        lowStockFields.style.display = this.checked ? 'block' : 'none';
+    });
+
+    requiresShipping.addEventListener('change', function() {
+        shippingFields.style.display = this.checked ? 'block' : 'none';
+    });
+});
+</script>
 @endpush
 
 

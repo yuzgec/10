@@ -6,20 +6,22 @@ use Spatie\Tags\HasTags;
 use App\Enums\MediumEnum;
 use App\Enums\CustomerEnum;
 use App\Models\CustomerOffer;
+use App\Services\MediaService;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Activitylog\LogOptions;
 use App\Enums\CustomerOfferStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Customer extends Model implements HasMedia
 {
     use HasFactory,LogsActivity,InteractsWithMedia,HasTags,SoftDeletes;
@@ -66,45 +68,13 @@ class Customer extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('page')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('gallery')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
+        MediaService::registerMediaCollections($this);
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
-        if ($media === null) {
-            return;
-        }
-
-        $this->addMediaConversion('img')
-            ->width(1250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-
-        $this->addMediaConversion('thumb')
-            ->width(500)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-            
-        $this->addMediaConversion('small')
-            ->width(250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-                 
-        $this->addMediaConversion('icon')
-            ->width(100)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
+        MediaService::registerMediaConversions($this, $media, false);
     }
-
     protected $casts = [
         'status' => CustomerEnum::class,
         'medium' => MediumEnum::class,

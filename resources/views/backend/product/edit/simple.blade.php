@@ -9,7 +9,10 @@
     ->attribute('data-action', 'update')
     ->open() 
 !!}
-<x-dashboard.crud.edit-header :model='$product' route="page" name="Sayfa"/>
+<input type="hidden" name="type" value="simple">
+<input type="hidden" name="product_id" value="{{ $product->id }}">
+
+<x-dashboard.crud.edit-header :model='$product' route="page" name="Ürün"/>
 
 <div class="row">
     <div class="col-md-9 mb-3">
@@ -46,19 +49,7 @@
                 <div class="tab-content">
                     <div class="tab-pane" id="image" role="tabpanel">
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="card">
-                                    <div class="card-stamp">
-                                        <div class="card-stamp-icon bg-blue">
-                                            <x-dashboard.icon.image/>
-                                        </div>
-                                    </div>
-                                    <div class="card-status-top bg-blue"></div>
-                                    <div class="card-header">
-                                        <h4 class="card-title"><x-dashboard.icon.image/>Image</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        
+                        
                             <div class="col-md-6 mb-3">
                                 <div class="card">
                                     <div class="card-stamp">
@@ -96,23 +87,6 @@
                                 </div>
                             </div>
 
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <div class="card">
-                                    <div class="card-stamp">
-                                        <div class="card-stamp-icon bg-green">
-                                            <x-dashboard.icon.image/>
-                                        </div>
-                                    </div>
-                                    <div class="card-status-top bg-blue"></div>
-                                    <div class="card-header">
-                                        <h4 class="card-title"><x-dashboard.icon.image/>Cover</h4>
-                                    </div>
-                                    <div class="card-body">
-                                       
                             <div class="col-md-6 mb-3">
                                 <div class="card">
                                     <div class="card-stamp">
@@ -146,9 +120,6 @@
                                                 <small class="text-muted">PNG, JPG veya JPEG</small>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -169,6 +140,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -231,7 +203,7 @@
                 <div class="mb-3">
                     <label class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" name="featured" value="1" 
-                                {{ old('featured') ? 'checked' : '' }}>
+                                {{ old('featured', $product->featured) ? 'checked' : '' }}>
                         <span class="form-check-label">Öne Çıkan Ürün</span>
                     </label>
                 </div>
@@ -239,7 +211,7 @@
                 <div class="mb-3">
                     <label class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" name="status" value="1" 
-                                {{ old('status', 1) ? 'checked' : '' }}>
+                                {{ old('status', $product->status) ? 'checked' : '' }}>
                         <span class="form-check-label">Aktif</span>
                     </label>
                 </div>
@@ -249,20 +221,61 @@
 
         <!-- Kategoriler -->
         <div class="card mb-3">
+            <livewire:category-manager :product="$product" />
+        </div>
+
+        <!-- İlişkili Ürünler -->
+        <livewire:relation-product :product="$product" />
+
+        <!-- Stok Yönetimi -->
+        <div class="card mb-3">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <h3 class="card-title">Kategoriler</h3>
+                <h3 class="card-title">Stok Yönetimi</h3>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <select name="categories[]" class="form-select" multiple data-tags="true">
-                        @foreach($cat as $category)
-                            <option value="{{ $category->id }}" 
-                                    {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
+                    <label class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" name="manage_stock" value="1" 
+                                {{ old('manage_stock', $product->manage_stock) ? 'checked' : '' }}>
+                        <span class="form-check-label">Stok Takibi</span>
+                    </label>
+                </div>
+
+                <div class="mb-3">
+                    <x-dashboard.form.only-number-input name="min_stock_level" label="Minimum Stok Seviyesi" value="{{ old('min_stock_level', $product->min_stock_level) }}" />
+                </div>
+
+                <div class="mb-3">
+                    <x-dashboard.form.only-number-input name="max_stock_level" label="Maksimum Stok Seviyesi" value="{{ old('max_stock_level', $product->max_stock_level) }}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Stok Durumu</label>
+                    <select name="stock_status" class="form-select">
+                        <option value="in_stock" {{ old('stock_status', $product->stock_status) == 'in_stock' ? 'selected' : '' }}>Stokta</option>
+                        <option value="out_of_stock" {{ old('stock_status', $product->stock_status) == 'out_of_stock' ? 'selected' : '' }}>Stokta Yok</option>
+                        <option value="on_backorder" {{ old('stock_status', $product->stock_status) == 'on_backorder' ? 'selected' : '' }}>Ön Siparişte</option>
                     </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Özel Alanlar -->
+        <div class="card mb-3">
+            <div class="card-status-top bg-blue"></div>
+            <div class="card-header">
+                <h3 class="card-title">Özel Alanlar</h3>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <x-dashboard.form.only-number-input name="warranty_period" label="Garanti Süresi (Ay)" value="{{ old('warranty_period', $product->warranty_period) }}" />
+                </div>
+                <div class="mb-3">
+                    <x-dashboard.form.only-input name="manufacturing_place" label="Üretim Yeri" value="{{ old('manufacturing_place', $product->manufacturing_place) }}" />
+                </div>
+                <div class="mb-3">
+                    <x-dashboard.form.only-input name="barcode" label="Barkod" value="{{ old('barcode', $product->barcode) }}" />
                 </div>
             </div>
         </div>
@@ -279,44 +292,44 @@
 
 @push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var categorySelect = document.querySelector('select[name="categories[]"]');
-        new TomSelect(categorySelect, {
-            plugins: ['remove_button'],
-            maxItems: null
+document.addEventListener("DOMContentLoaded", function() {
+    // İlişkili ürünler için TomSelect
+    const relatedProductsSelect = document.querySelector('#relatedProducts');
+    if (relatedProductsSelect) {
+        new TomSelect(relatedProductsSelect, {
+            maxItems: null,
+            placeholder: 'İlişkili ürünleri seçin...',
+            allowEmptyOption: true
         });
+    }
 
-        var tagSelect = document.querySelector('select[name="tags[]"]');
+    // Etiketler için TomSelect
+    const tagSelect = document.querySelector('select[name="tags[]"]');
+    if (tagSelect) {
         new TomSelect(tagSelect, {
-            plugins: ['remove_button'],
             maxItems: null,
             valueField: 'id',
             labelField: 'name',
             searchField: 'name',
+            placeholder: 'Etiket seçin veya ekleyin...',
             create: async function(input) {
-                const response = await $.post('/go/shop/tags/store', {
-                    name: input,
-                    _token: document.querySelector('meta[name="csrf-token"]').content
+                const response = await fetch('/go/shop/tags/store', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ name: input })
                 });
+                const data = await response.json();
                 return {
-                    id: response.id,
-                    name: response.name
+                    id: data.id,
+                    name: data.name
                 };
             }
         });
-    });
-
-    document.getElementById('tax_status').addEventListener('change', function() {
-        const taxClassWrapper = document.getElementById('tax_class_wrapper');
-        taxClassWrapper.style.display = this.value === 'none' ? 'none' : 'block';
-    });
-
-    // Sayfa yüklendiğinde kontrol et
-    document.addEventListener('DOMContentLoaded', function() {
-        const taxStatus = document.getElementById('tax_status');
-        const taxClassWrapper = document.getElementById('tax_class_wrapper');
-        taxClassWrapper.style.display = taxStatus.value === 'none' ? 'none' : 'block';
-    });
+    }
+});
 </script>
 
 @include('backend.layout.ck')

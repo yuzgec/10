@@ -34,6 +34,57 @@
 
                         <x-dashboard.site.seo :lang="$lang" />
 
+                        <div class="card mb-3">
+                            <div class="card-status-top bg-blue"></div>
+                            <div class="card-header">
+                                <h4 class="card-title">{{ strtoupper($lang->lang) }} FAQ</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="faq-items-{{ $lang->lang }}">
+                                    <div class="faq-item card p-3 mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h4 class="card-title m-0">
+                                                <x-dashboard.icon.add/>
+                                                Yeni FAQ
+                                            </h4>
+                                            <button type="button" class="btn btn-danger btn-sm btn-icon remove-faq">
+                                                <x-dashboard.icon.delete width="16"/>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="row g-2">
+                                            <div class="col-12">
+                                                <div class="form-floating mb-2">
+                                                    <input type="text" 
+                                                        class="form-control" 
+                                                        name="faqs[{{ $lang->lang }}][0][name]" 
+                                                        placeholder="Soru yazınız">
+                                                    <label>Soru</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <textarea 
+                                                        class="form-control" 
+                                                        name="faqs[{{ $lang->lang }}][0][desc]"
+                                                        style="height: 100px"
+                                                        placeholder="Cevap yazınız"></textarea>
+                                                    <label>Cevap</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-end mt-3">
+                                    <button type="button" class="btn btn-primary add-faq" data-locale="{{ $lang->lang }}">
+                                        <x-dashboard.icon.add class="me-1"/>
+                                        Yeni FAQ Ekle
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>       
                 </div>
                 @endforeach
@@ -188,5 +239,90 @@
 @endsection
 
 @section('customJS')
-    @include('backend.layout.ck')
+
+<script>
+    document.querySelectorAll('.add-faq').forEach(button => {
+        button.addEventListener('click', function() {
+            const locale = this.dataset.locale;
+            const container = document.querySelector(`.faq-items-${locale}`);
+            const index = container.querySelectorAll('.faq-item').length;
+            
+            const template = `
+                <div class="faq-item card p-3 mb-2">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="card-title m-0">
+                            <x-dashboard.icon.add/>
+                            Yeni FAQ
+                        </h4>
+                        <button type="button" class="btn btn-danger btn-sm btn-icon remove-faq">
+                            <x-dashboard.icon.delete width="16"/>
+                        </button>
+                    </div>
+                    
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <div class="form-floating mb-2">
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="faqs[${locale}][${index}][name]" 
+                                    placeholder="Soru yazınız">
+                                <label>Soru</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea 
+                                    class="form-control" 
+                                    name="faqs[${locale}][${index}][desc]"
+                                    style="height: 100px"
+                                    placeholder="Cevap yazınız"></textarea>
+                                <label>Cevap</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', template);
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-faq')) {
+            const faqItem = e.target.closest('.faq-item');
+            faqItem.remove();
+        }
+    });
+</script>
+
+<style>
+    .faq-item {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,.125);
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+    }
+
+    .faq-item:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    }
+
+    .form-floating > .form-control::placeholder {
+        color: transparent;
+    }
+
+    .form-floating > .form-control:focus::placeholder {
+        color: #6c757d;
+    }
+
+    .btn-danger {
+        transition: all 0.2s ease;
+        border-radius: 50%;
+    }
+
+    .btn-danger:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+@include('backend.layout.ck')
 @endsection

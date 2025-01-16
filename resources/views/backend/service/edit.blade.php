@@ -39,9 +39,16 @@
                             </div>
                         </div>
                         <x-dashboard.site.seo :lang="$lang" />
+
+                       
+
                     </div>       
                 </div>
                 @endforeach
+                <div class="mt-4">
+                    <h3>FAQ'lar</h3>
+                    <livewire:service-faq :service="$edit" />
+                </div>
                 <div class="tab-content">
                     <div class="tab-pane" id="image" role="tabpanel">                      
                         <div class="row">
@@ -251,7 +258,7 @@
 
 @section('customJS')
     @include('backend.layout.ck')
-  
+
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -259,4 +266,6 @@
             });
         </script>
     @endpush
+
+    
 @endsection

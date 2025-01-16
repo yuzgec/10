@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Faq;
 use App\Models\Service;
 use App\Models\Category;
-use App\Enums\StatusEnum;
 
+use App\Models\Language;
+use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Services\ViewService;
 use App\Services\MediaService;
 use App\Services\CategoryService;
 use App\Http\Requests\PageRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ServiceRequest;
 use Spatie\Activitylog\Models\Activity;
 use CyrildeWit\EloquentViewable\Support\Period;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -69,37 +73,45 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PageRequest $request)
+    public function store(ServiceRequest $request)
     {
-        $create = Service::create($request->except('image', 'cover', 'gallery'));
+        DB::beginTransaction();
+        try {
+            // Service oluştur
+            $create = Service::create($request->except('faqs','image','cover','gallery'));
 
-        $this->mediaService->handleMediaUpload(
-            $create, 
-            $request->file('image'),
-            'page',
-            false
-        );
-
-        $this->mediaService->handleMediaUpload(
-            $create, 
-            $request->file('cover'),
-            'cover',
-            false
-        );
-
-        if ($request->hasFile('gallery')) {
-            $files = $request->file('gallery');
-            
-            $this->mediaService->handleMultipleMediaUpload(
-                $create,
-                $files,
-                'gallery',
+            $this->mediaService->handleMediaUpload(
+                $update, 
+                $request->file('image'),
+                'page',
+                false
             );
+
+            $this->mediaService->handleMediaUpload(
+                $update, 
+                $request->file('cover'),
+                'cover',
+                false
+            );
+
+            if ($request->hasFile('gallery')) {
+                $this->mediaService->handleMultipleMediaUpload(
+                    $update,
+                    $request->file('gallery'),
+                    'gallery'
+                );
+            }
+
+          
+            DB::commit();
+            alert()->success('Başarılı', 'Başarıyla eklendi');
+            return redirect()->route('service.index');
+
+        } catch(\Exception $e) {
+            DB::rollback();
+            alert()->error('Hata', 'Bir hata oluştu: ' . $e->getMessage());
+            return redirect()->back();
         }
-
-        alert()->html('Başarıyla Eklendi','<b>'.$create->name.'</b> isimli hizmet başarıyla eklendi.', 'success');
-        return redirect()->route('service.index');
-
     }
 
     /**
@@ -115,7 +127,9 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        $edit = Service::with('getCategory')->withTrashed()->find($id);
+        $edit = Service::with('getCategory','faqs.translations')->lang()->withTrashed()->find($id);
+        //dd($edit->faqs->toArray());
+        //dd($edit);
         $cat = $this->categoryService->getChildrenBySlug('hizmet');
         return view('backend.service.edit', compact('edit', 'cat'));
     }
@@ -123,40 +137,22 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Service $service)
+    public function update(ServiceRequest $request, Service $update)
     {
-        $update = Service::withTrashed()->find($service->id);
+        DB::beginTransaction();
+        try {
+            $update->update($request->except(['faqs','existing_faqs','current_faqs']));
 
-        tap($update)->update($request->except('image', 'cover', 'gallery', 'deleteImage', 'deleteCover'));
+            DB::commit();
+            alert()->success('Başarılı', 'Başarıyla güncellendi');
+            return redirect()->route('service.edit', $update->id);
 
-        $this->mediaService->updateMedia(
-            $update, 
-            $request->file('image'),
-            'page',
-            false
-        );
-
-        $this->mediaService->updateMedia(
-            $update, 
-            $request->file('cover'),
-            'cover',
-            false
-        );
-
-        if ($request->hasFile('gallery')) {
-            $files = $request->file('gallery');
-            
-            $this->mediaService->handleMultipleMediaUpload(
-                $update,
-                $files,
-                'gallery',
-                false
-            );
+        } catch(\Exception $e) {
+            DB::rollback();
+         
+            alert()->error('Hata', 'Bir hata oluştu: ' . $e->getMessage());
+            return redirect()->back();
         }
-
-        alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli hizmet başarıyla güncellendi.', 'success');
-        return redirect()->route('service.index');
-
     }
 
     /**

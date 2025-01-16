@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="/frontend/style.css?ver=5">
 <link rel="stylesheet" href="/frontend/css/colors/sky.css?ver=3">
 <link rel="preload" href="/frontend/css/fonts/thicccboi.css" as="style" onload="this.rel='stylesheet'">
+<link rel="canonical" href="https://godijital.net/">
+
 <style>
   .navbar.navbar-light.fixed .btn:not(.btn-expand):not(.btn-gradient) {
     background: #08040d !important;

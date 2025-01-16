@@ -4,19 +4,19 @@ namespace App\Models;
 
 use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class Faq extends Model implements TranslatableContract
 {
-    use HasFactory,SoftDeletes,Translatable;
+    use HasFactory,Translatable;
 
     protected $table = 'faq';
     protected $guarded = [];
+    public $timestamps = false;
 
     public $translatedAttributes = ['name','desc'];
 
@@ -25,7 +25,6 @@ class Faq extends Model implements TranslatableContract
     {
         return $this->morphTo();
     }
-
 
     public function getCategory()
     {
@@ -49,4 +48,9 @@ class Faq extends Model implements TranslatableContract
     protected $casts = [
         'status' => StatusEnum::class,
     ];
+
+    public function services()
+    {
+        return $this->morphedByMany(Service::class, 'faqable');
+    }
 }

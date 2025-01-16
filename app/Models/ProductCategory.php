@@ -2,93 +2,92 @@
 
 namespace App\Models;
 
+use App\Models\Product;
+use App\Services\MediaService;
+use App\Models\ProductCategory;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-class ProductCategory extends Model implements TranslatableContract, HasMedia
+class ProductCategory extends Model implements TranslatableContract,HasMedia,Viewable
 {
-    use SoftDeletes, Translatable, NodeTrait, InteractsWithMedia;
+    use Translatable,InteractsWithMedia,NodeTrait,InteractsWithViews;
 
     protected $table = 'product_categories';
     
-    public $translatedAttributes = ['name', 'slug', 'short', 'desc', 'seoTitle', 'seoDesc', 'seoKey'];
-    protected $guarded = [];
+    protected $fillable = ['parent_id', 'order', 'status'];
+    public $translatedAttributes = ['name', 'slug'];
 
-    public function products()
+    public function parent(): BelongsTo
     {
-        return $this->belongsToMany(Product::class, 'category_product', 'product_category_id', 'product_id');
+        return $this->belongsTo(ProductCategory::class, 'parent_id');
     }
 
-    public function children()
+    public function children(): HasMany
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(ProductCategory::class, 'parent_id');
     }
 
-    public function parent()
+    public function allChildren(): HasMany
     {
-        return $this->belongsTo(self::class, 'parent_id');
+        return $this->children()->with('allChildren');
     }
 
-    public function scopeActive($query)
+    public function getParentNames(): array
     {
-        return $query->where('status', true);
+        $names = [];
+        $category = $this;
+        
+        while ($category->parent) {
+            $names[] = $category->parent->name;
+            $category = $category->parent;
+        }
+        
+        return array_reverse($names);
+    }
+
+    public function getFullPathAttribute(): string
+    {
+        $path = $this->name;
+        $category = $this;
+        
+        while ($category->parent) {
+            $path = $category->parent->name . ' > ' . $path;
+            $category = $category->parent;
+        }
+        
+        return $path;
     }
 
     public function scopeLang($query)
     {
         return $query->whereHas('translations', function ($query) {
-            $query->where('locale', '=', app()->getLocale());
+            $query->where('locale', app()->getLocale());
         });
     }
 
-    
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'category_product');
+    }
+
+
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('page')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('gallery')
-            ->useFallbackUrl('/backend/resimyok.jpg');
-
-        $this->addMediaCollection('cover')
-            ->useFallbackUrl('/backend/resimyok.jpg');
+        MediaService::registerMediaCollections($this);
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
-        if ($media === null) {
-            return;
-        }
-
-        $this->addMediaConversion('img')
-            ->width(1250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-
-        $this->addMediaConversion('thumb')
-            ->width(500)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
-            
-        $this->addMediaConversion('small')
-            ->width(250)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery', 'cover');
-                 
-        $this->addMediaConversion('icon')
-            ->width(100)
-            ->nonOptimized()
-            ->keepOriginalImageFormat()
-            ->performOnCollections('page', 'gallery');
+        MediaService::registerMediaConversions($this, $media, false);
     }
 
 }

@@ -77,9 +77,7 @@ return new class extends Migration
             
             $table->string('status')->default(StatusEnum::PUBLISHED->value);
             $table->integer('rank')->nullable();
-            
-            $table->timestamps();
-            $table->softDeletes();
+
         });
 
         Schema::create('faq_translations', function (Blueprint $table) {

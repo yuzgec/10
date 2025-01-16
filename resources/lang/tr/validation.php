@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'required' => ':attribute alanı zorunludur.',
+    'unique' => ':attribute alanı daha önce kullanılmış.',
+    'exists' => 'Seçilen :attribute geçersiz.',
+    'numeric' => ':attribute sayısal bir değer olmalıdır.',
+    'min' => [
+        'numeric' => ':attribute en az :min olmalıdır.',
+        'string' => ':attribute en az :min karakter olmalıdır.',
+    ],
+    'boolean' => ':attribute alanı true veya false olmalıdır.',
+    'array' => ':attribute bir dizi olmalıdır.',
+    'in' => 'Seçilen :attribute geçersiz.',
+
+    'attributes' => [
+        'name' => 'İsim',
+        'slug' => 'SEO URL',
+        'description' => 'Açıklama',
+        'short_description' => 'Kısa Açıklama',
+        'sku' => 'Stok Kodu',
+        'barcode' => 'Barkod',
+        'stock' => 'Stok',
+        'price' => 'Fiyat',
+        'sale_price' => 'İndirimli Fiyat',
+        'categories' => 'Kategoriler',
+        'tags' => 'Etiketler',
+        'brand_id' => 'Marka',
+        'tax_id' => 'Vergi',
+        'status' => 'Durum',
+        'featured' => 'Öne Çıkan',
+        'weight' => 'Ağırlık',
+        'dimension_unit' => 'Boyut Birimi',
+        'length' => 'Uzunluk',
+        'width' => 'Genişlik',
+        'height' => 'Yükseklik',
+        'related_products' => 'İlişkili Ürünler',
+        'selectedAttributes' => 'Özellikler',
+    ],
+]; 

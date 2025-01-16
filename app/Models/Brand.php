@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Services\MediaService;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Brand extends Model implements HasMedia
 {
@@ -19,5 +21,15 @@ class Brand extends Model implements HasMedia
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        MediaService::registerMediaCollections($this);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        MediaService::registerMediaConversions($this, $media, false);
     }
 } 

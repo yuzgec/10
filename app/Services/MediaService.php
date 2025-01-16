@@ -5,7 +5,12 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\Conversions\Manipulation;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\Conversions\Conversion;
+use Spatie\MediaLibrary\Support\ImageFactory;
 
 class MediaService
 {
@@ -183,5 +188,59 @@ class MediaService
     public function hasMedia(HasMedia $model, string $collection): bool
     {
         return $model->hasMedia($collection);
+    }
+
+    public static function registerMediaCollections(HasMedia $model): void 
+    {
+        $model->addMediaCollection('page')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+
+        $model->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+
+        $model->addMediaCollection('cover')
+            ->useFallbackUrl('/backend/resimyok.jpg');
+    }
+
+    public static function registerMediaConversions(HasMedia $model, Media $media = null, bool $withWatermark = false): void
+    {
+        if ($media === null) {
+            return;
+        }
+
+        if ($withWatermark) {
+            $model->addMediaConversion('watermark')
+                ->fit(Fit::Contain, 1250, 1250)
+                ->background('ffffff')
+                ->watermark(public_path('\watermark.png'))
+                ->nonOptimized()
+                ->keepOriginalImageFormat()
+                ->performOnCollections('gallery');
+        }
+
+        // Diğer dönüşümler aynı kalacak
+        $model->addMediaConversion('img')
+            ->fit(Fit::Contain, 1250, 1250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+
+        $model->addMediaConversion('thumb')
+            ->fit(Fit::Contain, 500, 500)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
+            
+        $model->addMediaConversion('small')
+            ->fit(Fit::Contain, 250, 250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery', 'cover');
+                 
+        $model->addMediaConversion('icon')
+            ->fit(Fit::Contain, 100, 100)
+            ->nonOptimized()
+            ->keepOriginalImageFormat()
+            ->performOnCollections('page', 'gallery');
     }
 } 
