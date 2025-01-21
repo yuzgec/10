@@ -233,23 +233,16 @@ return new class extends Migration
 
         // Pivot tablo
         Schema::create('category_product', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_category_id')->constrained()->onDelete('cascade');
-            $table->primary(['product_id', 'product_category_id']);
         });
 
         // Related Products pivot table
-        Schema::create('related_products', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->foreignId('related_product_id')->constrained('products')->onDelete('cascade');
-            $table->timestamps();
-            $table->primary(['product_id', 'related_product_id']);
-        });
-
         Schema::create('product_related', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('related_product_id')->constrained('products')->onDelete('cascade');
-            $table->primary(['product_id', 'related_product_id']);
         });
 
     }

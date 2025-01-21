@@ -3,7 +3,8 @@
         <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-35px] md:mx-[-20px] mt-[-15px] xl:mt-0 lg:mt-0 mb-16">
             <div class="xl:w-7/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[35px] md:px-[20px] mt-[15px] xl:mt-0 lg:mt-0 max-w-full">
                 <h1 class="xl:text-[3.3rem] text-[calc(1.455rem_+_2.46vw)] !leading-[1.05] font-bold !mb-0">
-                    <span class=" !relative z-[1] after:content-[''] after:absolute after:z-[-1] after:block after:[background-size:100%_100%] after:bg-no-repeat after:bg-bottom after:bottom-[-0.1em] after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-1 yellow">GO Dijital</span>
+                    <span class=" !relative z-[1] after:content-[''] after:absolute after:z-[-1] after:block after:[background-size:100%_100%] after:bg-no-repeat after:bg-bottom after:bottom-[-0.1em] after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-1 yellow">
+                      İzmir Web Tasarım</span>
                     yanınızda! Modern dünyada kaybolmayın.
                 </h1>
             </div>
@@ -26,30 +27,30 @@
           <div class="swiper-wrapper ticker">
             <div class="swiper-slide">
               <figure class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/polipa.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/polipa.jpg" alt="İzmir GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/ondance.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/ondance.jpg" alt="İzmir Web Tasarım" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/miknatis.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/miknatis.jpg" alt="İzmir SEO Uzmanı" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/koltukyikama.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/koltukyikama.jpg" alt="İzmir GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="İzmir Foça GO Dijital" />
               </figure>
             </div>
          
@@ -64,31 +65,31 @@
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/sms.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/sms.jpg" alt="İzmir GO Dijital Ajans" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/psikolog.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/psikolog.jpg" alt="İzmir Web Tasarım" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/ayazmetal.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/ayazmetal.jpg" alt="İzmir SEO Uzmanı" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/tunatech.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/tunatech.jpg" alt="İzmir Web Tasarım Fiyatları" />
               </figure>
             </div>
             <div class="swiper-slide">
               <figure
                 class="!rounded-[0.8rem] shadow-[rgba(30,34,40,0.02)_0_2px_1px,rgba(30,34,40,0.02)_0_4px_2px,rgba(30,34,40,0.02)_0_8px_4px,rgba(30,34,40,0.02)_0_16px_8px,rgba(30,34,40,0.03)_0_32px_16px]">
-                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="İzmir Foça GO Dijital Ajans" />
+                <img class="!rounded-[.8rem]" src="/works/hbk.jpg" alt="İzmir Sosyal Medya Yönetimi" />
               </figure>
             </div>
             

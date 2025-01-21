@@ -21,12 +21,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    protected $productService;
     protected $variationService;
 
-    public function __construct(ProductService $productService, VariationService $variationService)
+    public function __construct( VariationService $variationService)
     {
-        $this->productService = $productService;
         $this->variationService = $variationService;
     }
 
@@ -79,57 +77,168 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             // Ana ürün verilerini hazırla
-            $data = $request->validated();
+            $data = $this->prepareSimpleProductData($request->validated());
             
-            // Kategorileri array'e çevir
-            $categories = [];
-            if ($request->has('categories')) {
-                $categories = is_array($request->categories) ? $request->categories : [$request->categories];
-                $categories = array_filter($categories); // Boş değerleri temizle
-            }
-
             // Ürünü oluştur
-            $product = $this->productService->create(array_merge(
-                $data,
-                ['type' => 'simple']
-            ));
+            $product = Product::create($data);
 
-            // Kategorileri ekle
-            if (!empty($categories)) {
-                $product->categories()->attach($categories);
-            }
+            // İlişkileri senkronize et
+            $this->syncProductRelations($product, $request->validated());
+            
+            // Medya dosyalarını ekle
+            $this->handleProductMedia($product, $request);
 
             DB::commit();
-
-            alert()->success('Başarılı', 'Ürün başarıyla oluşturuldu.')->persistent(true, false);
+            alert()->success('Başarılı', 'Ürün başarıyla oluşturuldu.');
             return redirect()->route('product.index');
 
         } catch (\Exception $e) {
             DB::rollBack();
-            alert()->error('Hata', 'Ürün oluşturulurken bir hata oluştu: ' . $e->getMessage())->persistent(true, false);
+            alert()->error('Hata', 'Ürün oluşturulurken bir hata oluştu: ' . $e->getMessage());
             return back()->withInput();
         }
     }
+
     public function storeVariable(VariableProductRequest $request)
     {
         try {
-            $product = $this->productService->create(array_merge(
-                $request->validated(),
-                ['type' => 'variable']
-            ));
+            DB::beginTransaction();
 
+            // Ana ürün verilerini hazırla
+            $data = $this->prepareVariableProductData($request->validated());
+            
+            // Ürünü oluştur
+            $product = Product::create($data);
+
+            // İlişkileri senkronize et
+            //$this->syncProductRelations($product, $request->validated());
+            
+            // Varyasyonları oluştur
             if (!empty($request->variations)) {
-                $this->variationService->createVariations($product, $request->variations);
+                $this->createProductVariations($product, $request->variations);
             }
 
-            return redirect()
-                ->route('product.index')
-                ->with('success', 'Ürün başarıyla oluşturuldu.');
+            // Medya dosyalarını ekle
+            $this->handleProductMedia($product, $request);
+
+            DB::commit();
+            alert()->success('Başarılı', 'Ürün başarıyla oluşturuldu.');
+            return redirect()->route('product.index');
 
         } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->with('error', 'Bir hata oluştu: ' . $e->getMessage());
+            DB::rollBack();
+            alert()->error('Hata', 'Ürün oluşturulurken bir hata oluştu: ' . $e->getMessage());
+            return back()->withInput();
+        }
+    }
+
+    protected function prepareSimpleProductData(array $data): array
+    {
+        $baseData = [
+            'type' => 'simple',
+            'sku' => $data['sku'],
+            'price' => $data['price'],
+            'discount_price' => $data['discount_price'] ?? 0,
+            'stock' => $data['stock'] ?? 0,
+            'status' => $data['status'] ?? true,
+            'featured' => $data['featured'] ?? false,
+            'brand_id' => $data['brand_id'] ?? null,
+            
+            // Stok Yönetimi
+            'manage_stock' => $data['manage_stock'] ?? false,
+            'min_stock_level' => $data['min_stock_level'] ?? null,
+            'max_stock_level' => $data['max_stock_level'] ?? null,
+            'stock_status' => $data['stock_status'] ?? 'in_stock',
+            'allow_backorders' => $data['allow_backorders'] ?? false,
+            'notify_low_stock' => $data['notify_low_stock'] ?? false,
+            'low_stock_threshold' => $data['low_stock_threshold'] ?? null,
+            'show_stock_quantity' => $data['show_stock_quantity'] ?? true,
+            
+            // Kargo & Teslimat
+            'requires_shipping' => $data['requires_shipping'] ?? true,
+            'delivery_time' => $data['delivery_time'] ?? null,
+            'shipping_cost' => $data['shipping_cost'] ?? 0,
+            
+            // Özel Alanlar
+            'warranty_period' => $data['warranty_period'] ?? null,
+            'manufacturing_place' => $data['manufacturing_place'] ?? null,
+            'barcode' => $data['barcode'] ?? null,
+        ];
+
+        // Çeviriler için veri hazırlama
+        foreach (config('app.languages') as $lang) {
+            $baseData['name:'.$lang] = $data['name:'.$lang] ?? null;
+            $baseData['slug:'.$lang] = Str::slug($data['name:'.$lang] ?? '');
+            $baseData['short:'.$lang] = $data['short:'.$lang] ?? null;
+            $baseData['desc:'.$lang] = $data['desc:'.$lang] ?? null;
+            
+            // SEO alanları
+            $baseData['seoTitle:'.$lang] = $data['seoTitle:'.$lang] ?? null;
+            $baseData['seoDesc:'.$lang] = $data['seoDesc:'.$lang] ?? null;
+            $baseData['seoKey:'.$lang] = $data['seoKey:'.$lang] ?? null;
+        }
+
+        return $baseData;
+    }
+
+    protected function prepareVariableProductData(array $data): array
+    {
+        return array_merge($data, [
+            'type' => 'variable',
+            'manage_stock' => true,
+            'status' => $data['status'] ?? true,
+            // Diğer alanlar...
+        ]);
+    }
+
+    protected function syncProductRelations(Product $product, array $data): void
+    {
+        // Kategoriler
+        if (isset($data['categories'])) {
+            $product->categories()->sync($data['categories']);
+        }
+
+        // Etiketler
+        if (isset($data['tags'])) {
+            $product->tags()->sync($data['tags']);
+        }
+
+        // Özellikler
+        if (isset($data['selectedAttributes'])) {
+            $attributes = [];
+            foreach ($data['selectedAttributes'] as $attributeId => $valueId) {
+                if (!empty($valueId)) {
+                    $attributes[$attributeId] = ['value_id' => $valueId];
+                }
+            }
+            $product->productAttributes()->sync($attributes);
+        }
+    }
+
+    protected function handleProductMedia(Product $product, Request $request): void
+    {
+        if ($request->hasFile('image')) {
+            $product->clearMediaCollection('image');
+            $product->addMediaFromRequest('image')->toMediaCollection('image');
+        }
+
+        if ($request->hasFile('gallery')) {
+            $product->clearMediaCollection('gallery');
+            foreach ($request->file('gallery') as $image) {
+                $product->addMedia($image)->toMediaCollection('gallery');
+            }
+        }
+    }
+
+    protected function createProductVariations(Product $product, array $variations): void
+    {
+        foreach ($variations as $variation) {
+            $product->variations()->create([
+                'name' => $variation['name'],
+                'price' => $variation['price'],
+                'stock' => $variation['stock'],
+                'status' => $variation['status'] ?? true,
+            ]);
         }
     }
 

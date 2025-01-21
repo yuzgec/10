@@ -121,38 +121,48 @@ class PageController extends Controller
 
     public function update(PageRequest $request, Page $update)
     {
-        //dd($request->all());
-        tap($update)->update($request->except('image', 'cover', 'gallery'));
+        try {
+            DB::beginTransaction();
 
-   
-        $this->mediaService->updateMedia(
-            $update, 
-            $request->file('image'),
-            'page',
-            false
-        );
+            // Ana sayfa verilerini güncelle
+            tap($update)->update($request->except('image', 'cover', 'gallery'));
 
-        $this->mediaService->updateMedia(
-            $update, 
-            $request->file('cover'),
-            'cover',
-            false
-        );
-
-        if ($request->hasFile('gallery')) {
-            $files = $request->file('gallery');
-            
-            $this->mediaService->handleMultipleMediaUpload(
-                $update,
-                $files,
-                'gallery',
+            // Tekil medya dosyalarını güncelle
+            $this->mediaService->updateMedia(
+                $update, 
+                $request->file('image'),
+                'page',
                 false
             );
+
+            $this->mediaService->updateMedia(
+                $update, 
+                $request->file('cover'),
+                'cover',
+                false
+            );
+
+            // Çoklu medya dosyalarını güncelle
+            if ($request->hasFile('gallery')) {
+                $files = $request->file('gallery');
+                
+                $this->mediaService->handleMultipleMediaUpload(
+                    $update,
+                    $files,
+                    'gallery',
+                    false
+                );
+            }
+
+            DB::commit();
+            alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli sayfa başarıyla güncellendi.', 'success');
+            return redirect()->route('page.edit', $update->id);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('Hata','Sayfa güncellenirken bir hata oluştu: ' . $e->getMessage());
+            return back()->withInput();
         }
-
-        alert()->html('Başarıyla Güncellendi','<b>'.$update->name.'</b> isimli sayfa başarıyla güncellendi.', 'success');
-        return redirect()->route('page.edit', $update->id);
-
     }
 
     /**

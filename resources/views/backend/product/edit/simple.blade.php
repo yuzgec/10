@@ -225,7 +225,7 @@
         </div>
 
         <!-- İlişkili Ürünler -->
-        <livewire:relation-product :product="$product" />
+       
 
         <!-- Stok Yönetimi -->
         <div class="card mb-3">
@@ -291,47 +291,6 @@
 @endsection
 
 @push('scripts')
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // İlişkili ürünler için TomSelect
-    const relatedProductsSelect = document.querySelector('#relatedProducts');
-    if (relatedProductsSelect) {
-        new TomSelect(relatedProductsSelect, {
-            maxItems: null,
-            placeholder: 'İlişkili ürünleri seçin...',
-            allowEmptyOption: true
-        });
-    }
-
-    // Etiketler için TomSelect
-    const tagSelect = document.querySelector('select[name="tags[]"]');
-    if (tagSelect) {
-        new TomSelect(tagSelect, {
-            maxItems: null,
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            placeholder: 'Etiket seçin veya ekleyin...',
-            create: async function(input) {
-                const response = await fetch('/go/shop/tags/store', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({ name: input })
-                });
-                const data = await response.json();
-                return {
-                    id: data.id,
-                    name: data.name
-                };
-            }
-        });
-    }
-});
-</script>
-
 @include('backend.layout.ck')
 @endpush
 

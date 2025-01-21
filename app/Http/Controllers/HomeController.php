@@ -22,7 +22,7 @@ class HomeController extends Controller
 {
     public function index(){
 
-        SEOMeta::setTitle('İzmir Foça Web Tasarım | Google SEO Uzmanı');
+        SEOMeta::setTitle('Google SEO Uzmanı');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function contactus(){
 
 
-        SEOMeta::setTitle('İzmir GO Dijital İletişim | Web tasarım, Google SEO ve Reklamları | Sosyal Medya');
+        SEOMeta::setTitle('İletişim | Web tasarım, Google SEO ve Reklamları | Sosyal Medya');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
@@ -49,7 +49,7 @@ class HomeController extends Controller
 
     public function blogs(){
 
-        SEOMeta::setTitle('Blog | GO Dijital Ajans | Google SEO Uzmanı');
+        SEOMeta::setTitle('Blog | Google SEO Uzmanı');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
@@ -58,7 +58,7 @@ class HomeController extends Controller
 
     public function projects(){
 
-        SEOMeta::setTitle('Çalışmalarımız | GO Dijital Ajans | Google SEO Uzmanı');
+        SEOMeta::setTitle('Çalışmalarımız | Google SEO Uzmanı');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
@@ -70,10 +70,6 @@ class HomeController extends Controller
         $detail = Service::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
-
-        //dd($category,$slug,$detail);
-
-        //dd();
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
