@@ -14,26 +14,28 @@ class ProductTranslation extends Model implements Viewable
 {
     use LogsActivityTrait,HasFactory,HasSlug,InteractsWithViews;
 
+    public $timestamps = false;
+
     protected $translationForeignKey = 'product_id';
 
-    protected $guarded = [];
-    public $timestamps = false;
-    protected $logAttributes = ['name', 'slug'];
-
-    public function getCustomAttributeNames()
-    {
-        return [ 'name' => 'Başlık', 'slug' => 'Link'];
-    }
-
     
+    protected $fillable = [
+        'name',
+        'slug',
+        'short_description',
+        'description',
+        'seo_title',
+        'seo_description',
+        'seo_keywords'
+    ];
+
     public function getSlugOptions() : SlugOptions
     {
-        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
+        return SlugOptions::create()
+        ->generateSlugsFrom('name')
+        ->saveSlugsTo('slug');
     }
 
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+
 } 

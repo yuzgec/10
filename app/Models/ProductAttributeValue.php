@@ -3,24 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
-class ProductAttributeValue extends Model
+class ProductAttributeValue extends Model implements TranslatableContract
 {
     use Translatable;
 
-    protected $fillable = [
-        'product_attribute_id',
-        'color_code',
-        'sort_order'
-    ];
-
-    public $translatedAttributes = ['value', 'slug'];
-    public $translationModel = ProductAttributeValueTranslation::class;
-    public $translationForeignKey = 'product_attribute_value_id';
+    public $translatedAttributes = ['name', 'slug'];
+    protected $guarded = [];
+    protected $table = 'product_attribute_values';
 
     public function attribute()
     {
-        return $this->belongsTo(ProductAttribute::class, 'product_attribute_id');
+        return $this->belongsTo(ProductAttribute::class, 'attribute_id');
     }
+
+ 
 } 

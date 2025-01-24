@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Backend\CalendarController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\ProductController;
 
 
 Route::redirect('/hakkimizda', '/kurumsal/hakkimizda', 301);
@@ -45,3 +46,5 @@ if($selectLang == 1){
 
 require __DIR__.'/backend.php';
 require __DIR__.'/auth.php';
+
+// Varyasyonlu ürün route'ları

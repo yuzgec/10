@@ -58,16 +58,6 @@ class ViewShareProvider extends ServiceProvider
             return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams'])->lang()->get()->toFlatTree();
         });
 
-        $p_categories = Cache::remember('p_categories',now()->addYear(5), function () {
-            return ProductCategory::withCount(['products','media'])->lang()->get()->toFlatTree();
-        }); 
-
-        $brands = Cache::remember('brands',now()->addYear(5), function () {
-            return Brand::with(['media'])->get();
-        });
-
-       
-
         //dd($language);
         //dd($categories->where('slug','video'));
   
@@ -79,9 +69,6 @@ class ViewShareProvider extends ServiceProvider
             'pages' => $pages,
             'teams' => $teams,
             'language' => $language,
-            'p_categories' => $p_categories,
-            'brands' => $brands
-
         ]);
     }
 }

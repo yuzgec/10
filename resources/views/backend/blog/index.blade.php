@@ -11,7 +11,7 @@
             <x-dashboard.index.card-header 
                 :all='$all' 
                 route='blog'
-                category='blog' 
+                category='blog'     
                 name='Blog'
             />
             <div class="table-responsive">

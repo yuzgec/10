@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductAttributeTranslation extends Model
 {
+    use HasSlug;
+
     public $timestamps = false;
     
-    protected $fillable = [
-        'name',
-        'locale',
-        'product_attribute_id'
-    ];
+    protected $guarded = [];
+    protected $table = 'product_attribute_translations';
 
-    public function attribute()
+
+    public function getSlugOptions() : SlugOptions
     {
-        return $this->belongsTo(ProductAttribute::class, 'product_attribute_id');
+        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
     }
+
 } 

@@ -2,11 +2,11 @@
 
 namespace App\Enums;
 
-enum ProductAttributeType: string
+enum ProductAttributeType: int
 {
-    case SELECT = 'select';
-    case COLOR = 'color';
-    case BUTTON = 'button';
+    case SELECT     = 1;
+    case COLOR      = 2;
+    case BUTTON     = 3;
 
     public function label(): string
     {

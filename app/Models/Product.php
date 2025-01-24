@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use App\Enums\ProductType;
-use App\Services\MediaService;
+use Spatie\Tags\HasTags;
+use App\Enums\StatusEnum;
+use Spatie\Image\Enums\Fit;
+use App\Enums\ProductTypeEnum;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
@@ -14,188 +16,101 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class Product extends Model implements TranslatableContract, HasMedia
 {
-    use Translatable, SoftDeletes, InteractsWithMedia;
+    use SoftDeletes, Translatable, InteractsWithMedia,HasTags;
 
-    public $translatedAttributes = ['name', 'slug', 'description'];
+    public array $translatedAttributes = [
+        'name',
+        'slug',
+        'short_description',
+        'description',
+        'seoTitle',
+        'seoDesc',
+        'seoKey'
+    ];
 
     protected $fillable = [
+        'category_id',
+        'type',
         'sku',
         'price',
+        'discount_price',
         'stock',
-        'featured',
         'status',
         'brand_id',
-        'tax_status',
-        'tax_class_id',
-        // Stok Yönetimi
-        'manage_stock',
-        'min_stock_level',
-        'stock_status',
-        'allow_backorders',
-        'notify_low_stock',
-        'low_stock_threshold',
-        'show_stock_quantity',
-        // Kargo & Teslimat
-        'requires_shipping',
-        'delivery_time',
-        // Özel Alanlar
-        'warranty_period',
-        'manufacturing_place',
-        'barcode'
+        'rank'
     ];
 
     protected $casts = [
-        'featured' => 'boolean',
-        'status' => 'boolean',
-        'manage_stock' => 'boolean',
-        'allow_backorders' => 'boolean',
-        'notify_low_stock' => 'boolean',
-        'show_stock_quantity' => 'boolean',
-        'requires_shipping' => 'boolean',
+        'type' => ProductTypeEnum::class,
+        'status' => StatusEnum::class,
         'price' => 'decimal:2',
-        'stock' => 'integer',
-        'min_stock_level' => 'integer',
-        'low_stock_threshold' => 'integer',
-        'delivery_time' => 'integer',
-        'warranty_period' => 'integer',
-        'type' => ProductType::class
+        'discount_price' => 'decimal:2'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function variations()
     {
         return $this->hasMany(ProductVariation::class);
     }
 
-    public function brand()
+    public function attributes()
     {
-        return $this->belongsTo(Brand::class);
-    }
-
-    public function taxClass()
-    {
-        return $this->belongsTo(TaxClass::class);
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(ProductCategory::class, 'category_product');
-    }
-
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'taggable');
-    }
-
-    public function attributeValues()
-    {
-        return $this->belongsToMany(ProductAttributeValue::class, 'product_attribute_value');
-    }
-
-    public function relatedProducts()
-    {
-        return $this->belongsToMany(Product::class, 'product_related', 'product_id', 'related_product_id');
-    }
-
-    public function productAttributes()
-    {
-        return $this->hasMany(ProductAttributeRelation::class);
+        return $this->belongsToMany(ProductAttribute::class, 'product_attribute_relations')
+            ->withPivot('value_id', 'is_variation', 'is_visible')
+            ->withTimestamps();
     }
 
     public function registerMediaCollections(): void
     {
-        MediaService::registerMediaCollections($this);
+        $this->addMediaCollection('image')
+            ->singleFile()
+            ->useFallbackUrl('/backend/resimyok.jpg');
+
+        $this->addMediaCollection('gallery')
+            ->useFallbackUrl('/backend/resimyok.jpg');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
-        MediaService::registerMediaConversions($this, $media, true);
-    }
-
-    public function isLowStock(): bool
-    {
-        if (!$this->manage_stock || !$this->notify_low_stock || !$this->low_stock_threshold) {
-            return false;
+        if (!$media) {
+            return;
         }
 
-        return $this->stock <= $this->low_stock_threshold;
+        $this->addMediaConversion('img')
+            ->fit(Fit::Contain, 1250, 1250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat();
+
+        $this->addMediaConversion('thumb')
+            ->fit(Fit::Contain, 500, 500)
+            ->nonOptimized()
+            ->keepOriginalImageFormat();
+
+        $this->addMediaConversion('small')
+            ->fit(Fit::Contain, 250, 250)
+            ->nonOptimized()
+            ->keepOriginalImageFormat();
     }
 
-    public function canBackorder(): bool
+    public function categories()
     {
-        return $this->manage_stock && $this->allow_backorders;
+        return $this->belongsToMany(Category::class, 'product_categories');
     }
 
-    public function isInStock(): bool
+    // Spatie/Tags için type tanımı
+    public static function getTagClassName(): string
     {
-        if (!$this->manage_stock) {
-            return true;
-        }
-
-        if ($this->stock_status === 'out_of_stock') {
-            return false;
-        }
-
-        if ($this->stock_status === 'on_backorder') {
-            return $this->canBackorder();
-        }
-
-        return $this->stock > 0;
+        return Tag::class;
     }
 
-    public function getStockStatusTextAttribute(): string
+    // Tag tipini belirle
+    public function tags()
     {
-        if (!$this->manage_stock) {
-            return 'Stok takibi kapalı';
-        }
-
-        switch ($this->stock_status) {
-            case 'in_stock':
-                return 'Stokta';
-            case 'out_of_stock':
-                return 'Stok yok';
-            case 'on_backorder':
-                return 'Ön sipariş';
-            default:
-                return 'Bilinmiyor';
-        }
+        return $this->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->where('type', 'product');
     }
-
-    public function getDeliveryTimeTextAttribute(): string
-    {
-        if (!$this->requires_shipping) {
-            return 'Kargo gerektirmez';
-        }
-
-        if (!$this->delivery_time) {
-            return 'Belirtilmemiş';
-        }
-
-        return "{$this->delivery_time} gün";
-    }
-
-    
-    public function scopeActive($query){
-        return $query->where('status', 1);
-    }
-
-    public function scopeLang($query){
-        return $query->whereHas('translations', function ($query) {
-            $query->where('locale', app()->getLocale());
-        });
-    }
-
-    public function scopeRank($query){
-        return $query->orderBy('rank','asc');
-    }
-
-    public function isVariable(): bool
-    {
-        return $this->type === ProductType::VARIABLE->value;
-    }
-
-    public function isSimple(): bool
-    {
-        return $this->type === ProductType::SIMPLE->value;
-    }
-
 } 

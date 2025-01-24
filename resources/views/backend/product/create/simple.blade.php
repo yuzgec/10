@@ -284,24 +284,6 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="requires_shipping" name="requires_shipping" value="1">
-                        <label class="form-check-label" for="requires_shipping">Kargo Gerekli</label>
-                    </div>
-                </div>
-
-                <div id="shippingFields" style="display: none;">
-                    <div class="mb-3">
-                        <label class="form-label">Teslimat Süresi (Gün)</label>
-                        <input type="number" class="form-control" name="delivery_time" value="{{ old('delivery_time') }}">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <x-dashboard.form.only-number-input name="shipping_cost" label="Kargo Ücreti" step="0.01" />
-                </div>
-
             </div>
         </div>
 
@@ -328,11 +310,7 @@
 
         <!-- Kategoriler -->
         <div class="card mb-3">
-            <select name="categories[]" id="categories" class="form-select" multiple required>
-                @foreach($cat as $category)
-                    <option value="{{ $category->id }}">{{ $category->translate(app()->getLocale())->name }}</option>
-                @endforeach
-            </select>
+            <livewire:category-manager />
         </div>
 
         <div class="mt-3">
@@ -355,8 +333,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const stockFields = document.getElementById('stockFields');
     const notifyLowStock = document.getElementById('notify_low_stock');
     const lowStockFields = document.getElementById('lowStockFields');
-    const requiresShipping = document.getElementById('requires_shipping');
-    const shippingFields = document.getElementById('shippingFields');
 
     manageStock.addEventListener('change', function() {
         stockFields.style.display = this.checked ? 'block' : 'none';
@@ -364,10 +340,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     notifyLowStock.addEventListener('change', function() {
         lowStockFields.style.display = this.checked ? 'block' : 'none';
-    });
-
-    requiresShipping.addEventListener('change', function() {
-        shippingFields.style.display = this.checked ? 'block' : 'none';
     });
 });
 </script>

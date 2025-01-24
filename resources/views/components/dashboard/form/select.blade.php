@@ -7,7 +7,8 @@
     'icon' => null,
     'options' => [],
     'selected' => null,
-    'multiple' => false
+    'multiple' => false,
+    'api' => null
 ])
 
 @php $componentName = "dashboard.icon.$icon" @endphp

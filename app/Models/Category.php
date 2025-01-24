@@ -19,12 +19,37 @@ class Category extends Model implements HasMedia, TranslatableContract,Viewable
 {
     use SoftDeletes, InteractsWithMedia, Translatable, NodeTrait,InteractsWithViews;
 
-    public $translatedAttributes = ['name', 'slug', 'short', 'desc', 'seoTitle', 'seoDesc', 'seoKey'];
-    protected $guarded = [];
+    protected $fillable = ['parent_id', 'rank', 'status'];
+    public $translatedAttributes = ['name', 'slug', 'description'];
 
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id')
+                    ->with('translations')
+                    ->orderBy('rank');
+    }
+
+    // Tüm alt kategoriler (recursive)
+    public function allChildren()
+    {
+        return $this->children()->with('allChildren');
+    }
+
+    // Üst kategori
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    // Tüm üst kategoriler
+    public function allParents()
+    {
+        return $this->parent()->with('allParents');
     }
 
     public function pages()
@@ -48,10 +73,6 @@ class Category extends Model implements HasMedia, TranslatableContract,Viewable
         return $this->hasMany(Team::class);
     }
 
-    public function videos()
-    {
-        return $this->hasMany(Team::class);
-    }
 
     public function scopeActive($query)
     {

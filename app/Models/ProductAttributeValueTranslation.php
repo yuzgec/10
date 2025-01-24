@@ -2,39 +2,25 @@
 
 namespace App\Models;
 
-use Spatie\Sluggable\HasSlug;
-use App\Traits\LogsActivityTrait;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
 
 class ProductAttributeValueTranslation extends Model
 {
-    use LogsActivityTrait, HasFactory, HasSlug;
 
-    public $timestamps = false;
+    use HasSlug;
+
+    protected $translationForeignKey = 'product_attribute_value_id';
+    protected $table = 'product_attribute_value_translations';
+
     protected $guarded = [];
-
-    protected $translationForeignKey = 'p_attribute_value_id';
-    protected $logAttributes = ['value', 'slug'];
-    protected $table = 'p_attr_val_trans';
-    protected $fillable = ['locale', 'value', 'slug', 'product_attribute_value_id'];
-
-    public function getCustomAttributeNames()
-    {
-        return ['value' => 'Değer', 'slug' => 'Link'];
-    }
+    public $timestamps = false;
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('value')
-            ->saveSlugsTo('slug')
-            ->allowDuplicateSlugs();
-    }
-
-    public function attributeValue()
-    {
-        return $this->belongsTo(ProductAttributeValue::class, 'p_attribute_value_id');
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 } 

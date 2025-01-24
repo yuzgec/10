@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\ProductCategory;
+use App\Models\Category;
 
 class CategoryManager extends Component
 {
@@ -11,19 +11,39 @@ class CategoryManager extends Component
     public $cat;
     public $product;
     public $search = '';
+    public $expandedCategories = [];
 
     public function mount($product = null)
     {
         $this->product = $product;
         if ($product) {
-            $this->selectedCategories = $product->categories->pluck('id')->toArray();
+            $this->selectedCategories = $product->categories()
+                ->with(['translations', 'children', 'children.translations'])
+                ->get()
+                ->pluck('id')
+                ->toArray();
+            
+            foreach ($this->selectedCategories as $categoryId) {
+                $this->expandParentCategories($categoryId);
+            }
         }
         $this->loadCategories();
     }
 
+    private function expandParentCategories($categoryId)
+    {
+        $category = Category::find($categoryId);
+        if ($category && $category->parent_id) {
+            $this->expandedCategories[] = $category->parent_id;
+            $this->expandParentCategories($category->parent_id);
+        }
+    }
+
     public function loadCategories()
     {
-        $query = ProductCategory::query()->lang();
+        $query = Category::query()
+            ->with(['translations', 'children.translations', 'allChildren.translations'])
+            ->orderBy('rank');
         
         if ($this->search) {
             $query->whereTranslationLike('name', '%' . $this->search . '%');
@@ -31,101 +51,80 @@ class CategoryManager extends Component
             $query->whereNull('parent_id');
         }
         
-        $this->cat = $query->with(['allChildren', 'parent'])->get();
+        $this->cat = $query->get();
+        
+        // Debug için
+        \Log::info('Categories loaded:', [
+            'count' => $this->cat->count(),
+            'with_children' => $this->cat->filter(fn($cat) => $cat->children->count() > 0)->count()
+        ]);
     }
 
-    public function updatedSearch()
+    public function toggleExpand($categoryId)
     {
-        $this->loadCategories();
+        if (in_array($categoryId, $this->expandedCategories)) {
+            $this->expandedCategories = array_diff($this->expandedCategories, [$categoryId]);
+        } else {
+            $this->expandedCategories[] = $categoryId;
+        }
+        
+        // Debug için
+        \Log::info('Toggle expand:', [
+            'categoryId' => $categoryId,
+            'expandedCategories' => $this->expandedCategories
+        ]);
     }
 
     public function selectCategory($categoryId)
     {
-        $category = ProductCategory::find($categoryId);
+        $category = Category::find($categoryId);
         if (!$category) return;
 
         if (!in_array($categoryId, $this->selectedCategories)) {
             // Kategori seçildiğinde
             $this->selectedCategories[] = $categoryId;
             
-            // Üst kategorileri bul ve ekle
-            $parentId = $category->parent_id;
-            while ($parentId) {
-                if (!in_array($parentId, $this->selectedCategories)) {
-                    $this->selectedCategories[] = $parentId;
-                }
-                $parent = ProductCategory::find($parentId);
-                $parentId = $parent ? $parent->parent_id : null;
-            }
+            // Üst kategorileri otomatik seç
+            $this->selectParentCategories($category);
+            
+            // Alt kategorileri otomatik seç
+            $this->selectChildCategories($category);
         } else {
             // Kategori kaldırıldığında
             $this->selectedCategories = array_diff($this->selectedCategories, [$categoryId]);
             
-            // Alt kategorileri bul ve kaldır
-            $children = ProductCategory::where('parent_id', $categoryId)->get();
-            foreach ($children as $child) {
-                $this->selectedCategories = array_diff($this->selectedCategories, [$child->id]);
-                $this->removeChildren($child->id);
-            }
-            
-            // Eğer kardeş kategorilerden hiçbiri seçili değilse üst kategoriyi kaldır
-            if ($category->parent_id) {
-                $siblings = ProductCategory::where('parent_id', $category->parent_id)
-                    ->where('id', '!=', $categoryId)
-                    ->get();
-                
-                $hasSelectedSibling = false;
-                foreach ($siblings as $sibling) {
-                    if (in_array($sibling->id, $this->selectedCategories)) {
-                        $hasSelectedSibling = true;
-                        break;
-                    }
-                }
-                
-                if (!$hasSelectedSibling) {
-                    $this->selectedCategories = array_diff($this->selectedCategories, [$category->parent_id]);
-                    // Üst kategorinin üst kategorisini kontrol et
-                    $parent = ProductCategory::find($category->parent_id);
-                    if ($parent && $parent->parent_id) {
-                        $this->checkAndRemoveParent($parent);
-                    }
-                }
-            }
+            // Alt kategorileri otomatik kaldır
+            $this->removeChildCategories($category);
         }
 
         $this->selectedCategories = array_values(array_unique($this->selectedCategories));
         $this->dispatch('selectedCategoriesUpdated', ['selectedCategories' => $this->selectedCategories]);
     }
 
-    private function removeChildren($categoryId)
+    private function selectParentCategories($category)
     {
-        $children = ProductCategory::where('parent_id', $categoryId)->get();
-        foreach ($children as $child) {
-            $this->selectedCategories = array_diff($this->selectedCategories, [$child->id]);
-            $this->removeChildren($child->id);
+        if ($category->parent_id) {
+            $parent = Category::find($category->parent_id);
+            if ($parent) {
+                $this->selectedCategories[] = $parent->id;
+                $this->selectParentCategories($parent);
+            }
         }
     }
 
-    private function checkAndRemoveParent($category)
+    private function selectChildCategories($category)
     {
-        $siblings = ProductCategory::where('parent_id', $category->parent_id)
-            ->where('id', '!=', $category->id)
-            ->get();
-        
-        $hasSelectedSibling = false;
-        foreach ($siblings as $sibling) {
-            if (in_array($sibling->id, $this->selectedCategories)) {
-                $hasSelectedSibling = true;
-                break;
-            }
+        foreach ($category->children as $child) {
+            $this->selectedCategories[] = $child->id;
+            $this->selectChildCategories($child);
         }
-        
-        if (!$hasSelectedSibling) {
-            $this->selectedCategories = array_diff($this->selectedCategories, [$category->parent_id]);
-            $parent = ProductCategory::find($category->parent_id);
-            if ($parent && $parent->parent_id) {
-                $this->checkAndRemoveParent($parent);
-            }
+    }
+
+    private function removeChildCategories($category)
+    {
+        foreach ($category->children as $child) {
+            $this->selectedCategories = array_diff($this->selectedCategories, [$child->id]);
+            $this->removeChildCategories($child);
         }
     }
 

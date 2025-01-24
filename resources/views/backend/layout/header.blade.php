@@ -70,8 +70,7 @@
                                 </a>
                             </div>
                         </div>
-
-                      
+                     
                     
                         <div class="dropend">
                             <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -462,7 +461,7 @@
                     </div>
                 </li>
 
-
+{{-- 
                 <li class="nav-item dropdown {{ Request::is('go/shop*') ? 'show' : '' }}">
                     <a
                         class="nav-link dropdown-toggle {{ Request::is('go/shop*') ? 'text-white' : '' }}"
@@ -584,7 +583,7 @@
                             Silinmiş Sayfalar
                         </a>
                     </div>
-                </li>
+                </li> --}}
 
                 
                 <li class="nav-item">

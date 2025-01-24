@@ -3,33 +3,30 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ProductVariation extends Model
+class ProductVariation extends Model implements HasMedia
 {
+    use InteractsWithMedia, SoftDeletes;
+
     protected $fillable = [
         'product_id',
-        'name',
         'sku',
-        'variation_key',
         'price',
         'discount_price',
         'stock',
-        'weight',
-        'length',
-        'width',
-        'height',
-        'sort_order',
-        'status'
+        'status',
+        'is_default',
+        'sort_order'
     ];
 
     protected $casts = [
+        'is_default' => 'boolean',
+        'status' => 'boolean',
         'price' => 'decimal:2',
-        'discount_price' => 'decimal:2',
-        'weight' => 'decimal:2',
-        'length' => 'decimal:2',
-        'width' => 'decimal:2',
-        'height' => 'decimal:2',
-        'status' => 'boolean'
+        'discount_price' => 'decimal:2'
     ];
 
     public function product()
@@ -37,18 +34,15 @@ class ProductVariation extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function attributes()
+    public function attributeValues()
     {
-        return $this->hasMany(ProductVariationAttribute::class, 'variation_id');
+        return $this->belongsToMany(ProductAttributeValue::class, 'variation_values', 'variation_id', 'value_id')
+            ->withPivot('attribute_id')
+            ->using(VariationValue::class);
     }
 
-    public function getFinalPrice(): float
+    public function registerMediaCollections(): void
     {
-        return $this->discount_price ?? $this->price;
-    }
-
-    public function hasDiscount(): bool
-    {
-        return !is_null($this->discount_price);
+        $this->addMediaCollection('variations');
     }
 } 

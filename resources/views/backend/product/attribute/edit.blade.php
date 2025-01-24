@@ -1,119 +1,71 @@
 @extends('backend.layout.app')
 
 @section('content')
-    <div class="container-xl">
+   
+      
+{!! html()->modelForm($attribute, 'PUT', route('product-attributes.update', $attribute))->open() !!}
+
+    <x-dashboard.crud.edit-header route='product-attributes' name="Özellik" :model="$attribute"/>
+
+    <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Ürün Özelliği Düzenle</h3>
-            </div>
+            <div class="card-status-top bg-blue"></div>
             <div class="card-body">
-                <form action="{{ route('product-attributes.update', $attribute->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    
-                    <!-- Özellik Tipi -->
-                    <div class="mb-3">
-                        <label class="form-label">Özellik Tipi</label>
-                        <select name="type" class="form-select" id="typeSelect">
-                            <option value="select" {{ $attribute->type === 'select' ? 'selected' : '' }}>Seçenek</option>
-                            <option value="color" {{ $attribute->type === 'color' ? 'selected' : '' }}>Renk</option>
-                        </select>
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                            @foreach($language as $lang)
+                                <li class="nav-item">
+                                    <a href="#{{ $lang->lang }}" 
+                                        class="nav-link {{ $loop->first ? 'active' : '' }}"
+                                        data-bs-toggle="tab" 
+                                        role="tab">
+                                        <img src="/flags/{{ $lang->lang }}.svg" alt="{{ $lang->lang }}" style="margin-right: 5px;"> 
+                                        <b>{{ strtoupper($lang->lang) }}</b>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
 
-                    <!-- Durum -->
-                    <div class="mb-3">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="status" {{ $attribute->status ? 'checked' : '' }}>
-                            <span class="form-check-label">Aktif</span>
-                        </label>
-                    </div>
-
-                    <!-- Sıralama -->
-                    <div class="mb-3">
-                        <label class="form-label">Sıralama</label>
-                        <input type="number" name="rank" class="form-control" value="{{ $attribute->rank }}">
-                    </div>
-
-                    <!-- Çoklu Dil Alanları -->
-                    <div class="card">
-                        <div class="card-header">
-                            <ul class="nav nav-tabs card-header-tabs">
-                                @foreach($language as $lang)
-                                    <li class="nav-item">
-                                        <a href="#{{ $lang->lang }}" class="nav-link {{ $loop->first ? 'active' : '' }}" data-bs-toggle="tab">
-                                            {{ strtoupper($lang->lang) }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content">
-                                @foreach($language as $lang)
-                                    <div class="tab-pane {{ $loop->first ? 'active show' : '' }}" id="{{ $lang->lang }}">
-                                        <div class="mb-3">
-                                            <label class="form-label">Özellik Adı ({{ strtoupper($lang->lang) }})</label>
-                                            <input type="text" 
-                                                   name="name:{{ $lang->lang }}" 
-                                                   class="form-control"
-                                                   value="{{ $attribute->name }}">
-                                        </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            @foreach($language as $lang)
+                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" 
+                                        id="{{ $lang->lang }}" 
+                                        role="tabpanel">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Özellik Adı ({{ strtoupper($lang->lang) }})
+                                        </label>
+                                        <input type="text" 
+                                                name="name[{{ $lang->lang }}]" 
+                                                class="form-control"
+                                                value="{{ $attribute->translate($lang->lang)->name ?? '' }}"
+                                                required>
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
+                </div>
 
-                    <!-- Değerler -->
-                    <div class="card mt-3">
-                        <div class="card-header">
-                            <h3 class="card-title">Değerler</h3>
-                            <div class="card-actions">
-                                <button type="button" class="btn btn-primary" id="addValue">
-                                    <x-dashboard.icon.add />
-                                    Değer Ekle
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="valuesContainer">
-                                @foreach($attribute->values as $value)
-                                    <div class="row mb-2 align-items-center">
-                                        <div class="col">
-                                            @foreach($language as $locale)
-                                                <input type="text" 
-                                                       name="values[{{ $loop->parent->index }}][{{ $locale }}]" 
-                                                       class="form-control mb-2"
-                                                       value="{{ $value->value }}" 
-                                                       required>
-                                            @endforeach
-                                        </div>
-                                        @if($attribute->type === 'color')
-                                            <div class="col-auto">
-                                                <input type="color" 
-                                                       name="colors[]" 
-                                                       class="form-control form-control-color"
-                                                       value="{{ $value->color_code }}">
-                                            </div>
-                                        @endif
-                                        <div class="col-auto">
-                                            <button type="button" class="btn btn-icon btn-outline-danger" onclick="this.closest('.row').remove()">
-                                                <x-dashboard.icon.delete />
-                                            </button>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-footer">
-                        <button type="submit" class="btn btn-primary">Güncelle</button>
-                    </div>
-                </form>
+                <div class="mb-3 mt-3">
+                    <label class="form-check form-switch">
+                        <input type="checkbox" 
+                                class="form-check-input" 
+                                name="status" 
+                                value="1"
+                                {{ $attribute->status ? 'checked' : '' }}>
+                        <span class="form-check-label">Aktif</span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
+
+{!! html()->closeModelForm() !!}
+           
 @endsection
 
 @push('scripts')

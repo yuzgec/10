@@ -14,7 +14,6 @@ use App\Models\Category;
 use App\Models\ExchangeRate;
 use Illuminate\Http\Request;
 use App\Services\ViewService;
-use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -38,7 +37,6 @@ class DashboardController extends Controller
                 'blogs' => Blog::count(),
                 'faqs' => Faq::count(),
                 'categories' => Category::count(),
-                'productCategories' => ProductCategory::count(),
                 'teams' => Team::count(),
                 'videos' => Video::count(),
             ];

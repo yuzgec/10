@@ -81,14 +81,14 @@ class ServiceController extends Controller
             $create = Service::create($request->except('faqs','image','cover','gallery'));
 
             $this->mediaService->handleMediaUpload(
-                $update, 
+                $create, 
                 $request->file('image'),
                 'page',
                 false
             );
 
             $this->mediaService->handleMediaUpload(
-                $update, 
+                $create, 
                 $request->file('cover'),
                 'cover',
                 false
@@ -96,7 +96,7 @@ class ServiceController extends Controller
 
             if ($request->hasFile('gallery')) {
                 $this->mediaService->handleMultipleMediaUpload(
-                    $update,
+                    $create,
                     $request->file('gallery'),
                     'gallery'
                 );

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mt-3">
     <div class="card-status-top bg-blue"></div>
     <div class="card-header">
         <h3 class="card-title"><x-dashboard.icon.category/> Marka</h3>

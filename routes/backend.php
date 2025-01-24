@@ -8,9 +8,9 @@ use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Backend\MediaController;
 use App\Http\Controllers\Backend\VideoController;
-use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CalendarController;
@@ -21,18 +21,18 @@ use App\Http\Controllers\Backend\RedirectController;
 use App\Http\Controllers\Backend\WorkFlowController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\RouteListController;
+
 use App\Http\Controllers\Backend\PermissionController;
 
 use App\Http\Controllers\Backend\TranslationController;
-
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
 use App\Http\Controllers\Backend\OfferTemplateController;
+use App\Http\Controllers\Shop\ProductAttributeController;
 use App\Http\Controllers\Backend\GoogleCalendarController;
-use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\CustomerPaymentController;
-use App\Http\Controllers\Backend\ProductCategoryController;
-use App\Http\Controllers\Backend\ProductAttributeController;
+use App\Http\Controllers\Shop\ProductAttributeValueController;
+
 
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth','go-access']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -111,25 +111,13 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
     Route::group(["prefix"=>"shop"],function() {
 
         Route::auto('tags', TagController::class);
+        Route::auto('product', ProductController::class);
+        Route::auto('product-attributes', ProductAttributeController::class);
+        Route::auto('product-attribute-values', ProductAttributeValueController::class);
         Route::get('tags/{tag}/products', [TagController::class, 'products'])->name('tags.products');
         Route::get('tags/{tag}/blogs', [TagController::class, 'blogs'])->name('tags.blogs');
 
-        
-        Route::auto('product-categories', ProductCategoryController::class);
-        Route::auto('product-attributes', ProductAttributeController::class);
-        Route::auto('product-variants', ProductVariantController::class);
 
-        Route::prefix('/products')->group(function () {
-           Route::auto('/product', ProductController::class);
-
-           Route::get('/create/simple', [ProductController::class, 'createSimple'])->name('product.create.simple');
-           Route::get('/create/variable', [ProductController::class, 'createVariable'])->name('product.create.variable');
-           Route::post('/store/simple', [ProductController::class, 'storeSimple'])->name('product.store.simple');
-           Route::post('/store/variable', [ProductController::class, 'storeVariable'])->name('product.store.variable');
-           Route::put('/{product}/update-simple', [ProductController::class, 'updateSimple'])->name('product.update.simple');
-           Route::put('/{product}/update-variable', [ProductController::class, 'updateVariable'])->name('product.update.variable');
-        });
-    
     
     });
 

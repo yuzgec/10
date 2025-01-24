@@ -4,73 +4,66 @@ namespace App\Livewire;
 
 use App\Models\Tag;
 use Livewire\Component;
-use Illuminate\Support\Str;
 
 class TagManager extends Component
 {
-    public $tagInput = '';
     public $selectedTags = [];
-    public $suggestions = [];
+    public $tagsList = [];
+    public $search = '';
     public $tags = [];
     public $type;
     public $model;
 
-    public function mount($type = 'product', $model = null)
+    public function mount($type = null, $model = null)
     {
         $this->type = $type;
         $this->model = $model;
 
         if ($model) {
             $this->selectedTags = $model->tags()->pluck('id')->toArray();
-            $this->tags = Tag::whereIn('id', $this->selectedTags)->get()->keyBy('id');
+            $this->tagsList = $model->tags()->pluck('name', 'id')->toArray();
         }
     }
 
-    public function updatedTagInput($value)
+    public function updatedSearch()
     {
-        if (strlen($value) >= 3) {
-            $this->suggestions = Tag::where('name', 'like', "%{$value}%")
-                ->where('type', $this->type)
-                ->limit(5)
-                ->get()
-                ->toArray();
-        } else {
-            $this->suggestions = [];
+        if (empty($this->search)) {
+            $this->tags = [];
+            return;
         }
+
+        $this->tags = Tag::query()
+            ->when($this->type, function($query) {
+                return $query->where('type', $this->type);
+            })
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->whereNotIn('id', $this->selectedTags)
+            ->get()
+            ->map(function($tag) {
+                return [
+                    'id' => $tag->id,
+                    'name' => $tag->name
+                ];
+            })
+            ->toArray();
     }
 
-    public function selectSuggestion($name)
+    public function selectTag($tagId)
     {
-        $this->tagInput = $name;
-        $this->addTag();
-    }
-
-    public function addTag()
-    {
-        if (empty($this->tagInput)) return;
-
-        try {
-            $tag = Tag::firstOrCreate(
-                ['name' => trim($this->tagInput)],
-                ['type' => $this->type]
-            );
-
-            if (!in_array($tag->id, $this->selectedTags)) {
-                $this->selectedTags[] = $tag->id;
-                $this->tags[$tag->id] = $tag;
-            }
-
-            $this->tagInput = '';
-            $this->suggestions = [];
-        } catch (\Exception $e) {
-            \Log::error('Product Tag oluşturma hatası: ' . $e->getMessage());
+        $tag = Tag::find($tagId);
+        
+        if ($tag && !in_array($tagId, $this->selectedTags)) {
+            $this->selectedTags[] = $tagId;
+            $this->tagsList[$tagId] = $tag->name;
+            $this->search = '';
+            $this->tags = [];
         }
     }
 
     public function removeTag($tagId)
     {
         $this->selectedTags = array_values(array_diff($this->selectedTags, [$tagId]));
-        unset($this->tags[$tagId]);
+        unset($this->tagsList[$tagId]);
     }
 
     public function render()
