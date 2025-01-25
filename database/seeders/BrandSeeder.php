@@ -11,8 +11,7 @@ class BrandSeeder extends Seeder
     public function run()
     {
         $brands = [
-            'Nike', 'Adidas', 'Puma', 'Reebok', 'Under Armour',
-            'New Balance', 'Asics', 'Converse', 'Vans', 'Skechers'
+            'GO Dijital'
         ];
 
         foreach ($brands as $index => $brand) {

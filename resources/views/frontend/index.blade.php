@@ -1,5 +1,4 @@
 @extends('frontend.layout.app')
-
 @section('content')
     @include('frontend.layout.banner')
 
@@ -119,7 +118,7 @@
 
                     </div>
 
-                    <a href="/izmir-ajans/web-tasarim" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Hepsini Görüntüle</a>
+                    <a href="/izmir-ajans/web-tasarim" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0" title="İzmir İnternet Sitesi Yapımı">Hepsini Görüntüle</a>
                 
                 </div>
             </div>
@@ -170,7 +169,7 @@
 
                     </div>
 
-                    <a href="/izmir-ajans/kurumsal-kimlik" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6  !mb-0">Hepsini Görüntüle</a>
+                    <a href="/izmir-ajans/kurumsal-kimlik" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0" title="İzmir Kurumsal Kimlik">Hepsini Görüntüle</a>
             
                 </div>
 
@@ -224,7 +223,7 @@
 
                     </div>
 
-                    <a href="/izmir-ajans/google-seo" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0">Hepsini Görüntüle</a>
+                    <a href="/izmir-ajans/google-seo" class="btn btn-soft-ash !text-[.85rem] !tracking-[normal] !rounded-[50rem] mt-6 !mb-0" title="İzmir Google SEO Optimizasyonu">Hepsini Görüntüle</a>
                 
                 </div>
             </div>
@@ -272,7 +271,6 @@
         </div>
     </section>
 
-
     <section class="wrapper !bg-[#ffffff] ">
         <div  class="container pt-10">
 
@@ -293,7 +291,7 @@
                         data-items-xs="1">
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                            @foreach ($blog as $item )
+                            @foreach ($blog->take(6) as $item )
                                 <div class="swiper-slide">
                                     <div class="item-inner">
                                         <article>
@@ -310,7 +308,7 @@
                                                 <div class="card-body flex-[1_1_auto] p-[40px] xl:p-[1.75rem_1.75rem_1rem_1.75rem] lg:p-[1.75rem_1.75rem_1rem_1.75rem] md:p-[1.75rem_1.75rem_1rem_1.75rem] sm:pb-4 xsm:pb-4  ">
                                                     <div class="post-header">
                                                         <div class="inline-flex mb-[.4rem] uppercase tracking-[0.02rem] text-[0.7rem] font-bold text-[#aab0bc] relative align-top pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
-                                                            <a href="{{ route('blog.category', $item->getCategory->slug) }}" class="hover" rel="category">{{ $item->getCategory->name}}</a>
+                                                            <a href="{{ route('blog.category', $item->getCategory->slug) }}" class="hover" rel="category" title="{{ $item->getCategory->name}}">{{ $item->getCategory->name}}</a>
                                                         </div>
                                                         <h2 class="post-title h3 !mt-1 !mb-3">
                                                             <a class="text-[#343f52] hover:text-[#3f78e0]"  href="{{ route('blog.detail', $item->slug) }}" title="{{ $item->name}}">{{ $item->name}}</a>
@@ -350,7 +348,32 @@
                 </div>
             </div>
         </div>
-    </section>        
+    </section>    
+    
+    <section class="wrapper">
+        <div class="container">
+            <div class="flex flex-wrap mx-[-15px]">
+                <div class="xl:w-12/12 lg:w-12/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[50px]">
+                    <h2 class="!text-[.75rem] !leading-[1.35] uppercase text-[#3f78e0]  !text-center">Web Tasarım, Sosyal Medya Yönetimi ve Dijital Reklam Hizmetler</h2>
+                    <h3 class="text-[calc(1.325rem_+_0.9vw)] font-bold !leading-[1.2] xl:text-[2rem] !mb-8 xl:!px-6 text-center">
+                        <span class="text-gradient gradient-7">İZMİR WEB TASARIM</span>
+                    </h3>
+                    <p>
+                        İzmir GO Dijital, dijital dünyada etkili bir varlık oluşturmak isteyen işletmeler için profesyonel <a href="/izmir-ajans/web-tasarim" title="İzmir Web Tasarım">web tasarım</a>, <a href="/izmir-ajans/sosyal-medya" title="İzmir Sosyal Medya Yönetimi">sosyal medya yönetimi</a> ve <a href="/izmir-ajans/dijital-reklam" title="İzmir Dijital Reklam">dijital reklam hizmetleri</a> sunmaktadır. Yaratıcı web tasarımlarımız, kullanıcı dostu ve mobil uyumlu siteler ile hedef kitlenize en iyi deneyimi sunar. Web tasarımında estetik ve işlevselliği bir araya getirerek markanızı en iyi şekilde temsil eden siteler oluşturuyoruz.
+                    </p>
+                    <p>
+                        <a href="/izmir-ajans/sosyal-medya" title="İzmir Sosyal Medya Yönetimi">Sosyal medya stratejilerimizle</a> markanızı online platformlarda güçlendiriyoruz. Facebook, Instagram, LinkedIn gibi platformlarda etkileşimi artırarak takipçi kitlenizle güçlü bir bağ kurmanıza yardımcı oluyoruz. Aynı zamanda, Google ve Facebook reklamlarıyla hedef kitlenize doğru zamanda ve doğru içeriklerle ulaşmanızı sağlayarak reklam bütçenizin verimli kullanılmasına katkıda bulunuyoruz.
+                    </p>
+                    <p>
+                        <a href="/izmir-ajans/google-seo" title="İzmir Google SEO Optimizasyonu">SEO (Google Arama Motoru Optimizasyonu)</a> hizmetimiz, web sitenizin Google ve diğer arama motorlarında üst sıralarda yer almasını sağlar. Anahtar kelime araştırmaları, içerik optimizasyonu ve teknik SEO çalışmalarımızla organik aramalarda görünürlüğünüzü artırarak, daha fazla ziyaretçi ve potansiyel müşteri elde etmenizi sağlıyoruz.
+                    </p>
+                    <p>
+                        İzmir GO Dijital ile dijital dünyadaki başarıyı yakalayın, markanızı büyütün ve işinizi online platformlarda daha görünür hale getirin.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 @if (session('info'))
     <div class="alert alert-info">

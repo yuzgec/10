@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function contactus(){
 
 
-        SEOMeta::setTitle('İletişim | Web tasarım, Google SEO ve Reklamları | Sosyal Medya');
+        SEOMeta::setTitle('İletişim | Google SEO ve Reklamları');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
