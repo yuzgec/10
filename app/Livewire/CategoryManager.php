@@ -42,8 +42,7 @@ class CategoryManager extends Component
     public function loadCategories()
     {
         $query = Category::query()
-            ->with(['translations', 'children.translations', 'allChildren.translations'])
-            ->orderBy('rank');
+            ->with(['translations', 'children.translations', 'allChildren.translations']);
         
         if ($this->search) {
             $query->whereTranslationLike('name', '%' . $this->search . '%');
@@ -52,12 +51,6 @@ class CategoryManager extends Component
         }
         
         $this->cat = $query->get();
-        
-        // Debug için
-        \Log::info('Categories loaded:', [
-            'count' => $this->cat->count(),
-            'with_children' => $this->cat->filter(fn($cat) => $cat->children->count() > 0)->count()
-        ]);
     }
 
     public function toggleExpand($categoryId)
