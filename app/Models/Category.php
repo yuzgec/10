@@ -20,7 +20,7 @@ class Category extends Model implements HasMedia, TranslatableContract,Viewable
     use SoftDeletes, InteractsWithMedia, Translatable, NodeTrait,InteractsWithViews;
 
     protected $fillable = ['parent_id', 'rank', 'status'];
-    public $translatedAttributes = ['name', 'slug', 'description'];
+    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
 
     public function services()
     {
