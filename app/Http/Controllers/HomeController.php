@@ -30,12 +30,9 @@ class HomeController extends Controller
     }
 
     public function contactus(){
-
-
         SEOMeta::setTitle('İletişim | Google SEO ve Reklamları');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
-
         return view('frontend.page.contactus');
     }
 
@@ -122,7 +119,7 @@ class HomeController extends Controller
         $t = preg_replace('/([,\?:])/', "$1\n", $detail->name); // İşaretlerden sonra \n ekle
         $title = nl2br($t);
 
-        SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name);
+        SEOMeta::setTitle($detail->name.' - '. $detail->getCategory->name);
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());
 
@@ -139,7 +136,7 @@ class HomeController extends Controller
             $query->where('category_id', $category->id);
         })->get();
 
-        SEOMeta::setTitle('İzmir '.$category->name);
+        SEOMeta::setTitle($category->name);
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır.');
         SEOMeta::setCanonical(url()->full());
 
