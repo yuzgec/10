@@ -23,7 +23,8 @@ class BlogRequest extends FormRequest
             
             // Güncelleme durumunda unique kontrolü
             if ($this->isMethod('put') || $this->isMethod('patch')) {
-                $rules["name:{$lang}"] .= '|unique:blog_translations,name,' . $this->id . ',blog_id,locale,' . $lang;
+                $blogId = $this->segment(5); // URL'den blog ID'sini al
+                $rules["name:{$lang}"] .= '|unique:blog_translations,name,' . $blogId . ',blog_id,locale,' . $lang;
             } else {
                 $rules["name:{$lang}"] .= '|unique:blog_translations,name,NULL,blog_id,locale,' . $lang;
             }

@@ -23,7 +23,8 @@ class ServiceRequest extends FormRequest
             
             // Güncelleme durumunda unique kontrolü
             if ($this->isMethod('put') || $this->isMethod('patch')) {
-                $rules["name:{$lang}"] .= '|unique:service_translations,name,' . $this->id . ',service_id,locale,' . $lang;
+                $serviceId = $this->segment(5); // URL'den blog ID'sini al
+                $rules["name:{$lang}"] .= '|unique:service_translations,name,' . $serviceId . ',service_id,locale,' . $lang;
             } else {
                 $rules["name:{$lang}"] .= '|unique:service_translations,name,NULL,service_id,locale,' . $lang;
             }

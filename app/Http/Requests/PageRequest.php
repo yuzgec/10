@@ -23,7 +23,8 @@ class PageRequest extends FormRequest
             
             // Güncelleme durumunda unique kontrolü
             if ($this->isMethod('put') || $this->isMethod('patch')) {
-                $rules["name:{$lang}"] .= '|unique:page_translations,name,' . $this->id . ',page_id,locale,' . $lang;
+                $pageId = $this->segment(5); // URL'den blog ID'sini al
+                $rules["name:{$lang}"] .= '|unique:page_translations,name,' . $pageId . ',page_id,locale,' . $lang;
             } else {
                 $rules["name:{$lang}"] .= '|unique:page_translations,name,NULL,page_id,locale,' . $lang;
             }

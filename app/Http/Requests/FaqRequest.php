@@ -23,7 +23,8 @@ class FaqRequest extends FormRequest
           
           // Güncelleme durumunda unique kontrolü
           if ($this->isMethod('put') || $this->isMethod('patch')) {
-              $rules["name:{$lang}"] .= '|unique:faq_translations,name,' . $this->id . ',faq_id,locale,' . $lang;
+            $faqId = $this->segment(5); // URL'den blog ID'sini al
+            $rules["name:{$lang}"] .= '|unique:faq_translations,name,' . $faqId . ',faq_id,locale,' . $lang;
           } else {
               $rules["name:{$lang}"] .= '|unique:faq_translations,name,NULL,faq_id,locale,' . $lang;
           }
