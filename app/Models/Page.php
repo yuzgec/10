@@ -24,7 +24,7 @@ class Page extends Model implements TranslatableContract,HasMedia,Viewable
 {
     use HasFactory,SoftDeletes,InteractsWithMedia,Translatable,InteractsWithViews;
 
-    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle'];
+    public $translatedAttributes = ['name', 'slug','short','desc','seoKey', 'seoDesc', 'seoTitle','title1','desc1','title2','desc2','title3','desc3'];
 
     protected $table = 'pages';
     protected $guarded = [];

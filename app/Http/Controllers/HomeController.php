@@ -21,7 +21,7 @@ use CyrildeWit\EloquentViewable\Contracts\Views;
 class HomeController extends Controller
 {
     public function index(){
-
+ 
         SEOMeta::setTitle('Google SEO Uzmanı');
         SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
         SEOMeta::setCanonical(url()->full());

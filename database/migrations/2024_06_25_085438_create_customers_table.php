@@ -148,6 +148,21 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+
+        
+        Schema::create('exchange_rates', function (Blueprint $table) {
+            $table->id();
+            $table->string('currency_code'); // USD, EUR, GBP vb.
+            $table->decimal('buying_rate', 10, 4);  // Alış
+            $table->decimal('selling_rate', 10, 4); // Satış
+            $table->decimal('effective_rate', 10, 4); // Efektif
+            $table->date('rate_date');
+            $table->timestamps();
+
+            // Aynı gün için tekrar kur eklenmemesi için
+            $table->unique(['currency_code', 'rate_date']);
+        });
     }
 
     /**
@@ -162,5 +177,6 @@ return new class extends Migration
         Schema::dropIfExists('customer_works');
         Schema::dropIfExists('offer_template_items');
         Schema::dropIfExists('offer_templates');
+        Schema::dropIfExists('exchange_rates');
     }
 };

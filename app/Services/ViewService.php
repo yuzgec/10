@@ -99,8 +99,7 @@ class ViewService
             Service::class,
             Page::class,
             Team::class,
-            Category::class,
-            Video::class,
+            Category::class
         ]);
 
         $allViews = collect();

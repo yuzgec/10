@@ -37,8 +37,7 @@ class DashboardController extends Controller
                 'blogs' => Blog::count(),
                 'faqs' => Faq::count(),
                 'categories' => Category::count(),
-                'teams' => Team::count(),
-                'videos' => Video::count(),
+                'teams' => Team::count()
             ];
         });
 

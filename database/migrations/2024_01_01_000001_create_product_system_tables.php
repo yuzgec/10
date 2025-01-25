@@ -11,6 +11,16 @@ return new class extends Migration
 {
     public function up()
     {
+
+        Schema::create('brands', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->boolean('status')->default(true);
+            $table->integer('rank')->default(0);
+            $table->timestamps();
+        });
+        
         // 1. Ana Ürün Tablosu
         Schema::create('products', function (Blueprint $table) {
             $table->id();
@@ -21,6 +31,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount_price', 10, 2)->nullable();
             $table->integer('stock')->default(0);
+            $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -39,6 +50,13 @@ return new class extends Migration
             $table->string('seoTitle')->nullable();
             $table->string('seoDesc')->nullable();
             $table->string('seoKey')->nullable();
+
+            $table->integer('title1')->nullable();
+            $table->longtext('desc1')->nullable();
+            $table->integer('title2')->nullable();
+            $table->longtext('desc2')->nullable();
+            $table->integer('title3')->nullable();
+            $table->longtext('desc3')->nullable();
 
             $table->unique(['product_id', 'locale'], 'pt_uniq');
         });
@@ -120,23 +138,23 @@ return new class extends Migration
         });
 
         // 9. Kategori Ürün İlişkisi
-        Schema::create('category_product', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')
-                ->constrained()
-                ->onDelete('cascade')
-                ->name('cp_cat_fk');
-            $table->foreignId('product_id')
-                ->constrained()
-                ->onDelete('cascade')
-                ->name('cp_prod_fk');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            
+            $table->unique(['product_id', 'category_id']);
         });
+
+
+   
+
     }
 
     public function down()
     {
-        Schema::dropIfExists('category_product');
+        Schema::dropIfExists('product_categories');
         Schema::dropIfExists('variation_values');
         Schema::dropIfExists('product_variations');
         Schema::dropIfExists('product_attribute_value_translations');
@@ -145,5 +163,6 @@ return new class extends Migration
         Schema::dropIfExists('product_attributes');
         Schema::dropIfExists('product_translations');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('brands');
     }
 }; 

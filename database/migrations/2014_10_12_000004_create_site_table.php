@@ -64,6 +64,13 @@ return new class extends Migration
             $table->longtext('short')->nullable();
             $table->longtext('desc')->nullable();
 
+            $table->integer('title1')->nullable();
+            $table->longtext('desc1')->nullable();
+            $table->integer('title2')->nullable();
+            $table->longtext('desc2')->nullable();
+            $table->integer('title3')->nullable();
+            $table->longtext('desc3')->nullable();
+
             //SEO
             $table->string('seoTitle')->nullable();
             $table->string('seoDesc')->nullable();
@@ -169,11 +176,17 @@ return new class extends Migration
             $table->string('locale')->index();
             $table->unique(['service_id', 'locale']);
 
-
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->longtext('short')->nullable();
             $table->longtext('desc')->nullable();
+
+            $table->integer('title1')->nullable();
+            $table->longtext('desc1')->nullable();
+            $table->integer('title2')->nullable();
+            $table->longtext('desc2')->nullable();
+            $table->integer('title3')->nullable();
+            $table->longtext('desc3')->nullable();
 
             //SEO
             $table->string('seoTitle')->nullable();
@@ -210,6 +223,14 @@ return new class extends Migration
             $table->string('slug');
             $table->longtext('short')->nullable();
             $table->longtext('desc')->nullable();
+
+            $table->integer('title1')->nullable();
+            $table->longtext('desc1')->nullable();
+            $table->integer('title2')->nullable();
+            $table->longtext('desc2')->nullable();
+            $table->integer('title3')->nullable();
+            $table->longtext('desc3')->nullable();
+
 
             //SEO
             $table->string('seoTitle')->nullable();
