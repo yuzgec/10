@@ -315,7 +315,7 @@
                                                         </h2>
                                                     </div>
                                                     <div class="!relative">
-                                                        {{ $item->short}}
+                                                        {!! $item->short!!}
                                                     </div>
                                                 </div>
 
