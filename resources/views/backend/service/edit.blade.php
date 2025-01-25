@@ -7,6 +7,7 @@
     ->open() 
 !!}
 
+<input type="hidden" name="id" value="{{ $edit->id }}">
 
 <x-dashboard.crud.edit-header :model='$edit' route="service" name="Hizmet">
 <div class="p-1">

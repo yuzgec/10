@@ -6,6 +6,7 @@
     ->attribute('data-action', 'update')
     ->open() 
 !!}
+<input type="hidden" name="id" value="{{ $edit->id }}">
 
 <div class="col-12 mb-3">
     <div class="card">
