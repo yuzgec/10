@@ -12,7 +12,7 @@
                     <div class="inline-flex uppercase tracking-[0.02rem] text-[0.7rem] font-bold text-[#aab0bc] mb-[0.4rem]  text-line relative align-top pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
                         <a href="{{ route('blog.category', $detail->getCategory->slug) }}" class="hover" rel="category">{{ $detail->getCategory->name}}</a>
                     </div>
-                    <h1 class="text-[calc(1.365rem_+_1.38vw)] font-bold leading-[1.2] xl:text-[2.4rem] mb-4">
+                    <h1 class="text-gradient gradient-7 text-[calc(1.365rem_+_1.38vw)] font-bold leading-[1.2] xl:text-[2.4rem] mb-4">
                         {!! $title !!}
                     </h1>
                     <ul class="text-[0.8rem] text-[#aab0bc] m-0 p-0 list-none !mb-5">

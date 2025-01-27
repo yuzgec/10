@@ -11,63 +11,53 @@
             <div class="flex flex-wrap mx-[-15px] mt-[-30px] xl:mt-0 lg:mt-0">
                 <div class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
                     <div class="widget text-[#cacaca]">
-                        <img
-                            class="!mb-4"
-                            src="/logof.png"
-                            srcset="/logof.png"
-                            alt="İzmir GO Dijital Ajans"/>
-                            <p class="!mb-4">© 2024 İzmir GO Dijital Ajans.
-                                <br class="hidden xl:block lg:block text-[#cacaca]">Tüm Hakları Saklıdır.</p>
-                                <nav class="nav social social-white">
-                                    
-                                    <a
-                                        class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                        href="{{ config('settings.facebook')}}" title="GO Dijital Facebook">
-                                        <i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i>
-                                    </a>
-                                    
-                                    <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                        href="{{ config('settings.instagram')}}" title="GO Dijital İnstagram">
-                                        <i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i>
-                                    </a>
-                                    <a
-                                        class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                        href="{{ config('settings.youtube')}}" title="GO Dijital Youtube">
-                                        <i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i>
-                                    </a>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
-                            <div class="widget text-[#cacaca]">
-                                <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">İletişim Bilgileri</h4>
-                                <address class="xl:pr-20 xxl:!pr-28 not-italic leading-[inherit] block mb-4">{{ config('settings.adres1')}}</address>
-                                <a class="text-[#cacaca] hover:text-[#a07cc5]"
-                                    href="mailto:{{ config('settings.email1')}}">
-                                    {{ config('settings.email1')}}
-                                </a>
-                                <br>
-                                {{ config('settings.telefon1')}}
-                                </div>
-                            </div>
-                            <div
-                                class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
-                                <div class="widget text-[#cacaca]">
-                                    <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Hizmetlerimiz</h4>
-                                    <ul class="pl-0 list-none   !mb-0">
-                                    @foreach ($categories->where('parent_id', 2) as $item )
+                        <img class="!mb-4" src="/logof.png" srcset="/logof.png"alt="İzmir GO Dijital Ajans"/>
+                            <p class="!mb-4">© 2024 İzmir GO Dijital Ajans.<br class="hidden xl:block lg:block text-[#cacaca]">Tüm Hakları Saklıdır.</p>
+                        <nav class="nav social social-white">
+                            <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
+                                href="https://www.facebook.com/{{ config('settings.facebook')}}" title="GO Dijital Facebook">
+                                <i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i>
+                            </a>
+                            <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
+                                href="https://www.instagram.com/{{ config('settings.instagram')}}" title="GO Dijital İnstagram">
+                                <i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i>
+                            </a>
+                            <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
+                                href="https://www.youtube.com/{{ config('settings.youtube')}}" title="GO Dijital Youtube">
+                                <i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
 
-                                        <li>
-                                            <a class="text-[#cacaca] hover:text-[#a07cc5]" href="{{ route('category.detail', $item->slug)}}" title="{{ $item->name}}">
-                                                {{ $item->name}}
-                                            </a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            <div
-                                class="md:w-full xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
+                <div class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
+                    <div class="widget text-[#cacaca]">
+                        <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">İletişim Bilgileri</h4>
+                        <address class="xl:pr-20 xxl:!pr-28 not-italic leading-[inherit] block mb-4">{{ config('settings.adres1')}}</address>
+                        <a class="text-[#cacaca] hover:text-[#a07cc5]"
+                            href="mailto:{{ config('settings.email1')}}">
+                            {{ config('settings.email1')}}
+                        </a>
+                        <br>
+                        {{ config('settings.telefon1')}}
+                    </div>
+                </div>
+
+                <div class="md:w-4/12 xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
+                    <div class="widget text-[#cacaca]">
+                        <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Hizmetlerimiz</h4>
+                        <ul class="pl-0 list-none   !mb-0">
+                        @foreach ($categories->where('parent_id', 2) as $item )
+                            <li>
+                                <a class="text-[#cacaca] hover:text-[#a07cc5]" href="{{ route('category.detail', $item->slug)}}" title="{{ $item->name}}">
+                                    {{ $item->name}}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                            <div class="md:w-full xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
                                 <div class="widget text-[#cacaca]">
                                     <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Haber Bülteni</h4>
                                     <p class="!mb-5">Mail bültemize katılarak en güncel teknoloji haberlerini alabilirsiniz.</p>
@@ -118,7 +108,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                                    </div>
-                                                </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </footer>

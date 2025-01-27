@@ -11,7 +11,7 @@
     <div class="container text-center" style="padding-top: 60px;padding-bottom:60px">
         <div class="flex flex-wrap mx-[-15px]">
             <div class="sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-6/12 xxl:w-5/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
-                <h1 class="text-[calc(1.365rem_+_1.38vw)] font-bold leading-[1.2] xl:text-[2.4rem] mb-3 text-[#343f52]">{{ $detail->name}}</h1>
+                <h1 class="text-gradient gradient-7 text-[calc(1.365rem_+_1.38vw)] font-bold leading-[1.2] xl:text-[2.4rem] mb-3 text-[#343f52]">{{ $detail->name}}</h1>
                 <nav class="inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb  flex flex-wrap bg-[none] p-0 !rounded-none list-none mb-[20px]">
                         <li class="breadcrumb-item flex text-[#60697b]">
