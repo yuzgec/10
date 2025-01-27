@@ -57,58 +57,59 @@
                         </ul>
                     </div>
                 </div>
-                            <div class="md:w-full xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
-                                <div class="widget text-[#cacaca]">
-                                    <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Haber Bülteni</h4>
-                                    <p class="!mb-5">Mail bültemize katılarak en güncel teknoloji haberlerini alabilirsiniz.</p>
-                                    <div class="newsletter-wrapper">
+                
+                <div class="md:w-full xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:mt-0 lg:mt-0 mt-[30px]">
+                    <div class="widget text-[#cacaca]">
+                        <h4 class="widget-title text-white !mb-3 !text-[1rem] !leading-[1.45]">Haber Bülteni</h4>
+                        <p class="!mb-5">Mail bültemize katılarak en güncel teknoloji haberlerini alabilirsiniz.</p>
+                        <div class="newsletter-wrapper">
 
-                                    <div id="mc_embed_signup2">
-                                            <form
-                                                action="#"
-                                                method="post"
-                                                id="mc-embedded-subscribe-form2"
-                                                name="mc-embedded-subscribe-form"
-                                                class="validate dark-fields"
-                                                target="_blank"
-                                                novalidate="novalidate">
-                                                <div id="mc_embed_signup_scroll2">
-                                                    <div
-                                                        class="!text-left input-group form-floating !relative flex flex-wrap items-stretch w-full">
-                                                        <input
-                                                            type="email"
-                                                            value=""
-                                                            name="EMAIL"
-                                                            class="required email form-control block w-full text-[12px] font-medium leading-[1.7] appearance-none bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] px-4 py-[0.6rem] rounded-[0.4rem] motion-reduce:transition-none focus:text-[#60697b] focus:bg-[rgba(255,255,255,.03)] focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] disabled:bg-[#aab0bc] disabled:opacity-100 file:mt-[-0.6rem] file:mr-[-1rem] file:mb-[-0.6rem] file:ml-[-1rem] file:text-[#60697b] file:bg-[#fefefe] file:pointer-events-none file:transition-all file:duration-[0.2s] file:ease-in-out file:px-4 file:py-[0.6rem] file:rounded-none motion-reduce:file:transition-none placeholder:text-[#959ca9] placeholder:opacity-100 border border-solid !border-[rgba(255,255,255,0.1)] text-[#cacaca] focus:!border-[#a07cc5] bg-[rgba(255,255,255,.03)] focus-visible:!border-[#a07cc5] focus-visible:!outline-0"
-                                                            placeholder="Email Adresinizi Giriniz..."
-                                                            id="mce-EMAIL2">
-                                                            <label
-                                                                class="!ml-[0.05rem] text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none origin-[0_0] px-4 py-[0.6rem] left-0 top-0"
-                                                                for="mce-EMAIL2">Email Adresiniz</label>
-                                                            <input
-                                                                type="submit"
-                                                                value="KATIL"
-                                                                name="subscribe"
-                                                                id="mc-embedded-subscribe2"
-                                                                class="btn btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !relative z-[2] focus:z-[5] hover:!transform-none border-0"></div>
-                                                            <div id="mce-responses2" class="clear">
-                                                                <div class="response" id="mce-error-response2" style="display:none"></div>
-                                                                <div class="response" id="mce-success-response2" style="display:none"></div>
-                                                            </div>
-                                                       
-                                                            <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                                                                <input
-                                                                    type="text"
-                                                                    name="b_ddc180777a163e0f9f66ee014_4b1bcfa0bc"
-                                                                    tabindex="-1"
-                                                                    value=""></div>
-                                                                <div class="clear"></div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                        <div id="mc_embed_signup2">
+                                <form
+                                    action="#"
+                                    method="post"
+                                    id="mc-embedded-subscribe-form2"
+                                    name="mc-embedded-subscribe-form"
+                                    class="validate dark-fields"
+                                    target="_blank"
+                                    novalidate="novalidate">
+                                    <div id="mc_embed_signup_scroll2">
+                                        <div
+                                            class="!text-left input-group form-floating !relative flex flex-wrap items-stretch w-full">
+                                            <input
+                                                type="email"
+                                                value=""
+                                                name="EMAIL"
+                                                class="required email form-control block w-full text-[12px] font-medium leading-[1.7] appearance-none bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] px-4 py-[0.6rem] rounded-[0.4rem] motion-reduce:transition-none focus:text-[#60697b] focus:bg-[rgba(255,255,255,.03)] focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] disabled:bg-[#aab0bc] disabled:opacity-100 file:mt-[-0.6rem] file:mr-[-1rem] file:mb-[-0.6rem] file:ml-[-1rem] file:text-[#60697b] file:bg-[#fefefe] file:pointer-events-none file:transition-all file:duration-[0.2s] file:ease-in-out file:px-4 file:py-[0.6rem] file:rounded-none motion-reduce:file:transition-none placeholder:text-[#959ca9] placeholder:opacity-100 border border-solid !border-[rgba(255,255,255,0.1)] text-[#cacaca] focus:!border-[#a07cc5] bg-[rgba(255,255,255,.03)] focus-visible:!border-[#a07cc5] focus-visible:!outline-0"
+                                                placeholder="Email Adresinizi Giriniz..."
+                                                id="mce-EMAIL2">
+                                                <label
+                                                    class="!ml-[0.05rem] text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none origin-[0_0] px-4 py-[0.6rem] left-0 top-0"
+                                                    for="mce-EMAIL2">Email Adresiniz</label>
+                                                <input
+                                                    type="submit"
+                                                    value="KATIL"
+                                                    name="subscribe"
+                                                    id="mc-embedded-subscribe2"
+                                                    class="btn btn-violet text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:border-[#a07cc5] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !relative z-[2] focus:z-[5] hover:!transform-none border-0"></div>
+                                                <div id="mce-responses2" class="clear">
+                                                    <div class="response" id="mce-error-response2" style="display:none"></div>
+                                                    <div class="response" id="mce-success-response2" style="display:none"></div>
                                                 </div>
-                                            </div>
+                                            
+                                                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                                    <input
+                                                        type="text"
+                                                        name="b_ddc180777a163e0f9f66ee014_4b1bcfa0bc"
+                                                        tabindex="-1"
+                                                        value=""></div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </footer>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
