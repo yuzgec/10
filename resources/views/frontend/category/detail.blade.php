@@ -26,9 +26,6 @@
 
     <section class="wrapper !bg-[#ffffff]  angled upper-end relative border-0 before:top-[-4rem] before:border-l-transparent before:border-r-[100vw] before:border-t-[4rem] before:border-[#fefefe] before:content-[''] before:block before:absolute before:z-0 before:border-y-transparent before:border-0 before:border-solid before:right-0 after:content-[''] after:block after:absolute after:z-0 after:border-y-transparent after:border-[#fefefe] after:border-0 after:border-solid after:right-0">
         <div class="container">
-
-
-
             <div class="flex flex-wrap mx-[-15px] row-cols-2 row-cols-md-3 row-cols-xl-5 mb-10 justify-center">
                 @foreach ($services->where('category_id', $detail->id) as $item)
 

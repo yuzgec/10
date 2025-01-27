@@ -11,9 +11,9 @@ use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class PageTranslation extends Model implements Viewable
+class PageTranslation extends Model
 {
-    use LogsActivityTrait,HasFactory,HasSlug,InteractsWithViews;
+    use LogsActivityTrait,HasFactory,HasSlug;
 
     public $timestamps = false;
     protected $guarded = [];

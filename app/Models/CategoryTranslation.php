@@ -10,9 +10,9 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CategoryTranslation extends Model implements Viewable
+class CategoryTranslation extends Model
 {
-    use LogsActivityTrait,HasFactory,HasSlug,InteractsWithViews;
+    use LogsActivityTrait,HasFactory,HasSlug;
 
 
     public $timestamps = false;

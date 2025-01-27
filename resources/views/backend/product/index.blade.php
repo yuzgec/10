@@ -24,7 +24,7 @@
                 <div class="col-md-3">
                     <select name="category" class="form-select" onchange="this.form.submit()">
                         <option value="">Tüm Kategoriler</option>
-                        @foreach($categories as $category)
+                        @foreach($categories->where('parent_id', 7) as $category)
                             <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
                                 {{ $category->name }} ({{ $category->products_count }})
                             </option>

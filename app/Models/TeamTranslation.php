@@ -11,9 +11,9 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TeamTranslation extends Model implements Viewable
+class TeamTranslation extends Model
 {
-    use LogsActivityTrait,HasFactory,HasSlug,InteractsWithViews;
+    use LogsActivityTrait,HasFactory,HasSlug;
     
     public $timestamps = false;
     protected $guarded = [];

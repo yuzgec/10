@@ -17,8 +17,7 @@
                     </h1>
                     <ul class="text-[0.8rem] text-[#aab0bc] m-0 p-0 list-none !mb-5">
                         <li class="post-date inline-block">
-                            <i
-                                class="uil uil-calendar-alt pr-[0.2rem] align-[-.05rem] before:content-['\e9ba']"></i>
+                            <i class="uil uil-calendar-alt pr-[0.2rem] align-[-.05rem] before:content-['\e9ba']"></i>
                             <span>{{$detail->created_at}}</span>
                         </li>
                         <li
