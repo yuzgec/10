@@ -3,38 +3,48 @@
 namespace App\Observers;
 
 use App\Models\Product;
-use Illuminate\Support\Str;
 
 class ProductObserver
 {
-    private array $languages;
-
-    public function __construct()
+    /**
+     * Handle the Product "created" event.
+     */
+    public function created(Product $product): void
     {
-        $this->languages = config('app.languages', ['tr']);
+        //
     }
 
-    public function creating(Product $product)
+    /**
+     * Handle the Product "updated" event.
+     */
+    public function updated(Product $product): void
     {
-        if (empty($product->slug)) {
-            $this->generateSlug($product);
+        if ($product->isDirty('type') && $product->variations()->exists()) {
+            throw new \Exception('Varyasyonlu ürün tipi değiştirilemez');
         }
     }
 
-    public function updating(Product $product)
+    /**
+     * Handle the Product "deleted" event.
+     */
+    public function deleted(Product $product): void
     {
-        if ($product->isDirty('name')) {
-            $this->generateSlug($product);
-        }
+        //
     }
 
-    private function generateSlug(Product $product)
+    /**
+     * Handle the Product "restored" event.
+     */
+    public function restored(Product $product): void
     {
-        $slug = [];
-        foreach ($this->languages as $lang) {
-            $name = is_array($product->name) ? ($product->name[$lang] ?? '') : $product->name;
-            $slug[$lang] = Str::slug($name);
-        }
-        $product->slug = $slug;
+        //
     }
-} 
+
+    /**
+     * Handle the Product "force deleted" event.
+     */
+    public function forceDeleted(Product $product): void
+    {
+        //
+    }
+}
