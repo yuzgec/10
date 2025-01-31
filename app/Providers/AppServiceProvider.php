@@ -7,16 +7,17 @@ use App\Models\Blog;
 use App\Models\Page;
 use App\Models\Team;
 use Livewire\Livewire;
+use App\Models\Product;
 use App\Models\Service;
 use App\Models\Category;
 use App\Models\Language;
 use App\Observers\BlogObserver;
 use App\Observers\PageObserver;
 use App\Observers\TeamObserver;
+
+
+
 use App\Observers\ProductObserver;
-
-
-
 use App\Observers\ServiceObserver;
 use App\Observers\CategoryObserver;
 use Illuminate\Pagination\Paginator;

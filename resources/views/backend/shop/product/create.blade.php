@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
-                <x-dashboard.crud.tab-menu :language="$language">
+                <x-dashboard.crud.tab-menu :language="$languages">
                     <li class="nav-item" role="presentation">
                         <a href="#properties" class="nav-link" data-bs-toggle="tab">
                             <x-dashboard.icon.star/> @lang('Özellikler')
@@ -20,7 +20,7 @@
             </div>
             
             <div class="card-body">
-                @foreach($language as $lang)
+                @foreach($languages as $lang)
                 <div class="tab-pane @if($loop->first) active show @endif" id="{{ $lang }}" role="tabpanel">
                     <div class="card">
                         <div class="card-status-top bg-blue"></div>
@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        {{-- <!-- Medya Yönetimi -->
+        <!-- Medya Yönetimi -->
         <div class="card mb-3">
             <div class="card-status-top bg-blue"></div>
             <div class="card-header">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 
     <!-- Sağ Sidebar -->
@@ -165,5 +165,16 @@
 
 @push('scripts')
 @include('backend.layout.ck')
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // CKEditor Initialization
+    @foreach($languages as $lang)
+    ClassicEditor
+        .create(document.querySelector('#desc-{{ $lang }}'))
+        .catch(error => {
+            console.error(error);
+        });
+    @endforeach
+});
+</script>
 @endpush 

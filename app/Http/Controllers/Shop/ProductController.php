@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Shop;
 
+use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Enums\ProductTypeEnum;
 use App\Models\ProductAttribute;
 use App\Http\Controllers\Controller;
 
@@ -12,33 +14,35 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['translations', 'category', 'media'])
-            ->withCount(['variations'])
-            ->when(request('category'), function($q) {
-                $q->where('category_id', request('category'));
-            })
-            ->when(request('search'), function($q) {
-                $q->whereTranslationLike('name', '%'.request('search').'%');
-            })
-            ->when(request('status') !== null, function($q) {
-                $q->where('status', request('status'));
-            })
-            ->orderBy('rank')
-            ->paginate(20)
-            ->withQueryString();
+        $products = Product::with(['translations', 'media', 'categories'])
+        ->withCount('variations')
+        ->when(request('type'), function($q) {
+            $q->where('type', request('type'));
+        })
+        ->when(request('category'), function($q) {
+            $q->whereHas('categories', function($query) {
+                $query->where('categories.id', request('category'));
+            });
+        })
+        ->when(request('search'), function($q) {
+            $q->whereTranslationLike('name', '%'.request('search').'%');
+        })
+        ->orderByDesc('created_at')
+        ->paginate(20);
 
+        $productTypes = ProductTypeEnum::cases();
 
-            $attributes = ProductAttribute::all();
+        return view('backend.product.index', compact('products', 'productTypes'));
 
-        //dd($attributes);
-
-        return view('backend.product.index', compact('products', 'attributes'));
     }
 
     public function create()
     {
-        return view('backend.product.create');
+        $attributes = ProductAttribute::all();
+        $tags = Tag::all();
+        return view('backend.product.create', compact('attributes', 'tags'));
     }
+
 
     public function store(Request $request)
     {
