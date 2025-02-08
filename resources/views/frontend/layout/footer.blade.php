@@ -85,6 +85,8 @@
                                     </div>
                                 </form>
                             </div>
+                            <a href="/sitemap.xml" title="Site Haritası" class="text-[#cacaca] hover:text-[#a07cc5]">Site Haritası</a>
+
                         </div>
                     </div>
                 </div>

@@ -1,347 +1,343 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-  <loc>https://godijital.net/</loc>
+  <loc>https://www.godijital.net/</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://godijital.net/kurumsal/hakkimizda</loc>
+  <loc>https://www.godijital.net/kurumsal/hakkimizda</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/izmir-ajans/web-tasarim</loc>
+  <loc>https://www.godijital.net/izmir-ajans/web-tasarim</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/izmir-ajans/kurumsal-kimlik</loc>
+  <loc>https://www.godijital.net/izmir-ajans/kurumsal-kimlik</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/izmir-ajans/google-seo</loc>
+  <loc>https://www.godijital.net/izmir-ajans/google-seo</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/izmir-ajans/sosyal-medya</loc>
+  <loc>https://www.godijital.net/izmir-ajans/sosyal-medya</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/izmir-ajans/dijital-reklam</loc>
+  <loc>https://www.godijital.net/izmir-ajans/dijital-reklam</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/projeler</loc>
+  <loc>https://www.godijital.net/projeler</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/markalar</loc>
+  <loc>https://www.godijital.net/markalar</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/bloglar</loc>
+  <loc>https://www.godijital.net/bloglar</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/iletisim</loc>
+  <loc>https://www.godijital.net/iletisim</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/teklif-al</loc>
+  <loc>https://www.godijital.net/teklif-al</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/e-ticaret-sitesi</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/e-ticaret-sitesi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/portfoy-ve-kisisel-web-siteleri</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/portfoy-ve-kisisel-web-siteleri</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/qr-menu-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/qr-menu-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/kurumsal-web-sitesi</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/kurumsal-web-sitesi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/blog-ve-icerik-siteleri</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/blog-ve-icerik-siteleri</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/landing-page-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/landing-page-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/kurumsal-kimlik/logo-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/kurumsal-kimlik/logo-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/kurumsal-kimlik/banner-ve-reklam-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/kurumsal-kimlik/banner-ve-reklam-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/kurumsal-kimlik/ambalaj-ve-etiket-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/kurumsal-kimlik/ambalaj-ve-etiket-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/kurumsal-kimlik/kurumsal-kimlik-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/kurumsal-kimlik/kurumsal-kimlik-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/kurumsal-kimlik/sunum-tasarimlari</loc>
+  <loc>https://www.godijital.net/hizmet/kurumsal-kimlik/sunum-tasarimlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/kurumsal-kimlik/promosyon-urun-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/kurumsal-kimlik/promosyon-urun-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/google-seo/anahtar-kelime-arastirmasi</loc>
+  <loc>https://www.godijital.net/hizmet/google-seo/anahtar-kelime-arastirmasi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/google-seo/site-ici-seo-ayarlari</loc>
+  <loc>https://www.godijital.net/hizmet/google-seo/site-ici-seo-ayarlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/google-seo/seo-danismanlik-hizmetleri</loc>
+  <loc>https://www.godijital.net/hizmet/google-seo/seo-danismanlik-hizmetleri</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/google-seo/seo-icerik-uretimi</loc>
+  <loc>https://www.godijital.net/hizmet/google-seo/seo-icerik-uretimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/google-seo/rakip-analizi-ve-seo-raporlamasi</loc>
+  <loc>https://www.godijital.net/hizmet/google-seo/rakip-analizi-ve-seo-raporlamasi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/kurumsal-web-sitesi-yaptirirken-nelere-dikkat-etmelisiniz</loc>
+  <loc>https://www.godijital.net/blog/kurumsal-web-sitesi-yaptirirken-nelere-dikkat-etmelisiniz</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/webtasarim</loc>
+  <loc>https://www.godijital.net/blog-kategori/webtasarim</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/chat-gpt-nedir-kullanim-alanlari-nelerdir</loc>
+  <loc>https://www.godijital.net/blog/chat-gpt-nedir-kullanim-alanlari-nelerdir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/yapay-zeka</loc>
+  <loc>https://www.godijital.net/blog-kategori/yapay-zeka</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/2025-instagram-gorsel-boyutlari</loc>
+  <loc>https://www.godijital.net/blog/2025-instagram-gorsel-boyutlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/instagram</loc>
+  <loc>https://www.godijital.net/blog-kategori/instagram</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/kullanici-deneyimini-artiran-10-altin-kural</loc>
+  <loc>https://www.godijital.net/blog/kullanici-deneyimini-artiran-10-altin-kural</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/kartvizitiniz-degil-bir-internet-siteniz-olsun</loc>
+  <loc>https://www.godijital.net/blog/kartvizitiniz-degil-bir-internet-siteniz-olsun</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/googleda-seo-ile-ust-siralara-cikmanin-sirlari</loc>
+  <loc>https://www.godijital.net/blog/googleda-seo-ile-ust-siralara-cikmanin-sirlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/googleseo</loc>
+  <loc>https://www.godijital.net/blog-kategori/googleseo</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/email-imza-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/email-imza-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/api-entegrasyonlari</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/api-entegrasyonlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/web-tasarim/ozel-yazilim-cozumleri</loc>
+  <loc>https://www.godijital.net/hizmet/web-tasarim/ozel-yazilim-cozumleri</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/sosyal-medya/sosyal-medya-gorsel-tasarimi</loc>
+  <loc>https://www.godijital.net/hizmet/sosyal-medya/sosyal-medya-gorsel-tasarimi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/dijital-reklam/google-reklamlari</loc>
+  <loc>https://www.godijital.net/hizmet/dijital-reklam/google-reklamlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/hizmet/dijital-reklam/meta-reklamlari</loc>
+  <loc>https://www.godijital.net/hizmet/dijital-reklam/meta-reklamlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/domain-sure-bitiminden-sonra-ne-olur-cezai-bir-islem-var-midir</loc>
+  <loc>https://www.godijital.net/blog/domain-sure-bitiminden-sonra-ne-olur-cezai-bir-islem-var-midir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/yerel-seo-icin-google-haritalar-nasil-optimize-edilir</loc>
+  <loc>https://www.godijital.net/blog/yerel-seo-icin-google-haritalar-nasil-optimize-edilir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/google-harita</loc>
+  <loc>https://www.godijital.net/blog-kategori/google-harita</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/2025-iyzico-sanal-pos-basvuru-nasil-yapilir</loc>
+  <loc>https://www.godijital.net/blog/2025-iyzico-sanal-pos-basvuru-nasil-yapilir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/internet-sitenizi-duzenli-olarak-guncelliyor-musunuz</loc>
+  <loc>https://www.godijital.net/blog/internet-sitenizi-duzenli-olarak-guncelliyor-musunuz</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/2025-paytr-sanal-pos-basvuru-nasil-yapilir</loc>
+  <loc>https://www.godijital.net/blog/2025-paytr-sanal-pos-basvuru-nasil-yapilir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/izmirde-web-tasarim-yapan-ajanslar</loc>
+  <loc>https://www.godijital.net/blog/izmirde-web-tasarim-yapan-ajanslar</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/2025-izmir-internet-sitesi-yaptirma-fiyatlari</loc>
+  <loc>https://www.godijital.net/blog/2025-izmir-internet-sitesi-yaptirma-fiyatlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/facebook-gruplarini-isletmeniz-icin-nasil-daha-etkili-kullanabilirsiniz</loc>
+  <loc>https://www.godijital.net/blog/facebook-gruplarini-isletmeniz-icin-nasil-daha-etkili-kullanabilirsiniz</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/facebook</loc>
+  <loc>https://www.godijital.net/blog-kategori/facebook</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/kurumsal-bir-sitenin-site-haritasi-nasil-olmalidir</loc>
+  <loc>https://www.godijital.net/blog/kurumsal-bir-sitenin-site-haritasi-nasil-olmalidir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/2025te-facebookta-etkilesim-artirma-stratejileri</loc>
+  <loc>https://www.godijital.net/blog/2025te-facebookta-etkilesim-artirma-stratejileri</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/google-haritalarda-kullanici-yorumlari-ile-guven-olusturmanin-yollari</loc>
+  <loc>https://www.godijital.net/blog/google-haritalarda-kullanici-yorumlari-ile-guven-olusturmanin-yollari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/instagram-algoritmasi-nasil-calisir-etkilesiminizi-artirmanin-yollari</loc>
+  <loc>https://www.godijital.net/blog/instagram-algoritmasi-nasil-calisir-etkilesiminizi-artirmanin-yollari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/youtube-algoritmasi-nasil-calisir-videolarinizi-one-cikarmanin-sirlari</loc>
+  <loc>https://www.godijital.net/blog/youtube-algoritmasi-nasil-calisir-videolarinizi-one-cikarmanin-sirlari</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog-kategori/youtube</loc>
+  <loc>https://www.godijital.net/blog-kategori/youtube</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/seo-uzmani-kime-denir-izmir-google-seo</loc>
+  <loc>https://www.godijital.net/blog/seo-uzmani-kime-denir-izmir-google-seo</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/google-haritalarda-hesap-neden-askiya-alinir</loc>
+  <loc>https://www.godijital.net/blog/google-haritalarda-hesap-neden-askiya-alinir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/hergun-google-harita-icin-arayan-ajanslar-dolandirici-mi</loc>
+  <loc>https://www.godijital.net/blog/hergun-google-harita-icin-arayan-ajanslar-dolandirici-mi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/google-seo-nedir-neden-cok-onemlidir</loc>
+  <loc>https://www.godijital.net/blog/google-seo-nedir-neden-cok-onemlidir</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/google-haritalarina-firmanizi-eklemenizin-onemi</loc>
+  <loc>https://www.godijital.net/blog/google-haritalarina-firmanizi-eklemenizin-onemi</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/izmirde-seo-optimizasyonu-yapan-ajanslar</loc>
+  <loc>https://www.godijital.net/blog/izmirde-seo-optimizasyonu-yapan-ajanslar</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://godijital.net/blog/2025-instagram-mavi-tik-alimi-asamalar-ve-paketler</loc>
+  <loc>https://www.godijital.net/blog/2025-instagram-mavi-tik-alimi-asamalar-ve-paketler</loc>
   <lastmod>2025-01-27T23:49:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
