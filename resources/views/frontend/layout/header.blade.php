@@ -74,7 +74,7 @@
                                     <li class="dropdown ">
                                         <a class="dropdown-item hover:!text-[#a07cc5]"
                                             href="{{ route('category.detail',$item->slug)}}"
-                                            title=" {{ $item->name }}">
+                                            title="İzmir {{ $item->name }}">
                                             {{ $item->name }}
                                         </a>
                                     </li>
@@ -129,7 +129,7 @@
                                         
                                         <a
                                             class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]"
-                                            href="https://www.facebook.com{{ config('settings.facebook')}}">
+                                            href="https://www.facebook.com/{{ config('settings.facebook')}}">
                                             <i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i>
                                         </a>
                                        
