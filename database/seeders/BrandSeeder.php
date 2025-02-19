@@ -2,25 +2,37 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
+use App\Models\Shop\Brand;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class BrandSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $brands = [
-            'GO Dijital'
+            [
+                'tr' => [
+                    'name' => 'Nike',
+                    'desc' => 'Nike markası açıklaması',
+                    'seoTitle' => 'Nike Spor Ürünleri',
+                    'seoDesc' => 'Nike spor ürünleri açıklaması',
+                    'seoKey' => 'nike, spor, ayakkabı'
+                ],
+                'en' => [
+                    'name' => 'Nike',
+                    'desc' => 'Nike brand description',
+                    'seoTitle' => 'Nike Sports Products',
+                    'seoDesc' => 'Nike sports products description',
+                    'seoKey' => 'nike, sports, shoes'
+                ],
+                'status' => true,
+                'featured' => true
+            ],
+            // Diğer markalar...
         ];
 
-        foreach ($brands as $index => $brand) {
-            Brand::create([
-                'name' => $brand,
-                'slug' => Str::slug($brand),
-                'status' => true,
-                'rank' => $index
-            ]);
+        foreach ($brands as $brand) {
+            Brand::create($brand);
         }
     }
 } 

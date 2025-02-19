@@ -55,7 +55,7 @@ class ViewShareProvider extends ServiceProvider
 
 
         $categories = Cache::remember('categories',now()->addDay(1), function () {
-            return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams', 'products'])->lang()->get()->toFlatTree();
+            return Category::withCount(['pages', 'services', 'blogs', 'faqs','media','teams'])->lang()->get()->toFlatTree();
         });
 
         //dd($language);

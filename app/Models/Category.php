@@ -68,10 +68,7 @@ class Category extends Model implements HasMedia, TranslatableContract,Viewable
         return $this->hasMany(Faq::class);
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_categories');
-    }
+
 
     public function teams()
     {

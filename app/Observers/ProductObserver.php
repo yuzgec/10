@@ -2,49 +2,23 @@
 
 namespace App\Observers;
 
-use App\Models\Product;
+use App\Models\Shop\Product;
+use App\Enums\ProductTypeEnum;
 
 class ProductObserver
 {
-    /**
-     * Handle the Product "created" event.
-     */
-    public function created(Product $product): void
+    public function creating(Product $product)
     {
-        //
-    }
-
-    /**
-     * Handle the Product "updated" event.
-     */
-    public function updated(Product $product): void
-    {
-        if ($product->isDirty('type') && $product->variations()->exists()) {
-            throw new \Exception('Varyasyonlu ürün tipi değiştirilemez');
+        if ($product->type === ProductTypeEnum::SIMPLE) {
+            $product->manage_stock = true;
         }
     }
 
-    /**
-     * Handle the Product "deleted" event.
-     */
-    public function deleted(Product $product): void
+    public function updating(Product $product)
     {
-        //
-    }
-
-    /**
-     * Handle the Product "restored" event.
-     */
-    public function restored(Product $product): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Product "force deleted" event.
-     */
-    public function forceDeleted(Product $product): void
-    {
-        //
+        // Stok kontrolü ve otomatik status güncelleme
+        if ($product->isDirty('stock') && $product->manage_stock) {
+            $product->status = $product->stock > 0;
+        }
     }
 }

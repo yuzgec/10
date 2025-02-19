@@ -8,7 +8,6 @@ use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Backend\MediaController;
 use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\Backend\ServiceController;
@@ -28,10 +27,9 @@ use App\Http\Controllers\Backend\TranslationController;
 use App\Http\Controllers\Backend\CustomerWorkController;
 use App\Http\Controllers\Backend\CustomerOfferController;
 use App\Http\Controllers\Backend\OfferTemplateController;
-use App\Http\Controllers\Shop\ProductAttributeController;
 use App\Http\Controllers\Backend\GoogleCalendarController;
 use App\Http\Controllers\Backend\CustomerPaymentController;
-use App\Http\Controllers\Shop\ProductAttributeValueController;
+use App\Http\Controllers\Shop\ProductController;
 
 
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth','go-access']], function () {
@@ -110,10 +108,9 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
 
     Route::group(["prefix"=>"shop"],function() {
 
+        Route::resource('product', ProductController::class);
+
         Route::auto('tags', TagController::class);
-        Route::auto('product', ProductController::class);
-        Route::auto('product-attributes', ProductAttributeController::class);
-        Route::auto('product-attribute-values', ProductAttributeValueController::class);
         Route::get('tags/{tag}/products', [TagController::class, 'products'])->name('tags.products');
         Route::get('tags/{tag}/blogs', [TagController::class, 'blogs'])->name('tags.blogs');
 
@@ -123,6 +120,8 @@ Route::group(["prefix"=>"go", 'middleware' => ['auth','web','go-access']],functi
 
 
 });
+
+Route::resource('product', ProductController::class);
 
 
 

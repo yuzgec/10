@@ -15,20 +15,9 @@
         </div>
     </div>
 
-    <!-- Toplu İşlemler -->
     <div class="row mb-3">
         <div class="col-md-6">
-            <div class="input-group">
-                <input type="number" 
-                    class="form-control" 
-                    wire:model="bulkPrice" 
-                    placeholder="Tüm varyasyonlara uygulanacak fiyat">
-                <button type="button"
-                    class="btn btn-primary" 
-                    wire:click.prevent="applyBulkPrice">
-                <x-dashboard.icon.save class="me-1"/> Uygula
-                </button>
-            </div>
+            <h4>Varyasyon Listesi</h4>
         </div>
         <div class="col-md-6">
             <div class="input-group">
@@ -39,7 +28,7 @@
                 <button type="button"
                     class="btn btn-primary" 
                     wire:click.prevent="generateSKUs">
-                    <x-dashboard.icon.save class="me-1"/> Oluştur
+                    Toplu SKU Oluştur
                 </button>
             </div>
         </div>
@@ -55,67 +44,49 @@
                 <table class="table table-vcenter card-table">
                     <thead>
                         <tr>
-                            <th>Görsel</th>
                             <th>Varyasyon</th>
                             <th>SKU</th>
                             <th>Fiyat</th>
-                            <th>İndirimli Fiyat</th>
                             <th>Stok</th>
-                            <th class="text-center" style="width: 100px">Varsayılan</th>
+                            <th>Durum</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($variations as $index => $variation)
                             <tr>
-                                <td style="width: 120px">
-                                    <div class="avatar-upload">
-                                        <input type="file" 
-                                               name="variations[{{ $index }}][image]" 
-                                               class="d-none"
-                                               id="variation-image-{{ $index }}"
-                                               accept="image/*">
-                                        <label for="variation-image-{{ $index }}" 
-                                               class="avatar-preview border rounded cursor-pointer d-flex align-items-center justify-content-center" 
-                                               style="width: 80px; height: 80px;">
-                                            <x-dashboard.icon.gallery class="text-muted"/>
-                                        </label>
-                                    </div>
+                                <td>
+                                    @foreach($variation['values'] as $valueId)
+                                        @php
+                                            $attributeValue = \App\Models\Shop\AttributeValue::find($valueId);
+                                            $attribute = $attributeValue->attribute;
+                                        @endphp
+                                        <span class="badge bg-blue me-1">
+                                            {{ $attribute->name }}: {{ $attributeValue->name }}
+                                        </span>
+                                    @endforeach
                                 </td>
-                                <td class="align-middle">
-                                    {{ collect($variation['values'])->pluck('name')->join(' / ') }}
-                                </td>
-                                <td style="width: 150px">
+                                <td>
                                     <input type="text" 
-                                           class="form-control form-control-sm" 
-                                           wire:model.defer="variations.{{ $index }}.sku">
+                                        class="form-control form-control-sm"
+                                        wire:model="variations.{{ $index }}.sku">
                                 </td>
-                                <td style="width: 150px">
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-text">₺</span>
-                                        <input type="number" 
-                                               class="form-control" 
-                                               wire:model.defer="variations.{{ $index }}.price">
-                                    </div>
-                                </td>
-                                <td style="width: 150px">
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-text">₺</span>
-                                        <input type="number" 
-                                               class="form-control" 
-                                               wire:model.defer="variations.{{ $index }}.discount_price">
-                                    </div>
-                                </td>
-                                <td style="width: 100px">
+                                <td>
                                     <input type="number" 
-                                           class="form-control form-control-sm" 
-                                           wire:model.defer="variations.{{ $index }}.stock">
+                                        class="form-control form-control-sm"
+                                        step="0.01"
+                                        wire:model="variations.{{ $index }}.price">
                                 </td>
-                                <td class="text-center align-middle">
-                                    <input type="radio" 
-                                           class="form-check-input" 
-                                           name="default_variation" 
-                                           wire:model="defaultVariation"
-                                           value="{{ $index }}">
+                                <td>
+                                    <input type="number" 
+                                        class="form-control form-control-sm"
+                                        wire:model="variations.{{ $index }}.stock">
+                                </td>
+                                <td>
+                                    <label class="form-check form-switch">
+                                        <input class="form-check-input" 
+                                            type="checkbox"
+                                            wire:model="variations.{{ $index }}.status">
+                                    </label>
                                 </td>
                             </tr>
                         @endforeach

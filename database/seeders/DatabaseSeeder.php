@@ -2,23 +2,26 @@
 
 namespace Database\Seeders;
 
+use App\Models\Shop\Brand;
+use App\Models\Shop\Product;
+
 use Illuminate\Database\Seeder;
+use Database\Seeders\ShopSeeder;
+use Database\Seeders\UserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $this->call([
-            LanguageSeeder::class,
-            RolesAndPermissionsSeeder::class,
+            ShopSeeder::class,
             UserSeeder::class,
-            CategorySeeder::class,
-            CustomerSeeder::class,
-            ProductSystemSeeder::class,
-            TagSeeder::class,
-            CitySeeder::class,
-            DistrictSeeder::class,
-            BrandSeeder::class,
         ]);
+
+        // Test verileri için factory kullanımı
+        Brand::factory(5)->create();
+        Product::factory(20)
+            ->simple()
+            ->create();
     }
 }

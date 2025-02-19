@@ -17,7 +17,6 @@ use App\Observers\TeamObserver;
 
 
 
-use App\Observers\ProductObserver;
 use App\Observers\ServiceObserver;
 use App\Observers\CategoryObserver;
 use Illuminate\Pagination\Paginator;
@@ -25,7 +24,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Livewire\ProductAttributeManager;
 
 
 
@@ -50,9 +48,7 @@ class AppServiceProvider extends ServiceProvider
         Blog::observe(BlogObserver::class);
         Category::observe(CategoryObserver::class);
         Team::observe(TeamObserver::class);
-        Product::observe(ProductObserver::class);
 
-        Livewire::component('product-attribute-manager', ProductAttributeManager::class);
 
         //$lang = $languages->pluck('lang')->toArray(); // Sadece `lang` değerleri bir array olarak
         //Config::set('translatable.locales', $lang);        

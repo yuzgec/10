@@ -17,7 +17,6 @@ use CyrildeWit\EloquentViewable\Support\Period;
 use CyrildeWit\EloquentViewable\Contracts\Views;
 
 
-
 class HomeController extends Controller
 {
     public function index(){
@@ -37,10 +36,22 @@ class HomeController extends Controller
     }
 
     public function offer(){
+
+        SEOMeta::setTitle('Teklif Al | Google SEO Uzmanı');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
+
+
         return view('frontend.page.offer');
     }
 
     public function brands(){
+
+        SEOMeta::setTitle('Çalıştığımız Markalar | Google SEO Uzmanı');
+        SEOMeta::setDescription('İzmir GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir ajanstır');
+        SEOMeta::setCanonical(url()->full());
+
+
         return view('frontend.page.brands');
     }
 
@@ -68,6 +79,10 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
+        if (!$detail) {
+            abort(404);
+        }
+
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
         SEOMeta::setTitle('İzmir '.$detail->name.' '. $detail->getCategory->name);
@@ -82,6 +97,10 @@ class HomeController extends Controller
         $detail = Category::whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
+
+        if (!$detail) {
+            abort(404);
+        }
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
@@ -100,9 +119,13 @@ class HomeController extends Controller
             $query->where('slug', $slug);
         })->first();
 
+        if (!$detail) {
+            abort(404);
+        }
+
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 
-        SEOMeta::setTitle('İzmir '.$detail->name);
+        SEOMeta::setTitle($detail->name);
         SEOMeta::setDescription('GO Dijital web tasarım, sosyal medya ve google seo optimizasyonu alanlarında hizmet veren bir dijital ajanstır');
         SEOMeta::setCanonical(url()->full());
 
@@ -131,6 +154,10 @@ class HomeController extends Controller
         $category = Category::whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
+
+        if (!$category) {
+            abort(404);
+        }
 
         $all = Blog::with(['getCategory'])->whereHas('translations', function ($query) use ($category){
             $query->where('category_id', $category->id);
