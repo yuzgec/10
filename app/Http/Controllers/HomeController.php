@@ -133,9 +133,14 @@ class HomeController extends Controller
     }
 
     public function blog($slug){
+
         $detail = Blog::with(['getCategory'])->whereHas('translations', function ($query) use ($slug){
             $query->where('slug', $slug);
         })->first();
+
+        if (!$detail) {
+            abort(404);
+        }
 
         views($detail)->cooldown(60)->collection(config('app.locale'))->record();
 

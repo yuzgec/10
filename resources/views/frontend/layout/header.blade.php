@@ -153,7 +153,7 @@
 
                             <li class="nav-item">
                                 <nav class="nav social social-muted justify-end text-right">
-                                    <a class="m-[0_0_0_.7rem] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]" href="https://www.instagram.com/{{ config('settings.instagram')}}">
+                                    <a class="m-[0_0_0_.7rem] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]" href="https://www.instagram.com/{{ config('settings.instagram')}}" title="İzmir Web Tasarım Ajansı" target="_blank">
                                         <i class="uil uil-instagram before:content-['\eb9c'] text-[1rem] text-[#d53581]"></i>
                                     </a>
                                 </nav>
