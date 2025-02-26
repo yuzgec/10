@@ -356,7 +356,7 @@
                 <div class="xl:w-12/12 lg:w-12/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[50px]">
                     <h2 class="!text-[.75rem] !leading-[1.35] uppercase text-[#3f78e0]  !text-center">Web Tasarım, Sosyal Medya Yönetimi ve Dijital Reklam Hizmetler</h2>
                     <h3 class="text-[calc(1.325rem_+_0.9vw)] font-bold !leading-[1.2] xl:text-[2rem] !mb-8 xl:!px-6 text-center">
-                        <span class="text-gradient gradient-7">İZMİR WEB TASARIM >& GOOGLE SEO UZMANI</span
+                        <span class="text-gradient gradient-7">İZMİR WEB TASARIM >& GOOGLE SEO UZMANI</span>
                     </h3>
                     <p>
                         İzmir GO Dijital, dijital dünyada etkili bir varlık oluşturmak isteyen işletmeler için profesyonel <a href="/izmir-ajans/web-tasarim" title="İzmir Web Tasarım">web tasarım</a>, <a href="/izmir-ajans/sosyal-medya" title="İzmir Sosyal Medya Yönetimi">sosyal medya yönetimi</a> ve <a href="/izmir-ajans/dijital-reklam" title="İzmir Dijital Reklam">dijital reklam hizmetleri</a> sunmaktadır. Yaratıcı web tasarımlarımız, kullanıcı dostu ve mobil uyumlu siteler ile hedef kitlenize en iyi deneyimi sunar. Web tasarımında estetik ve işlevselliği bir araya getirerek markanızı en iyi şekilde temsil eden siteler oluşturuyoruz.

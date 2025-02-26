@@ -3,7 +3,7 @@
         <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-35px] md:mx-[-20px] mt-[-15px] xl:mt-0 lg:mt-0 mb-16">
             <div class="xl:w-7/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[35px] md:px-[20px] mt-[15px] xl:mt-0 lg:mt-0 max-w-full">
                 <h1 class="xl:text-[3.3rem] text-[calc(1.455rem_+_2.46vw)] !leading-[1.05] font-bold !mb-0">
-                    <span class=" !relative z-[1] after:content-[''] after:absolute after:z-[-1] after:block after:[background-size:100%_100%] after:bg-no-repeat after:bg-bottom after:bottom-[-0.1em] after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-1 yellow">
+                    <span class=" text-gradient gradient-7 !relative z-[1] after:content-[''] after:absolute after:z-[-1] after:block after:[background-size:100%_100%] after:bg-no-repeat after:bg-bottom after:bottom-[-0.1em] after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-1 yellow">
                       İzmir Web Tasarım</span> yanınızda! Modern dünyada kaybolmayın.
                 </h1>
             </div>
