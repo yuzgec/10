@@ -39,12 +39,29 @@ class Variation extends Model implements HasMedia
 
     public function attributes()
     {
-        return $this->belongsToMany(Attribute::class, 'variation_attrs', 'variation_id', 'attr_id')
+        return $this->belongsToMany(Attr::class, 'variation_attrs', 'variation_id', 'attr_id')
                     ->withPivot('attr_value_id');
     }
 
     public function attributeValues()
     {
-        return $this->belongsToMany(AttributeValue::class, 'variation_attrs', 'variation_id', 'attr_value_id');
+        return $this->belongsToMany(AttrValue::class, 'variation_attrs', 'variation_id', 'attr_value_id');
+    }
+    
+    public function getFormattedPrice()
+    {
+        if (!empty($this->discount_price)) {
+            return [
+                'original' => number_format($this->price, 2, ',', '.'),
+                'discounted' => number_format($this->discount_price, 2, ',', '.'),
+                'discount_rate' => round((($this->price - $this->discount_price) / $this->price) * 100)
+            ];
+        }
+        
+        return [
+            'original' => number_format($this->price, 2, ',', '.'),
+            'discounted' => null,
+            'discount_rate' => null
+        ];
     }
 } 

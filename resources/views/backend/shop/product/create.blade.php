@@ -182,29 +182,61 @@
 </div>
 
 {!! html()->form()->close() !!}
+@endsection
 
 @push('scripts')
+<script src="{{ asset('js/product-variation.js') }}"></script>
 <script>
-    document.querySelectorAll('input[name$="[name]"]').forEach(input => {
-        input.addEventListener('input', function() {
-            const lang = this.name.match(/^(\w+)\[/)[1];
-            const slugInput = document.querySelector(`input[name="${lang}[slug]"]`);
-            slugInput.value = this.value
-                .toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Slug oluşturma
+        document.querySelectorAll('input[name$="[name]"]').forEach(input => {
+            input.addEventListener('input', function() {
+                const lang = this.name.match(/^(\w+)\[/)[1];
+                const slugInput = document.querySelector(`input[name="${lang}[slug]"]`);
+                if (slugInput) {
+                    slugInput.value = this.value
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, '')
+                        .replace(/\s+/g, '-');
+                }
+            });
         });
-    });
 
-    document.getElementById('product-type').addEventListener('change', function() {
-    const isVariable = this.value === '2';
-    const simpleFields = document.getElementById('simple-product-fields');
-    
-    simpleFields.style.display = isVariable ? 'none' : 'block';
-    
-    // Livewire'a bildir
-    Livewire.dispatch('productTypeChanged', isVariable ? '2' : '1');
-});
+        // Ürün tipi değiştiğinde
+        const productTypeSelect = document.getElementById('product-type');
+        if (productTypeSelect) {
+            productTypeSelect.addEventListener('change', function() {
+                const isVariable = this.value === '2'; // 2: Variable, 1: Simple
+                const simpleFields = document.getElementById('simple-product-fields');
+                const variableFields = document.querySelector('.variable-product-fields');
+                
+                if (simpleFields) {
+                    simpleFields.style.display = isVariable ? 'none' : 'block';
+                }
+                
+                if (variableFields) {
+                    variableFields.style.display = isVariable ? 'block' : 'none';
+                }
+                
+                // Livewire bileşenine bildir
+                if (window.Livewire) {
+                    Livewire.dispatch('productTypeChanged', { type: isVariable ? '2' : '1' });
+                }
+            });
+            
+            // Sayfa yüklendiğinde mevcut seçime göre göster/gizle
+            const isVariable = productTypeSelect.value === '2';
+            const simpleFields = document.getElementById('simple-product-fields');
+            const variableFields = document.querySelector('.variable-product-fields');
+            
+            if (simpleFields) {
+                simpleFields.style.display = isVariable ? 'none' : 'block';
+            }
+            
+            if (variableFields) {
+                variableFields.style.display = isVariable ? 'block' : 'none';
+            }
+        }
+    });
 </script>
 @endpush
-@endsection 

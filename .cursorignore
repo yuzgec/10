@@ -3,6 +3,9 @@
 .DS_Store
 .cursorignore
 /public/backend/ckeditor/*
+/public
+/storage
+/bootstrap
 *.jpg
 *.png
 *.gif

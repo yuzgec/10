@@ -49,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
         Category::observe(CategoryObserver::class);
         Team::observe(TeamObserver::class);
 
+        // Livewire bileşenlerini kaydet
+        Livewire::component('variation-manager', \App\Livewire\VariationManager::class);
 
         //$lang = $languages->pluck('lang')->toArray(); // Sadece `lang` değerleri bir array olarak
         //Config::set('translatable.locales', $lang);        

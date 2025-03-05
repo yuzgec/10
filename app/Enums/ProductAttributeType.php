@@ -2,18 +2,24 @@
 
 namespace App\Enums;
 
-enum ProductAttributeType: int
+enum ProductAttributeType: string
 {
-    case SELECT     = 1;
-    case COLOR      = 2;
-    case BUTTON     = 3;
-
+    case SELECT = 'select';
+    case COLOR = 'color';
+    case RADIO = 'radio';
+    case TEXT = 'text';
+    case TEXTAREA = 'textarea';
+    case CHECKBOX = 'checkbox';
+    
     public function label(): string
     {
         return match($this) {
-            self::SELECT => 'Seçim',
+            self::SELECT => 'Seçim Kutusu',
             self::COLOR => 'Renk',
-            self::BUTTON => 'Buton'
+            self::RADIO => 'Radyo Buton',
+            self::TEXT => 'Metin',
+            self::TEXTAREA => 'Çok Satırlı Metin',
+            self::CHECKBOX => 'Onay Kutusu'
         };
     }
 
@@ -22,7 +28,10 @@ enum ProductAttributeType: int
         return match($this) {
             self::SELECT => 'bg-blue',
             self::COLOR => 'bg-purple',
-            self::BUTTON => 'bg-green'
+            self::RADIO => 'bg-green',
+            self::TEXT => 'bg-yellow',
+            self::TEXTAREA => 'bg-pink',
+            self::CHECKBOX => 'bg-red'
         };
     }
 } 

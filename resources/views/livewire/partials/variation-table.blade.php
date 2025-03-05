@@ -34,67 +34,77 @@
         </div>
     </div>
 
-    <!-- Varyasyon Tablosu -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Varyasyonlar</h3>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-vcenter card-table">
-                    <thead>
-                        <tr>
-                            <th>Varyasyon</th>
-                            <th>SKU</th>
-                            <th>Fiyat</th>
-                            <th>Stok</th>
-                            <th>Durum</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($variations as $index => $variation)
-                            <tr>
-                                <td>
-                                    @foreach($variation['values'] as $valueId)
-                                        @php
-                                            $attributeValue = \App\Models\Shop\AttributeValue::find($valueId);
-                                            $attribute = $attributeValue->attribute;
-                                        @endphp
-                                        <span class="badge bg-blue me-1">
-                                            {{ $attribute->name }}: {{ $attributeValue->name }}
-                                        </span>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <input type="text" 
-                                        class="form-control form-control-sm"
-                                        wire:model="variations.{{ $index }}.sku">
-                                </td>
-                                <td>
-                                    <input type="number" 
-                                        class="form-control form-control-sm"
-                                        step="0.01"
-                                        wire:model="variations.{{ $index }}.price">
-                                </td>
-                                <td>
-                                    <input type="number" 
-                                        class="form-control form-control-sm"
-                                        wire:model="variations.{{ $index }}.stock">
-                                </td>
-                                <td>
-                                    <label class="form-check form-switch">
-                                        <input class="form-check-input" 
-                                            type="checkbox"
-                                            wire:model="variations.{{ $index }}.status">
-                                    </label>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="d-flex justify-content-between mb-3">
+        <h4>Varyasyon Kombinasyonları</h4>
+        <button type="button" class="btn btn-primary" wire:click="generateCombinations">
+            Kombinasyonları Oluştur
+        </button>
     </div>
+
+    @if(count($combinations) > 0)
+        <div class="table-responsive">
+            <table class="table table-vcenter table-bordered">
+                <thead>
+                    <tr>
+                        @foreach($selectedAttributes as $attrData)
+                            @if(!empty($attrData['id']))
+                                @php
+                                    $attribute = App\Models\Shop\Attr::find($attrData['id']);
+                                @endphp
+                                @if($attribute)
+                                    <th>{{ $attribute->getTranslation('name', app()->getLocale()) }}</th>
+                                @endif
+                            @endif
+                        @endforeach
+                        <th>SKU</th>
+                        <th>Fiyat</th>
+                        <th>Stok</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($combinations as $index => $combination)
+                        <tr>
+                            @foreach($combination['attributes'] as $attrId => $valueId)
+                                <td>
+                                    @php
+                                        $value = App\Models\Shop\AttrValue::find($valueId);
+                                    @endphp
+                                    @if($value)
+                                        {{ $value->getTranslation('name', app()->getLocale()) }}
+                                    @endif
+                                </td>
+                            @endforeach
+                            <td>
+                                <input type="text" class="form-control" 
+                                       wire:model="combinations.{{ $index }}.sku" 
+                                       placeholder="SKU">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" 
+                                       wire:model="combinations.{{ $index }}.price" 
+                                       step="0.01" min="0" placeholder="Fiyat">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" 
+                                       wire:model="combinations.{{ $index }}.stock" 
+                                       min="0" placeholder="Stok">
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-3">
+            <button type="button" class="btn btn-success" wire:click="saveVariations">
+                Varyasyonları Kaydet
+            </button>
+        </div>
+    @else
+        <div class="alert alert-info">
+            Henüz kombinasyon oluşturulmadı. Lütfen özellikleri seçin ve "Kombinasyonları Oluştur" butonuna tıklayın.
+        </div>
+    @endif
 </div>
 
 <style>
@@ -108,6 +118,4 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
-</script>
 @endpush 
-</style> 

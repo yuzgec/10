@@ -15,31 +15,18 @@ class Product extends Model implements HasMedia, TranslatableContract
 {
     use SoftDeletes, InteractsWithMedia, Translatable, HasFactory;
 
+    protected $guarded = [];
+
     public $translatedAttributes = [
         'name',
         'slug',
         'short',
         'desc',
+        'technical_desc',
+        'cargo_desc',
         'seoTitle',
         'seoDesc',
-        'seoKey',
-        'technical_desc',
-        'cargo_desc'
-    ];
-
-    protected $fillable = [
-        'type',
-        'price',
-        'discount_price',
-        'special_price',
-        'stock',
-        'manage_stock',
-        'sku',
-        'barcode',
-        'weight',
-        'warranty',
-        'status',
-        'featured'
+        'seoKey'
     ];
 
     protected $casts = [
@@ -65,8 +52,8 @@ class Product extends Model implements HasMedia, TranslatableContract
 
     public function attributes()
     {
-        return $this->belongsToMany(Attribute::class, 'product_variation_attributes')
-            ->withPivot('attribute_value_id');
+        return $this->belongsToMany(Attr::class, 'product_attrs')
+            ->withPivot('attr_value_id');
     }
 
     public function scopeActive($query)
@@ -93,5 +80,23 @@ class Product extends Model implements HasMedia, TranslatableContract
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function isVariable()
+    {
+        return $this->type === ProductTypeEnum::VARIABLE;
+    }
+
+    public function isSimple()
+    {
+        return $this->type === ProductTypeEnum::SIMPLE;
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('product')
+            ->singleFile();
+            
+        $this->addMediaCollection('gallery');
     }
 } 

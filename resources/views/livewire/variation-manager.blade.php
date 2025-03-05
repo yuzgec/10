@@ -8,7 +8,7 @@
             <div class="mb-4">
                 <label class="form-label fw-bold">Kullanılacak Özellikler</label>
                 <div class="vstack gap-3">
-                    @foreach($selectedAttributes as $index => $attribute)
+                    @forelse($selectedAttributes as $index => $attribute)
                         <div class="card card-sm border">
                             <div class="card-body">
                                 <div class="d-flex align-items-center gap-2">
@@ -16,7 +16,7 @@
                                         <select class="form-select" wire:model.live="selectedAttributes.{{ $index }}.id" wire:change="loadAttributeValues({{ $index }})">
                                             <option value="">Özellik Seçin</option>
                                             @foreach($productAttributes as $attr)
-                                                <option value="{{ $attr->id }}">{{ $attr->name }}</option>
+                                                <option value="{{ $attr->id }}">{{ $attr->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -25,7 +25,7 @@
                                     </button>
                                 </div>
 
-                                @if(!empty($attribute['values']))
+                                @if(isset($attribute['values']) && !empty($attribute['values']))
                                     <div class="mt-3">
                                         <label class="form-label">Değerler</label>
                                         <div class="d-flex flex-wrap gap-2">
@@ -43,7 +43,11 @@
                                 @endif
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="alert alert-info">
+                            Henüz özellik eklenmedi. Aşağıdaki butona tıklayarak özellik ekleyebilirsiniz.
+                        </div>
+                    @endforelse
 
                     <button type="button" class="btn btn-primary" wire:click="addAttribute">
                         Özellik Ekle
@@ -51,7 +55,7 @@
                 </div>
             </div>
 
-            @if(count($variations))
+            @if(count($combinations) > 0)
                 @include('livewire.partials.variation-table')
             @endif
         </div>
